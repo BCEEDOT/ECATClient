@@ -17,7 +17,7 @@ import { FacultyDataContextService } from "../../../faculty/services/faculty-dat
   styleUrls: ['./comment.dialog.scss']
 })
 export class CommentDialog implements OnInit {
-  comment: StudSpComment | FacSpComment;
+  comment: StudSpComment & FacSpComment;
   isStudent: boolean;
   canSave: boolean = false;
   commentLoad: string = 'CommentLoading';
@@ -33,7 +33,7 @@ export class CommentDialog implements OnInit {
     @Inject(MD_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.comment = this.data.comment as StudSpComment | FacSpComment;
+    this.comment = this.data.comment as StudSpComment & FacSpComment;
     console.log(this.comment);
     this.isStudent = this.global.persona.value.isStudent;
 
@@ -151,6 +151,10 @@ export class CommentDialog implements OnInit {
     } else {
       this.dialogRef.close();
     }
+  }
+
+  makeAnonymous(value: any): void {
+    this.comment.requestAnonymity = value;
   }
 
 }

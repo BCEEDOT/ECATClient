@@ -37,7 +37,7 @@
 
   </router-outlet>
 </td-layout-nav>
-<div *ngIf="activeWorkGroup && onListView">
+<div fxHide.xs *ngIf="activeWorkGroup && onListView">
   <a style="z-index: 9999;" md-fab color="primary" class="mat-fab-bottom-right" (click)="assessCompare()" mdTooltip="Compare" mdTooltipPosition="left">
     <md-icon>show_chart</md-icon>
   </a>

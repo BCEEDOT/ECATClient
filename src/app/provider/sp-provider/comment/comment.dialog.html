@@ -1,25 +1,68 @@
-<h4 md-dialog-title>Comment for {{comment?.recipient?.rankName}}</h4>
+<div fxLayout="row" class="pull-top-xs">
+  <h4 class="md-title">
+    <span *ngIf="comment.requestAnonymity" class="md-title">Anonymous </span>Comment for {{comment?.recipient?.rankName}}</h4>
+  <div fxFlex></div>
+  <div class="pull-top-xs">
+    <button md-icon-button color="accent" (click)="cancel()">
+      <md-icon class="large-icon">close</md-icon>
+    </button>
+  </div>
+</div>
+
 <md-dialog-content>
   <md-input-container class="md-block">
     <textarea mdInput placeholder="Comment (3000 characters max)" [(ngModel)]="comment.commentText" maxlength="3000" rows="15"
       cols="75" [disabled]="viewOnly" #commentText="ngModel" required></textarea>
   </md-input-container>
 </md-dialog-content>
-<md-dialog-actions>
-  <div flex="50">
+<md-dialog-actions fxLayout="row" fxShow fxHide.xs fxHide.sm>
+  <div fxFlex="40%">
     <button md-raised-button (click)="comment.requestAnonymity=true; commentText.control.markAsDirty()" [disabled]="viewOnly && comment.requestAnonymity!==true"
       [ngClass]="{'btn-selected': comment.requestAnonymity===true}" *ngIf="isStudent">Anonymous</button>
     <button md-raised-button (click)="comment.requestAnonymity=false; commentText.control.markAsDirty()" [disabled]="viewOnly && comment.requestAnonymity!==false"
       [ngClass]="{'btn-selected': comment.requestAnonymity===false}" *ngIf="isStudent">Named</button>
   </div>
-  <span flex="30"></span>
-  <div flex="35" *ngIf="comment.entityAspect.entityState.isAdded()">
-    <button md-raised-button color="primary" (click)="cancel()">Cancel</button>
+  <span fxFlex></span>
+  <div *ngIf="comment.entityAspect.entityState.isAdded()">
+
+    <!-- <button md-raised-button color="primary" (click)="cancel()">Cancel</button> -->
     <button md-raised-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">Save</button>
   </div>
-  <div flex="65" *ngIf="!comment.entityAspect.entityState.isAdded()">
+  <div fxLayout="row" fxLayoutGap="3px" *ngIf="!comment.entityAspect.entityState.isAdded()">
+    <div fxFlex></div>
     <button md-raised-button color="primary" [disabled]="viewOnly" (click)="delete()">Delete</button>
-    <button md-raised-button color="primary" (click)="cancel()">Cancel</button>
+    <!-- <button md-raised-button color="primary" (click)="cancel()">Cancel</button> -->
     <button md-raised-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">Save</button>
+  </div>
+</md-dialog-actions>
+
+<md-dialog-actions fxLayout="row" fxHide fxShow.xs fxShow.sm>
+  <md-button-toggle *ngIf="isStudent" type="radio" [disabled]="viewOnly && comment.requestAnonymity!==true" [checked]="comment.requestAnonymity"
+    (change)="makeAnonymous($event.source.checked)" (click)="commentText.control.markAsDirty()">
+    <md-icon class="tab-icon" *ngIf="!comment.requestAnonymity">radio_button_unchecked</md-icon>
+    <md-icon class="tab-icon" *ngIf="comment.requestAnonymity">radio_button_checked</md-icon>
+    Anonymous
+  </md-button-toggle>
+  <span fxFlex></span>
+  <div fxFlex="25%" *ngIf="comment.entityAspect.entityState.isAdded()">
+    <div fxFlex></div>
+    <!-- <button md-icon-button color="primary" (click)="cancel()">
+      <md-icon class="large-icon">close</md-icon>
+    </button> -->
+    <button md-icon-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">
+      <md-icon mdTooltip="Save" mdTooltipPosition="before" class="large-icon">save</md-icon>
+    </button>
+  </div>
+  <div fxFlex="40%" *ngIf="!comment.entityAspect.entityState.isAdded()">
+    <div fxFlex></div>
+    <button md-icon-button color="primary" [disabled]="viewOnly" (click)="delete()">
+      <md-icon  mdTooltip="Delete" mdTooltipPosition="before" class="large-icon">delete_forever</md-icon>
+    </button>
+    <!-- <button md-icon-button color="primary" (click)="cancel()">
+      <md-icon class="large-icon">close</md-icon>
+    </button> -->
+    <button md-icon-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">
+      <md-icon mdTooltip="Save" mdTooltipPosition="before" class="large-icon">save</md-icon>
+    </button>
   </div>
 </md-dialog-actions>
