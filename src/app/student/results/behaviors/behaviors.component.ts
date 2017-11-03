@@ -22,6 +22,7 @@ export class BehaviorsComponent implements OnChanges {
   @Input() change: number;
 
   chartColors: any = { domain: [] };
+  activeInventory: SpInventory;
 
   ngOnChanges(): void {
     this.activate();
@@ -33,6 +34,8 @@ export class BehaviorsComponent implements OnChanges {
       if (a.displayOrder > b.displayOrder) { return 1; }
       return 0;
     });
+
+    this.activeInventory = this.inventories[0];
 
     this.inventories.forEach((inv: SpInventory) => {
       // let chartColors = {  domain: [] };
@@ -63,6 +66,26 @@ export class BehaviorsComponent implements OnChanges {
 
       })
     })
+  }
+
+  previousInv() {
+    let prev = this.inventories.find(inv => inv.displayOrder === (this.activeInventory.displayOrder - 1));
+    if (!prev) {
+      let length = this.inventories.length;
+      this.activeInventory = this.inventories[length - 1];
+    } else {
+      this.activeInventory = prev;
+    }
+
+  }
+
+  nextInv() {
+    let next = this.inventories.find(inv => inv.displayOrder === (this.activeInventory.displayOrder + 1));
+    if (!next) {
+      this.activeInventory = this.inventories[0];
+    } else {
+      this.activeInventory = next;
+    }
   }
 
 }

@@ -1,18 +1,28 @@
 <md-card-title *ngIf="!memHasComments">You did not recieve any comments</md-card-title>
-<md-card-content *ngIf="memHasComments">
-  <md-list fxFlex="25">
-    <md-list-item *ngFor="let comment of comments" [ngClass]="{'selected': this.selectedComment == comment }" (click)="this.changeComment(comment)">
-      <span>{{comment?.authorName}}</span>
-    </md-list-item>
-  </md-list>
-  <span fxFlex="2"></span>
-  <md-card fxFlex="75" style="align-self: flex-start">
-    <md-card-content>
-      <div fxLayout="row">
-        <span class="md-subhead">From: {{selectedComment?.authorName}}</span>
-      </div>
-      <p>{{selectedComment?.commentText}}</p>
-    </md-card-content>
-  </md-card>
+<md-card-content *ngIf="memHasComments" fxShow fxHide.xs>
+  <div *ngFor="let comment of comments; let last = last">
+    <md-list>
+      <md-list-item>
+        <md-icon md-list-avatar>account_box</md-icon>
+        <h4 md-line>
+          <span class="tc-grey-800 md-title">{{comment?.authorName}}</span>
+        </h4>
+      </md-list-item>
+      <p class="pad-left pull-top-sm md-subhead" ngClass.xs="xs-pad-left">
+        {{comment.commentText}}
+      </p>
+    </md-list>
+    <md-divider md-inset *ngIf="!last"></md-divider>
+  </div>
 </md-card-content>
-
+<md-card-content *ngIf="memHasComments" fxHide fxShow.xs>
+  <div *ngFor="let comment of comments; let last = last">
+    <h4>
+      <span class="tc-grey-800 md-title">{{comment?.authorName}}</span>
+    </h4>
+    <p class="pull-top-sm md-subhead">
+      {{comment.commentText}}
+    </p>
+    <md-divider *ngIf="!last"></md-divider>
+  </div>
+</md-card-content>

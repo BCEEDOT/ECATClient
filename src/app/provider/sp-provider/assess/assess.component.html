@@ -90,14 +90,14 @@
           <button md-raised-button color="primary" *ngIf="!viewOnly" [disabled]="!canSave" (click)="save()">Save</button>
         </div>
       </md-card-actions>
-      <md-card-actions fxHide fxShow.xs>
-        <button md-icon-button color="primary" [disabled]="activeInventory.id===inventories[0].id" (click)="previousInv()">
-          <md-icon mdTooltip="Previous" mdTooltipPosition="after" class="large-icon">arrow_back</md-icon>
-        </button>
-        <button md-icon-button color="primary" [disabled]="activeInventory.id===inventories[inventories.length - 1].id" (click)="nextInv()">
-          <md-icon mdTooltip="Next" mdTooltipPosition="before" class="large-icon">arrow_forward</md-icon>
-        </button>
-        <div style="float: right">
+      <md-card-actions fxHide fxShow.xs fxLayout="row">
+        <div fxFlex>
+          <button md-icon-button color="primary" [disabled]="activeInventory.id===inventories[0].id" (click)="previousInv()">
+            <md-icon mdTooltip="Previous" mdTooltipPosition="after" class="large-icon">arrow_back</md-icon>
+          </button>
+        </div>
+        <div fxFlex></div>
+        <div fxFlex=".5 1 auto" fxFlexAlign="center">
           <button md-icon-button color="primary" *ngIf="viewOnly" (click)="cancel()">
             <md-icon mdTooltip="Back" mdTooltipPosition="before" class="large-icon">exit_to_app</md-icon>
           </button>
@@ -108,6 +108,13 @@
             <md-icon mdTooltip="Save" mdTooltipPosition="before" class="large-icon">save</md-icon>
           </button>
         </div>
+        <div fxFlex></div>
+        <div>
+          <button md-icon-button color="primary" [disabled]="activeInventory.id===inventories[inventories.length - 1].id" (click)="nextInv()">
+            <md-icon mdTooltip="Next" mdTooltipPosition="before" class="large-icon">arrow_forward</md-icon>
+          </button>
+        </div>
+
       </md-card-actions>
     </md-card>
   </div>
