@@ -44,7 +44,7 @@
           <div fxLayout="column" fxLayoutGap="30px" fxLayoutAlign="center center" fxHide fxShow.xs>
             <div fxFlex>
               <md-slide-toggle [disabled]="viewOnly" (change)="saveCheck()" name="displayed" class="example-margin" [(ngModel)]="activeInventory.behaveDisplayed"
-                [color]="color" [checked]="checked" [disabled]="disabled">
+                [disabled]="disabled">
                 {{(activeInventory.behaveDisplayed) ? 'Not Displayed' : 'Displayed'}}
               </md-slide-toggle>
             </div>

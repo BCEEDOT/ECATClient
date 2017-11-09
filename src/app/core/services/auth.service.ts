@@ -19,6 +19,7 @@ import { GlobalService, ILoggedInUser } from "./global.service";
 import { EmProviderService } from "./em-provider.service";
 import { DataContext } from "../../app-constants";
 import { MpEntityType, MpInstituteRole } from "../common/mapStrings";
+import { TdDialogService } from '@covalent/core';
 
 @Injectable()
 export class AuthService implements IHttpInterceptor {
@@ -27,7 +28,7 @@ export class AuthService implements IHttpInterceptor {
   //public token: string;
 
   constructor(private http: Http, private router: Router, private global: GlobalService,
-    private jwtHelper: JwtHelper, private emProvider: EmProviderService) { }
+    private jwtHelper: JwtHelper, private emProvider: EmProviderService, private dialogService: TdDialogService) { }
 
   login(username: string, password: string): Observable<boolean> {
 
@@ -38,7 +39,11 @@ export class AuthService implements IHttpInterceptor {
     data.append('username', username);
     data.append('password', password);
 
-    return this.http.post('http://localhost:62187/connect/token',
+    //TODO: Update for environment
+    //dev
+    //return this.http.post('http://localhost:62187/connect/token',
+    //awstesting
+    return this.http.post('http://ec2-34-237-207-101.compute-1.amazonaws.com/connect/token',
       data).map((response: Response) => {
         let accessToken = response.json().access_token;
         let idToken = response.json().id_token;
@@ -75,6 +80,7 @@ export class AuthService implements IHttpInterceptor {
 
     let accessTokenSigned = localStorage.getItem('ecatAccessToken');
     let idTokenSigned = localStorage.getItem('ecatUserIdToken');
+    
     let accessToken = this.jwtHelper.decodeToken(accessTokenSigned);
     let idToken = this.jwtHelper.decodeToken(idTokenSigned);
     var user: ILoggedInUser = <ILoggedInUser>{};
