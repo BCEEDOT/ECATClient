@@ -8,7 +8,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { TdLoadingService } from '@covalent/core;
+import { TdLoadingService } from '@covalent/core';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/groupBy';
 import 'rxjs/add/operator/mergeAll';
