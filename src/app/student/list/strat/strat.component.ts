@@ -1,7 +1,9 @@
-import { Component, OnInit, OnChanges, Input, AfterViewInit, AfterViewChecked, Output } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, AfterViewInit, AfterViewChecked, Output, OnDestroy } from '@angular/core';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
 import { MdSnackBar } from '@angular/material';
 import 'rxjs/add/operator/debounceTime'
+import { Subscription } from 'rxjs';
+import { DragulaService } from "ng2-dragula";
 
 import { Course, WorkGroup, CrseStudentInGroup, StratResponse } from "../../../core/entities/student";
 import { WorkGroupService } from "../../services/workgroup.service";
@@ -15,20 +17,25 @@ import { MpSpStatus } from "../../../core/common/mapStrings";
   templateUrl: './strat.component.html',
   styleUrls: ['./strat.component.scss']
 })
-export class StratComponent implements OnInit, OnChanges {
+export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
 
   activeWorkGroup: WorkGroup;
   user: CrseStudentInGroup
   peers: Array<CrseStudentInGroup>;
+  unstratted: StratResponse[] = [];
+  stratted: StratResponse[] = [];
   errorMessage: string;
   groupCount: number;
   userId: number;
   readOnly: boolean = false;
+  showUnstrat: boolean = false;
+  dragSub: Subscription;
+  grpSub: Subscription;
 
   constructor(private workGroupService: WorkGroupService, private global: GlobalService,
     private loadingService: TdLoadingService, private snackBarService: MdSnackBar,
     private spTools: SpProviderService, private dialogService: TdDialogService,
-    private studentDataContext: StudentDataContext) {
+    private studentDataContext: StudentDataContext, private dragulaService: DragulaService) {
 
     //this.workGroupService.isLoading$.subscribe(value => this.isLoading = value);
   }
@@ -36,26 +43,74 @@ export class StratComponent implements OnInit, OnChanges {
   @Input() workGroup: WorkGroup;
 
   ngOnInit() {
+    this.grpSub = this.workGroupService.workGroup$.subscribe(grp => {
+      this.activeWorkGroup = grp;
+      this.activate();
+    });
+    
     this.activate();
   }
 
-  ngOnChanges() {
-    this.activate();
+  ngOnDestroy(){
+    this.grpSub.unsubscribe();
+    this.dragSub.unsubscribe();
   }
+
+  // ngOnChanges() {
+  //   this.activate();
+  // }
 
   activate() {
-    this.activeWorkGroup = this.workGroup;
+    this.activeWorkGroup = this.workGroupService.workGroup$.getValue();
+
+    this.activeWorkGroup.groupMembers.forEach(gm => {
+      this.studentDataContext.getSingleStrat(gm.studentId, this.activeWorkGroup.workGroupId, this.activeWorkGroup.courseId);
+    });
+
+    this.unstratted = this.activeWorkGroup.spStratResponses.filter(str => {
+      if(str.stratPosition === 0 && !str.entityAspect.entityState.isDetached()){return true;}
+    }).sort((a: StratResponse, b: StratResponse) => {
+      if (a.assessee.studentProfile.person.lastName < b.assessee.studentProfile.person.lastName) {return -1;}
+      if (a.assessee.studentProfile.person.lastName > b.assessee.studentProfile.person.lastName) {return 1;}
+      if (a.assessee.studentProfile.person.firstName < b.assessee.studentProfile.person.firstName) {return -1;}
+      if (a.assessee.studentProfile.person.firstName > b.assessee.studentProfile.person.firstName) {return 1;}
+      return 0;
+    });
+
+    this.stratted = this.activeWorkGroup.spStratResponses.filter(str => {
+      if(str.stratPosition !== 0 && !str.entityAspect.entityState.isDetached()){return true;}
+    }).sort((a: StratResponse, b: StratResponse) => {
+        if (a.stratPosition < b.stratPosition) {return -1;}
+        if (a.stratPosition > b.stratPosition) {return 1;}
+        return 0;
+    });
+    
+    if (this.unstratted.length > 0){
+      this.showUnstrat = true;
+    } else {
+      this.showUnstrat = false;
+    }
+
     this.readOnly = this.activeWorkGroup.mpSpStatus !== MpSpStatus.open;
     this.groupCount = this.activeWorkGroup.groupMembers.length;
-    const userId = this.global.persona.value.person.personId;
+    this.userId = this.global.persona.value.person.personId;
 
-    this.user = this.activeWorkGroup.groupMembers.filter(gm => gm.studentId == userId)[0];
-    this.peers = this.activeWorkGroup.groupMembers.filter(gm => gm.studentId !== userId);
-    this.evaluateStrat(true);
+    // this.user = this.activeWorkGroup.groupMembers.filter(gm => gm.studentId == userId)[0];
+    // this.peers = this.activeWorkGroup.groupMembers.filter(gm => gm.studentId !== userId);
+    // this.evaluateStrat(true);
+    this.dragSub = this.dragulaService.drop.subscribe((value) => {
+      this.onDrop(value.slice(1));
+    });
+  }
+
+  private onDrop(args){
+    for (var i = 0; i < this.stratted.length; i++) {
+        this.stratted[i].stratPosition = i + 1;
+    }
   }
 
   cancel() {
-    if (this.activeWorkGroup.groupMembers.some(gm => gm.proposedStratPosition !== null)) {
+    //if (this.activeWorkGroup.groupMembers.some(gm => gm.proposedStratPosition !== null)) {
       this.dialogService.openConfirm({
         message: 'Are you sure you want to cancel and discard your changes?',
         title: 'Unsaved Changed',
@@ -63,85 +118,110 @@ export class StratComponent implements OnInit, OnChanges {
         cancelButton: 'No'
       }).afterClosed().subscribe((confirmed: boolean) => {
         if (confirmed) {
-          this.activeWorkGroup.groupMembers.forEach(gm => {
-            gm.stratValidationErrors = [];
-            gm.stratIsValid = true;
-            gm.proposedStratPosition = undefined;
+          this.unstratted = [];
+          this.stratted = [];
+          
+          //having an issue where the detached entities are still being tracked with the group which is causing problems when canceling and refreshing everything...
+          var notDetached = this.activeWorkGroup.spStratResponses.filter(str => {
+            if(!str.entityAspect.entityState.isDetached()){return true;}
+          })
+          notDetached.forEach(str => {
+            str.entityAspect.rejectChanges();
           });
+          
+          this.activate();
+          //this.activeWorkGroup.groupMembers.forEach(gm => {
+            //gm.stratValidationErrors = [];
+            //gm.stratIsValid = true;
+            //gm.proposedStratPosition = undefined;
+          //});
           this.snackBarService.open('Changes Discarded', 'Dismiss', { duration: 2000 })
           //this.location.back();
         }
       });
-    } else {
+    //} else {
       //this.location.back();
-    }
+    //}
   }
 
-  isValid(): boolean {
-    let invalidStrats = this.activeWorkGroup.groupMembers.some(gm => !gm.stratIsValid);
-    let isDirty = this.activeWorkGroup.groupMembers.some(gm => gm.proposedStratPosition !== null);
-
-    if (!isDirty) {
-      return true;
-    }
-
-    if (invalidStrats) {
-      return true;
-    }
-
-    return false;
-
+  isComplete(): boolean {
+    return this.unstratted.length === 0;
   }
 
-  isPristine(): boolean {
-    let stratComplete =  this.activeWorkGroup.groupMembers.some(gm => gm.proposedStratPosition !== null || gm.stratValidationErrors.length > 0);
-    this.workGroupService.stratComplete(!stratComplete);
-    return stratComplete
+  isDirty(): boolean {
+      if (this.stratted.length > 0){
+          return this.stratted.some(fstrat => fstrat.entityAspect.entityState.isAddedModifiedOrDeleted());
+      }
+      
+      return false;
   }
 
-  evaluateStrat(force?: boolean): void {
-    this.spTools.evaluateStratification(false, force);
-  }
+  // isValid(): boolean {
+  //   let invalidStrats = this.activeWorkGroup.groupMembers.some(gm => !gm.stratIsValid);
+  //   let isDirty = this.activeWorkGroup.groupMembers.some(gm => gm.proposedStratPosition !== null);
+
+  //   if (!isDirty) {
+  //     return true;
+  //   }
+
+  //   if (invalidStrats) {
+  //     return true;
+  //   }
+
+  //   return false;
+
+  // }
+
+  // isPristine(): boolean {
+  //   let stratComplete =  this.activeWorkGroup.groupMembers.some(gm => gm.proposedStratPosition !== null || gm.stratValidationErrors.length > 0);
+  //   this.workGroupService.stratComplete(!stratComplete);
+  //   return stratComplete
+  // }
+
+  // evaluateStrat(force?: boolean): void {
+  //   this.spTools.evaluateStratification(false, force);
+  // }
 
   saveChanges(): void {
     const that = this;
-    this.evaluateStrat(true);
+    //this.evaluateStrat(true);
 
-    const hasErrors = this.activeWorkGroup.groupMembers
-      .some(gm => !gm.stratIsValid);
+    //const hasErrors = this.activeWorkGroup.groupMembers
+      //.some(gm => !gm.stratIsValid);
 
-    if (hasErrors) {
-      this.dialogService.openAlert({
-        message: 'Your proposed changes contain errors, please ensure all proposed changes are valid before saving'
-      })
-    }
+    // if (hasErrors) {
+    //   this.dialogService.openAlert({
+    //     message: 'Your proposed changes contain errors, please ensure all proposed changes are valid before saving'
+    //   })
+    // }
 
-    const gmWithChanges = this.activeWorkGroup.groupMembers
-      .filter(gm => gm.proposedStratPosition !== null);
+    // const gmWithChanges = this.activeWorkGroup.groupMembers
+    //   .filter(gm => gm.proposedStratPosition !== null);
 
-    const changeSet = [] as Array<number>;
+    // const changeSet = [] as Array<number>;
 
-    gmWithChanges.forEach(gm => {
-      //const stratResponse = gm.proposedStratPosition
-      const stratResponse = this.studentDataContext.getSingleStrat(gm.studentId, this.workGroupService.workGroup$.value.workGroupId, gm.course.id);
-      gm.assesseeStratResponse[0].stratPosition = gm.proposedStratPosition;
-      changeSet.push(gm.studentId);
-    });
+    // gmWithChanges.forEach(gm => {
+    //   //const stratResponse = gm.proposedStratPosition
+    //   const stratResponse = this.studentDataContext.getSingleStrat(gm.studentId, this.workGroupService.workGroup$.value.workGroupId, gm.course.id);
+    //   gm.assesseeStratResponse[0].stratPosition = gm.proposedStratPosition;
+    //   changeSet.push(gm.studentId);
+    // });
 
     this.spTools.save().then(() => {
 
       this.activeWorkGroup.groupMembers
-        .filter(gm => changeSet.some(cs => cs === gm.studentId))
+        //.filter(gm => changeSet.some(cs => cs === gm.studentId))
         .forEach(gm => {
           gm.stratValidationErrors = [];
           gm.stratIsValid = true;
           gm.proposedStratPosition = null;
         });
       this.workGroupService.stratComplete(true);
-      this.user.updateStatusOfPeer();
+      this.activeWorkGroup.groupMembers.filter(gm => {if(gm.studentId === this.userId){return true;}})[0].updateStatusOfPeer();
+      this.activate();
       this.snackBarService.open("Success, Strats Updated!", 'Dismiss', { duration: 2000 })
     }).catch((error) => {
-      this.user.updateStatusOfPeer();
+      this.activeWorkGroup.groupMembers.filter(gm => {if(gm.studentId === this.userId){return true;}})[0].updateStatusOfPeer();
       this.dialogService.openAlert({
         message: 'There was an error saving your changes, please try again.'
       })

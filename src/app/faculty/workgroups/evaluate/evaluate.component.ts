@@ -392,4 +392,18 @@ export class EvaluateComponent implements OnInit, OnDestroy {
     this.tabIndex = 0;
 
   }
+
+  back() {
+    this.members.forEach(mem => {
+      if (mem.facultyStrat){
+        if (mem.facultyStrat.entityAspect.entityState.isAdded()){
+          if (mem.facultyStrat.stratPosition === 0) {
+            mem.facultyStrat.entityAspect.rejectChanges();
+          }
+        }
+      }
+    })
+
+    this.location.back();
+  }
 }
