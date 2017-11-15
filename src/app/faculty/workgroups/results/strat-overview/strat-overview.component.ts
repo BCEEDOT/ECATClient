@@ -28,6 +28,7 @@ export class StratOverviewComponent implements OnInit {
   studentIds: number[] = [];
   facultyStrat: number[] = [];
   finalStrat: number[] = [];
+  selfStrat: number[] = [];
   hovered: number;
 
   constructor() { }
@@ -44,16 +45,13 @@ export class StratOverviewComponent implements OnInit {
 
     this.membersResults.forEach(member => {
       member.updateStatusOfStudent();
+      console.log(member.statusOfStudent);
+      this.selfStrat[member.studentId.toString()] = member.statusOfStudent.selfStrat;
+      console.log(this.selfStrat);
       this.finalStrat[member.studentId.toString()] = member.stratResult.finalStratPosition;
       this.facultyStrat[member.studentId.toString()] = member.facultyStrat.stratPosition;
       this.studentIds.push(member.studentId);
     })
-
-    console.log(this.facultyStrat);
-
-
-
-
   }
 
 }

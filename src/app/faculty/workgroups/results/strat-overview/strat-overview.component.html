@@ -1,10 +1,10 @@
 <div id="stratTable" class="pad-sm">
-  <div class="table-responsive-vertical">
+  <div>
     <!-- Table starts here -->
     <table id="table" class="table table-hover table-mc-light-blue">
       <thead>
         <tr>
-          <th *ngFor="let num of studentIds.slice(0, (studentIds.length / 2));"></th>
+          <th *ngFor="let num of studentIds.slice(0, (studentIds.length / 2) + 1);"></th>
           <th>Ratees</th>
           <th *ngFor="let num of studentIds.slice(0, (studentIds.length / 2) + 1);"></th>
         </tr>
@@ -19,20 +19,32 @@
       <tbody>
         <tr *ngFor="let memberResult of membersResults;">
           <td class="md-caption">{{memberResult?.rankName}}</td>
-          <td align="center" *ngFor="let studentId of studentIds;" #td [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId" (mouseout)="hovered = null">
-            {{memberResult?.statusOfStudent.gaveStratTo[studentId]}}
+          <td align="center" *ngFor="let studentId of studentIds;" #td [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId"
+            (mouseout)="hovered = null">
+            <span [ngClass]="{'self': memberResult.studentId === studentId}">{{memberResult?.statusOfStudent.calcGaveStrats[studentId]}}</span>
           </td>
         </tr>
         <tr>
           <td class="md-caption">Instructor</td>
-          <td *ngFor="let studentId of studentIds;" [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId" (mouseout)="hovered = null">
+          <td *ngFor="let studentId of studentIds;" [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId"
+            (mouseout)="hovered = null">
             {{facultyStrat[studentId]}}
           </td>
         </tr>
         <tr>
-          <td class="md-button">Final Strat</td>
-          <td *ngFor="let studentId of studentIds;" [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId" (mouseout)="hovered = null">
+          <td class="md-subhead border">Final Strat</td>
+          <td class="border" *ngFor="let studentId of studentIds;" [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId"
+            (mouseout)="hovered = null">
             {{finalStrat[studentId]}}
+          </td>
+        </tr>
+        <tr>
+          <td class="md-subhead space">
+            <span mdTooltip="Not used in Final Strat" mdTooltipPosition="right"><md-icon class="small-icon">info_outline</md-icon>Self Strat</span>
+          </td>
+          <td class="tc-orange-900 space" style="font-weight: bold;" *ngFor="let studentId of studentIds;" [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId"
+          (mouseout)="hovered = null">
+            {{selfStrat[studentId]}}
           </td>
         </tr>
       </tbody>

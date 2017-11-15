@@ -248,6 +248,8 @@ export class CrseStudentInGroup extends EntityBase {
         let gaveCummScore = 0;
         const missingItems = [];
         const gaveStrats = [];
+        const calcGaveStrats = [];
+        let selfStrat;
         let composite = null;
         let gaveComposite = null;
         const facResponses = this.workGroup.facSpResponses;
@@ -355,9 +357,22 @@ export class CrseStudentInGroup extends EntityBase {
 
         user.assessorStratResponse.forEach(asr => {
             gaveStrats[asr.assesseePersonId.toString()] = asr.stratPosition;
-        })
+            if (asr.assesseePersonId === asr.assessorPersonId) {
+                selfStrat = asr.stratPosition;
+            }
+        });
 
-
+        user.assessorStratResponse.forEach(asr => {
+            if (asr.assesseePersonId === asr.assessorPersonId) {
+                calcGaveStrats[asr.assesseePersonId.toString()] = 'X';
+            } else {
+                if (asr.stratPosition > selfStrat) {
+                    calcGaveStrats[asr.assesseePersonId.toString()] = asr.stratPosition - 1;
+                } else {
+                    calcGaveStrats[asr.assesseePersonId.toString()] = asr.stratPosition;
+                }
+            }
+        });
 
         const peers = this.workGroup.groupMembers.filter(mem => mem.studentId !== this.studentId);
 
@@ -435,6 +450,8 @@ export class CrseStudentInGroup extends EntityBase {
             missingAssessItems: missingItems,
             gaveStratTo: gaveStrats,
             //facBreakout: facBreakOut,
+            selfStrat: selfStrat,
+            calcGaveStrats: calcGaveStrats,
             gaveBreakOut: gaveBo,
             breakOutChartData: gaveChartData,
             gaveBreakOutChartData: gaveBreakOutChartData,

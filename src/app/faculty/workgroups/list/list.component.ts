@@ -65,7 +65,8 @@ export class ListComponent implements OnInit {
     this.strings = [];
 
     if (this.course.workGroups) {
-      this.workGroups = this.workGroupOrig = this.course.workGroups.filter(wg => wg.mpSpStatus !== MpSpStatus.created);
+      this.workGroups = this.workGroupOrig = this.course.workGroups.filter(
+        wg => wg.mpSpStatus !== MpSpStatus.created);
 
       this.workGroups.sort((wgA: WorkGroup, wgB: WorkGroup) => {
         if (wgA.mpCategory < wgB.mpCategory) return -1;

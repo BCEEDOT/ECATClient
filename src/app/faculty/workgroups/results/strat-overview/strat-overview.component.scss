@@ -9,6 +9,24 @@
     color: white !important; 
 }
 
+.self {
+    color: #e75b0f;
+    font-weight: bold;
+}
+
+.space {
+    border-top: 10px solid transparent !important;
+}
+
+.small-icon {
+    font-size: 18px;
+}
+
+.border {
+    border-top: 1px solid #e0e0e0 !important;
+}
+
+
 /* -- Box model ------------------------------- */
 *,
 *:after,
