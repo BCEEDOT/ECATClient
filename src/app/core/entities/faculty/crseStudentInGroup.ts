@@ -481,12 +481,12 @@ export class CrseStudentInGroup extends EntityBase {
             value: counts.e
         });
         this.resultForStudent.breakOutReceived.push({
-            name: 'ineffective',
-            value: counts.i
-        });
-        this.resultForStudent.breakOutReceived.push({
             name: 'Not Displayed',
             value: counts.nd
+        });
+        this.resultForStudent.breakOutReceived.push({
+            name: 'Ineffective',
+            value: counts.i
         });
 
         this.resultForStudent.breakOutReceivedChartData = [ { "name": "% Recieved", "series": this.resultForStudent.breakOutReceived }];
