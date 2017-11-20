@@ -96,4 +96,48 @@ export class CourseEnrollComponent implements OnInit {
     });
   }
 
+  pollCanvasEnrollments() {
+    this.loadingService.register();
+    this.lmsadminDataContextService.pollCanvasCourseMembers(this.course.id).then(data => {
+      this.loadingService.resolve();
+      // if (data.numRemoved > 0) {
+      //   this.course.students.forEach(stud => {
+      //     if (stud.student == null) {stud.entityAspect.setDetached();}
+      //   })
+      //   this.course.faculty.forEach(fac => {
+      //     if (fac.facultyProfile == null) {fac.entityAspect.setDetached();}
+      //   })
+      // }
+      
+      if (data.hasToken) {
+        this.dialogService.openAlert({
+          message: 'Accounts Created: ' + data.numOfAccountCreated + '\n Accounts Enrolled: ' + data.numAdded + '\n Accounts Disenrolled: ' + data.numRemoved,
+          title: 'Poll Complete',
+          closeButton: 'Dismiss'
+        });
+
+        this.refreshData();
+      } else {
+        this.dialogService.openConfirm({
+          message: 'ECAT does not have a valid LMS token for your account. Please authorize with the LMS so ECAT can generate a token.',
+          title: 'Poll Failed.',
+          acceptButton: 'Authorize'
+        }).afterClosed().subscribe((confirmed: boolean) => {
+          if (confirmed){
+            window.open(this.lmsadminDataContextService.canvasAuthUrl, '_blank');
+          }
+        })
+      }
+
+    }).catch((e: Event) => {
+      this.loadingService.resolve();
+      console.log('Error retrieving course enrollments ' + e);
+      this.dialogService.openAlert({
+        message: 'Error polling LMS for enrollments. Please try again.',
+        title: 'Poll Error',
+        closeButton: 'Dismiss'
+      });
+    });
+  }
+
 }

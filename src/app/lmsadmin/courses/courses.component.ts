@@ -84,4 +84,33 @@ export class CoursesComponent implements OnInit {
     });
   }
 
+  pollCanvasCourses(){
+    this.loadingService.register();
+    this.ctx.pollCanvasCourses().then(data => {
+      this.loadingService.resolve();
+      
+      if (data.hasToken){
+        this.courses = this.ctx.cachedCourses();
+        
+        this.dialogService.openAlert({
+          message: 'Courses Added: ' + data.numAdded,
+          title: 'Poll Complete',
+          closeButton: 'Dismiss'
+        });
+  
+        this.activate();
+      } else {
+        this.dialogService.openConfirm({
+          message: 'ECAT does not have a valid LMS token for your account. Please authorize with the LMS so ECAT can generate a token.',
+          title: 'Poll Failed.',
+          acceptButton: 'Authorize'
+        }).afterClosed().subscribe((confirmed: boolean) => {
+          if (confirmed){
+            window.open(this.ctx.canvasAuthUrl, '_blank');
+          }
+        })
+      }
+    })
+  }
+
 }

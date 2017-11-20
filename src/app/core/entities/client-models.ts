@@ -51,6 +51,9 @@ export interface ILmsAdminApiResources extends IApiResources {
     pollGroups: IApiResource;
     pollAllGroupMembers: IApiResource;
     syncBbGrades: IApiResource;
+    pollCanvasCourses: IApiResource;
+    pollCanvasMembers: IApiResource;
+    SyncCanvasGrades: IApiResource;
 }
 
 export interface IMilPayGrade {
@@ -112,4 +115,5 @@ export interface ISaveGradesResult extends EntityBase
     returnedScores: number;
     numOfStudents: number;
     message: string;
+    hasToken: boolean;
 }

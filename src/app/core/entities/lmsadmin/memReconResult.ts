@@ -18,7 +18,7 @@ export class MemReconResult extends EntityBase {
    students: StudentInCourse[];
 
    /// <code> Place custom code between <code> tags
-   
+   hasToken: boolean;
    /// </code>
 
 }

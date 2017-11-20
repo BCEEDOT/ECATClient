@@ -14,7 +14,7 @@ export class CourseReconResult extends EntityBase {
    courses: Course[];
 
    /// <code> Place custom code between <code> tags
-   
+   hasToken: boolean;
    /// </code>
 
 }
