@@ -1,6 +1,6 @@
-import { EntityBase } from '../EntityBase';
-import { SpInventory } from './SpInventory';
-import { SpResult } from './SpResult';
+import { EntityBase } from '../entitybase';
+import { SpInventory } from './spInventory';
+import { SpResult } from './spResult';
 
 /// <code-import> Place custom imports between <code-import> tags
 

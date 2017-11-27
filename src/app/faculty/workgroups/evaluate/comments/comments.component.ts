@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { Location } from '@angular/common';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 import { Subscription } from "rxjs/Subscription";
 
@@ -31,7 +31,7 @@ export class CommentsComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private route: ActivatedRoute,
     private location: Location,
     private ctx: FacultyDataContextService,
-    private snackBar: MdSnackBar,
+    private snackBar: MatSnackBar,
     private dialogService: TdDialogService,
     private loadingService: TdLoadingService,
     private facWorkGroupService: FacWorkgroupService, ) { }

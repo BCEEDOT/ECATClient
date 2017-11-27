@@ -1,6 +1,6 @@
-import { EntityBase } from '../EntityBase';
-import { Course } from './Course';
-import { CrseStudentInGroup } from './CrseStudentInGroup';
+import { EntityBase } from '../entitybase';
+import { Course } from './course';
+import { CrseStudentInGroup } from './crseStudentInGroup';
 
 /// <code-import> Place custom imports between <code-import> tags
 

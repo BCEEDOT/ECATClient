@@ -1,6 +1,6 @@
-import { EntityBase } from '../EntityBase';
-import { ProfileStudent } from './ProfileStudent';
-import { ProfileFaculty } from './ProfileFaculty';
+import { EntityBase } from '../entitybase';
+import { ProfileStudent } from './profileStudent';
+import { ProfileFaculty } from './profileFaculty';
 
 /// <code-import> Place custom imports between <code-import> tags
 import { EcLocalDataService } from "../../common/static"

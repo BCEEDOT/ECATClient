@@ -1,15 +1,18 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MdSnackBar } from '@angular/material';
-import { TdLoadingService, TdMediaService, ITdDataTableColumn, ITdDataTableSortChangeEvent, TdDataTableSortingOrder, TdDataTableService, CovalentExpansionPanelModule } from '@covalent/core';
+import { MatSnackBar } from '@angular/material';
+import {
+  TdLoadingService, TdMediaService, ITdDataTableColumn, ITdDataTableSortChangeEvent,
+  TdDataTableSortingOrder, TdDataTableService, CovalentExpansionPanelModule,
+} from '@covalent/core';
 
-import { Person, RoadRunner } from "../core/entities/user";
-import { GlobalService, ILoggedInUser } from "../core/services/global.service";
-import { UserDataContext } from "../core/services/data/user-data-context.service";
+import { Person, RoadRunner } from '../core/entities/user';
+import { GlobalService, ILoggedInUser } from '../core/services/global.service';
+import { UserDataContext } from '../core/services/data/user-data-context.service';
 import { RoadrunnerService } from './services/roadrunner.service';
-import { FacultyDataContextService } from "../faculty/services/faculty-data-context.service";
-import { Course, WorkGroup } from "../core/entities/faculty";
+import { FacultyDataContextService } from '../faculty/services/faculty-data-context.service';
+import { Course, WorkGroup } from '../core/entities/faculty';
 
 @Component({
   selector: 'qs-roadrunner',
@@ -38,7 +41,6 @@ export class RoadrunnerComponent implements OnInit {
 
   dateFormat = new Intl.DateTimeFormat('en-US');
 
-
   columns: ITdDataTableColumn[] = [
     { name: 'flight', label: 'Flight', sortable: false },
     { name: 'name', label: 'Name' },
@@ -60,15 +62,15 @@ export class RoadrunnerComponent implements OnInit {
   constructor(private titleService: Title,
     private router: Router,
     private loadingService: TdLoadingService,
-    private snackBarService: MdSnackBar,
+    private snackBarService: MatSnackBar,
     private userDataContext: UserDataContext,
     private facultyDataContext: FacultyDataContextService,
     private _dataTableService: TdDataTableService,
     public media: TdMediaService,
     private global: GlobalService,
     private roadRunnerService: RoadrunnerService,
-    
-    
+
+
   ) { }
 
 
@@ -121,7 +123,7 @@ export class RoadrunnerComponent implements OnInit {
   }
 
   signOut(edit): void {
-    
+
     if (edit.signOut) {
       edit.prevSignOut = true;
       this.count = this.count + 1;
@@ -135,7 +137,7 @@ export class RoadrunnerComponent implements OnInit {
       this.roadRunnerInfos.forEach(element => {
         element['signedOutSomewhere'] = true;
         this.signedOut = true;
-                this.roadRunnerService.signedOut(this.signedOut);
+        this.roadRunnerService.signedOut(this.signedOut);
 
       });
     }
@@ -154,7 +156,7 @@ export class RoadrunnerComponent implements OnInit {
 
     this.titleService.setTitle('Road Runner');
     this.persona = this.global.persona.value;
-    
+
     this.activate();
 
   }
@@ -192,7 +194,7 @@ export class RoadrunnerComponent implements OnInit {
                 this.roadRunnerInfos.forEach(element => {
                   element['signedOutSomewhere'] = true;
                   this.signedOut = true;
-                          this.roadRunnerService.signedOut(this.signedOut);
+                  this.roadRunnerService.signedOut(this.signedOut);
 
                 });
               }

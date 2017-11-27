@@ -7,11 +7,11 @@ import {
   NavigationExtras,
   CanLoad, Route,
 } from '@angular/router';
-import { tokenNotExpired } from 'angular2-jwt';
+// import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../core/services/auth.service';
-import { AuthUtilityService } from '../../core/services/auth-utility.service';
+// import { AuthUtilityService } from '../../core/services/auth-utility.service';
 import { EmProviderService } from '../../core/services/em-provider.service';
 import { StudentRegistrationHelper } from '../../core/entities/student';
 import { DataContext, ResourceEndPoint } from '../../app-constants';
@@ -24,7 +24,8 @@ export class StudentAuthGuard implements CanActivate, CanActivateChild {
   persona: ILoggedInUser;
 
   constructor(private authService: AuthService,
-    private router: Router, private authUtility: AuthUtilityService,
+    // private jwt: JwtHelperService,
+    private router: Router,
     private emProvider: EmProviderService, private regHelper: StudentRegistrationHelper,
     private global: GlobalService) {
 
@@ -37,7 +38,7 @@ export class StudentAuthGuard implements CanActivate, CanActivateChild {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let url: string = state.url;
     // First check if a user has a token and if it is expired
-    if (tokenNotExpired('ecatAccessToken') && this.studentContextActivated && this.persona.isStudent) {
+    if (this.authService.tokenNotExpired() && this.studentContextActivated && this.persona.isStudent) {
 
       return true;
 
@@ -57,7 +58,7 @@ export class StudentAuthGuard implements CanActivate, CanActivateChild {
   activate(url: string): boolean {
     // TODO: Rewrite this to handle errors better
     // check if user has a stored token
-    if (tokenNotExpired('ecatAccessToken')) {
+    if (this.authService.tokenNotExpired()) {
       return <any>this.emProvider.prepare(DataContext.Student, this.regHelper, ResourceEndPoint.Student)
         .then(() => {
           this.studentContextActivated = true;

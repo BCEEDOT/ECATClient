@@ -2,7 +2,7 @@ import { Subject } from 'rxjs/Subject';
 import { Component, OnInit, OnChanges, Input, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/takeUntil';
 
 import { Course, WorkGroup, CrseStudentInGroup } from '../../../core/entities/student';
@@ -30,7 +30,7 @@ export class AssessComponent implements OnChanges, OnDestroy {
   ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(private workGroupService: WorkGroupService, private global: GlobalService,
-    private loadingService: TdLoadingService, private snackBarService: MdSnackBar,
+    private loadingService: TdLoadingService, private snackBarService: MatSnackBar,
     private spProvider: SpProviderService, private router: Router, private route: ActivatedRoute) {
   }
 

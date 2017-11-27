@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { SpProviderService } from "../sp-provider.service";
 import { StudSpComment } from '../../../core/entities/student';
@@ -25,12 +25,12 @@ export class CommentDialog implements OnInit {
 
   constructor(private studentDataContext: StudentDataContext,
     private facultyDataContext: FacultyDataContextService,
-    private snackBarService: MdSnackBar,
+    private snackBarService: MatSnackBar,
     private loadingService: TdLoadingService,
     private dialogService: TdDialogService,
     private global: GlobalService,
-    public dialogRef: MdDialogRef<CommentDialog>,
-    @Inject(MD_DIALOG_DATA) public data: any) { }
+    public dialogRef: MatDialogRef<CommentDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.comment = this.data.comment as StudSpComment & FacSpComment;

@@ -1,63 +1,63 @@
-<md-list fxHide.xs>
-  <md-list-item *ngIf="readOnly">
+<mat-list fxHide.xs>
+  <mat-list-item *ngIf="readOnly">
     <div flex="90">
     </div>
     <div flex="20">
-      <md-slide-toggle class="example-margin" [(ngModel)]="stratToggle" [color]="color" [checked]="checked" [disabled]="disabled">
+      <mat-slide-toggle class="example-margin" [(ngModel)]="stratToggle" [color]="color" [checked]="checked" [disabled]="disabled">
         {{(stratToggle) ? 'Hide' : 'Show'}} Strats
-      </md-slide-toggle>
+      </mat-slide-toggle>
     </div>
-  </md-list-item>
+  </mat-list-item>
 
-  <md-list-item>
-    <md-icon md-list-avatar>person</md-icon>
-    <h3 md-line> {{user?.rankName}} </h3>
+  <mat-list-item>
+    <mat-icon mat-list-avatar>person</mat-icon>
+    <h3 matLine> {{user?.rankName}} </h3>
     <div flex="20" *ngIf="readOnly">
       <div *ngIf="stratToggle">
         <span class="md-title">{{user?.statusOfPeer[user?.studentId].stratedPosition}}</span>
       </div>
     </div>
     <span flex="70" class="pad-right-lg md-body-1 tc-grey-500">
-      <button md-button (click)="assess(user.studentId)">
-        <md-icon>{{user?.assessText}}</md-icon> Assessment </button>
+      <button mat-button (click)="assess(user.studentId)">
+        <mat-icon>{{user?.assessText}}</mat-icon> Assessment </button>
     </span>
     <span flex="60" class="pad-right-lg md-body-1 tc-grey-500"></span>
     <span flex></span>
-  </md-list-item>
-  <md-divider class="bgc-dark-orange-500" md-inset></md-divider>
+  </mat-list-item>
+  <mat-divider class="bgc-dark-orange-500" md-inset></mat-divider>
   <ng-template let-peer let-last="last" ngFor [ngForOf]="peers">
-    <md-list-item>
-      <md-icon md-list-avatar>person</md-icon>
-      <h3 md-line> {{peer?.rankName}} </h3>
+    <mat-list-item>
+      <mat-icon mat-list-avatar>person</mat-icon>
+      <h3 matLine> {{peer?.rankName}} </h3>
       <div flex="20" *ngIf="readOnly">
         <div *ngIf="stratToggle">
           <span class="md-title">{{user?.statusOfPeer[peer?.studentId].stratedPosition}}</span>
         </div>
       </div>
       <span flex="70" class="pad-right-lg md-body-1 tc-grey-500">
-        <button md-button (click)="assess(peer.studentId)">
-          <md-icon>{{peer?.assessText}}</md-icon> Assessment</button>
+        <button mat-button (click)="assess(peer.studentId)">
+          <mat-icon>{{peer?.assessText}}</mat-icon> Assessment</button>
       </span>
       <span flex="60" class="pad-right-lg md-body-1 tc-grey-500">
-        <button md-button *ngIf="peer?.commentText !== 'not_interested'" (click)="comment(peer)">
-          <md-icon>{{peer?.commentText}}</md-icon> Comment</button>
+        <button mat-button *ngIf="peer?.commentText !== 'not_interested'" (click)="comment(peer)">
+          <mat-icon>{{peer?.commentText}}</mat-icon> Comment</button>
         <span class="pad-left-sm" *ngIf="peer?.commentText === 'not_interested'">
-          <md-icon class="tab-icon">{{peer?.commentText}}</md-icon> Comment</span>
+          <mat-icon class="tab-icon">{{peer?.commentText}}</mat-icon> Comment</span>
       </span>
       <span flex></span>
-    </md-list-item>
-    <md-divider *ngIf="!last" md-inset></md-divider>
+    </mat-list-item>
+    <mat-divider *ngIf="!last" md-inset></mat-divider>
   </ng-template>
-</md-list>
+</mat-list>
 
 <div fxLayout="column" fxHide fxShow.xs fxLayoutAlign="center center">
   <div fxLayout="row" *ngIf="readOnly" class="pad-top-xs">
     <div fxFlex="90%">
     </div>
     <div fxFlex="10%">
-      <md-slide-toggle class="example-margin" [(ngModel)]="stratToggle" [color]="color" [checked]="checked" [disabled]="disabled">
+      <mat-slide-toggle class="example-margin" [(ngModel)]="stratToggle" [color]="color" [checked]="checked" [disabled]="disabled">
         {{(stratToggle) ? 'Hide' : 'Show'}} Strats
-      </md-slide-toggle>
+      </mat-slide-toggle>
     </div>
   </div>
 
@@ -69,8 +69,8 @@
       </span>
     </h3>
     <div class="tc-grey-500 md-body-1">
-      <button md-button (click)="assess(user.studentId)">
-        <md-icon>{{user?.assessText}}</md-icon> Assessment </button>
+      <button mat-button (click)="assess(user.studentId)">
+        <mat-icon>{{user?.assessText}}</mat-icon> Assessment </button>
     </div>
   </div>
   <ng-template let-peer let-last="last" ngFor [ngForOf]="peers">
@@ -83,14 +83,14 @@
         </h3>
       <div fxLayout="row">
         <span fxFlex="50%" class="md-body-1 tc-grey-500">
-          <button md-button (click)="assess(peer.studentId)">
-            <md-icon>{{peer?.assessText}}</md-icon> Assessment</button>
+          <button mat-button (click)="assess(peer.studentId)">
+            <mat-icon>{{peer?.assessText}}</mat-icon> Assessment</button>
         </span>
         <span fxFlex="50%" class="md-body-1 tc-grey-500">
-          <button md-button *ngIf="peer?.commentText !== 'not_interested'" (click)="comment(peer)">
-            <md-icon>{{peer?.commentText}}</md-icon> Comment</button>
+          <button mat-button *ngIf="peer?.commentText !== 'not_interested'" (click)="comment(peer)">
+            <mat-icon>{{peer?.commentText}}</mat-icon> Comment</button>
           <span class="pad-left-sm" *ngIf="peer?.commentText === 'not_interested'">
-            <md-icon class="tab-icon">{{peer?.commentText}}</md-icon> Comment</span>
+            <mat-icon class="tab-icon">{{peer?.commentText}}</mat-icon> Comment</span>
         </span>
       </div>
       <span flex></span>

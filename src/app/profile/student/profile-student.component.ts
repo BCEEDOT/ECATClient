@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 
 import { ProfileStudent } from "../../core/entities/user";
@@ -16,7 +16,7 @@ export class ProfileStudentComponent implements OnInit {
   isEditing: boolean = false;
   profileLoading = 'studentProfileLoading';
 
-  constructor(private loadingService: TdLoadingService, private snackBarService: MdSnackBar, 
+  constructor(private loadingService: TdLoadingService, private snackBarService: MatSnackBar, 
   private dialogService: TdDialogService, private userDataContext: UserDataContext) { }
 
   ngOnInit() {

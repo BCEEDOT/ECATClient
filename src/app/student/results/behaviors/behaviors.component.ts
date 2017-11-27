@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output } from '@angular/core';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { SpResult, SpInventory } from '../../../core/entities/student';
 import { WorkGroupService } from '../../services/workgroup.service';

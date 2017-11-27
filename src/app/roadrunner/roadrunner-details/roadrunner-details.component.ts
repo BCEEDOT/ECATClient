@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 import { TdDialogService } from '@covalent/core';
 import { isEmpty } from 'lodash';
@@ -40,7 +40,7 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private dialogService: TdDialogService,
-        private snackBarService: MdSnackBar,
+        private snackBarService: MatSnackBar,
         private location: Location,
     ) {
 

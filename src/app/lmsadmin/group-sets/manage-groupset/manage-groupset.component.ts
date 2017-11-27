@@ -9,7 +9,7 @@ import 'rxjs/add/operator/takeUntil';
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 import { DragulaService } from "ng2-dragula";
-import { MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA, MdSnackBar } from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { DOCUMENT } from '@angular/platform-browser';
 
 import { MpEntityType, MpGroupCategory, MpSpStatus } from '../../../core/common/mapStrings';
@@ -42,9 +42,9 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
   workGroupCategory: string;
   allExpanded: boolean = false;
   searchInputTerm: string;
-  editDialogRef: MdDialogRef<EditGroupDialogComponent>;
-  addDialogRef: MdDialogRef<AddGroupDialogComponent>;
-  moveDialogRef: MdDialogRef<MoveStudentDialogComponent>;
+  editDialogRef: MatDialogRef<EditGroupDialogComponent>;
+  addDialogRef: MatDialogRef<AddGroupDialogComponent>;
+  moveDialogRef: MatDialogRef<MoveStudentDialogComponent>;
   ngUnsubscribe: Subject<any> = new Subject<any>();
   usedFlightNumbers: string[] = [];
   isUnassignedPanelExpanded: boolean = false;
@@ -69,10 +69,10 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private dialogService: TdDialogService,
     private loadingService: TdLoadingService,
-    private snackBar: MdSnackBar,
-    public editDialog: MdDialog, @Inject(DOCUMENT) editDoc: any,
-    public addDialog: MdDialog, @Inject(DOCUMENT) addDoc: any,
-    public moveDialog: MdDialog, @Inject(DOCUMENT) moveDoc: any,) {
+    private snackBar: MatSnackBar,
+    public editDialog: MatDialog, @Inject(DOCUMENT) editDoc: any,
+    public addDialog: MatDialog, @Inject(DOCUMENT) addDoc: any,
+    public moveDialog: MatDialog, @Inject(DOCUMENT) moveDoc: any,) {
 
     this.workGroups$ = route.data.pluck('groupSetMembers');
     this.course$ = route.data.pluck('courseMembers');

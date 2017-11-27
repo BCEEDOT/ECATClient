@@ -1,12 +1,12 @@
-import { EntityBase } from '../EntityBase';
-import { SpResponse } from './SpResponse';
-import { SpInstrument } from './SpInstrument';
+import { EntityBase } from '../entitybase';
+import { SpResponse } from './spResponse';
+import { SpInstrument } from './spInstrument';
 
 /// <code-import> Place custom imports between <code-import> tags
 import * as mapEnum from '../../common/mapEnum';
 import * as mapStrings from '../../common/mapStrings'
 import * as staticData from '../../common/static'
-import { SpResult } from './SpResult';
+import { SpResult } from './spResult';
 /// </code-import>
 
 export class SpInventory extends EntityBase {

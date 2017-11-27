@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from "rxjs/Observable";
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/pluck';
 
 import { TdLoadingService, TdDialogService } from '@covalent/core';
@@ -30,7 +30,7 @@ export class AssessComponent implements OnInit {
         private dialogService: TdDialogService,
         private loadingService: TdLoadingService,
         private router: Router,
-        private snackBarService: MdSnackBar
+        private snackBarService: MatSnackBar,
     ) {
         this.route.params.subscribe(params => {
             this.cogAssessId = params['cogId'];

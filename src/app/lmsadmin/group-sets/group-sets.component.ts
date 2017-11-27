@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-import { MdSnackBar, MdDialog, MdDialogRef } from "@angular/material";
+import { MatSnackBar, MatDialog, MatDialogRef } from "@angular/material";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 
 import { LmsadminDataContextService } from "../services/lmsadmin-data-context.service";
@@ -28,7 +28,7 @@ export class GroupSetsComponent implements OnInit {
     pub: 'Published',
   };
   catMap = MpGroupCategory;
-  dialogRef: MdDialogRef<PollLmsDialog>;
+  dialogRef: MatDialogRef<PollLmsDialog>;
   
   constructor(private lmsadminDataContext: LmsadminDataContextService, 
    private lmsadminWorkGroupService: LmsadminWorkgroupService,
@@ -36,8 +36,8 @@ export class GroupSetsComponent implements OnInit {
     private route: ActivatedRoute,
     private dialogService: TdDialogService,
     private loadingService: TdLoadingService,
-    private snackBar: MdSnackBar,
-    private dialog: MdDialog) { }
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

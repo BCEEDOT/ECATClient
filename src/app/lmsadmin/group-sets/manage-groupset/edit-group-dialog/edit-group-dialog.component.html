@@ -1,29 +1,29 @@
-<md-card-title>Edit Flight</md-card-title>
-<md-list>
+<mat-card-title>Edit Flight</mat-card-title>
+<mat-list>
   <form [formGroup]="editGroupForm" (ngSubmit)="ok()">
-    <md-list-item class="pull-left-md">
-      <md-icon md-list-avatar>description</md-icon>
+    <mat-list-item class="pull-left-md">
+      <mat-icon mat-list-avatar>description</mat-icon>
       <div class="pad-left-sm">
-        <md-select required selected="workGroup.groupNumber" formControlName="groupNumber" placeholder="Flight Number">
-          <md-option *ngFor="let num of numbers" [value]="num">{{ num }}</md-option>
-        </md-select>
+        <mat-select required selected="workGroup.groupNumber" formControlName="groupNumber" placeholder="Flight Number">
+          <mat-option *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
+        </mat-select>
       </div>
-    </md-list-item>
-    <md-list-item class="pull-left-md">
-      <md-icon md-list-avatar>description</md-icon>
-      <md-input-container class="pad-left-sm">
-        <input mdInput placeholder="Nickname" id="customName" value="workGroup.customName" type="text" formControlName="customName"
+    </mat-list-item>
+    <mat-list-item class="pull-left-md">
+      <mat-icon mat-list-avatar>description</mat-icon>
+      <mat-form-field class="pad-left-sm">
+        <input matInput placeholder="Nickname" id="customName" value="workGroup.customName" type="text" formControlName="customName"
         />
-      </md-input-container>
-    </md-list-item>
+      </mat-form-field>
+    </mat-list-item>
   </form>
-</md-list>
-<md-card-actions class="pad-top-sm pad-bottom-none pull-left-sm pull-bottom-none">
+</mat-list>
+<mat-card-actions class="pad-top-sm pad-bottom-none pull-left-sm pull-bottom-none">
   <div class="pad-left-sm" fxLayout="row" fxLayoutAlign="start center">
 
-    <button md-raised-button color="primary" type="button" [disabled]="isDisabled()" (click)="ok()" class="text-upper">Ok</button>
-    <button md-raised-button color="primary" type="button" class="text-upper" (click)="close();">Cancel</button>
-    <button *ngIf="canDelete" md-raised-button color="primary" type="button" class="text-upper" (click)="delete()">Delete</button>
+    <button mat-raised-button color="primary" type="button" [disabled]="isDisabled()" (click)="ok()" class="text-upper">Ok</button>
+    <button mat-raised-button color="primary" type="button" class="text-upper" (click)="close();">Cancel</button>
+    <button *ngIf="canDelete" mat-raised-button color="primary" type="button" class="text-upper" (click)="delete()">Delete</button>
 
   </div>
-</md-card-actions>
+</mat-card-actions>

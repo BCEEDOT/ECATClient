@@ -1,9 +1,9 @@
-import { EntityBase } from '../EntityBase';
-import { SpResultBreakOut } from './SpResultBreakOut';
-import { Course } from './Course';
-import { CrseStudentInGroup } from './CrseStudentInGroup';
-import { SpInstrument } from './SpInstrument';
-import { WorkGroup } from './WorkGroup';
+import { EntityBase } from '../entitybase';
+import { SpResultBreakOut } from './spResultBreakOut';
+import { Course } from './course';
+import { CrseStudentInGroup } from './crseStudentInGroup';
+import { SpInstrument } from './spInstrument';
+import { WorkGroup } from './workGroup';
 
 /// <code-import> Place custom imports between <code-import> tags
 

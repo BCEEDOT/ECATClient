@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MD_DIALOG_DATA, MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { TdDialogService } from "@covalent/core";
 
 import { MpGroupCategory } from '../../../../core/common/mapStrings';
@@ -23,7 +23,7 @@ export class EditGroupDialogComponent implements OnInit {
   canDelete: boolean = false;
 
   constructor(private fb: FormBuilder, private dialogService: TdDialogService,
-    public dialogRef: MdDialogRef<EditGroupDialogComponent>, @Inject(MD_DIALOG_DATA) public data: any) { }
+    public dialogRef: MatDialogRef<EditGroupDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
 

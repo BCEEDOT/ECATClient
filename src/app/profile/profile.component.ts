@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 
 //import { ProfileService } from './services/profile.service';
@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     private router: Router,
     private loadingService: TdLoadingService,
     private dialogService: TdDialogService,
-    private snackBarService: MdSnackBar,
+    private snackBarService: MatSnackBar,
     private global: GlobalService,
     private userDataContext: UserDataContext,
     public media: TdMediaService,

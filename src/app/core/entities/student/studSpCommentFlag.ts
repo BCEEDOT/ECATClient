@@ -1,5 +1,5 @@
-import { EntityBase } from '../EntityBase';
-import { StudSpComment } from './StudSpComment';
+import { EntityBase } from '../entitybase';
+import { StudSpComment } from './studSpComment';
 
 /// <code-import> Place custom imports between <code-import> tags
 

@@ -1,51 +1,51 @@
 <div class="width pad-bottom-xxl">
   <ng-template tdLoading [tdLoadingUntil]="!isLoading" tdLoadingStrategy="overlay">
-    <md-card>
-      <md-card-title fxLayout="row">
-        <button md-raised-button color="primary" (click)="back()">Back</button>
+    <mat-card>
+      <mat-card-title fxLayout="row">
+        <button mat-raised-button color="primary" (click)="back()">Back</button>
         <div fxFlexOffset="20%" fxFlexAlign="center">
           {{wgName}} - {{workGroup.mpSpStatus}}
         </div>
         <span fxFlex></span>
-        <button md-raised-button *ngIf="workGroup.mpSpStatus === statusMap.underReview || workGroup.mpSpStatus === statusMap.reviewed" (click)="this.reopenFlight()">{{reopenBtnText}}</button>
-        <button md-raised-button *ngIf="workGroup.mpSpStatus === statusMap.open || workGroup.mpSpStatus === statusMap.underReview || workGroup.mpSpStatus === statusMap.reviewed" (click)="this.reviewFlight()" [ngClass]="canReview ? 'can-review' : 'no-review'" [disabled]="workGroup.mpSpStatus === statusMap.created">{{reviewBtnText}}</button>
-        <button md-icon-button (click)="this.refreshData()"><md-icon>autorenew</md-icon></button>
-      </md-card-title>
-      <md-tab-group [(selectedIndex)]="tabIndex">
-        <md-tab>
-          <ng-template md-tab-label>
-            <md-icon class="tab-icon">assessment</md-icon>
+        <button mat-raised-button *ngIf="workGroup.mpSpStatus === statusMap.underReview || workGroup.mpSpStatus === statusMap.reviewed" (click)="this.reopenFlight()">{{reopenBtnText}}</button>
+        <button mat-raised-button *ngIf="workGroup.mpSpStatus === statusMap.open || workGroup.mpSpStatus === statusMap.underReview || workGroup.mpSpStatus === statusMap.reviewed" (click)="this.reviewFlight()" [ngClass]="canReview ? 'can-review' : 'no-review'" [disabled]="workGroup.mpSpStatus === statusMap.created">{{reviewBtnText}}</button>
+        <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+      </mat-card-title>
+      <mat-tab-group [(selectedIndex)]="tabIndex">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">assessment</mat-icon>
             Assess
-            <md-icon class="small-tab-icon" *ngIf="workGroup.mpSpStatus !== statusMap.published" [ngClass]="(assessComplete) ? 'tc-green-700' : 'tc-red-700'">{{assessStatusIcon}}</md-icon>
+            <mat-icon class="small-tab-icon" *ngIf="workGroup.mpSpStatus !== statusMap.published" [ngClass]="(assessComplete) ? 'tc-green-700' : 'tc-red-700'">{{assessStatusIcon}}</mat-icon>
           </ng-template>
           <assess [members]="members"></assess>
-        </md-tab>
-        <md-tab>
-          <ng-template md-tab-label>
-            <md-icon class="tab-icon">format_list_numbered</md-icon>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">format_list_numbered</mat-icon>
             Strat
-            <md-icon class="small-tab-icon" *ngIf="workGroup.mpSpStatus !== statusMap.published" [ngClass]="(stratComplete) ? 'tc-green-700' : 'tc-red-700'">{{stratStatusIcon}}</md-icon>
+            <mat-icon class="small-tab-icon" *ngIf="workGroup.mpSpStatus !== statusMap.published" [ngClass]="(stratComplete) ? 'tc-green-700' : 'tc-red-700'">{{stratStatusIcon}}</mat-icon>
           </ng-template>
           <strat [members]="members"></strat>
-        </md-tab>
-        <md-tab [disabled]="!showComments">
-          <ng-template md-tab-label>
-            <md-icon class="tab-icon">comment</md-icon>
+        </mat-tab>
+        <mat-tab [disabled]="!showComments">
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">comment</mat-icon>
             Review Comments
-            <md-icon class="small-tab-icon" *ngIf="!showComments && workGroup.mpSpStatus !== statusMap.published">lock</md-icon>
-            <md-icon class="small-tab-icon" *ngIf="showComments && workGroup.mpSpStatus !== statusMap.published" [ngClass]="(commentsComplete) ? 'tc-green-700' : 'tc-red-700'">{{commentStatusIcon}}</md-icon>
+            <mat-icon class="small-tab-icon" *ngIf="!showComments && workGroup.mpSpStatus !== statusMap.published">lock</mat-icon>
+            <mat-icon class="small-tab-icon" *ngIf="showComments && workGroup.mpSpStatus !== statusMap.published" [ngClass]="(commentsComplete) ? 'tc-green-700' : 'tc-red-700'">{{commentStatusIcon}}</mat-icon>
           </ng-template>
           <comments *ngIf="showComments" [members]="members"></comments>
-        </md-tab>
-      </md-tab-group>
-    </md-card>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
   </ng-template>
 </div>
-<a style="z-index: 9999;" md-fab color="primary" class="mat-fab-bottom-right fixed" [routerLink]="['../../status', workGroupId]" *ngIf="workGroup.mpSpStatus !== statusMap.published"
-mdTooltip="Go To Status" mdTooltipPosition="left">
-  <md-icon>check_circle</md-icon>
+<a style="z-index: 9999;" mat-fab color="primary" class="mat-fab-bottom-right fixed" [routerLink]="['../../status', workGroupId]" *ngIf="workGroup.mpSpStatus !== statusMap.published"
+matTooltip="Go To Status" matTooltipPosition="left">
+  <mat-icon>check_circle</mat-icon>
 </a>
-<a style="z-index: 9999;" md-fab color="primary" class="mat-fab-bottom-right fixed" [routerLink]="['../../results', workGroupId]" *ngIf="workGroup.mpSpStatus === statusMap.published"
-mdTooltip="Go To Results" mdTooltipPosition="left">
-  <md-icon>data_usage</md-icon>
+<a style="z-index: 9999;" mat-fab color="primary" class="mat-fab-bottom-right fixed" [routerLink]="['../../results', workGroupId]" *ngIf="workGroup.mpSpStatus === statusMap.published"
+matTooltip="Go To Results" matTooltipPosition="left">
+  <mat-icon>data_usage</mat-icon>
 </a>

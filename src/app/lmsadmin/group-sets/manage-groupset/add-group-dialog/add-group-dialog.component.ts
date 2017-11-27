@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MD_DIALOG_DATA, MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { TdDialogService } from "@covalent/core";
 
 import { Course, CrseStudentInGroup, WorkGroup, WorkGroupModel } from '../../../../core/entities/lmsadmin';
@@ -21,7 +21,7 @@ export class AddGroupDialogComponent implements OnInit {
   flightNumber: string;
 
   constructor(private fb: FormBuilder, private dialogService: TdDialogService,
-    public dialogRef: MdDialogRef<AddGroupDialogComponent>, @Inject(MD_DIALOG_DATA) public data: any) { }
+    public dialogRef: MatDialogRef<AddGroupDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
 

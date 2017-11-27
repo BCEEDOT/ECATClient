@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Router } from "@angular/router";
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Observable } from "rxjs/Observable";
 
 import { CogResultsService } from "./cog-results.service";
@@ -18,7 +18,7 @@ export class CogAssessService {
     cogActiveInventory$: BehaviorSubject<CogInventory> = new BehaviorSubject({} as CogInventory);
     readyToSave$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-    constructor(private userDataContext: UserDataContext, private snackBarService: MdSnackBar,
+    constructor(private userDataContext: UserDataContext, private snackBarService: MatSnackBar,
         private dialogService: TdDialogService, private loadingService: TdLoadingService, 
         private router: Router, private cogResultsService: CogResultsService) { }
 

@@ -4,59 +4,59 @@
   </div>
   
   <div fxLayout="row" fxLayoutGap="50px" class="pad-left-md pad-right-md pad-bottom-md pad-top-sm">
-    <md-list id="unstratted" [dragula]='"bag-one"' [dragulaModel]='unstratted' fxFlex *ngIf='showUnstrat && !readOnly' style="min-height: 50px; border-width: 1px; border-style:solid; border-color:lightgrey;">
-      <md-list-item *ngFor="let unstrat of unstratted" [id]="unstrat?.assesseePersonId" >
-        <button md-raised-button fxFlex class="text-left" style="cursor: move;"><md-icon>reorder</md-icon> {{unstrat?.assessee?.rankName}}</button>
-      </md-list-item>
-    </md-list>
+    <mat-list id="unstratted" [dragula]='"bag-one"' [dragulaModel]='unstratted' fxFlex *ngIf='showUnstrat && !readOnly' style="min-height: 50px; border-width: 1px; border-style:solid; border-color:lightgrey;">
+      <mat-list-item *ngFor="let unstrat of unstratted" [id]="unstrat?.assesseePersonId" >
+        <button mat-raised-button fxFlex class="text-left" style="cursor: move;"><mat-icon>reorder</mat-icon> {{unstrat?.assessee?.rankName}}</button>
+      </mat-list-item>
+    </mat-list>
     
-    <md-list id="stratted" [dragula]='"bag-one"' [dragulaModel]='stratted' fxFlex style="min-height: 50px; border-width: 1px; border-style:solid; border-color:lightgrey; padding-bottom:5px" *ngIf='!readOnly' [ngClass]="(!showUnstrat)?'notopen':''">
-      <md-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
-        <button md-raised-button fxFlex style="cursor: move;">
+    <mat-list id="stratted" [dragula]='"bag-one"' [dragulaModel]='stratted' fxFlex style="min-height: 50px; border-width: 1px; border-style:solid; border-color:lightgrey; padding-bottom:5px" *ngIf='!readOnly' [ngClass]="(!showUnstrat)?'notopen':''">
+      <mat-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
+        <button mat-raised-button fxFlex style="cursor: move;">
           <div fxFlexLayout="row"  fxLayoutGap="10px">
-            <md-icon style="padding-top: 7px; vertical-align: middle;">reorder</md-icon>
+            <mat-icon style="padding-top: 7px; vertical-align: middle;">reorder</mat-icon>
             <div>{{strat?.assessee?.rankName}}</div>
             <div fxFlex></div> 
             <div><span style="color: #3e6d92; font-size:large"><strong>{{strat?.stratPosition}}</strong></span></div>
           </div>
         </button>
-      </md-list-item>
-    </md-list>
+      </mat-list-item>
+    </mat-list>
   
-    <md-list id="stratted" fxFlex class="notopen" style="min-height: 50px;" *ngIf='readOnly' [ngClass]="(!showUnstrat)?'notopen':''">
-      <md-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
-          <button md-raised-button disableRipple fxFlex style="cursor:default">
+    <mat-list id="stratted" fxFlex class="notopen" style="min-height: 50px;" *ngIf='readOnly' [ngClass]="(!showUnstrat)?'notopen':''">
+      <mat-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
+          <button mat-raised-button disableRipple fxFlex style="cursor:default">
               <div fxFlexLayout="row"  fxLayoutGap="10px">
-                <md-icon style="padding-top: 7px; vertical-align: middle;">person</md-icon>
+                <mat-icon style="padding-top: 7px; vertical-align: middle;">person</mat-icon>
                 <div>{{strat?.assessee?.rankName}}</div>
                 <div fxFlex></div> 
                 <div><span style="color: #3e6d92; font-size:large"><strong>{{strat?.stratPosition}}</strong></span></div>
               </div>
             </button>
-      </md-list-item>
-    </md-list>
+      </mat-list-item>
+    </mat-list>
   </div>
-  <md-divider></md-divider>
+  <mat-divider></mat-divider>
   
-  <md-card-actions fxLayout="row" fxLayoutAlign="end">
-    <button md-raised-button color="primary" type="button" [disabled]="!isDirty()" (click)="cancel();">Cancel</button>
-    <button md-raised-button color="primary" type="button" [disabled]="!isComplete() || !isDirty()" (click)="saveChanges()">Save</button>
-  </md-card-actions>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="end">
+    <button mat-raised-button color="primary" type="button" [disabled]="!isDirty()" (click)="cancel();">Cancel</button>
+    <button mat-raised-button color="primary" type="button" [disabled]="!isComplete() || !isDirty()" (click)="saveChanges()">Save</button>
+  </mat-card-actions>
   
   
-  <!--md-list>
-    <md-list-item>
+  <!--mat-list>
+    <mat-list-item>
       <div fxFlex="55"></div>
       <div fxFlex="10" class="pad-left-md md-body-1 tc-grey-500">Strat</div>
       <div fxFlex="15" class="pad-left-sm md-body-1 tc-grey-500"><span *ngIf="!readOnly">Proposed Change</span></div>
       <div fxFlex="10"></div>
-    </md-list-item>
-    <md-divider></md-divider>
-    <!--<md-list class="will-load">-->
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <!--<mat-list class="will-load">-->
   
     <!--ng-template let-member let-last="last" ngFor [ngForOf]="groupMembers">
-      <md-list-item>
-        <md-icon md-list-avatar>person</md-icon>
+      <mat-list-item>
+        <mat-icon mat-list-avatar>person</mat-icon>
         <div fxFlex="55">
           <h3 class="md-subhead">{{member?.rankName}}</h3>
         </div>
@@ -66,10 +66,10 @@
   
         <div fxFlex="15" *ngIf="!readOnly">
           <div layout-margin>
-            <md-input-container>
-              <input mdInput memberStratForm="ngModel" [(ngModel)]="member.proposedStratPosition" (ngModelChange)="evaluateStrat(); isValid(); isPristine()"
+            <mat-form-field>
+              <input matInput memberStratForm="ngModel" [(ngModel)]="member.proposedStratPosition" (ngModelChange)="evaluateStrat(); isValid(); isPristine()"
                 name="proposedMemberStrat" min="1" max="{{groupCount}}" type="number">
-            </md-input-container>
+            </mat-form-field>
           </div>
         </div>
         <div fxFlex="10" *ngIf="!readOnly">
@@ -78,39 +78,39 @@
                 Valid
               </span>
             <span *ngIf="!member.stratIsValid">
-              <span mdTooltip="{{member.stratValidationErrors[0].cat}}" mdTooltipPosition="above" class="tc-red-500" >Invalid</span>
+              <span matTooltip="{{member.stratValidationErrors[0].cat}}" matTooltipPosition="above" class="tc-red-500" >Invalid</span>
             </span>
           </span>
         </div>
-      </md-list-item>
+      </mat-list-item>
     </ng-template>
     
-  </md-list-->
+  </mat-list-->
 
-<!-- <md-list>
-  <md-list-item>
+<!-- <mat-list>
+  <mat-list-item>
     <span fxFlex="55" fxFlexOffset="3%"></span>
     <span fxFlex="10" fxFlex.xs="10" fxFlexOffset="3%" class="pad-left md-body-1 tc-grey-500">Strat</span>
     <span fxFlex="15" fxFlex.xs="20" fxFlexOffset="2%" class="pad-left md-body-1 tc-grey-500">
       <span *ngIf="!readOnly">Proposed Change</span>
     </span>
     <span fxFlex="10"></span>
-  </md-list-item>
-  <md-divider></md-divider>
-  <!--<md-list class="will-load">-->
-  <!--md-list-item>
-    <md-icon fxHide.xs md-list-avatar>person</md-icon>
-    <h3 md-line>{{user?.rankName}}</h3>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <!--<mat-list class="will-load">-->
+  <!--mat-list-item>
+    <mat-icon fxHide.xs mat-list-avatar>person</mat-icon>
+    <h3 matLine>{{user?.rankName}}</h3>
     <div fxFlex="10" fxFlex.xs="10">
-      <h3 md-line>{{user?.statusOfPeer[user?.studentId].stratedPosition}}</h3>
+      <h3 matLine>{{user?.statusOfPeer[user?.studentId].stratedPosition}}</h3>
     </div>
 
     <div fxFlex="15" fxFlex.xs="15" *ngIf="!readOnly">
       <div layout-margin>
-        <md-input-container>
-          <input mdInput [(ngModel)]="user.proposedStratPosition" (ngModelChange)="evaluateStrat(); isValid(); isPristine()" name="proposedUserStrat"
+        <mat-form-field>
+          <input matInput [(ngModel)]="user.proposedStratPosition" (ngModelChange)="evaluateStrat(); isValid(); isPristine()" name="proposedUserStrat"
             min="1" max="{{groupCount}}" type="number">
-        </md-input-container>
+        </mat-form-field>
       </div>
     </div>
     <div fxFlex="10" *ngIf="!readOnly">
@@ -119,28 +119,28 @@
           Valid
         </span>
         <span *ngIf="!user.stratIsValid">
-          <span mdTooltip="{{user.stratValidationErrors[0].cat}}" mdTooltipPosition="above" class="tc-red-500">Invalid</span>
+          <span matTooltip="{{user.stratValidationErrors[0].cat}}" matTooltipPosition="above" class="tc-red-500">Invalid</span>
         </span>
       </span>
     </div>
     <div fxFlex="25" *ngIf="readOnly">
     </div>
-  </md-list-item>
-  <md-divider class="bgc-dark-orange-500" md-inset></md-divider>
+  </mat-list-item>
+  <mat-divider class="bgc-dark-orange-500" md-inset></mat-divider>
   <ng-template let-peer let-last="last" ngFor [ngForOf]="peers">
-    <md-list-item>
-      <md-icon fxHide.xs md-list-avatar>person</md-icon>
-      <h3 md-line>{{peer?.rankName}}</h3>
+    <mat-list-item>
+      <mat-icon fxHide.xs mat-list-avatar>person</mat-icon>
+      <h3 matLine>{{peer?.rankName}}</h3>
       <div fxFlex="10" fxFlex.xs="10">
-        <h3 md-line>{{user?.statusOfPeer[peer?.studentId].stratedPosition}}</h3>
+        <h3 matLine>{{user?.statusOfPeer[peer?.studentId].stratedPosition}}</h3>
       </div>
 
       <div fxFlex="15" fxFlex.xs="15" *ngIf="!readOnly">
         <div layout-margin>
-          <md-input-container>
-            <input mdInput peerStratForm="ngModel" [(ngModel)]="peer.proposedStratPosition" (ngModelChange)="evaluateStrat(); isValid(); isPristine()"
+          <mat-form-field>
+            <input matInput peerStratForm="ngModel" [(ngModel)]="peer.proposedStratPosition" (ngModelChange)="evaluateStrat(); isValid(); isPristine()"
               name="proposedPeerStrat" min="1" max="{{groupCount}}" type="number">
-          </md-input-container>
+          </mat-form-field>
         </div>
       </div>
       <div fxFlex="10" *ngIf="!readOnly">
@@ -149,28 +149,28 @@
             Valid
           </span>
           <span *ngIf="!peer.stratIsValid">
-            <span mdTooltip="{{peer.stratValidationErrors[0].cat}}" mdTooltipPosition="above" class="tc-red-500">Invalid</span>
+            <span matTooltip="{{peer.stratValidationErrors[0].cat}}" matTooltipPosition="above" class="tc-red-500">Invalid</span>
           </span>
         </span>
       </div>
       <div fxFlex="25" *ngIf="readOnly">
       </div>
 
-    </md-list-item>
+    </mat-list-item>
   </ng-template>
-</md-list>
-<md-divider></md-divider>
+</mat-list>
+<mat-divider></mat-divider>
 
-<md-list-item fxShow fxHide.xs layout="row" layout-align="end" layout-margin>
-  <button md-raised-button color="primary" type="button" class="text-upper" [disabled]="!isPristine()" (click)="cancel();">Cancel</button>
-  <button md-raised-button color="primary" type="button" [disabled]="isValid()" (click)="saveChanges()" class="text-upper">Save</button>
-</md-list-item>
+<mat-list-item fxShow fxHide.xs layout="row" layout-align="end" layout-margin>
+  <button mat-raised-button color="primary" type="button" class="text-upper" [disabled]="!isPristine()" (click)="cancel();">Cancel</button>
+  <button mat-raised-button color="primary" type="button" [disabled]="isValid()" (click)="saveChanges()" class="text-upper">Save</button>
+</mat-list-item>
 
-<md-list-item fxHide fxShow.xs layout="row" layout-align="end" layout-margin>
-  <button md-icon-button color="primary" type="button" class="text-upper" [disabled]="!isPristine()" (click)="cancel();">
-      <md-icon mdTooltip="Cancel" mdTooltipPosition="before" class="large-icon">cancel</md-icon>
+<mat-list-item fxHide fxShow.xs layout="row" layout-align="end" layout-margin>
+  <button mat-icon-button color="primary" type="button" class="text-upper" [disabled]="!isPristine()" (click)="cancel();">
+      <mat-icon matTooltip="Cancel" matTooltipPosition="before" class="large-icon">cancel</mat-icon>
   </button>
-  <button md-icon-button color="primary" type="button" [disabled]="isValid()" (click)="saveChanges()" class="text-upper">
-      <md-icon mdTooltip="Save" mdTooltipPosition="before" class="large-icon">save</md-icon>
+  <button mat-icon-button color="primary" type="button" [disabled]="isValid()" (click)="saveChanges()" class="text-upper">
+      <mat-icon matTooltip="Save" matTooltipPosition="before" class="large-icon">save</mat-icon>
   </button>
-</md-list-item> -->
+</mat-list-item> -->

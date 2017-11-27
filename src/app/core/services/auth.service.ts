@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/http';
-import { CovalentHttpModule, IHttpInterceptor } from '@covalent/http';
-import { Router } from '@angular/router';
+// import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Params, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { JwtHelper } from "angular2-jwt";
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { EntityState } from 'breeze-client';
 
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
-import { AuthUtilityService } from "./auth-utility.service";
+// import { AuthUtilityService } from "./auth-utility.service";
 import { Person } from "../entities/user";
 import { GlobalService, ILoggedInUser } from "./global.service";
 import { EmProviderService } from "./em-provider.service";
@@ -21,32 +21,43 @@ import { DataContext } from "../../app-constants";
 import { MpEntityType, MpInstituteRole } from "../common/mapStrings";
 import { TdDialogService } from '@covalent/core';
 
+interface ILoginResponse {
+  access_token: string;
+  id_token: string;
+}
+
 @Injectable()
-export class AuthService implements IHttpInterceptor {
+export class AuthService {
   // store the URL so we can redirect after logging in
   redirectUrl: string;
-  //public token: string;
+  // public token: string;
 
-  constructor(private http: Http, private router: Router, private global: GlobalService,
-    private jwtHelper: JwtHelper, private emProvider: EmProviderService, private dialogService: TdDialogService) { }
+  constructor(private http: HttpClient, private router: Router, private global: GlobalService,
+    private jwt: JwtHelperService, private emProvider: EmProviderService, private dialogService: TdDialogService) { }
 
   login(username: string, password: string): Observable<boolean> {
 
-    //let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-    //let options = new RequestOptions({ headers: headers });
-    let data = new URLSearchParams();
-    data.append('grant_type', 'password');
-    data.append('username', username);
-    data.append('password', password);
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/x-www-form-urlencoded');
+    // let options = new RequestOptions({ headers: headers });
+    const body = new HttpParams()
+      .set('grant_type', 'password')
+      .set('username', username)
+      .set('password', password);
 
-    //TODO: Update for environment
-    //dev
-    //return this.http.post('http://localhost:62187/connect/token',
-    //awstesting
-    return this.http.post('http://ec2-34-237-207-101.compute-1.amazonaws.com/connect/token',
-      data).map((response: Response) => {
-        let accessToken = response.json().access_token;
-        let idToken = response.json().id_token;
+    // const body = { grant_type: 'password', username: username, password: password };
+
+    // console.log(params);
+
+    // TODO: Update for environment
+    // dev
+    return this.http.post<ILoginResponse>('http://localhost:62187/connect/token', body,
+      // awstesting
+      // return this.http.post('http://ec2-34-237-207-101.compute-1.amazonaws.com/connect/token',
+      { headers: headers}).map((loginResponse: ILoginResponse) => {
+        console.log(loginResponse);
+        let accessToken = loginResponse.access_token;
+        let idToken = loginResponse.id_token;
         if (accessToken && idToken) {
           localStorage.setItem('ecatAccessToken', accessToken);
           localStorage.setItem('ecatUserIdToken', idToken);
@@ -55,34 +66,18 @@ export class AuthService implements IHttpInterceptor {
 
           return false;
         }
-      }).catch(this.handleError)
+      }, (error: HttpErrorResponse) => {
+        console.log(error.error.message);
+      });
   }
 
-  private handleError(error: Response | any) {
-
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      if (err === 'invalid_grant') {
-        return Observable.throw('Invalid username and password');
-      }
-      //errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-      errMsg = 'An error occured. Please try again';
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-
-    return Observable.throw(errMsg);
-  }
-
-  public activateUser() {
+  activateUser(): void {
 
     let accessTokenSigned = localStorage.getItem('ecatAccessToken');
     let idTokenSigned = localStorage.getItem('ecatUserIdToken');
-    
-    let accessToken = this.jwtHelper.decodeToken(accessTokenSigned);
-    let idToken = this.jwtHelper.decodeToken(idTokenSigned);
+
+    let accessToken = this.jwt.decodeToken(accessTokenSigned);
+    let idToken = this.jwt.decodeToken(idTokenSigned);
     var user: ILoggedInUser = <ILoggedInUser>{};
 
     var loggedInUser = {
@@ -96,7 +91,7 @@ export class AuthService implements IHttpInterceptor {
       mpComponent: idToken.mpComponent,
       email: idToken.email,
       registrationComplete: idToken.registrationComplete,
-      mpInstituteRole: idToken.mpInstituteRole
+      mpInstituteRole: idToken.mpInstituteRole,
     } as Person;
 
     let entityUser = this.emProvider.getManager(DataContext.User).createEntity(MpEntityType.person, loggedInUser, EntityState.Unchanged);
@@ -117,15 +112,15 @@ export class AuthService implements IHttpInterceptor {
     this.global.user(user);
     console.log(user);
 
-    //set a timer for warning the user when they are 5 minutes from token expiring
-    //token.exp is in seconds, Date.now in milliseconds, and tokenTimer wants milliseconds
+    // set a timer for warning the user when they are 5 minutes from token expiring
+    // token.exp is in seconds, Date.now in milliseconds, and tokenTimer wants milliseconds
     let tokenWarn = ((accessToken.exp - (Date.now() / 1000)) - 300) * 1000;
     this.global.startTokenTimer(tokenWarn);
   }
 
-  logout() {
+  logout(): void {
 
-    if(this.emProvider) {
+    if (this.emProvider) {
       this.emProvider.clear(DataContext.User);
       this.emProvider.clear(DataContext.Student);
       this.emProvider.clear(DataContext.Faculty);
@@ -134,15 +129,20 @@ export class AuthService implements IHttpInterceptor {
     // this.emProvider.clear(DataContext.User);
     // this.emProvider.clear(DataContext.Student);
     // this.emProvider.clear(DataContext.Faculty);
-    
+
     // this.emProvider.clearAll();
 
-    
-    this.global.user(null);
+    this.global.user(undefined);
     this.global.userDataContext(false);
     localStorage.removeItem('ecatAccessToken');
     localStorage.removeItem('ecatUserIdToken');
     this.router.navigate(['/login']);
   }
-}
 
+  tokenNotExpired(): boolean {
+    const token = this.jwt.tokenGetter();
+
+    return token !== null && !this.jwt.isTokenExpired(token);
+  }
+
+}

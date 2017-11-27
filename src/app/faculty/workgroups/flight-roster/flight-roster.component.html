@@ -1,33 +1,33 @@
 <div class="width">
-  <md-card>
-    <md-card-title>
+  <mat-card>
+    <mat-card-title>
       <div fxFlex>
-        <button md-raised-button color="primary" md-raised-button (click)="back()">
-        <!--md-icon class="tc-white-700">arrow_back</md-icon-->Back
+        <button mat-raised-button color="primary" mat-raised-button (click)="back()">
+        <!--mat-icon class="tc-white-700">arrow_back</mat-icon-->Back
       </button>
       </div>
       <div class="text-center" fxFlex="100">
         {{workGroup?.mpCategory}} - {{workGroup?.defaultName}} {{workGroup?.customName}}
       </div>
-    </md-card-title>
+    </mat-card-title>
 
-    <md-divider></md-divider>
+    <mat-divider></mat-divider>
 
-    <md-list>
-      <md-list-item>
+    <mat-list>
+      <mat-list-item>
         <div fxFlex="80"></div>
         <div *ngFor="let category of categoriesToDisplay" fxFlex="20" class="pad-sm text-center tc-black text-lg">
           {{category}} Flight
         </div>
-      </md-list-item>
+      </mat-list-item>
 
-      <md-divider></md-divider>
+      <mat-divider></mat-divider>
 
       <ng-template let-member let-last="last" ngFor [ngForOf]="rosterInfos">
 
-        <md-list-item>
+        <mat-list-item>
 
-          <md-icon md-list-avatar>person</md-icon>
+          <mat-icon mat-list-avatar>person</mat-icon>
           <div fxFlex="80" class="md-subhead text-left pad-sm">
             {{member?.rankName}}
           </div>
@@ -36,45 +36,45 @@
             {{(member?.flights[category]) ? member?.flights[category] : 'None'}}
           </div>
           <div fxFlex></div>
-        </md-list-item>
-        <md-divider *ngIf="!last" md-inset></md-divider>
+        </mat-list-item>
+        <mat-divider *ngIf="!last" md-inset></mat-divider>
 
 
       </ng-template>
 
-    </md-list>
+    </mat-list>
 
-  </md-card>
+  </mat-card>
 </div>
 
 
-<!-- <md-card class="width">
-    <md-card-title>
+<!-- <mat-card class="width">
+    <mat-card-title>
       <div>
-          <button md-raised-button color="primary" [routerLink]="['../..']">
-              <md-icon class="tc-white-700">arrow_back</md-icon>Back to WorkGroups
+          <button mat-raised-button color="primary" [routerLink]="['../..']">
+              <mat-icon class="tc-white-700">arrow_back</mat-icon>Back to WorkGroups
           </button>
       </div>
       <div fxFlex class="text-left">
          {{workGroup?.mpCategory}} - {{workGroup?.defaultName}}
       </div>
-    </md-card-title>
-    <md-divider></md-divider>
-  <md-list fxFlex="100">
-  <md-list-item>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+  <mat-list fxFlex="100">
+  <mat-list-item>
     <span fxFlex="60">Student</span>
     <span fxFlex="20">BC2 Flight</span>
     <span fxFlex="20">BC3 Flight</span>
-  </md-list-item>
-    <md-divider></md-divider>
+  </mat-list-item>
+    <mat-divider></mat-divider>
 
     <ng-template let-member let-last="last" ngFor [ngForOf]="groupMembers">
-      <md-list-item>
-        <md-icon md-list-avatar>person</md-icon>
-        <h3 md-line> {{member?.rankName}} </h3>
+      <mat-list-item>
+        <mat-icon mat-list-avatar>person</mat-icon>
+        <h3 matLine> {{member?.rankName}} </h3>
 
-      </md-list-item>
-      <md-divider *ngIf="!last" md-inset></md-divider>
+      </mat-list-item>
+      <mat-divider *ngIf="!last" md-inset></mat-divider>
     </ng-template>
-  </md-list>
-</md-card> -->
+  </mat-list>
+</mat-card> -->

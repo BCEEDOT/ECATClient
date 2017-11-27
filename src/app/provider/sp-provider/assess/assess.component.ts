@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/pluck';
@@ -45,7 +45,7 @@ export class AssessComponent implements OnInit {
     private global: GlobalService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBarService: MdSnackBar,
+    private snackBarService: MatSnackBar,
     private location: Location) {
 
     this.inventories$ = route.data.pluck('inventories');

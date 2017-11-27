@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from "rxjs/Subscription";
@@ -30,7 +30,7 @@ export class StratComponent implements OnInit, OnDestroy {
     showUnstrat: boolean = false;
 
     constructor(private spProvider: SpProviderService, private facultyDataContext: FacultyDataContextService, private loadingService: TdLoadingService,
-        private dialogService: TdDialogService, private snackBarService: MdSnackBar, private route: ActivatedRoute, private facWorkGroupService: FacWorkgroupService,
+        private dialogService: TdDialogService, private snackBarService: MatSnackBar, private route: ActivatedRoute, private facWorkGroupService: FacWorkgroupService,
         private dragulaService: DragulaService,) {
 
         this.route.params.subscribe(params => {

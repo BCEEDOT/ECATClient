@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { MdSnackBar } from "@angular/material";
+import { MatSnackBar } from "@angular/material";
 
 import { TdLoadingService, TdDialogService } from "@covalent/core";
 
@@ -27,7 +27,7 @@ export class PublishGroupsetComponent implements OnInit {
     private lmsadminDataService: LmsadminDataContextService,
     private lmsadminWorkGroupService: LmsadminWorkgroupService,
     private dialogService: TdDialogService,
-    private snackBar: MdSnackBar) { }
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

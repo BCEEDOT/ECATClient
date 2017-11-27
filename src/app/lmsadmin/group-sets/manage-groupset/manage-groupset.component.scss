@@ -1,4 +1,4 @@
-@mixin md-icon-size($size: 18px) {
+@mixin mat-icon-size($size: 18px) {
     font-size: $size;
     height: $size;
     width: $size;
@@ -6,7 +6,7 @@
 }
 
 .material-icons.mat-icon{
-    @include md-icon-size(18px);
+    @include mat-icon-size(18px);
 }
 
 // .ex-moved {

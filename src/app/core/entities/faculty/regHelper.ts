@@ -25,6 +25,10 @@ import { Person } from './person';
 import { ProfileFaculty } from './profileFaculty';
 import { RoadRunner } from './roadRunner';
 
+// import { SpResultBreakOut, Course, FacultyInCourse, FacSpComment, FacSpCommentFlag, CrseStudentInGroup, SpResponse,
+// SpInventory, SpInstrument, WorkGroup, FacSpResponse, FacStratResponse, StudSpComment, StudSpCommentFlag, SpResult, StratResponse,
+// StratResult, WorkGroupModel, StudentInCourse, ProfileStudent, Person, ProfileFaculty   } from './index';
+
 @Injectable()
 export class FacultyRegistrationHelper implements IRegistrationHelper {
     register(metadataStore: MetadataStore) {

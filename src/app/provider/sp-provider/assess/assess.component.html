@@ -2,37 +2,37 @@
   (keydown.ArrowLeft)="onLeftArrow($event)" (keydown.ArrowRight)="onRightArrow($event)">
   <div fxFlex></div>
   <div class="pad-top-sm">
-    <md-card ngClass.xs="auto-height">
-      <md-card-title *ngIf="!isSelf">Assessement for {{activeInventory?.responseForAssessee?.assessee?.rankName}}</md-card-title>
-      <md-card-title *ngIf="isSelf">Self Assessment</md-card-title>
-      <md-divider></md-divider>
-      <md-card-content>
+    <mat-card ngClass.xs="auto-height">
+      <mat-card-title *ngIf="!isSelf">Assessement for {{activeInventory?.responseForAssessee?.assessee?.rankName}}</mat-card-title>
+      <mat-card-title *ngIf="isSelf">Self Assessment</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content>
         <p>With regards to displaying the behavior
           <span style="color: #3e6d92">{{activeInventory.behavior}}</span> how effective {{perspective}}?</p>
 
         <div fxShow fxHide.xs>
-          <button md-icon-button mdTooltip="Mark As (Not) Displayed" mdTooltipPosition="below" [md-menu-trigger-for]="menu" [disabled]="viewOnly"
+          <button mat-icon-button matTooltip="Mark As (Not) Displayed" matTooltipPosition="below" [mat-menu-trigger-for]="menu" [disabled]="viewOnly"
             style="float: left">
-            <md-icon>more_vert</md-icon>
+            <mat-icon>more_vert</mat-icon>
           </button>
           <span></span>
-          <md-menu #menu="mdMenu">
-            <button md-menu-item *ngIf="!activeInventory.behaveDisplayed" (click)="activeInventory.behaveDisplayed=true; saveCheck()">Displayed</button>
-            <button md-menu-item *ngIf="activeInventory.behaveDisplayed" (click)="activeInventory.behaveDisplayed=false; saveCheck()">Not Displayed</button>
-          </md-menu>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngIf="!activeInventory.behaveDisplayed" (click)="activeInventory.behaveDisplayed=true; saveCheck()">Displayed</button>
+            <button mat-menu-item *ngIf="activeInventory.behaveDisplayed" (click)="activeInventory.behaveDisplayed=false; saveCheck()">Not Displayed</button>
+          </mat-menu>
           <span></span>
           <div *ngIf="activeInventory.behaveDisplayed">
-            <button md-raised-button (click)="activeInventory.behaviorEffect=respEnum.ie; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorEffect===respEnum.ie}"
+            <button mat-raised-button (click)="activeInventory.behaviorEffect=respEnum.ie; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorEffect===respEnum.ie}"
               [disabled]="viewOnly && activeInventory.behaviorEffect!==respEnum.ie">Ineffective</button>
-            <button md-raised-button (click)="activeInventory.behaviorEffect=respEnum.e; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorEffect===respEnum.e}"
+            <button mat-raised-button (click)="activeInventory.behaviorEffect=respEnum.e; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorEffect===respEnum.e}"
               [disabled]="viewOnly && activeInventory.behaviorEffect!==respEnum.e">Effective</button>
-            <button md-raised-button (click)="activeInventory.behaviorEffect=respEnum.he; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorEffect===respEnum.he}"
+            <button mat-raised-button (click)="activeInventory.behaviorEffect=respEnum.he; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorEffect===respEnum.he}"
               [disabled]="viewOnly && activeInventory.behaviorEffect!==respEnum.he">Highly Effective</button>
             <span class="pad-right-sm"></span>
             <div style="float:right">
-              <button md-raised-button (click)="activeInventory.behaviorFreq=respEnum.usl; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorFreq===respEnum.usl}"
+              <button mat-raised-button (click)="activeInventory.behaviorFreq=respEnum.usl; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorFreq===respEnum.usl}"
                 [disabled]="viewOnly && activeInventory.behaviorFreq!==respEnum.usl">Usually</button>
-              <button md-raised-button (click)="activeInventory.behaviorFreq=respEnum.alw; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorFreq===respEnum.alw}"
+              <button mat-raised-button (click)="activeInventory.behaviorFreq=respEnum.alw; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorFreq===respEnum.alw}"
                 [disabled]="viewOnly && activeInventory.behaviorFreq!==respEnum.alw">Always</button>
             </div>
           </div>
@@ -43,91 +43,91 @@
         <form #assessmentForm="ngForm">
           <div fxLayout="column" fxLayoutGap="30px" fxLayoutAlign="center center" fxHide fxShow.xs>
             <div fxFlex>
-              <md-slide-toggle [disabled]="viewOnly" (change)="saveCheck()" name="displayed" class="example-margin" [(ngModel)]="activeInventory.behaveDisplayed"
+              <mat-slide-toggle [disabled]="viewOnly" (change)="saveCheck()" name="displayed" class="example-margin" [(ngModel)]="activeInventory.behaveDisplayed"
                 [disabled]="disabled">
                 {{(activeInventory.behaveDisplayed) ? 'Not Displayed' : 'Displayed'}}
-              </md-slide-toggle>
+              </mat-slide-toggle>
             </div>
             <div fxFlex *ngIf="!activeInventory.behaveDisplayed">
               <p class="text-center">NOT DISPLAYED</p>
             </div>
             <div fxFlex *ngIf="activeInventory.behaveDisplayed">
-              <md-select (change)="saveCheck()" [(ngModel)]="activeInventory.behaviorEffect" [disabled]="viewOnly" name="effectiveness"
+              <mat-select (change)="saveCheck()" [(ngModel)]="activeInventory.behaviorEffect" [disabled]="viewOnly" name="effectiveness"
                 #assessmentForm="ngModel" placeholder="Effectiveness">
-                <md-option [value]="respEnum.ie">
+                <mat-option [value]="respEnum.ie">
                   Ineffective
-                </md-option>
-                <md-option [value]="respEnum.e">
+                </mat-option>
+                <mat-option [value]="respEnum.e">
                   Effective
-                </md-option>
-                <md-option [value]="respEnum.he">
+                </mat-option>
+                <mat-option [value]="respEnum.he">
                   Highly Effective
-                </md-option>
-              </md-select>
+                </mat-option>
+              </mat-select>
             </div>
             <div fxFlex *ngIf="activeInventory.behaveDisplayed">
-              <md-select (change)="saveCheck()" [(ngModel)]="activeInventory.behaviorFreq" [disabled]="viewOnly" name="frequency" #assessmentForm="ngModel"
+              <mat-select (change)="saveCheck()" [(ngModel)]="activeInventory.behaviorFreq" [disabled]="viewOnly" name="frequency" #assessmentForm="ngModel"
                 placeholder="Frequency">
-                <md-option [value]="respEnum.usl">
+                <mat-option [value]="respEnum.usl">
                   Usually
-                </md-option>
-                <md-option [value]="respEnum.alw">
+                </mat-option>
+                <mat-option [value]="respEnum.alw">
                   Always
-                </md-option>
-              </md-select>
+                </mat-option>
+              </mat-select>
 
             </div>
 
           </div>
         </form>
-      </md-card-content>
-      <md-card-actions fxShow fxHide.xs>
-        <button md-raised-button color="primary" [disabled]="activeInventory.id===inventories[0].id" (click)="previousInv()">Previous</button>
-        <button md-raised-button color="primary" [disabled]="activeInventory.id===inventories[inventories.length - 1].id" (click)="nextInv()">Next</button>
+      </mat-card-content>
+      <mat-card-actions fxShow fxHide.xs>
+        <button mat-raised-button color="primary" [disabled]="activeInventory.id===inventories[0].id" (click)="previousInv()">Previous</button>
+        <button mat-raised-button color="primary" [disabled]="activeInventory.id===inventories[inventories.length - 1].id" (click)="nextInv()">Next</button>
         <div style="float: right">
-          <button md-raised-button color="primary" *ngIf="viewOnly" (click)="cancel()">Exit</button>
-          <button md-raised-button color="primary" *ngIf="!viewOnly" (click)="cancel()">Cancel</button>
-          <button md-raised-button color="primary" *ngIf="!viewOnly" [disabled]="!canSave" (click)="save()">Save</button>
+          <button mat-raised-button color="primary" *ngIf="viewOnly" (click)="cancel()">Exit</button>
+          <button mat-raised-button color="primary" *ngIf="!viewOnly" (click)="cancel()">Cancel</button>
+          <button mat-raised-button color="primary" *ngIf="!viewOnly" [disabled]="!canSave" (click)="save()">Save</button>
         </div>
-      </md-card-actions>
-      <md-card-actions fxHide fxShow.xs fxLayout="row">
+      </mat-card-actions>
+      <mat-card-actions fxHide fxShow.xs fxLayout="row">
         <div fxFlex>
-          <button md-icon-button color="primary" [disabled]="activeInventory.id===inventories[0].id" (click)="previousInv()">
-            <md-icon mdTooltip="Previous" mdTooltipPosition="after" class="large-icon">arrow_back</md-icon>
+          <button mat-icon-button color="primary" [disabled]="activeInventory.id===inventories[0].id" (click)="previousInv()">
+            <mat-icon matTooltip="Previous" matTooltipPosition="after" class="large-icon">arrow_back</mat-icon>
           </button>
         </div>
         <div fxFlex></div>
         <div fxFlex=".5 1 auto" fxFlexAlign="center">
-          <button md-icon-button color="primary" *ngIf="viewOnly" (click)="cancel()">
-            <md-icon mdTooltip="Back" mdTooltipPosition="before" class="large-icon">exit_to_app</md-icon>
+          <button mat-icon-button color="primary" *ngIf="viewOnly" (click)="cancel()">
+            <mat-icon matTooltip="Back" matTooltipPosition="before" class="large-icon">exit_to_app</mat-icon>
           </button>
-          <button md-icon-button color="primary" *ngIf="!viewOnly" (click)="cancel()">
-            <md-icon mdTooltip="Cancel" mdTooltipPosition="before" class="large-icon">cancel</md-icon>
+          <button mat-icon-button color="primary" *ngIf="!viewOnly" (click)="cancel()">
+            <mat-icon matTooltip="Cancel" matTooltipPosition="before" class="large-icon">cancel</mat-icon>
           </button>
-          <button md-icon-button color="primary" *ngIf="!viewOnly" [disabled]="!canSave" (click)="save()">
-            <md-icon mdTooltip="Save" mdTooltipPosition="before" class="large-icon">save</md-icon>
+          <button mat-icon-button color="primary" *ngIf="!viewOnly" [disabled]="!canSave" (click)="save()">
+            <mat-icon matTooltip="Save" matTooltipPosition="before" class="large-icon">save</mat-icon>
           </button>
         </div>
         <div fxFlex></div>
         <div>
-          <button md-icon-button color="primary" [disabled]="activeInventory.id===inventories[inventories.length - 1].id" (click)="nextInv()">
-            <md-icon mdTooltip="Next" mdTooltipPosition="before" class="large-icon">arrow_forward</md-icon>
+          <button mat-icon-button color="primary" [disabled]="activeInventory.id===inventories[inventories.length - 1].id" (click)="nextInv()">
+            <mat-icon matTooltip="Next" matTooltipPosition="before" class="large-icon">arrow_forward</mat-icon>
           </button>
         </div>
 
-      </md-card-actions>
-    </md-card>
+      </mat-card-actions>
+    </mat-card>
   </div>
   <span></span>
   <div fxShow fxHide.xs fxHide.sm>
-    <md-nav-list>
+    <mat-nav-list>
       <h4>Behaviors</h4>
-      <a md-list-item class="md-2-line" *ngFor="let inventory of inventories" (click)="activeInventory=inventory; saveCheck()"
+      <a mat-list-item class="md-2-line" *ngFor="let inventory of inventories" (click)="activeInventory=inventory; saveCheck()"
         [ngClass]="{'inv-selected': activeInventory.id===inventory.id}">
-        <p md-line class="md-title" style="color: #3e6d92">{{getShortBehavior(inventory)}}</p>
-        <p md-line [class]="inventory.responseForAssessee.mpItemResponse">{{getResponseString(inventory)}}</p>
+        <p matLine class="md-title" style="color: #3e6d92">{{getShortBehavior(inventory)}}</p>
+        <p matLine [class]="inventory.responseForAssessee.mpItemResponse">{{getResponseString(inventory)}}</p>
       </a>
-    </md-nav-list>
+    </mat-nav-list>
   </div>
   <div fxFlex></div>
 </div>

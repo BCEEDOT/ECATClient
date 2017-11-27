@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdSnackBar } from "@angular/material";
+import { MatSnackBar } from '@angular/material';
 import { TdLoadingService } from '@covalent/core';
+// import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
-import { AuthService } from "../core/services/auth.service";
-import { AuthUtilityService } from "../core/services/auth-utility.service";
-import { tokenNotExpired } from "angular2-jwt";
+import { AuthService } from '../core/services/auth.service';
+// import { AuthUtilityService } from '../core/services/auth-utility.service';
+
 
 @Component({
   selector: 'qs-login',
@@ -21,13 +22,13 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router,
               private loadingService: TdLoadingService, 
               private authService: AuthService, 
-              private snackBar: MdSnackBar, 
-              private authUtility: AuthUtilityService) { }
+              // private jwt: JwtHelperService,
+              private snackBar: MatSnackBar,) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
-    //check if user has a stored token and it is still valid
-    if (tokenNotExpired('ecatAccessToken')) {
+    // check if user has a stored token and it is still valid
+    if (this.authService.tokenNotExpired()) {
       this.router.navigate(['/dashboard']);
     }
 
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
         this.loadingService.resolve();
         this.router.navigate(['/dashboard']);
       } else {
-        //replace with correct message box
+        // replace with correct message box
         alert('Login failed');
         this.loadingService.resolve();
       }

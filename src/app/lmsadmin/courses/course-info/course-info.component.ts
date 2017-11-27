@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { MdSnackBar } from "@angular/material";
+import { MatSnackBar } from "@angular/material";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 
 import { Course } from "../../../core/entities/lmsadmin";
@@ -21,7 +21,7 @@ export class CourseInfoComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dialogService: TdDialogService,
-    private snackBar: MdSnackBar,
+    private snackBar: MatSnackBar,
     private loadingService: TdLoadingService) { }
 
   ngOnInit() {

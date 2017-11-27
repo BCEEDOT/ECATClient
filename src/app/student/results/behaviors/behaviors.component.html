@@ -1,12 +1,12 @@
 <div style="padding-bottom:1%" fxShow fxHide.xs>
-  <md-list>
-    <md-list-item>
+  <mat-list>
+    <mat-list-item>
       <span fxFlex="50">BEHAVIOR</span>
       <span fxFlex="20">SELF</span>
       <span fxFlex="15" fxFlexAlign="center">PEERS</span>
       <span fxFlex="15">INSTRUCTOR</span>
-    </md-list-item>
-    <md-list-item *ngFor="let inv of inventories">
+    </mat-list-item>
+    <mat-list-item *ngFor="let inv of inventories">
       <span fxFlex="50" style="padding-right: 2.5%">{{inv?.behavior}}</span>
       <span fxFlex="15">{{inv?.resultBreakOut?.selfResult}}</span>
       <span fxFlex="20">
@@ -16,8 +16,8 @@
         </ngx-charts-pie-chart>
       </span>
       <span fxFlex="15">{{inv?.resultBreakOut?.facultyResult}}</span>
-    </md-list-item>
-  </md-list>
+    </mat-list-item>
+  </mat-list>
 </div>
 <div fxHide fxShow.xs>
   <div class="pad-left-sm pad-right-sm" fxLayout="column">
@@ -44,8 +44,8 @@
   </div>
   <div class="border-top pad-bottom-xs" fxLayout="row">
     <div fxFlex>
-      <button md-icon-button color="primary" (click)="previousInv()">
-        <md-icon mdTooltip="Previous" mdTooltipPosition="after" class="large-icon">arrow_back</md-icon>
+      <button mat-icon-button color="primary" (click)="previousInv()">
+        <mat-icon matTooltip="Previous" matTooltipPosition="after" class="large-icon">arrow_back</mat-icon>
       </button>
     </div>
     <div class="pull-top-sm" fxFlex=".8 1 auto" fxFlexAlign="center">
@@ -53,8 +53,8 @@
     </div>
 
     <div>
-      <button md-icon-button color="primary" (click)="nextInv()">
-        <md-icon mdTooltip="Next" mdTooltipPosition="before" class="large-icon">arrow_forward</md-icon>
+      <button mat-icon-button color="primary" (click)="nextInv()">
+        <mat-icon matTooltip="Next" matTooltipPosition="before" class="large-icon">arrow_forward</mat-icon>
       </button>
     </div>
   </div>

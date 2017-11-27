@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, AfterViewInit, AfterViewChecked, Output, OnDestroy } from '@angular/core';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/debounceTime'
 import { Subscription } from 'rxjs';
 import { DragulaService } from "ng2-dragula";
@@ -33,7 +33,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   grpSub: Subscription;
 
   constructor(private workGroupService: WorkGroupService, private global: GlobalService,
-    private loadingService: TdLoadingService, private snackBarService: MdSnackBar,
+    private loadingService: TdLoadingService, private snackBarService: MatSnackBar,
     private spTools: SpProviderService, private dialogService: TdDialogService,
     private studentDataContext: StudentDataContext, private dragulaService: DragulaService) {
 
