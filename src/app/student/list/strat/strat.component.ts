@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, AfterViewInit, AfterViewChecked, Output, OnDestroy } from '@angular/core';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import 'rxjs/add/operator/debounceTime'
 import { Subscription } from 'rxjs';
 import { DragulaService } from "ng2-dragula";
@@ -207,6 +207,11 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
     //   changeSet.push(gm.studentId);
     // });
 
+    let config = new MatSnackBarConfig();
+    config.verticalPosition = 'bottom';
+    config.horizontalPosition = 'left';
+    config.duration = 2000;
+
     this.spTools.save().then(() => {
 
       this.activeWorkGroup.groupMembers
@@ -219,7 +224,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       this.workGroupService.stratComplete(true);
       this.activeWorkGroup.groupMembers.filter(gm => {if(gm.studentId === this.userId){return true;}})[0].updateStatusOfPeer();
       this.activate();
-      this.snackBarService.open("Success, Strats Updated!", 'Dismiss', { duration: 2000 })
+      this.snackBarService.open("Success, Strats Updated!", 'Dismiss', config);
     }).catch((error) => {
       this.activeWorkGroup.groupMembers.filter(gm => {if(gm.studentId === this.userId){return true;}})[0].updateStatusOfPeer();
       this.dialogService.openAlert({

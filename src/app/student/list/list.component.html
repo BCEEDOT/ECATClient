@@ -21,8 +21,8 @@
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">assessment</mat-icon>
             ASSESS
-            <mat-icon *ngIf=assessComplete matTooltip="Complete" class="small-tab-icon tc-green-700">check_circle</mat-icon>
-            <mat-icon *ngIf=!assessComplete matTooltip="Incomplete" class="small-tab-icon tc-red-700">error_outline</mat-icon>
+            <mat-icon *ngIf=assessComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
+            <mat-icon *ngIf=!assessComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
           </ng-template>
 
           <assess [change]="change" [workGroup]="activeWorkGroup"></assess>
@@ -31,8 +31,8 @@
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">format_list_numbered</mat-icon>
             STRAT
-            <mat-icon *ngIf=stratComplete matTooltip="Complete" class="small-tab-icon tc-green-700">check_circle</mat-icon>
-            <mat-icon *ngIf=!stratComplete matTooltip="Incomplete" class="small-tab-icon tc-red-700">error_outline</mat-icon>
+            <mat-icon *ngIf=stratComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
+            <mat-icon *ngIf=!stratComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
           </ng-template>
 
           <strat [workGroup]="activeWorkGroup"></strat>

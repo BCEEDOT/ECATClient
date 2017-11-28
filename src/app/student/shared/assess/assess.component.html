@@ -10,7 +10,7 @@
   </mat-list-item>
 
   <mat-list-item>
-    <mat-icon mat-list-avatar>person</mat-icon>
+    <mat-icon matListAvatar>person</mat-icon>
     <h3 matLine> {{user?.rankName}} </h3>
     <div flex="20" *ngIf="readOnly">
       <div *ngIf="stratToggle">
@@ -27,7 +27,7 @@
   <mat-divider class="bgc-dark-orange-500" md-inset></mat-divider>
   <ng-template let-peer let-last="last" ngFor [ngForOf]="peers">
     <mat-list-item>
-      <mat-icon mat-list-avatar>person</mat-icon>
+      <mat-icon matListAvatar>person</mat-icon>
       <h3 matLine> {{peer?.rankName}} </h3>
       <div flex="20" *ngIf="readOnly">
         <div *ngIf="stratToggle">

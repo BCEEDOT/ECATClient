@@ -17,13 +17,13 @@
             <mat-list>
               <h3 matSubheader>Basic Information</h3>
               <mat-list-item>
-                <mat-icon mat-list-avatar>account_box</mat-icon>
+                <mat-icon matListAvatar>account_box</mat-icon>
                 <h4 matLine>{{prettyName}}</h4>
                 <p matLine>Name</p>
               </mat-list-item>
               <mat-divider md-inset></mat-divider>
               <mat-list-item>
-                <mat-icon mat-list-avatar>description</mat-icon>
+                <mat-icon matListAvatar>description</mat-icon>
                 <h4 matLine>{{user?.email}}</h4>
                 <p matLine>Email</p>
               </mat-list-item>
@@ -31,39 +31,42 @@
               <h3 matSubheader>Additional Information</h3>
               <div *ngIf="!isEditing">
                 <mat-list-item>
-                  <mat-icon mat-list-avatar>description</mat-icon>
+                  <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpGender}}</h4>
                   <p matLine>Gender</p>
                 </mat-list-item>
                 <mat-divider md-inset></mat-divider>
                 <mat-list-item>
-                  <mat-icon mat-list-avatar>description</mat-icon>
+                  <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpAffiliation}}</h4>
                   <p matLine>Affiliation</p>
                 </mat-list-item>
                 <mat-divider md-inset></mat-divider>
                 <mat-list-item>
-                  <mat-icon mat-list-avatar>description</mat-icon>
+                  <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpComponent}}</h4>
                   <p matLine>Military Component</p>
                 </mat-list-item>
                 <mat-divider md-inset></mat-divider>
                 <mat-list-item>
-                  <mat-icon mat-list-avatar>description</mat-icon>
+                  <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpPaygrade}}</h4>
                   <p matLine>Pay Grade</p>
                 </mat-list-item>
               </div>
               <div *ngIf="isEditing">
                 <form #profileForm="ngForm">
-                  <div layout-gt-xs="row" layout-margin>
-                    <mat-select flex="50" #genderForm="ngModel" pattern="^((?!Unknown).)*$" placeholder="Gender" [(ngModel)]="user && user.mpGender"
-                      name="gender" required>
-                      <mat-option [value]="gender.female">Female</mat-option>
-                      <mat-option [value]="gender.male">Male</mat-option>
-                      <mat-option [value]="gender.other">Other</mat-option>
-                      <mat-option [value]="gender.unk">[Select Your Gender]</mat-option>
-                    </mat-select>
+
+                  <div class="pad-left-md">
+                    <mat-form-field>
+                      <mat-select #genderForm="ngModel" pattern="^((?!Unknown).)*$" placeholder="Gender" [(ngModel)]="user && user.mpGender" name="gender"
+                        required>
+                        <mat-option [value]="gender.female">Female</mat-option>
+                        <mat-option [value]="gender.male">Male</mat-option>
+                        <mat-option [value]="gender.other">Other</mat-option>
+                        <mat-option [value]="gender.unk">[Select Your Gender]</mat-option>
+                      </mat-select>
+                    </mat-form-field>
                     <mat-hint>
                       <span class="tc-red-600">
                         <span [hidden]="!genderForm.errors?.required">Required</span>
@@ -71,14 +74,16 @@
                       </span>
                     </mat-hint>
                   </div>
-                  <div layout-gt-xs="row" layout-margin>
-                    <mat-select flex="50" #affiliationForm="ngModel" pattern="^((?!Unknown).)*$" placeholder="Affiliation" [(ngModel)]="user && user.mpAffiliation"
-                      (ngModelChange)="updatePayGradeList()" invalidAffiliation="Unknown" name="affiliation" required>
-                      <mat-option *ngFor="let affiliation of affiliationList | filterUnknownPipe" [value]="affiliation.value">
-                        {{affiliation.value}}
-                      </mat-option>
-                      <mat-option value="Unknown">[Select Your Military Affiliation]</mat-option>
-                    </mat-select>
+                  <div class="pad-left-md">
+                    <mat-form-field>
+                      <mat-select #affiliationForm="ngModel" pattern="^((?!Unknown).)*$" placeholder="Affiliation" [(ngModel)]="user && user.mpAffiliation"
+                        (ngModelChange)="updatePayGradeList()" invalidAffiliation="Unknown" name="affiliation" required>
+                        <mat-option *ngFor="let affiliation of affiliationList | filterUnknownPipe" [value]="affiliation.value">
+                          {{affiliation.value}}
+                        </mat-option>
+                        <mat-option value="Unknown">[Select Your Military Affiliation]</mat-option>
+                      </mat-select>
+                    </mat-form-field>
                     <mat-hint>
                       <span class="tc-red-600">
                         <span [hidden]="!affiliationForm.errors?.required">Required</span>
@@ -86,14 +91,16 @@
                       </span>
                     </mat-hint>
                   </div>
-                  <div layout-gt-xs="row" layout-margin>
-                    <mat-select flex="50" #componentForm="ngModel" placeholder="Military Component" [(ngModel)]="user && user.mpComponent" pattern="^((?!Unknown).)*$"
-                      name="militaryComponent" required>
-                      <mat-option *ngFor="let component of componentList | filterUnknownPipe" [value]="component.value">
-                        {{component.value}}
-                      </mat-option>
-                      <mat-option value="Unknown">[Select Your Military Component]</mat-option>
-                    </mat-select>
+                  <div class="pad-left-md">
+                    <mat-form-field>
+                      <mat-select #componentForm="ngModel" placeholder="Military Component" [(ngModel)]="user && user.mpComponent" pattern="^((?!Unknown).)*$"
+                        name="militaryComponent" required>
+                        <mat-option *ngFor="let component of componentList | filterUnknownPipe" [value]="component.value">
+                          {{component.value}}
+                        </mat-option>
+                        <mat-option value="Unknown">[Select Your Military Component]</mat-option>
+                      </mat-select>
+                    </mat-form-field>
                     <mat-hint>
                       <span class="tc-red-600">
                         <span [hidden]="!componentForm.errors?.required">Required</span>
@@ -101,14 +108,16 @@
                       </span>
                     </mat-hint>
                   </div>
-                  <div layout-gt-xs="row" layout-margin>
-                    <mat-select flex="50" #paygradeForm="ngModel" placeholder="Paygrade" [(ngModel)]="user && user.mpPaygrade" pattern="^((?!Unknown).)*$"
-                      name="paygrade" required>
-                      <mat-option *ngFor="let grade of payGradeList | filterUnknownPipe" [value]="grade.prop">
-                        {{grade.value}}
-                      </mat-option>
-                      <mat-option value="Unknown">[Select Your Paygrade]</mat-option>
-                    </mat-select>
+                  <div class="pad-left-md">
+                    <mat-form-field>
+                      <mat-select #paygradeForm="ngModel" placeholder="Paygrade" [(ngModel)]="user && user.mpPaygrade" pattern="^((?!Unknown).)*$"
+                        name="paygrade" required>
+                        <mat-option *ngFor="let grade of payGradeList | filterUnknownPipe" [value]="grade.prop">
+                          {{grade.value}}
+                        </mat-option>
+                        <mat-option value="Unknown">[Select Your Paygrade]</mat-option>
+                      </mat-select>
+                    </mat-form-field>
                     <mat-hint>
                       <span class="tc-red-600">
                         <span [hidden]="!paygradeForm.errors?.required">Required</span>
