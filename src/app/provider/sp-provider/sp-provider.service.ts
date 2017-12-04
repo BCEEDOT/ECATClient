@@ -77,6 +77,8 @@ export class SpProviderService {
     return this.dialog.open(CommentDialog, {
       disableClose: true,
       //hasBackdrop: true,
+      height: 'auto',
+      width: '600px',
       data: {
         comment: comment,
       }
