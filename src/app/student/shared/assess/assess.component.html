@@ -38,11 +38,14 @@
         <button mat-button (click)="assess(peer.studentId)">
           <mat-icon>{{peer?.assessText}}</mat-icon> Assessment</button>
       </span>
-      <span flex="60" class="pad-right-lg md-body-1 tc-grey-500">
+      <span *ngIf="peer?.commentText === 'not_interested'" flex="60" class="pad-right-lg">
+
+      </span>
+      <span *ngIf="peer?.commentText !== 'not_interested'" flex="60" class="pad-right-lg md-body-1 tc-grey-500">
         <button mat-button *ngIf="peer?.commentText !== 'not_interested'" (click)="comment(peer)">
           <mat-icon>{{peer?.commentText}}</mat-icon> Comment</button>
-        <span class="pad-left-sm" *ngIf="peer?.commentText === 'not_interested'">
-          <mat-icon class="tab-icon">{{peer?.commentText}}</mat-icon> Comment</span>
+        <!-- <span class="pad-left-sm" *ngIf="peer?.commentText === 'not_interested'">
+          <mat-icon class="tab-icon">{{peer?.commentText}}</mat-icon> Comment</span> -->
       </span>
       <span flex></span>
     </mat-list-item>

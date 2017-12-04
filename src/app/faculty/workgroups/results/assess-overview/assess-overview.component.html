@@ -9,7 +9,7 @@
   <mat-divider></mat-divider>
   <ng-template let-memberResult let-last="last" ngFor [ngForOf]="membersResults">
     <mat-list-item>
-      <mat-icon mat-list-avatar>person</mat-icon>
+      <mat-icon matListAvatar>person</mat-icon>
       <span class="pad-left-sm" fxFlex="40">{{memberResult?.rankName}} </span>
       <span class="pad-left-md md-title" fxFlex="10">{{memberResult?.resultForStudent?.finalStrat}}</span>
       <span fxFlex="20" class="text-center">

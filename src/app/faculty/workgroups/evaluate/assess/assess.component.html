@@ -1,14 +1,17 @@
   <mat-list>
     <ng-template let-member let-last="last" ngFor [ngForOf]="groupMembers">
       <mat-list-item>
-        <mat-icon mat-list-avatar>person</mat-icon>
+        <mat-icon matListAvatar>person</mat-icon>
         <h3 matLine> {{member?.rankName}} </h3>
         <span flex="70" class="pad-right-lg md-body-1 tc-grey-500">
           <button mat-button [routerLink]="['assess/' + member.studentId]"><mat-icon>{{member?.assessText}}</mat-icon> Assessment</button>
         </span>
-        <span flex="60" class="pad-right-lg md-body-1 tc-grey-500">
+        <span flex="60" *ngIf="member?.commentText === 'not_interested'" class="pad-right-lg">
+
+        </span>
+        <span flex="60" *ngIf="member?.commentText !== 'not_interested'" class="pad-right-lg md-body-1 tc-grey-500">
           <button mat-button *ngIf="member?.commentText !== 'not_interested'"  (click)="comment(member)"><mat-icon>{{member?.commentText}}</mat-icon> Comment</button>
-          <span class="pad-left-sm" *ngIf="member?.commentText === 'not_interested'"><mat-icon>{{member?.commentText}}</mat-icon> Comment</span>
+          <!-- <span class="pad-left-sm" *ngIf="member?.commentText === 'not_interested'"><mat-icon>{{member?.commentText}}</mat-icon>Comment</span> -->
         </span>
         <span flex></span>
       </mat-list-item>

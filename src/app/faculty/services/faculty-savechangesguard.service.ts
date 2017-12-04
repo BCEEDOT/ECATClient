@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot } from '@ang
 import { TdDialogService } from '@covalent/core';
 import { Observable, Observer } from 'rxjs/Rx';
 
+import { FacStratResponse } from "./../../core/entities/faculty";
 import { FacultyComponent } from "../faculty.component";
 import { FacultyDataContextService } from "../services/faculty-data-context.service";
 
@@ -13,9 +14,28 @@ export class FacultySaveChangesGuard implements CanDeactivate<FacultyComponent> 
 
   canDeactivate(facultyComponent: FacultyComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot): boolean {
 
-    let hasChanges = this.facultyDataContext.hasChanges();
+    let changes = [];
+    changes = this.facultyDataContext.getChanges();
 
-    if (!hasChanges) {
+
+    changes = changes.filter(change => {
+      if (change.entityType.shortName === 'FacStratResponse') {
+        const stratResponse = change as FacStratResponse;
+        if (stratResponse.stratPosition === 0) {
+          console.log('This strat response was just added');          
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    });
+
+    console.log(changes);
+
+
+    if (changes.length === 0) {
       return true;
     }
 

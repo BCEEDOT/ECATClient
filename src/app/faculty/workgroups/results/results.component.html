@@ -2,11 +2,14 @@
   <mat-card>
     <div fxLayout="row" fxLayoutAlign="center center">
       <img class="pad-top-md" src="../../../../assets/resultsloading.png" height="150" width="150">
-    </div>  
-     <h4 class="text-center pad-bottom-md">Results loading... please wait. </h4> 
+    </div>
+    <h4 class="text-center pad-bottom-md">Results loading... please wait. </h4>
     <mat-card-footer>
-      <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
+      <div class="progress-bar-container">
+        <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
+      </div>
     </mat-card-footer>
+
   </mat-card>
 </div>
 
@@ -20,7 +23,9 @@
         {{workGroupName}} - Results
       </div>
       <span fxFlex></span>
-      <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+      <button mat-icon-button (click)="this.refreshData()">
+        <mat-icon>autorenew</mat-icon>
+      </button>
     </mat-card-title>
     <mat-tab-group>
       <mat-tab>

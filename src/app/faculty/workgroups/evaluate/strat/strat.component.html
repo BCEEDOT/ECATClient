@@ -1,19 +1,19 @@
-<div *ngIf="showUnstrat" class="text-center pad-top-xs" style="color:grey">
+<div *ngIf="showUnstrat" class="text-center pad-top-sm" style="color:grey">
     Drag students from the left list to the right to stratify.
   </div>
 
-<div fxLayout="row" fxLayoutGap="75px" class="pad-left-md pad-right-md pad-bottom-md pad-top-sm">
-  <mat-list id="unstratted" [dragula]='"bag-one"' [dragulaModel]='unstratted' fxFlex *ngIf='showUnstrat && !readOnly' style="min-height: 50px; border-width: 1px; border-style:solid; border-color:lightgrey;">
+<div fxLayout="row" fxLayoutGap="75px" class="pad-left-md pad-right-md pad-bottom-md pad-top-md">
+  <mat-list id="unstratted" [dragula]='"bag-one"' [dragulaModel]='unstratted' fxFlex *ngIf='showUnstrat && !readOnly' style="background-color: #f9f9f9; min-height: 50px; border-width: 2px; border-style:dashed; border-color: #e0e0e0; padding-bottom: 10px">
     <mat-list-item *ngFor="let unstrat of unstratted" [id]="unstrat?.assesseePersonId" >
-      <button mat-raised-button fxFlex class="text-left" style="cursor: move;"><mat-icon>reorder</mat-icon> {{unstrat?.studentAssessee?.rankName}}</button>
+      <button mat-raised-button fxFlex class="text-left" style="cursor: move;"><mat-icon>drag_handle</mat-icon> {{unstrat?.studentAssessee?.rankName}}</button>
     </mat-list-item>
   </mat-list>
   
-  <mat-list id="stratted" [dragula]='"bag-one"' [dragulaModel]='stratted' fxFlex style="min-height: 50px; border-width: 1px; border-style:solid; border-color:lightgrey; padding-bottom:5px; " *ngIf='!readOnly' [ngClass]="(!showUnstrat)?'notopen':''">
+  <mat-list id="stratted" [dragula]='"bag-one"' [dragulaModel]='stratted' fxFlex style="background-color: #f9f9f9; min-height: 50px; border-width: 2px; border-style:dashed; border-color:#e0e0e0; padding-bottom:10px; " *ngIf='!readOnly' [ngClass]="(!showUnstrat)?'notopen':''">
     <mat-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
       <button mat-raised-button fxFlex style="cursor: move;">
         <div fxFlexLayout="row"  fxLayoutGap="10px">
-          <mat-icon style="padding-top: 7px; vertical-align: middle;">reorder</mat-icon>
+          <mat-icon style="padding-top: 7px; vertical-align: middle;">drag_handle</mat-icon>
           <div>{{strat?.studentAssessee?.rankName}}</div>
           <div fxFlex></div> 
           <div><span style="color: #3e6d92; font-size:large"><strong>{{strat?.stratPosition}}</strong></span></div>

@@ -9,7 +9,7 @@
           {{selStudent?.rankName}} - Result Details
         </div>
         <span fxFlex></span>
-        <button mat-raised-button [mat-menu-trigger-for]="menu" class="selected pad-right-md">Select Student<mat-icon style="color:white">expand_more</mat-icon></button>
+        <button mat-raised-button [mat-menu-trigger-for]="menu" class="selected pad-right-xl">Select Student <mat-icon style="color:white">expand_more</mat-icon></button>
         <span></span>
         <mat-menu #menu="matMenu">
           <button *ngFor="let mem of groupMems" mat-menu-item (click)="selStudent = mem">{{mem.rankName}}</button>
