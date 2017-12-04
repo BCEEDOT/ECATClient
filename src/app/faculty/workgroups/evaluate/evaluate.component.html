@@ -1,15 +1,23 @@
 <div class="width pad-bottom-xxl">
   <ng-template tdLoading [tdLoadingUntil]="!isLoading" tdLoadingStrategy="overlay">
     <mat-card>
-      <mat-card-title fxLayout="row">
-        <button mat-raised-button color="primary" (click)="back()">Back</button>
-        <div fxFlexOffset="20%" fxFlexAlign="center">
-          {{wgName}} - {{workGroup.mpSpStatus}}
+      <mat-card-title>
+        <div fxLayout="row">
+          <div fxFlex>
+            <button mat-raised-button color="primary" (click)="back()">Back</button>
+          </div>
+        
+          <div fxFlex="grow" class="text-center">
+            {{wgName}} - {{workGroup.mpSpStatus}}
+          </div>
+
+          <div fxFlex></div>
+          <div fxLayout="row">
+            <button mat-raised-button *ngIf="workGroup.mpSpStatus === statusMap.underReview || workGroup.mpSpStatus === statusMap.reviewed" (click)="this.reopenFlight()">{{reopenBtnText}}</button>
+            <button mat-raised-button *ngIf="workGroup.mpSpStatus === statusMap.open || workGroup.mpSpStatus === statusMap.underReview || workGroup.mpSpStatus === statusMap.reviewed" (click)="this.reviewFlight()" [ngClass]="canReview ? 'can-review' : 'no-review'" [disabled]="workGroup.mpSpStatus === statusMap.created">{{reviewBtnText}}</button>
+            <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+          </div>
         </div>
-        <span fxFlex></span>
-        <button mat-raised-button *ngIf="workGroup.mpSpStatus === statusMap.underReview || workGroup.mpSpStatus === statusMap.reviewed" (click)="this.reopenFlight()">{{reopenBtnText}}</button>
-        <button mat-raised-button *ngIf="workGroup.mpSpStatus === statusMap.open || workGroup.mpSpStatus === statusMap.underReview || workGroup.mpSpStatus === statusMap.reviewed" (click)="this.reviewFlight()" [ngClass]="canReview ? 'can-review' : 'no-review'" [disabled]="workGroup.mpSpStatus === statusMap.created">{{reviewBtnText}}</button>
-        <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
       </mat-card-title>
       <mat-tab-group [(selectedIndex)]="tabIndex">
         <mat-tab>
