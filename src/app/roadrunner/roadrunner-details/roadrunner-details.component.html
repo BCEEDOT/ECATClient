@@ -47,6 +47,8 @@
                 <input matInput [min]="minDate" [max]="maxDate" #leaveForm="ngModel" [ngModelOptions]="{standalone: true}" [matDatepicker]="leave"
                   [(ngModel)]="oneEvent.leaveDate" placeholder="Leave Date" required/>
                 <!-- <button matSuffix [matDatepickerToggle]="leave"></button> -->
+                <mat-datepicker-toggle matSuffix [for]="leave"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #leave [startAt]="oneEvent.leaveDate"></mat-datepicker>
 
               </mat-form-field>
               <!-- <mat-datepicker #leave [touchUi]="touch" [startAt]="oneEvent.leaveDate"></mat-datepicker> -->
@@ -59,6 +61,8 @@
                 <!-- <button matSuffix [matDatepickerToggle]="return"></button> -->
                 <input matInput [min]="oneEvent.leaveDate" [max]="maxDate" #returnForm="ngModel" [ngModelOptions]="{standalone: true}" [matDatepicker]="return"
                   placeholder="Return Date" [(ngModel)]="oneEvent.returnDate" required/>
+                  <mat-datepicker-toggle matSuffix [for]="return"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi="true" #return [startAt]="oneEvent.returnDate"></mat-datepicker>
                 <mat-error *ngIf="returnForm.hasError('matDatepickerMin')">Please select date after your leave date!</mat-error>
 
               </mat-form-field>
