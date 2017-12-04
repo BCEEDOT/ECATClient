@@ -45,6 +45,10 @@ mat-nav-list{
      padding-left: 2%;
 }
 
+.mat-list-item.mat-2-line{
+    height: 55px;
+}
+
 h4 {
     color:#3e6d92; 
     margin-bottom:5px;
@@ -69,7 +73,7 @@ h4 {
     border-left-style: solid;
 }
 
-:host /deep/ { 
+::ng-deep { 
     .mat-list .mat-list-item.mat-2-line .mat-list-item-content, .mat-nav-list .mat-list-item.mat-2-line .mat-list-item-content {
         height: 55px;
     }

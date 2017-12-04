@@ -199,19 +199,19 @@ export class AssessComponent implements OnInit {
   getResponseString(inv: IStudSpInventory | IFacSpInventory): string {
     switch (inv.responseForAssessee.mpItemResponse) {
       case MpSpItemResponse.iea:
-        return 'Always Ineffective';
+        return 'Ineffective Always';
       case MpSpItemResponse.ieu:
-        return 'Usually Ineffective';
+        return 'Ineffective Usually';
       case MpSpItemResponse.nd:
         return 'Not Displayed';
       case MpSpItemResponse.eu:
-        return 'Usually Effective';
+        return 'Effective Usually';
       case MpSpItemResponse.ea:
-        return 'Always Effective';
+        return 'Effective Always';
       case MpSpItemResponse.heu:
-        return 'Usually Highly Effective';
+        return 'Highly Effective Usually';
       case MpSpItemResponse.hea:
-        return 'Always Highly Effective';
+        return 'Highly Effective Always';
       default:
         return '';
     }

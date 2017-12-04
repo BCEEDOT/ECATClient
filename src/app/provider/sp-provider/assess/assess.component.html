@@ -122,7 +122,7 @@
   <div fxShow fxHide.xs fxHide.sm>
     <mat-nav-list>
       <h4>Behaviors</h4>
-      <a mat-list-item class="md-2-line" *ngFor="let inventory of inventories" (click)="activeInventory=inventory; saveCheck()"
+      <a mat-list-item *ngFor="let inventory of inventories" (click)="activeInventory=inventory; saveCheck()"
         [ngClass]="{'inv-selected': activeInventory.id===inventory.id}">
         <p matLine class="md-title" style="color: #3e6d92">{{getShortBehavior(inventory)}}</p>
         <p matLine [class]="inventory.responseForAssessee.mpItemResponse">{{getResponseString(inventory)}}</p>
