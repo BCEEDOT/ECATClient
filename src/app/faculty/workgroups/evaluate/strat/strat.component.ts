@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import { MdSnackBar } from '@angular/material';
+
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from "rxjs/Subscription";
 import { DragulaService } from "ng2-dragula";
 
+import { GlobalService } from "../../../../core/services/global.service";
 import { WorkGroup, CrseStudentInGroup, FacStratResponse } from "../../../../core/entities/faculty";
 import { SpProviderService } from "../../../../provider/sp-provider/sp-provider.service";
 import { FacultyDataContextService } from "../../../services/faculty-data-context.service";
@@ -30,7 +31,8 @@ export class StratComponent implements OnInit, OnDestroy {
     showUnstrat: boolean = false;
 
     constructor(private spProvider: SpProviderService, private facultyDataContext: FacultyDataContextService, private loadingService: TdLoadingService,
-        private dialogService: TdDialogService, private snackBarService: MdSnackBar, private route: ActivatedRoute, private facWorkGroupService: FacWorkgroupService,
+        private dialogService: TdDialogService, private route: ActivatedRoute, private facWorkGroupService: FacWorkgroupService,
+        private global: GlobalService,
         private dragulaService: DragulaService,) {
 
         this.route.params.subscribe(params => {
@@ -133,7 +135,7 @@ export class StratComponent implements OnInit, OnDestroy {
                 //     this.activate();
                 // }
                 
-                this.snackBarService.open('Changes Discarded', 'Dismiss', { duration: 2000 });
+                this.global.showSnackBar('Changes Discarded');
                 //this.location.back();
             }
         });
@@ -206,7 +208,7 @@ export class StratComponent implements OnInit, OnDestroy {
                     });
                 this.facWorkGroupService.stratComplete(true);
                 this.activate();
-                this.snackBarService.open("Success, Strats Updated!", 'Dismiss', { duration: 2000 });
+                this.global.showSnackBar('Success, Strats Updated!');
             }).catch((error) => {
                 this.loadingService.resolve();
                 this.dialogService.openAlert({

@@ -1,20 +1,37 @@
-<md-sidenav-container fullscreen>
-  <md-sidenav #sidenav mode="side" color="primary" opened="true" style="width:257px;border-right:1px solid #ccc">
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav mode="side" color="primary" opened="true" style="width:257px;border-right:1px solid #ccc">
     <div flex class="md-content ">
-      <md-nav-list>
-        <td-expansion-panel *ngIf="readOnly" label="Unassigned Students"  [expand]="isUnassignedPanelExpanded">
-          <div id="unassigned" style="min-height: 50px;">
-            <p [id]="unassignedStudent.studentId" [myHighlight]="unassignedStudent.highlighted" (mouseover)="hovered = unassignedStudent.studentId"
-              (mouseout)="hovered = null" fxFlexOffset="5%" class="push-none pad-xs md-caption" *ngFor="let unassignedStudent of unassignedStudents">
-              {{unassignedStudent.rankName}}</p>
+      <mat-nav-list>
+        <td-expansion-panel *ngIf="readOnly" label="Unassigned Students" [expand]="isUnassignedPanelExpanded">
+          <div fxLayout="column" id="unassigned" style="min-height: 50px;">
+            <p [id]="unassignedStudent.studentId" 
+              [myHighlight]="unassignedStudent.highlighted" 
+              (mouseover)="hovered = unassignedStudent.studentId"
+              (mouseout)="hovered = null" 
+              class="push-none pad-sm md-caption"
+              style="padding-left: 16px;"
+              *ngFor="let unassignedStudent of unassignedStudents">
+                {{unassignedStudent.rankName}}
+            </p>
           </div>
         </td-expansion-panel>
-        <td-expansion-panel *ngIf="!readOnly" label="Unassigned Students"  [expand]="isUnassignedPanelExpanded">
-          <div id="unassigned" style="min-height: 50px;" [dragula]='"bag-one"' [dragulaModel]='unassignedStudents'>
-            <p [id]="unassignedStudent.studentId" [myHighlight]="unassignedStudent.highlighted" [ngClass]="{'selected': hovered === unassignedStudent.studentId}"
-              (mouseover)="hovered = unassignedStudent.studentId" (mouseout)="hovered = null" fxFlexOffset="5%" class="push-none pad-xs md-caption"
-              *ngFor="let unassignedStudent of unassignedStudents" (click)="studentClick(unassignedStudent)">
-              {{unassignedStudent.rankName}}</p>
+        <td-expansion-panel *ngIf="!readOnly" label="Unassigned Students" [expand]="isUnassignedPanelExpanded">
+          <div fxLayout="column" id="unassigned" 
+              style="min-height: 50px;" 
+              [dragula]='"bag-one"' 
+              [dragulaModel]='unassignedStudents'>
+              <p [id]="unassignedStudent.studentId" 
+                  [myHighlight]="unassignedStudent.highlighted" 
+                  [ngClass]="{'selected': hovered === unassignedStudent.studentId}"
+                  (mouseover)="hovered = unassignedStudent.studentId" 
+                  (mouseout)="hovered = null" 
+                  class="push-none pad-sm md-caption"
+                  style="padding-left: 16px;"
+                  *ngFor="let unassignedStudent of unassignedStudents" 
+                  (click)="studentClick(unassignedStudent)">
+
+              {{unassignedStudent.rankName}}
+            </p>
           </div>
         </td-expansion-panel>
         <td-expansion-panel label="Roster Changes" [disabled]="changes.length === 0">
@@ -25,78 +42,84 @@
               {{change.changeDescription}}
             </p>
             <div fxFlex></div>
-            <a md-icon-button mdTooltip="Click to Undo Change" (click)="undoChange(change)">
-              <md-icon>close</md-icon>
+            <a mat-icon-button matTooltip="Click to Undo Change" (click)="undoChange(change)">
+              <mat-icon>close</mat-icon>
             </a>
           </div>
 
         </td-expansion-panel>
-      </md-nav-list>
+      </mat-nav-list>
     </div>
-  </md-sidenav>
+  </mat-sidenav>
+  <!-- Search/save/back/reset/expand all bar -->
   <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" class="pad-right-sm pad-left-sm">
-    <button type="button" md-raised-button color="primary"  [routerLink]="['../..']">Back</button>
+    <button type="button" mat-raised-button color="primary" [routerLink]="['../..']">Back</button>
     <td-search-box [showUnderline]="true" (search)="search($event)" (clear)="clear($event)" backIcon="arrow_back" placeholder="Search here"
       [alwaysVisible]="false" flex></td-search-box>
-    <button [ngClass]="canSaveFlag ? '' : 'can-save'" [disabled]="!changesToSave()" (click)="save()" type="button" md-raised-button color="primary">Save</button>
-    <button (click)="reset(false)" type="button" md-raised-button color="primary">Reset</button>
-    <md-slide-toggle class="example-margin" [(ngModel)]="allExpanded" (change)="expandOrCollapseAll()" >
+    <button [ngClass]="canSaveFlag ? '' : 'can-save'" [disabled]="!changesToSave()" (click)="save()" type="button" mat-raised-button
+      color="primary">Save</button>
+    <button (click)="reset(false)" type="button" mat-raised-button color="primary">Reset</button>
+    <mat-slide-toggle class="example-margin" [(ngModel)]="allExpanded" (change)="expandOrCollapseAll()">
       {{(allExpanded) ? 'Collapse' : 'Expand'}} All
-    </md-slide-toggle>
+    </mat-slide-toggle>
   </div>
+
   <div fxLayout="row" fxLayoutAlign="space-around start" fxLayoutWrap class="pad-bottom-xl">
     <div fxFlex="25%" *ngFor="let workGroup of workGroups">
-      <md-card *ngIf="readOnly">
+      <!-- Workgroup cards if the group published  -->
+      <mat-card *ngIf="readOnly">
         <td-expansion-panel [expand]="workGroup.isExpanded">
           <ng-template td-expansion-panel-label>
-            <md-icon>lock_outline</md-icon>
+            <mat-icon>lock_outline</mat-icon>
             <span>{{workGroup.defaultName}} - ({{workGroup.groupMembers.length}})</span>
           </ng-template>
           <td-expansion-summary>
             <div fxLayout="row" class="bgc-grey-50 pad-left-md pad-right-md pad-top-sm">
-              <span fxFlex>{{(workGroup.customName) ? workGroup.customName : 'N/A'}}</span>
-              <a fxFlexAlign="end center" md-icon-button mdTooltip="Click to edit Flight" (click)="editGroup(workGroup)">
-                <md-icon>edit</md-icon>
+              <span fxFlex class="pad-top-sm">{{(workGroup.customName) ? workGroup.customName : 'N/A'}}</span>
+              <a fxFlexAlign="end center" mat-icon-button matTooltip="Click to edit Flight" (click)="editGroup(workGroup)">
+                <mat-icon>edit</mat-icon>
               </a>
             </div>
           </td-expansion-summary>
-          <md-divider></md-divider>
-          <md-card-content>
+          <mat-divider></mat-divider>
+          <mat-card-content>
             <div style="min-height: 50px" [id]="workGroup.workGroupId">
               <p *ngFor="let groupMember of workGroup.groupMembers trackBy:groupMember?.studentId" [id]="groupMember.studentId" [myHighlight]="groupMember.highlighted"
                 (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="md-caption push-none pad-xs">
                 {{groupMember.rankName}}
               </p>
             </div>
-          </md-card-content>
+          </mat-card-content>
         </td-expansion-panel>
-      </md-card>
+      </mat-card>
 
-
-      <md-card *ngIf="!readOnly">
-        <td-expansion-panel  [expand]="workGroup.isExpanded">
+      <!-- Workgroup cards if the group is not published....Then checks if workgroup is open/created  -->
+      <mat-card *ngIf="!readOnly">
+        <td-expansion-panel [expand]="workGroup.isExpanded">
           <ng-template td-expansion-panel-label>
-            <md-icon *ngIf="!workGroup.canEdit">lock_outline</md-icon>
+            <mat-icon *ngIf="!workGroup.canEdit">lock_outline</mat-icon>
             <span>{{workGroup.defaultName}} - ({{workGroup.groupMembers.length}})</span>
           </ng-template>
           <td-expansion-summary>
             <div fxLayout="row" class="bgc-grey-50 pad-left-md pad-right-md pad-top-sm">
-              <span fxFlex>{{(workGroup.customName) ? workGroup.customName : 'N/A'}}</span>
-              <a fxFlexAlign="end center" md-icon-button mdTooltip="Click to edit Flight" (click)="editGroup(workGroup)">
-                <md-icon>edit</md-icon>
-              </a>
+              <span fxFlex class="pad-top-sm">{{(workGroup.customName) ? workGroup.customName : 'N/A'}}</span>
+              <div class="pull-top-sm">
+                <a fxFlexAlign="end center" mat-icon-button matTooltip="Click to edit Flight" (click)="editGroup(workGroup)">
+                  <mat-icon>edit</mat-icon>
+                </a>
+              </div>
             </div>
           </td-expansion-summary>
-          <md-divider></md-divider>
-          <md-card-content *ngIf="!workGroup.canEdit">
+          <mat-divider></mat-divider>
+          <mat-card-content *ngIf="!workGroup.canEdit">
             <div style="min-height: 50px" [id]="workGroup.workGroupId">
               <p *ngFor="let groupMember of workGroup.groupMembers trackBy:groupMember?.studentId" [id]="groupMember.studentId" [myHighlight]="groupMember.highlighted"
                 (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="md-caption push-none pad-xs">
                 {{groupMember.rankName}}
               </p>
             </div>
-          </md-card-content>
-          <md-card-content *ngIf="workGroup.canEdit">
+          </mat-card-content>
+          <mat-card-content *ngIf="workGroup.canEdit">
             <div style="min-height: 50px" [id]="workGroup.workGroupId" [dragula]='"bag-one"' [dragulaModel]='workGroup.groupMembers'>
               <p *ngFor="let groupMember of workGroup.groupMembers trackBy:groupMember?.studentId" [id]="groupMember.studentId" [myHighlight]="groupMember.highlighted"
                 [ngClass]="{'selected': hovered === groupMember.studentId}" (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null"
@@ -104,13 +127,13 @@
                 {{groupMember.rankName}}
               </p>
             </div>
-          </md-card-content>
-          </td-expansion-panel>
-      </md-card>
+          </mat-card-content>
+        </td-expansion-panel>
+      </mat-card>
     </div>
   </div>
-</md-sidenav-container>
-<a *ngIf="!readOnly" md-fab (click)="addGroup()" color="primary" class="mat-fab-bottom-right fixed fab-pad"
-mdTooltip="Add Flight" mdTooltipPosition="left">
-  <md-icon>add</md-icon>
+</mat-sidenav-container>
+<a *ngIf="!readOnly" mat-fab (click)="addGroup()" color="primary" class="mat-fab-bottom-right fixed fab-pad" matTooltip="Add Flight"
+  matTooltipPosition="left">
+  <mat-icon>add</mat-icon>
 </a>

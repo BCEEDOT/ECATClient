@@ -1,5 +1,5 @@
-import { EntityBase } from '../EntityBase';
-import { FacSpComment } from './FacSpComment';
+import { EntityBase } from '../entitybase';
+import { FacSpComment } from './facSpComment';
 
 /// <code-import> Place custom imports between <code-import> tags
 

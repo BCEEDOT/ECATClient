@@ -1,28 +1,30 @@
 <td-layout-nav logo="" toolbarTitle="ECAT - Cognitive Assessment">
-
+    <button mat-icon-button td-menu-button tdLayoutToggle>
+        <mat-icon>menu</mat-icon>
+    </button>
   <div td-toolbar-content fxLayout="row" fxLayoutAlign="center center" fxFlex>
     <span fxFlex></span>
-    <a md-icon-button mdTooltip="Docs" href="https://teradata.github.io/covalent/" target="_blank">
-      <md-icon>chrome_reader_mode</md-icon>
+    <a mat-icon-button matTooltip="Docs" href="https://teradata.github.io/covalent/" target="_blank">
+      <mat-icon>chrome_reader_mode</mat-icon>
     </a>
-    <a md-icon-button mdTooltip="Github" href="https://github.com/teradata/covalent" target="_blank">
-      <md-icon svgIcon="assets:github"></md-icon>
+    <a mat-icon-button matTooltip="Github" href="https://github.com/teradata/covalent" target="_blank">
+      <mat-icon svgIcon="assets:github"></mat-icon>
     </a>
   </div>
 
   <div class="width">
 
-    <md-card>
+    <mat-card>
 
-      <md-card-title fxLayoutAlign="center center">{{cogName}}</md-card-title>
+      <mat-card-title fxLayoutAlign="center center">{{cogName}}</mat-card-title>
 
-      <md-divider></md-divider>
+      <mat-divider></mat-divider>
 
-      <md-card-content *ngIf="showInstructions">
+      <mat-card-content *ngIf="showInstructions">
         <div [innerHTML]="cogInventories[0].instrument.cogInstructions"></div>
-      </md-card-content>
+      </mat-card-content>
 
-      <md-card-content *ngIf="!showInstructions">
+      <mat-card-content *ngIf="!showInstructions">
         <div [ngSwitch]="cogAssessId" tdMediaToggle="gt-xs" class="pad-sm">
           <!--matches component variable -->
           <ecpe-assess *ngSwitchCase="1"> </ecpe-assess>
@@ -30,22 +32,22 @@
           <ecmspe-assess *ngSwitchCase="3"> </ecmspe-assess>
           <etmpre-assess *ngSwitchCase="4"> </etmpre-assess>
         </div>
-      </md-card-content>
+      </mat-card-content>
 
-      <md-divider></md-divider>
+      <mat-divider></mat-divider>
 
-      <md-card-actions *ngIf="showInstructions">
-        <button md-button color="primary" (click)="showInstructions = false">Continue Assessment</button>
-      </md-card-actions>
+      <mat-card-actions *ngIf="showInstructions">
+        <button mat-button color="primary" (click)="showInstructions = false">Continue Assessment</button>
+      </mat-card-actions>
 
-      <md-card-actions fxLayout="row" *ngIf="!showInstructions">
-        <button md-button color="primary" (click)="showInstructions = true">Show Instructions</button>
+      <mat-card-actions fxLayout="row" *ngIf="!showInstructions">
+        <button mat-button color="primary" (click)="showInstructions = true">Show Instructions</button>
         <div fxFlex></div>
-        <button md-button color="primary" (click)="cancelAssess();">Cancel</button>
-        <button md-button color="primary" [disabled]="!readyToSave" (click)="saveAssess();">Complete Assessment</button>
-      </md-card-actions>
+        <button mat-button color="primary" (click)="cancelAssess();">Cancel</button>
+        <button mat-button color="primary" [disabled]="!readyToSave" (click)="saveAssess();">Complete Assessment</button>
+      </mat-card-actions>
 
-    </md-card>
+    </mat-card>
 
   </div>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild, Inject } from '@angular/core';
-import { MD_DIALOG_DATA, MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 import { TdDialogService } from "@covalent/core";
 import { CrseStudentInGroup } from "../../../../core/entities/lmsadmin/index";
 
@@ -18,7 +18,7 @@ export class MoveStudentDialogComponent implements OnInit {
   selFlight: string = '';
   unassign: boolean = false;
 
-  constructor(private dialogService: TdDialogService, public dialogRef: MdDialogRef<MoveStudentDialogComponent>, @Inject(MD_DIALOG_DATA) public data: any) { }
+  constructor(private dialogService: TdDialogService, public dialogRef: MatDialogRef<MoveStudentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.student = this.data.student;

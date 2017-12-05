@@ -1,48 +1,50 @@
-<md-card class="width">
-  <md-card-title> Edit Course Information </md-card-title>
-  <md-card-content>
+<mat-card class="width">
+  <mat-card-title class="text-center"> Edit Course Information </mat-card-title>
+  <mat-card-content>
     <form #courseInfoForm="ngForm">
         <div layout-gt-xs="row" layout-margin>
-          <md-input-container flex>
-            <input mdInput #classNumInput="ngModel" placeholder="Class Number" [(ngModel)]="course.classNumber" name="classNumber"
+          <mat-form-field flex>
+            <input matInput #classNumInput="ngModel" placeholder="Class Number" [(ngModel)]="course.classNumber" name="classNumber"
               maxlength="10" tdAutoTrim required/>
-            <md-hint>
+            <mat-hint>
               <span [hidden]="classNumInput.pristine" class="tc-red-600"></span>
-            </md-hint>
-          </md-input-container>
+            </mat-hint>
+          </mat-form-field>
         </div>
         <div layout-gt-xs="row" layout-margin>
-          <md-input-container flex>
-            <input mdInput [min]="minDate" [max]="maxDate" #startForm="ngModel" [ngModelOptions]="{standalone: true}" [mdDatepicker]="start"
+          <mat-form-field flex>
+            <input matInput [min]="minDate" [max]="maxDate" #startForm="ngModel" [ngModelOptions]="{standalone: true}" [matDatepicker]="start"
               [(ngModel)]="course.startDate" placeholder="Start Date" required/>
-            <button mdSuffix [mdDatepickerToggle]="start"></button>
-
-          </md-input-container>
-          <md-datepicker #start [touchUi]="touch" [startAt]="course.startDate"></md-datepicker>
+            <!-- <button matSuffix [matDatepickerToggle]="start"></button> -->
+            <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+            <mat-datepicker #start touchUi="false" [startAt]="course.startDate"></mat-datepicker>
+          </mat-form-field>
+          
         </div>
         <div layout-gt-xs="row" layout-margin>
-          <md-input-container flex>
-            <button mdSuffix [mdDatepickerToggle]="grad"></button>
-            <input mdInput [min]="course.startDate" [max]="maxDate" #gradForm="ngModel" [ngModelOptions]="{standalone: true}" [mdDatepicker]="grad"
+          <mat-form-field flex>
+            <!--button matSuffix [matDatepickerToggle]="grad"></button-->
+            <mat-datepicker-toggle matSuffix [for]="grad"></mat-datepicker-toggle>
+            <input matInput [min]="course.startDate" [max]="maxDate" #gradForm="ngModel" [ngModelOptions]="{standalone: true}" [matDatepicker]="grad"
               placeholder="Grad Date" [(ngModel)]="course.gradDate" required/>
-            <md-error *ngIf="gradForm.hasError('mdDatepickerMin')">Please select date after the start date!</md-error>
-
-          </md-input-container>
-          <md-datepicker #grad [touchUi]="touch" [startAt]="course.gradDate"></md-datepicker>
+            <mat-error *ngIf="gradForm.hasError('matDatepickerMin')">Please select date after the start date!</mat-error>
+            <mat-datepicker #grad touchUi="false" [startAt]="course.gradDate"></mat-datepicker>
+          </mat-form-field>
+          
         </div>
         <div layout-gt-xs="row" layout-margin>
-          <md-input-container flex>
-            <input mdInput #displayNameInput="ngModel" placeholder="Display Name" [(ngModel)]="course.name" name="name" tdAutoTrim required/>
-            <md-hint>
+          <mat-form-field flex>
+            <input matInput #displayNameInput="ngModel" placeholder="Display Name" [(ngModel)]="course.name" name="name" tdAutoTrim required/>
+            <mat-hint>
               <span [hidden]="displayNameInput.pristine" class="tc-red-600"></span>
-            </md-hint>
-          </md-input-container>
+            </mat-hint>
+          </mat-form-field>
         </div>
     </form>
-  </md-card-content>
-  <md-card-actions>
+  </mat-card-content>
+  <mat-card-actions>
     <span fxFlex></span>
-    <button md-raised-button color="primary" (click)="this.cancel()">Cancel</button>
-    <button md-raised-button color="primary" (click)="this.save()" [disabled]="!courseInfoForm.dirty && !startForm.dirty && !gradForm.dirty">Save</button>
-  </md-card-actions>
-</md-card>
+    <button mat-raised-button color="primary" (click)="this.cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="this.save()" [disabled]="(!courseInfoForm.dirty && !startForm.dirty && !gradForm.dirty) || courseInfoForm.invalid || startForm.invalid || gradForm.invalid">Save</button>
+  </mat-card-actions>
+</mat-card>

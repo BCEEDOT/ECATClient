@@ -1,28 +1,28 @@
 <div class="width">
-  <md-card>
-    <md-card-title>
-      <button md-raised-button color="primary" (click)="back()">Back</button>
+  <mat-card>
+    <mat-card-title>
+      <button mat-raised-button color="primary" (click)="back()">Back</button>
       <span fxFlex="100" class="text-center">{{wgName}} Status</span>
       <span fxFlex></span>
-      <button md-raised-button (click)="this.reviewFlight()" [ngClass]="canReview ? 'can-review' : 'no-review'" *ngIf="workGroup.mpSpStatus !== statusMap.created && workGroup.mpSpStatus !== statusMap.published">Review</button>
-      <button md-icon-button (click)="this.refreshData()"><md-icon>autorenew</md-icon></button>
-    </md-card-title>
-    <md-divider></md-divider>
-    <md-card-content>
-      <md-list>
-        <md-list-item>
+      <button mat-raised-button (click)="this.reviewFlight()" [ngClass]="canReview ? 'can-review' : 'no-review'" *ngIf="workGroup.mpSpStatus !== statusMap.created && workGroup.mpSpStatus !== statusMap.published">Review</button>
+      <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
           <span fxFlex="45"></span>
           <span fxFlex="10" class="text-center">SELF</span>
           <span fxFlex="10" class="text-center">PEER</span>
           <span fxFlex="10" class="text-center">STRATS</span>
           <span fxFlex="15" class="text-center">COMMENTS</span>
           <span fxFlex="20" class="text-center">RESPONSE AGGREGATES</span>
-        </md-list-item>
-        <md-list-item *ngFor="let student of members">
+        </mat-list-item>
+        <mat-list-item *ngFor="let student of members">
           <span fxFlex="45">{{student.rankName}}</span>
-          <span fxFlex="10" class="text-center"><md-icon *ngIf="student.check.isSelfDone">check</md-icon><md-icon *ngIf="!student.check.isSelfDone">clear</md-icon></span>
-          <span fxFlex="10" class="text-center"><md-icon *ngIf="student.check.sp.isDone">check</md-icon><md-icon *ngIf="!student.check.sp.isDone" mdTooltip={{student.check.sp.count}} mdTooltipPosition="above">clear</md-icon></span>
-          <span fxFlex="10" class="text-center"><md-icon *ngIf="student.check.strat.isDone">check</md-icon><md-icon *ngIf="!student.check.strat.isDone" mdTooltip={{student.check.strat.count}} mdTooltipPosition="above">clear</md-icon></span>
+          <span fxFlex="10" class="text-center"><mat-icon *ngIf="student.check.isSelfDone">check</mat-icon><mat-icon *ngIf="!student.check.isSelfDone">clear</mat-icon></span>
+          <span fxFlex="10" class="text-center"><mat-icon *ngIf="student.check.sp.isDone">check</mat-icon><mat-icon *ngIf="!student.check.sp.isDone" matTooltip={{student.check.sp.count}} matTooltipPosition="above">clear</mat-icon></span>
+          <span fxFlex="10" class="text-center"><mat-icon *ngIf="student.check.strat.isDone">check</mat-icon><mat-icon *ngIf="!student.check.strat.isDone" matTooltip={{student.check.strat.count}} matTooltipPosition="above">clear</mat-icon></span>
           <span fxFlex="15" class="text-center">{{student.numberOfAuthorComments}}</span>
           <span fxFlex="20" class="text-center">
           <ngx-charts-bar-horizontal-stacked
@@ -34,8 +34,8 @@
           </ngx-charts-bar-horizontal-stacked>
           <span *ngIf="!student.hasChartData">No Data</span>
         </span>
-        </md-list-item>
-      </md-list>
-    </md-card-content>
-  </md-card>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
 </div>

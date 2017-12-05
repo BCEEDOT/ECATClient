@@ -1,12 +1,15 @@
 <td-layout-nav logo="" toolbarTitle="ECAT - Road Runner">
-    <div td-toolbar-content fxLayout="row" fxLayoutAlign="center center" fxFlex>
-        <span fxFlex></span>
-        <a md-icon-button mdTooltip="Profile" routerLink="/profile">
-            <md-icon>account_circle</md-icon>
-        </a>
-    </div>
+  <button mat-icon-button td-menu-button tdLayoutToggle>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div td-toolbar-content fxLayout="row" fxLayoutAlign="center center" fxFlex>
+    <span fxFlex></span>
+    <a mat-icon-button matTooltip="Profile" routerLink="/profile">
+      <mat-icon>account_circle</mat-icon>
+    </a>
+  </div>
   <!--faculty display-->
-  <md-card *ngIf="persona.isFaculty">
+  <mat-card *ngIf="persona.isFaculty">
     <p></p>
     <div>
       <span class="md-title">Students that are Signed Out for {{flightDisplayed}}</span>
@@ -36,7 +39,7 @@
       </div>
     </div>
     <p></p>
-  </md-card>
+  </mat-card>
   <div *ngIf="persona.isStudent" class="pad-bottom-lg">
     <div *tdLoading="'roadRunnerLoading'">
       <roadrunner-locations [roadRunnerInfos]="roadRunnerInfos" (signOut)="signOut($event)"></roadrunner-locations>
@@ -45,7 +48,7 @@
   </div>
 </td-layout-nav>
 <div *ngIf="persona.isStudent">
-  <a md-fab color="primary" class="mat-fab-bottom-right" [routerLink]="['New']" mdTooltip="Add Address" mdTooltipPosition="left">
-    <md-icon>add</md-icon>
+  <a mat-fab color="primary" class="mat-fab-bottom-right" [routerLink]="['New']" matTooltip="Add Address" matTooltipPosition="left">
+    <mat-icon>add</mat-icon>
   </a>
 </div>

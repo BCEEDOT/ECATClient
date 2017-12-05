@@ -33,16 +33,20 @@
     height: 100%;
 }
 
-md-card-content {
+mat-card-content {
     p {
         padding-bottom:2%;
         font-size: 18px;
     }
 }
 
-md-nav-list{
+mat-nav-list{
      float: right; 
      padding-left: 2%;
+}
+
+.mat-list-item.mat-2-line{
+    height: 55px;
 }
 
 h4 {
@@ -69,7 +73,7 @@ h4 {
     border-left-style: solid;
 }
 
-:host /deep/ { 
+::ng-deep { 
     .mat-list .mat-list-item.mat-2-line .mat-list-item-content, .mat-nav-list .mat-list-item.mat-2-line .mat-list-item-content {
         height: 55px;
     }

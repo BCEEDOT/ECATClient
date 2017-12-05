@@ -1,7 +1,7 @@
-import { EntityBase } from '../EntityBase';
-import { FacSpCommentFlag } from './FacSpCommentFlag';
-import { StudSpCommentFlag } from './StudSpCommentFlag';
-import { SpResult } from './SpResult';
+import { EntityBase } from '../entitybase';
+import { FacSpCommentFlag } from './facSpCommentFlag';
+import { StudSpCommentFlag } from './studSpCommentFlag';
+import { SpResult } from './spResult';
 
 /// <code-import> Place custom imports between <code-import> tags
 

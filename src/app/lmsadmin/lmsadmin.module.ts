@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from "@angular/forms";
 //import { CommonModule } from '@angular/common';
+import { MatNativeDateModule, MatDatepickerModule } from "@angular/material";
 import { CovalentPagingModule } from '@covalent/core';
 import { CoursesComponent } from './courses/courses.component';
 import { LmsAdminRoutingModule } from "./lmsadmin-routing.module";
@@ -19,7 +20,6 @@ import { MyHighlightDirective } from './directives/my-highlight.directive';
 import { EditGroupDialogComponent } from './group-sets/manage-groupset/edit-group-dialog/edit-group-dialog.component';
 import { AddGroupDialogComponent } from './group-sets/manage-groupset/add-group-dialog/add-group-dialog.component';
 import { PollLmsDialog } from './group-sets/poll-lms-dialog/poll-lms-dialog.component';
-import {MaterialModule, MdNativeDateModule } from "@angular/material";
 import { PublishGroupsetComponent } from './group-sets/publish-groupset/publish-groupset.component';
 import { MoveStudentDialogComponent } from './group-sets/manage-groupset/move-student-dialog/move-student-dialog.component';
 
@@ -30,8 +30,8 @@ import { MoveStudentDialogComponent } from './group-sets/manage-groupset/move-st
     SharedModule,
     CovalentPagingModule,
     ReactiveFormsModule,
-    MaterialModule,
-    MdNativeDateModule
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   declarations: [
     LmsadminComponent,
@@ -41,18 +41,18 @@ import { MoveStudentDialogComponent } from './group-sets/manage-groupset/move-st
     CourseEnrollComponent,
     ConfigGroupsetComponent,
     CourseInfoComponent, MyHighlightDirective, EditGroupDialogComponent, AddGroupDialogComponent, 
-    PollLmsDialog, PublishGroupsetComponent, MoveStudentDialogComponent
+    PollLmsDialog, PublishGroupsetComponent, MoveStudentDialogComponent,
   ],
   providers: [
     LmsadminAuthGuardService,
     LmsadminDataContextService,
-    LmsadminWorkgroupService
+    LmsadminWorkgroupService,
   ],
   entryComponents: [
     EditGroupDialogComponent,
     AddGroupDialogComponent,
     PollLmsDialog,
-    MoveStudentDialogComponent
+    MoveStudentDialogComponent,
   ]
 })
 export class LmsadminModule { }

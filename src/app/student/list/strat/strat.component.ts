@@ -1,6 +1,5 @@
 import { Component, OnInit, OnChanges, Input, AfterViewInit, AfterViewChecked, Output, OnDestroy } from '@angular/core';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
 import 'rxjs/add/operator/debounceTime'
 import { Subscription } from 'rxjs';
 import { DragulaService } from "ng2-dragula";
@@ -33,7 +32,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   grpSub: Subscription;
 
   constructor(private workGroupService: WorkGroupService, private global: GlobalService,
-    private loadingService: TdLoadingService, private snackBarService: MdSnackBar,
+    private loadingService: TdLoadingService,
     private spTools: SpProviderService, private dialogService: TdDialogService,
     private studentDataContext: StudentDataContext, private dragulaService: DragulaService) {
 
@@ -47,11 +46,11 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       this.activeWorkGroup = grp;
       this.activate();
     });
-    
+
     this.activate();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.grpSub.unsubscribe();
     this.dragSub.unsubscribe();
   }
@@ -68,24 +67,24 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
     });
 
     this.unstratted = this.activeWorkGroup.spStratResponses.filter(str => {
-      if(str.stratPosition === 0 && !str.entityAspect.entityState.isDetached()){return true;}
+      if (str.stratPosition === 0 && !str.entityAspect.entityState.isDetached()) { return true; }
     }).sort((a: StratResponse, b: StratResponse) => {
-      if (a.assessee.studentProfile.person.lastName < b.assessee.studentProfile.person.lastName) {return -1;}
-      if (a.assessee.studentProfile.person.lastName > b.assessee.studentProfile.person.lastName) {return 1;}
-      if (a.assessee.studentProfile.person.firstName < b.assessee.studentProfile.person.firstName) {return -1;}
-      if (a.assessee.studentProfile.person.firstName > b.assessee.studentProfile.person.firstName) {return 1;}
+      if (a.assessee.studentProfile.person.lastName < b.assessee.studentProfile.person.lastName) { return -1; }
+      if (a.assessee.studentProfile.person.lastName > b.assessee.studentProfile.person.lastName) { return 1; }
+      if (a.assessee.studentProfile.person.firstName < b.assessee.studentProfile.person.firstName) { return -1; }
+      if (a.assessee.studentProfile.person.firstName > b.assessee.studentProfile.person.firstName) { return 1; }
       return 0;
     });
 
     this.stratted = this.activeWorkGroup.spStratResponses.filter(str => {
-      if(str.stratPosition !== 0 && !str.entityAspect.entityState.isDetached()){return true;}
+      if (str.stratPosition !== 0 && !str.entityAspect.entityState.isDetached()) { return true; }
     }).sort((a: StratResponse, b: StratResponse) => {
-        if (a.stratPosition < b.stratPosition) {return -1;}
-        if (a.stratPosition > b.stratPosition) {return 1;}
-        return 0;
+      if (a.stratPosition < b.stratPosition) { return -1; }
+      if (a.stratPosition > b.stratPosition) { return 1; }
+      return 0;
     });
-    
-    if (this.unstratted.length > 0){
+
+    if (this.unstratted.length > 0) {
       this.showUnstrat = true;
     } else {
       this.showUnstrat = false;
@@ -103,44 +102,44 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
     });
   }
 
-  private onDrop(args){
+  private onDrop(args) {
     for (var i = 0; i < this.stratted.length; i++) {
-        this.stratted[i].stratPosition = i + 1;
+      this.stratted[i].stratPosition = i + 1;
     }
   }
 
   cancel() {
     //if (this.activeWorkGroup.groupMembers.some(gm => gm.proposedStratPosition !== null)) {
-      this.dialogService.openConfirm({
-        message: 'Are you sure you want to cancel and discard your changes?',
-        title: 'Unsaved Changed',
-        acceptButton: 'Yes',
-        cancelButton: 'No'
-      }).afterClosed().subscribe((confirmed: boolean) => {
-        if (confirmed) {
-          this.unstratted = [];
-          this.stratted = [];
-          
-          //having an issue where the detached entities are still being tracked with the group which is causing problems when canceling and refreshing everything...
-          var notDetached = this.activeWorkGroup.spStratResponses.filter(str => {
-            if(!str.entityAspect.entityState.isDetached()){return true;}
-          })
-          notDetached.forEach(str => {
-            str.entityAspect.rejectChanges();
-          });
-          
-          this.activate();
-          //this.activeWorkGroup.groupMembers.forEach(gm => {
-            //gm.stratValidationErrors = [];
-            //gm.stratIsValid = true;
-            //gm.proposedStratPosition = undefined;
-          //});
-          this.snackBarService.open('Changes Discarded', 'Dismiss', { duration: 2000 })
-          //this.location.back();
-        }
-      });
+    this.dialogService.openConfirm({
+      message: 'Are you sure you want to cancel and discard your changes?',
+      title: 'Unsaved Changed',
+      acceptButton: 'Yes',
+      cancelButton: 'No'
+    }).afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.unstratted = [];
+        this.stratted = [];
+
+        //having an issue where the detached entities are still being tracked with the group which is causing problems when canceling and refreshing everything...
+        var notDetached = this.activeWorkGroup.spStratResponses.filter(str => {
+          if (!str.entityAspect.entityState.isDetached()) { return true; }
+        })
+        notDetached.forEach(str => {
+          str.entityAspect.rejectChanges();
+        });
+
+        this.activate();
+        //this.activeWorkGroup.groupMembers.forEach(gm => {
+        //gm.stratValidationErrors = [];
+        //gm.stratIsValid = true;
+        //gm.proposedStratPosition = undefined;
+        //});
+        this.global.showSnackBar("Changes Discarded");
+        //this.location.back();
+      }
+    });
     //} else {
-      //this.location.back();
+    //this.location.back();
     //}
   }
 
@@ -149,11 +148,11 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   }
 
   isDirty(): boolean {
-      if (this.stratted.length > 0){
-          return this.stratted.some(fstrat => fstrat.entityAspect.entityState.isAddedModifiedOrDeleted());
-      }
-      
-      return false;
+    if (this.stratted.length > 0) {
+      return this.stratted.some(fstrat => fstrat.entityAspect.entityState.isAddedModifiedOrDeleted());
+    }
+
+    return false;
   }
 
   // isValid(): boolean {
@@ -187,7 +186,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
     //this.evaluateStrat(true);
 
     //const hasErrors = this.activeWorkGroup.groupMembers
-      //.some(gm => !gm.stratIsValid);
+    //.some(gm => !gm.stratIsValid);
 
     // if (hasErrors) {
     //   this.dialogService.openAlert({
@@ -207,6 +206,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
     //   changeSet.push(gm.studentId);
     // });
 
+
     this.spTools.save().then(() => {
 
       this.activeWorkGroup.groupMembers
@@ -217,11 +217,11 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
           gm.proposedStratPosition = null;
         });
       this.workGroupService.stratComplete(true);
-      this.activeWorkGroup.groupMembers.filter(gm => {if(gm.studentId === this.userId){return true;}})[0].updateStatusOfPeer();
+      this.activeWorkGroup.groupMembers.filter(gm => { if (gm.studentId === this.userId) { return true; } })[0].updateStatusOfPeer();
       this.activate();
-      this.snackBarService.open("Success, Strats Updated!", 'Dismiss', { duration: 2000 })
+      this.global.showSnackBar("Success, Strats Updated!");
     }).catch((error) => {
-      this.activeWorkGroup.groupMembers.filter(gm => {if(gm.studentId === this.userId){return true;}})[0].updateStatusOfPeer();
+      this.activeWorkGroup.groupMembers.filter(gm => { if (gm.studentId === this.userId) { return true; } })[0].updateStatusOfPeer();
       this.dialogService.openAlert({
         message: 'There was an error saving your changes, please try again.'
       })

@@ -3,73 +3,77 @@
     <span *ngIf="comment.requestAnonymity" class="md-title">Anonymous </span>Comment for {{comment?.recipient?.rankName}}</h4>
   <!-- <div fxFlex></div>
   <div class="pull-top-xs">
-    <button md-icon-button color="accent" (click)="cancel()">
-      <md-icon class="large-icon">close</md-icon>
+    <button mat-icon-button color="accent" (click)="cancel()">
+      <mat-icon class="large-icon">close</mat-icon>
     </button>
   </div> -->
 </div>
 
-<md-dialog-content>
-  <md-input-container class="md-block">
-    <textarea mdInput placeholder="Comment (3000 characters max)" [(ngModel)]="comment.commentText" maxlength="3000" rows="15"
+<mat-dialog-content>
+  <mat-form-field class="md-block full-width">
+    <textarea matInput placeholder="Comment (3000 characters max)" [(ngModel)]="comment.commentText" maxlength="3000" rows="15"
       cols="75" [disabled]="viewOnly" #commentText="ngModel" required></textarea>
-  </md-input-container>
-</md-dialog-content>
-<md-dialog-actions fxLayout="row" fxShow fxHide.xs>
-  <div fxFlex="40%">
-    <button md-raised-button (click)="comment.requestAnonymity=true; commentText.control.markAsDirty()" [disabled]="viewOnly && comment.requestAnonymity!==true"
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxShow fxHide.xs>
+  <!-- <div fxFlex="40%">
+    <button mat-raised-button (click)="comment.requestAnonymity=true; commentText.control.markAsDirty()" [disabled]="viewOnly && comment.requestAnonymity!==true"
       [ngClass]="{'btn-selected': comment.requestAnonymity===true}" *ngIf="isStudent">Anonymous</button>
-    <button md-raised-button (click)="comment.requestAnonymity=false; commentText.control.markAsDirty()" [disabled]="viewOnly && comment.requestAnonymity!==false"
+    <button mat-raised-button (click)="comment.requestAnonymity=false; commentText.control.markAsDirty()" [disabled]="viewOnly && comment.requestAnonymity!==false"
       [ngClass]="{'btn-selected': comment.requestAnonymity===false}" *ngIf="isStudent">Named</button>
+  </div> -->
+  <div class="center">
+    <mat-checkbox *ngIf="isStudent && !viewOnly" color="primary" [checked]="comment.requestAnonymity" (change)="makeAnonymous($event.source.checked)"
+      (click)="commentText.control.markAsDirty()" [disabled]="viewOnly && comment.requestAnonymity!==true">Anonymous</mat-checkbox>
   </div>
   <span fxFlex></span>
   <div *ngIf="comment.entityAspect.entityState.isAdded()">
-    <button md-raised-button color="primary" (click)="cancel()">Cancel</button>
-    <button md-raised-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">Save</button>
+    <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">Save</button>
   </div>
   <div fxLayout="row" fxLayoutGap="3px" *ngIf="!comment.entityAspect.entityState.isAdded()">
     <div fxFlex></div>
-    <button md-raised-button color="primary" [disabled]="viewOnly" (click)="delete()">Delete</button>
-    <button md-raised-button color="primary" (click)="cancel()">Cancel</button>
-    <button md-raised-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">Save</button>
+    <button *ngIf="!viewOnly" mat-raised-button color="primary" [disabled]="viewOnly" (click)="delete()">Delete</button>
+    <button *ngIf="!viewOnly" mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+    <button *ngIf="viewOnly" mat-raised-button color="primary" (click)="cancel()">Exit</button>
+    <button *ngIf="!viewOnly" mat-raised-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">Save</button>
   </div>
-</md-dialog-actions>
+</mat-dialog-actions>
 
-<md-dialog-actions fxLayout="row" fxHide fxShow.xs>
-  <!-- <md-button-toggle *ngIf="isStudent" type="radio" [disabled]="viewOnly && comment.requestAnonymity!==true" 
+<mat-dialog-actions fxLayout="row" fxHide fxShow.xs>
+  <!-- <mat-button-toggle *ngIf="isStudent" type="radio" [disabled]="viewOnly && comment.requestAnonymity!==true" 
     [checked]="comment.requestAnonymity"
     (change)="makeAnonymous($event.source.checked)" (click)="commentText.control.markAsDirty()">
-    <md-icon class="tab-icon" *ngIf="!comment.requestAnonymity">radio_button_unchecked</md-icon>
-    <md-icon class="tab-icon" *ngIf="comment.requestAnonymity">radio_button_checked</md-icon>
+    <mat-icon class="tab-icon" *ngIf="!comment.requestAnonymity">radio_button_unchecked</mat-icon>
+    <mat-icon class="tab-icon" *ngIf="comment.requestAnonymity">radio_button_checked</mat-icon>
     Anonymous
-  </md-button-toggle> -->
+  </mat-button-toggle> -->
   <div class="center">
-    <md-checkbox *ngIf="isStudent"
-    color="primary"
-    [checked]="comment.requestAnonymity"
-    (change)="makeAnonymous($event.source.checked)" (click)="commentText.control.markAsDirty()"
-    [disabled]="viewOnly && comment.requestAnonymity!==true">Anonymous</md-checkbox>
+    <mat-checkbox *ngIf="isStudent && !viewOnly" color="primary" [checked]="comment.requestAnonymity" (change)="makeAnonymous($event.source.checked)"
+      (click)="commentText.control.markAsDirty()" [disabled]="viewOnly && comment.requestAnonymity!==true">Anonymous</mat-checkbox>
   </div>
   <span fxFlex></span>
   <div fxFlex="30%" *ngIf="comment.entityAspect.entityState.isAdded()">
     <div fxFlex></div>
-    <button md-icon-button color="primary" (click)="cancel()">
-      <md-icon class="large-icon">cancel</md-icon>
+    <button mat-icon-button color="primary" (click)="cancel()">
+      <mat-icon *ngIf="!viewOnly" class="large-icon">cancel</mat-icon>
+      <mat-icon *ngIf="viewOnly" class="large-icon">exit_to_app</mat-icon>
     </button>
-    <button md-icon-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">
-      <md-icon mdTooltip="Save" mdTooltipPosition="before" class="large-icon">save</md-icon>
+    <button mat-icon-button color="primary" *ngIf="!viewOnly" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">
+      <mat-icon matTooltip="Save" matTooltipPosition="before" class="large-icon">save</mat-icon>
     </button>
   </div>
   <div fxFlex="40%" *ngIf="!comment.entityAspect.entityState.isAdded()">
     <div fxFlex></div>
-    <button md-icon-button color="primary" [disabled]="viewOnly" (click)="delete()">
-      <md-icon mdTooltip="Delete" mdTooltipPosition="before" class="large-icon">delete_forever</md-icon>
+    <button *ngIf="!viewOnly" mat-icon-button color="primary" [disabled]="viewOnly" (click)="delete()">
+      <mat-icon matTooltip="Delete" matTooltipPosition="before" class="large-icon">delete_forever</mat-icon>
     </button>
-    <button md-icon-button color="primary" (click)="cancel()">
-      <md-icon class="large-icon">cancel</md-icon>
+    <button  mat-icon-button color="primary" (click)="cancel()">
+      <mat-icon *ngIf="!viewOnly" class="large-icon">cancel</mat-icon>
+      <mat-icon *ngIf="viewOnly" class="large-icon">exit_to_app</mat-icon>
     </button>
-    <button md-icon-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">
-      <md-icon mdTooltip="Save" mdTooltipPosition="before" class="large-icon">save</md-icon>
+    <button  mat-icon-button color="primary" *ngIf="!viewOnly" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">
+      <mat-icon matTooltip="Save" matTooltipPosition="before" class="large-icon">save</mat-icon>
     </button>
   </div>
-</md-dialog-actions>
+</mat-dialog-actions>

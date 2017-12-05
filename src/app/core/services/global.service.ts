@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-
-import { Person } from "../entities/user";
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { TimerObservable } from 'rxjs/observable/TimerObservable'
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { TdDialogService } from "@covalent/core";
+
+import { Person } from "../entities/user";
+
 
 export interface ILoggedInUser {
   person: Person,
@@ -20,7 +22,7 @@ export class GlobalService {
   userDataContextActivated: BehaviorSubject<boolean> = new BehaviorSubject(false);
   persona: BehaviorSubject<ILoggedInUser> = new BehaviorSubject({} as ILoggedInUser);
 
-  constructor(private dialogService: TdDialogService) {}
+  constructor(private dialogService: TdDialogService, private snackBar: MatSnackBar) {}
 
   user(user: ILoggedInUser) {
     this.persona.next(user);
@@ -28,6 +30,16 @@ export class GlobalService {
 
   userDataContext(activated) {
     this.userDataContextActivated.next(activated);
+  }
+
+  showSnackBar(text: string) {
+    let config = new MatSnackBarConfig();
+    config.verticalPosition = 'bottom';
+    config.horizontalPosition = 'left';
+    config.duration = 2000;
+
+    this.snackBar.open(text,'', config);
+
   }
 
   startTokenTimer(time: number){

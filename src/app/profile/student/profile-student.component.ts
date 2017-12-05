@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 
+import { GlobalService } from "../../core/services/global.service";
 import { ProfileStudent } from "../../core/entities/user";
 import { UserDataContext } from "../../core/services/data/user-data-context.service";
 
@@ -16,7 +16,7 @@ export class ProfileStudentComponent implements OnInit {
   isEditing: boolean = false;
   profileLoading = 'studentProfileLoading';
 
-  constructor(private loadingService: TdLoadingService, private snackBarService: MdSnackBar, 
+  constructor(private loadingService: TdLoadingService, private global: GlobalService, 
   private dialogService: TdDialogService, private userDataContext: UserDataContext) { }
 
   ngOnInit() {
@@ -39,7 +39,7 @@ export class ProfileStudentComponent implements OnInit {
     this.userDataContext.commit()
       .then((res) => {
         this.loadingService.resolve(this.profileLoading);
-        this.snackBarService.open('Student Profile Updated', 'Dismiss', {duration: 2000});
+        this.global.showSnackBar('Student Profile Updated');
         this.isEditing = false;
       })
       .catch((error) => {

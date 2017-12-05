@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TdDialogService, TdLoadingService, TdMediaService } from '@covalent/core';

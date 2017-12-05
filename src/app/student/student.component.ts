@@ -2,12 +2,11 @@ import { MpSpStatus } from '../core/common/mapStrings';
 import { Component, AfterViewInit, OnInit, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MdSnackBar } from '@angular/material';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/pluck';
-import { MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
 import { DOCUMENT } from '@angular/platform-browser';
 
 import { Course, WorkGroup } from '../core/entities/student';
@@ -35,7 +34,7 @@ export class StudentComponent implements OnInit, OnDestroy {
   activeWorkGroup: WorkGroup;
   grpDisplayName: string = 'Not Set';
   assessIsLoaded: string = 'assessIsLoaded';
-  dialogRef: MdDialogRef<AssessCompareDialog>;
+  dialogRef: MatDialogRef<AssessCompareDialog>;
   onListView: boolean = true;
   viewSub: Subscription;
 
@@ -44,11 +43,10 @@ export class StudentComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private loadingService: TdLoadingService,
     private dialogService: TdDialogService,
-    private snackBarService: MdSnackBar,
     public media: TdMediaService,
     private workGroupService: WorkGroupService,
     private studentDataContext: StudentDataContext,
-    public dialog: MdDialog, @Inject(DOCUMENT) doc: any) {
+    public dialog: MatDialog, @Inject(DOCUMENT) doc: any) {
 
     this.courses$ = route.data.pluck('assess');
 

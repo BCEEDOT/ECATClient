@@ -5,17 +5,17 @@ import {
   RouterStateSnapshot,
   CanActivateChild,
   NavigationExtras,
-  CanLoad, Route
+  CanLoad, Route,
 } from '@angular/router';
-import { tokenNotExpired } from "angular2-jwt";
+// import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../core/services/auth.service';
-import { AuthUtilityService } from "../../core/services/auth-utility.service";
-import { EmProviderService } from "../../core/services/em-provider.service";
-import { FacultyRegistrationHelper } from "../../core/entities/faculty";
-import { DataContext, ResourceEndPoint } from "../../app-constants";
-import { GlobalService, ILoggedInUser } from "../../core/services/global.service";
+// import { AuthUtilityService } from '../../core/services/auth-utility.service';
+import { EmProviderService } from '../../core/services/em-provider.service';
+import { FacultyRegistrationHelper } from '../../core/entities/faculty';
+import { DataContext, ResourceEndPoint } from '../../app-constants';
+import { GlobalService, ILoggedInUser } from '../../core/services/global.service';
 
 @Injectable()
 export class FacultyAuthGuardService implements CanActivate, CanActivateChild {
@@ -24,25 +24,23 @@ export class FacultyAuthGuardService implements CanActivate, CanActivateChild {
   persona: ILoggedInUser;
 
   constructor(private authService: AuthService,
-    private router: Router, private authUtility: AuthUtilityService,
+    private router: Router,
     private emProvider: EmProviderService, private regHelper: FacultyRegistrationHelper,
+    // private jwt: JwtHelperService,
     private global: GlobalService) {
 
-    //this.persona = this.global.persona.value;
     this.global.persona.subscribe((data) => {
       this.persona = data;
     });
 
   }
 
-
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let url: string = state.url;
-    
-    //console.log(this.persona.isStudent);
-    //console.log(this.studentContextActivated);
-    //First check if a user has a token and if it is expired
-    if (tokenNotExpired('ecatAccessToken') && this.facultyContextActivated && this.persona.isFaculty) {
+    // First check if a user has a token and if it is expired
+
+
+    if (this.authService.tokenNotExpired() && this.facultyContextActivated && this.persona.isFaculty) {
 
       return true;
 
@@ -52,9 +50,8 @@ export class FacultyAuthGuardService implements CanActivate, CanActivateChild {
 
     } else {
       this.router.navigate(['/dashboard']);
-      console.log("Your are not a faculty");
+      console.log('Your are not a faculty');
     }
-    
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -62,9 +59,9 @@ export class FacultyAuthGuardService implements CanActivate, CanActivateChild {
   }
 
   activate(url: string): boolean {
-    //TODO: Rewrite this to handle errors better
-    //check if user has a stored token
-    if (tokenNotExpired('ecatAccessToken')) {
+    // TODO: Rewrite this to handle errors better
+    // check if user has a stored token
+    if (this.authService.tokenNotExpired()) {
       return <any>this.emProvider.prepare(DataContext.Faculty, this.regHelper, ResourceEndPoint.Faculty)
         .then(() => {
           console.log('Faculty Context Activated');
@@ -73,8 +70,8 @@ export class FacultyAuthGuardService implements CanActivate, CanActivateChild {
         })
         .catch(e => {
           console.log('Error creating user em' + e);
-          if (e.status == 401) {
-            this.router.navigate(['/login'], navigationExtras);
+          if (e.status === 401) {
+            this.router.navigate(['/login']);
             return false;
           }
         })
@@ -82,20 +79,20 @@ export class FacultyAuthGuardService implements CanActivate, CanActivateChild {
     }
 
     // Store the attempted URL for redirecting
-    this.authService.redirectUrl = url;
+    // this.authService.redirectUrl = url;
 
-    // Create a dummy session id
-    let sessionId = 123456789;
+    // // Create a dummy session id
+    // let sessionId = 123456789;
 
-    // Set our navigation extras object
-    // that contains our global query params and fragment
-    let navigationExtras: NavigationExtras = {
-      queryParams: { 'session_id': sessionId },
-      fragment: 'anchor'
-    };
+    // // Set our navigation extras object
+    // // that contains our global query params and fragment
+    // let navigationExtras: NavigationExtras = {
+    //   queryParams: { 'session_id': sessionId },
+    //   fragment: 'anchor'
+    // };
 
     // Navigate to the login page with extras
-    this.router.navigate(['/login'], navigationExtras);
+    this.router.navigate(['/login']);
     return false;
   }
 

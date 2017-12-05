@@ -1,21 +1,21 @@
-<md-card-title *ngIf="!memHasComments">You did not recieve any comments</md-card-title>
-<md-card-content *ngIf="memHasComments" fxShow fxHide.xs>
+<mat-card-title *ngIf="!memHasComments">You did not recieve any comments</mat-card-title>
+<mat-card-content *ngIf="memHasComments" fxShow fxHide.xs>
   <div *ngFor="let comment of comments; let last = last">
-    <md-list>
-      <md-list-item>
-        <md-icon md-list-avatar>account_box</md-icon>
-        <h4 md-line>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListAvatar>account_box</mat-icon>
+        <h4 matLine>
           <span class="tc-grey-800 md-title">{{comment?.authorName}}</span>
         </h4>
-      </md-list-item>
+      </mat-list-item>
       <p class="pad-left pull-top-sm md-subhead" ngClass.xs="xs-pad-left">
         {{comment.commentText}}
       </p>
-    </md-list>
-    <md-divider md-inset *ngIf="!last"></md-divider>
+    </mat-list>
+    <mat-divider md-inset *ngIf="!last"></mat-divider>
   </div>
-</md-card-content>
-<md-card-content *ngIf="memHasComments" fxHide fxShow.xs>
+</mat-card-content>
+<mat-card-content *ngIf="memHasComments" fxHide fxShow.xs>
   <div *ngFor="let comment of comments; let last = last">
     <h4>
       <span class="tc-grey-800 md-title">{{comment?.authorName}}</span>
@@ -23,6 +23,6 @@
     <p class="pull-top-sm md-subhead">
       {{comment.commentText}}
     </p>
-    <md-divider *ngIf="!last"></md-divider>
+    <mat-divider *ngIf="!last"></mat-divider>
   </div>
-</md-card-content>
+</mat-card-content>

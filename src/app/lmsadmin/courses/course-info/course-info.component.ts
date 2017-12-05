@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { MdSnackBar } from "@angular/material";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 
+import { GlobalService } from "../../../core/services/global.service";
 import { Course } from "../../../core/entities/lmsadmin";
 import { LmsadminDataContextService } from "../../services/lmsadmin-data-context.service";
 
@@ -21,7 +21,7 @@ export class CourseInfoComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dialogService: TdDialogService,
-    private snackBar: MdSnackBar,
+    private global: GlobalService,
     private loadingService: TdLoadingService) { }
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class CourseInfoComponent implements OnInit {
     this.loadingService.register();
     if (this.course.entityAspect.entityState.isModified()) {
       this.lmsadminDataContextService.commit().then(fulfilled => {
-      this.snackBar.open('Course Info Saved!', 'Dismiss', {duration: 2000});
+      this.global.showSnackBar('Course Info Saved!');
       this.loadingService.resolve();
       this.router.navigate(['../../'], { relativeTo: this.route });
     }, (reject => {

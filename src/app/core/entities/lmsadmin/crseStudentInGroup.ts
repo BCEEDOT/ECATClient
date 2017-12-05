@@ -1,13 +1,13 @@
-import { EntityBase } from '../EntityBase';
-import { Course } from './Course';
-import { FacStratResponse } from './FacStratResponse';
-import { StratResponse } from './StratResponse';
-import { GroupMemReconResult } from './GroupMemReconResult';
-import { SpResult } from './SpResult';
-import { WorkGroup } from './WorkGroup';
-import { StratResult } from './StratResult';
-import { StudentInCourse } from './StudentInCourse';
-import { ProfileStudent } from './ProfileStudent';
+import { EntityBase } from '../entitybase';
+import { Course } from './course';
+import { FacStratResponse } from './facStratResponse';
+import { StratResponse } from './stratResponse';
+import { GroupMemReconResult } from './groupMemReconResult';
+import { SpResult } from './spResult';
+import { WorkGroup } from './workGroup';
+import { StratResult } from './stratResult';
+import { StudentInCourse } from './studentInCourse';
+import { ProfileStudent } from './profileStudent';
 
 /// <code-import> Place custom imports between <code-import> tags
 import { EcLocalDataService } from "../../common/static"

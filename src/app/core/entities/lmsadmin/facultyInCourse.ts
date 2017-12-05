@@ -1,8 +1,8 @@
-import { EntityBase } from '../EntityBase';
-import { Course } from './Course';
-import { FacStratResponse } from './FacStratResponse';
-import { MemReconResult } from './MemReconResult';
-import { ProfileFaculty } from './ProfileFaculty';
+import { EntityBase } from '../entitybase';
+import { Course } from './course';
+import { FacStratResponse } from './facStratResponse';
+import { MemReconResult } from './memReconResult';
+import { ProfileFaculty } from './profileFaculty';
 
 /// <code-import> Place custom imports between <code-import> tags
 

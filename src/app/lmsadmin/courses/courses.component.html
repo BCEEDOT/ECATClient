@@ -1,26 +1,30 @@
-<md-card class="width">
+<mat-card class="width">
   <ng-template tdLoading [tdLoadingUntil]="!isLoading" tdLoadingStrategy="replace" tdLoadingType="circle">
-    <md-card-title fxLayout="row">
-      <div fxFlexOffset="40%" fxFlexAlign="center">
-        Course List
+    <mat-card-title>
+      <div fxLayout="row">
+        <div fxFlex="grow" class="text-center">
+          Course List
+        </div>
+        <div fxFlex></div>
+        <div fxLayout="row">
+          <button mat-raised-button color="primary" (click)="this.pollCourses()">Poll LMS Courses</button>
+          <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+        </div>
       </div>
-      <span fxFlex></span>
-      <button md-raised-button color="primary" (click)="this.pollCourses()">Poll LMS Courses</button>
-      <button md-icon-button (click)="this.refreshData()"><md-icon>autorenew</md-icon></button>
-    </md-card-title>
-    <md-divider></md-divider>
-    <md-card-content>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
       <span fxFlex="100" class="text-center pad-top-xl md-title" *ngIf="!this.courses">No courses for this academy.</span>
       <div *ngIf="courses?.length > 0">
-        <md-list>
-          <md-list-item>
+        <mat-list>
+          <mat-list-item>
             <span fxFlex="30">NAME</span>
             <span fxFlex="30">CLASS</span>
             <span fxFlex="30">START DATE</span>
             <span fxFlex="30">GRAD DATE</span>
             <span fxFlex="10"></span>
-          </md-list-item>
-          <md-list-item *ngFor="let course of courses">
+          </mat-list-item>
+          <mat-list-item *ngFor="let course of courses">
             <span fxFlex="30">
               <h3 class="md-subhead">{{course.name}}</h3>
             </span>
@@ -34,29 +38,29 @@
               <h3 class="md-subhead">{{course.displayGrad}}</h3>
             </span>
             <div fxFlex="10">
-              <md-menu #appMenu="mdMenu" yPosition="below" xPosition="before">
-                <button md-menu-item [routerLink]="[course.id + '/info']"> 
-                  <md-icon> info_outline </md-icon>
+              <mat-menu #appMenu="matMenu" yPosition="below" xPosition="before">
+                <button mat-menu-item [routerLink]="[course.id + '/info']"> 
+                  <mat-icon> info_outline </mat-icon>
                   <span class="md-subhead"> Course Information </span>
                 </button>
-                <md-divider></md-divider>
-                <button md-menu-item [routerLink]="[course.id + '/enrollments']" [disabled]="course.classNumber===null || course.classNumber === '' || course.name === null || course.name === ''"> 
-                  <md-icon> people_outline </md-icon>
+                <mat-divider></mat-divider>
+                <button mat-menu-item [routerLink]="[course.id + '/enrollments']" [disabled]="course.classNumber===null || course.classNumber === '' || course.name === null || course.name === ''"> 
+                  <mat-icon> people_outline </mat-icon>
                   <span class="md-subhead"> Course Enrollments </span>
                 </button>
-                <button md-menu-item [routerLink]="[course.id + '/groupsets']" [disabled]="course.classNumber===null || course.classNumber === '' || course.name === null || course.name === ''"> 
-                  <md-icon> library_books </md-icon>
+                <button mat-menu-item [routerLink]="[course.id + '/groupsets']" [disabled]="course.classNumber===null || course.classNumber === '' || course.name === null || course.name === ''"> 
+                  <mat-icon> library_books </mat-icon>
                   <span class="md-subhead"> Group Management </span>
                 </button>
-              </md-menu>
+              </mat-menu>
 
-              <button md-icon-button [mdMenuTriggerFor]="appMenu">
-                <md-icon>more_vert</md-icon>
+              <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                <mat-icon>more_vert</mat-icon>
               </button>
             </div>
-          </md-list-item>
-        </md-list>
+          </mat-list-item>
+        </mat-list>
       </div>
-    </md-card-content>
+    </mat-card-content>
   </ng-template>
-</md-card>
+</mat-card>

@@ -1,44 +1,44 @@
 <div class="width pad-bottom-xxl">
   <ng-template tdLoading [tdLoadingUntil]="!isLoading" tdLoadingStrategy="overlay">
-    <md-card *ngIf="!user?.hasAcknowledged">
-      <md-card-title>Instructions</md-card-title>
-      <md-divider></md-divider>
-      <md-card-content>
+    <mat-card *ngIf="!user?.hasAcknowledged">
+      <mat-card-title>Instructions</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content>
         <div [innerHTML]="instructions"></div>
-      </md-card-content>
-      <md-divider></md-divider>
-      <md-card-actions>
-        <button md-button color="primary" class="text-upper" (click)="user.hasAcknowledged=true;">I AGREE</button>
-      </md-card-actions>
-    </md-card>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button mat-button color="primary" class="text-upper" (click)="user.hasAcknowledged=true;">I AGREE</button>
+      </mat-card-actions>
+    </mat-card>
 
-    <md-card *ngIf="user?.hasAcknowledged">
+    <mat-card *ngIf="user?.hasAcknowledged">
       <td-message *ngIf="readOnly" label="This Group is currently Under Review" class="bgc-green-200" icon="error">
       </td-message>
-      <md-tab-group [(selectedIndex)]="activeTab" class="tab-group" dynamicHeight>
-        <md-tab>
+      <mat-tab-group [(selectedIndex)]="activeTab" class="tab-group" dynamicHeight>
+        <mat-tab>
 
-          <ng-template md-tab-label>
-            <md-icon class="tab-icon">assessment</md-icon>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">assessment</mat-icon>
             ASSESS
-            <md-icon *ngIf=assessComplete mdTooltip="Complete" class="small-tab-icon tc-green-700">check_circle</md-icon>
-            <md-icon *ngIf=!assessComplete mdTooltip="Incomplete" class="small-tab-icon tc-red-700">error_outline</md-icon>
+            <mat-icon *ngIf=assessComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
+            <mat-icon *ngIf=!assessComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
           </ng-template>
 
           <assess [change]="change" [workGroup]="activeWorkGroup"></assess>
-        </md-tab>
-        <md-tab [disabled]="readOnly">
-          <ng-template md-tab-label>
-            <md-icon class="tab-icon">format_list_numbered</md-icon>
+        </mat-tab>
+        <mat-tab [disabled]="readOnly">
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">format_list_numbered</mat-icon>
             STRAT
-            <md-icon *ngIf=stratComplete mdTooltip="Complete" class="small-tab-icon tc-green-700">check_circle</md-icon>
-            <md-icon *ngIf=!stratComplete mdTooltip="Incomplete" class="small-tab-icon tc-red-700">error_outline</md-icon>
+            <mat-icon *ngIf=stratComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
+            <mat-icon *ngIf=!stratComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
           </ng-template>
 
           <strat [workGroup]="activeWorkGroup"></strat>
-        </md-tab>
-      </md-tab-group>
+        </mat-tab>
+      </mat-tab-group>
 
-    </md-card>
+    </mat-card>
   </ng-template>
 </div>

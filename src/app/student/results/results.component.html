@@ -1,39 +1,41 @@
 <div class="width" *ngIf="isLoading">
-  <md-card>
+  <mat-card>
     <div fxLayout="row" fxLayoutAlign="center center">
       <img class="pad-top-md" src="../../../../assets/resultsloading.png" height="150" width="150">
     </div>
     <h4 class="text-center pad-bottom-md">Results loading... please wait. </h4>
-    <md-card-footer>
-      <md-progress-bar color="accent" mode="indeterminate"></md-progress-bar>
-    </md-card-footer>
-  </md-card>
+    <mat-card-footer>
+      <div class="progress-bar-container">
+        <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </mat-card-footer>
+  </mat-card>
 </div>
 
 <div class="width" *ngIf="!isLoading">
-  <md-card>
-    <md-tab-group>
-      <md-tab>
-        <ng-template md-tab-label>
-          <md-icon class="tab-icon">assessment</md-icon>
+  <mat-card>
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">assessment</mat-icon>
           Assessment
         </ng-template>
         <assess [workGroup]="workGroup"></assess>
-      </md-tab>
-      <md-tab>
-        <ng-template md-tab-label>
-          <md-icon class="tab-icon">assignment</md-icon>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">assignment</mat-icon>
           Feedback Results
         </ng-template>
         <behaviors [change]="change" [memberResults]="memberResults"></behaviors>
-      </md-tab>
-      <md-tab>
-        <ng-template md-tab-label>
-          <md-icon class="tab-icon">comment</md-icon>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">comment</mat-icon>
           Comments Recieved
         </ng-template>
         <comments [memberResults]="memberResults"></comments>
-      </md-tab>
-    </md-tab-group>
-  </md-card>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
 </div>

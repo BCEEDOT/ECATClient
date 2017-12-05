@@ -5,24 +5,25 @@ import {
   RouterStateSnapshot,
   CanActivateChild,
   NavigationExtras,
-  CanLoad, Route
+  CanLoad, Route,
 } from '@angular/router';
-import { tokenNotExpired } from "angular2-jwt";
+// import { JwtHelperService } from '@auth0/angular-jwt';
 import { EntityState } from 'breeze-client';
 
 import { AuthService } from './auth.service';
-import { AuthUtilityService } from "./auth-utility.service";
-import { EmProviderService } from "./em-provider.service";
-import { UserRegistrationHelper } from "../entities/user";
-import { DataContext, ResourceEndPoint } from "../../app-constants";
-import { GlobalService } from "./global.service";
+// import { AuthUtilityService } from './auth-utility.service';
+import { EmProviderService } from './em-provider.service';
+import { UserRegistrationHelper } from '../entities/user';
+import { DataContext, ResourceEndPoint } from '../../app-constants';
+import { GlobalService } from './global.service';
 
 @Injectable()
 export class UserAuthGuard implements CanActivate {
 
 
   constructor(private authService: AuthService,
-    private router: Router, private authUtility: AuthUtilityService,
+    private router: Router, 
+    // private jwt: JwtHelperService,
     private emProvider: EmProviderService, private regHelper: UserRegistrationHelper,
     private global: GlobalService) { }
 
@@ -30,22 +31,21 @@ export class UserAuthGuard implements CanActivate {
 
     let url: string = state.url;
 
-    //First check if a user has a token and if it is expired
-    if (tokenNotExpired('ecatAccessToken') && this.global.userDataContextActivated.value) {
+    // First check if a user has a token and if it is expired
+    if (this.authService.tokenNotExpired() && this.global.userDataContextActivated.value) {
 
       return true;
 
     } else {
-      
       return this.activate(url);
     }
   }
 
 
   activate(url: string): boolean {
-    //TODO: Rewrite this to handle errors better
-    //check if user has a stored token
-    if (tokenNotExpired('ecatAccessToken')) {
+    // TODO: Rewrite this to handle errors better
+    // check if user has a stored token
+    if (this.authService.tokenNotExpired()) {
       return <any>this.emProvider.prepare(DataContext.User, this.regHelper, ResourceEndPoint.User)
         .then(() => {
           console.log('User Context Activated');
@@ -60,7 +60,7 @@ export class UserAuthGuard implements CanActivate {
         })
         .catch(e => {
           console.log('Error creating user em' + e);
-          if (e.status == 401) {
+          if (e.status === 401) {
             this.router.navigate(['/login']);
             return false;
           }

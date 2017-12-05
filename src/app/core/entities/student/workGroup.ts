@@ -1,12 +1,12 @@
-import { EntityBase } from '../EntityBase';
-import { Course } from './Course';
-import { SpResponse } from './SpResponse';
-import { CrseStudentInGroup } from './CrseStudentInGroup';
-import { StratResponse } from './StratResponse';
-import { StudSpComment } from './StudSpComment';
-import { SpInstrument } from './SpInstrument';
-import { SpResult } from './SpResult';
-import { StratResult } from './StratResult';
+import { EntityBase } from '../entitybase';
+import { Course } from './course';
+import { SpResponse } from './spResponse';
+import { CrseStudentInGroup } from './crseStudentInGroup';
+import { StratResponse } from './stratResponse';
+import { StudSpComment } from './studSpComment';
+import { SpInstrument } from './spInstrument';
+import { SpResult } from './spResult';
+import { StratResult } from './stratResult';
 import { FacSpResponse } from "../faculty/facSpResponse";
 
 /// <code-import> Place custom imports between <code-import> tags
