@@ -1,12 +1,18 @@
 <mat-card class="width">
-  <mat-card-title fxLayout="row">
-    <button mat-raised-button color="primary" [routerLink]="['../..']">Back</button>
-    <div fxFlexOffset="20%" fxFlexAlign="center">
-      {{course?.name}} - {{course?.classNumber}} Enrollments
+  <mat-card-title>
+    <div fxLayout="row">
+      <div fxFlex>
+        <button mat-raised-button color="primary" [routerLink]="['../..']">Back</button>
+      </div>
+      <div fxFlex="grow" class="text-center">
+        {{course?.name}} - {{course?.classNumber}} Enrollments
+      </div>
+      <div fxFlex></div>
+      <div fxLayout="row">
+        <button mat-raised-button color="primary" (click)="this.pollEnrollments()">Poll Enrollments</button>
+        <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+      </div>
     </div>
-    <span fxFlex></span>
-    <button mat-raised-button color="primary" (click)="this.pollEnrollments()">Poll Enrollments</button>
-    <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
   </mat-card-title>
   <mat-card-content>
     <mat-tab-group>

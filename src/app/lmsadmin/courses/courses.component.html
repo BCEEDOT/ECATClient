@@ -1,12 +1,16 @@
 <mat-card class="width">
   <ng-template tdLoading [tdLoadingUntil]="!isLoading" tdLoadingStrategy="replace" tdLoadingType="circle">
-    <mat-card-title fxLayout="row">
-      <div fxFlexOffset="40%" fxFlexAlign="center">
-        Course List
+    <mat-card-title>
+      <div fxLayout="row">
+        <div fxFlex="grow" class="text-center">
+          Course List
+        </div>
+        <div fxFlex></div>
+        <div fxLayout="row">
+          <button mat-raised-button color="primary" (click)="this.pollCourses()">Poll LMS Courses</button>
+          <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+        </div>
       </div>
-      <span fxFlex></span>
-      <button mat-raised-button color="primary" (click)="this.pollCourses()">Poll LMS Courses</button>
-      <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
     </mat-card-title>
     <mat-divider></mat-divider>
     <mat-card-content>

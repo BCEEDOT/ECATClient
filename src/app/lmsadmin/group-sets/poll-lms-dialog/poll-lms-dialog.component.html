@@ -43,10 +43,10 @@
       </mat-list>
     </div>
     <div *ngIf="pollFail === true">
-      <p color="red">{{failMessage}}</p>
+      <p style="color: red">{{failMessage}}</p>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions fxLayoutAlign="end">
-    <button [disabled]="!pollComplete && !pollFail" mat-raised-button (click)="close()">Close</button>
+    <button [disabled]="!pollComplete && !pollFail" mat-raised-button color="primary" (click)="close()">Close</button>
   </mat-dialog-actions>
 </div>
