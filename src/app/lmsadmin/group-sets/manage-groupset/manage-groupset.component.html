@@ -8,8 +8,8 @@
               [myHighlight]="unassignedStudent.highlighted" 
               (mouseover)="hovered = unassignedStudent.studentId"
               (mouseout)="hovered = null" 
-              fxFlexOffset="5%" 
-              class="pad-sm md-caption" 
+              class="push-none pad-sm md-caption"
+              style="padding-left: 16px;"
               *ngFor="let unassignedStudent of unassignedStudents">
                 {{unassignedStudent.rankName}}
             </p>
@@ -25,7 +25,6 @@
                   [ngClass]="{'selected': hovered === unassignedStudent.studentId}"
                   (mouseover)="hovered = unassignedStudent.studentId" 
                   (mouseout)="hovered = null" 
-              
                   class="push-none pad-sm md-caption"
                   style="padding-left: 16px;"
                   *ngFor="let unassignedStudent of unassignedStudents" 
