@@ -12,7 +12,7 @@
     <mat-list-item class="pull-left-md">
       <mat-icon mat-list-avatar>description</mat-icon>
       <mat-form-field class="pad-left-sm">
-        <input matInput placeholder="Nickname" id="customName" value="workGroup.customName" type="text" formControlName="customName"
+        <input matInput placeholder="Nickname" id="customName" [value]="workGroup.customName" type="text" formControlName="customName"
         />
       </mat-form-field>
     </mat-list-item>
