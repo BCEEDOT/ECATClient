@@ -470,23 +470,25 @@ export class CrseStudentInGroup extends EntityBase {
             i: this.spResult.breakOut.ineffA + this.spResult.breakOut.ineffU,
             nd: this.spResult.breakOut.notDisplay
         }
+
+        const total = counts.h + counts.e + counts.i + counts.nd;
         
         this.resultForStudent.breakOutReceived = [];
         this.resultForStudent.breakOutReceived.push({
             name: 'Highly Effective',
-            value: counts.h
+            value: Math.round((counts.h / total) * 100)
         });
         this.resultForStudent.breakOutReceived.push({
             name: 'Effective',
-            value: counts.e
+            value: Math.round((counts.e / total) * 100)
         });
         this.resultForStudent.breakOutReceived.push({
             name: 'Not Displayed',
-            value: counts.nd
+            value: Math.round((counts.nd / total) * 100)
         });
         this.resultForStudent.breakOutReceived.push({
             name: 'Ineffective',
-            value: counts.i
+            value: Math.round((counts.i / total) * 100)
         });
 
         this.resultForStudent.breakOutReceivedChartData = [ { "name": "% Recieved", "series": this.resultForStudent.breakOutReceived }];
