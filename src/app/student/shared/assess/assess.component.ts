@@ -29,7 +29,7 @@ export class AssessComponent implements OnChanges, OnDestroy {
   ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(private workGroupService: WorkGroupService, private global: GlobalService,
-    private loadingService: TdLoadingService
+    private loadingService: TdLoadingService,
     private spProvider: SpProviderService, private router: Router, private route: ActivatedRoute) {
   }
 
