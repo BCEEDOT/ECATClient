@@ -1,7 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { QueryResult } from 'breeze-client';
 import { Observable } from 'rxjs/Observable';
@@ -46,7 +45,6 @@ export class CognitivesComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private loadingService: TdLoadingService,
-        private snackBarService: MatSnackBar,
         private userDataContext: UserDataContext,
         private global: GlobalService,
         private cogResultsService: CogResultsService) {

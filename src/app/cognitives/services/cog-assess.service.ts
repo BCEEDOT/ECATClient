@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Router } from "@angular/router";
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MatSnackBar } from '@angular/material';
+import { GlobalService } from "../../core/services/global.service";
 import { Observable } from "rxjs/Observable";
+import 'rxjs/add/observable/of';
 
 import { CogResultsService } from "./cog-results.service";
 import { CogInstrument, CogInventory, CogEcpeResult, CogEcmspeResult, CogEsalbResult, CogEtmpreResult } from "../../core/entities/user";
@@ -18,7 +19,7 @@ export class CogAssessService {
     cogActiveInventory$: BehaviorSubject<CogInventory> = new BehaviorSubject({} as CogInventory);
     readyToSave$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-    constructor(private userDataContext: UserDataContext, private snackBarService: MatSnackBar,
+    constructor(private userDataContext: UserDataContext, private global: GlobalService,
         private dialogService: TdDialogService, private loadingService: TdLoadingService, 
         private router: Router, private cogResultsService: CogResultsService) { }
 
@@ -67,7 +68,7 @@ export class CogAssessService {
             }).afterClosed().subscribe((confirmed: boolean) => {
                 if (confirmed) {
                     this.cogInventories$.value.forEach(inventory => inventory.rejectChanges());
-                    this.snackBarService.open('Changes Discarded', 'Dismiss', { duration: 2000 })
+                    this.global.showSnackBar('Changes Discarded');
                     this.router.navigate(['/cognitives']);
                 }
             });
@@ -104,7 +105,7 @@ export class CogAssessService {
         this.userDataContext.commit()
             .then(result => {
                 this.loadingService.resolve();
-                this.snackBarService.open("Success, Cognitive Asessment Saved!", 'Dismiss', { duration: 2000 })
+                this.global.showSnackBar('Success, Cognitive Asessment Saved!');
             })
             .catch(result => {
                 this.loadingService.resolve();

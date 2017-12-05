@@ -1,10 +1,8 @@
 import { Component, AfterViewInit, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 
-//import { ProfileService } from './services/profile.service';
 import { Person } from "../core/entities/user";
 import { GlobalService, ILoggedInUser } from "../core/services/global.service";
 import { UserDataContext } from "../core/services/data/user-data-context.service";
@@ -33,7 +31,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     private router: Router,
     private loadingService: TdLoadingService,
     private dialogService: TdDialogService,
-    private snackBarService: MatSnackBar,
+   
     private global: GlobalService,
     private userDataContext: UserDataContext,
     public media: TdMediaService,
@@ -116,7 +114,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.userDataContext.commit()
       .then((res) => {
         this.loadingService.resolve(this.profileLoading);
-        this.snackBarService.open('Profile Updated', 'Dismiss', { duration: 2000 });
+        this.global.showSnackBar('Profile Updated');
         this.isEditing = false;
       })
       .catch((error) => {

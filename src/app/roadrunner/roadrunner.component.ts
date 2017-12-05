@@ -1,7 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material';
 import {
   TdLoadingService, TdMediaService, ITdDataTableColumn, ITdDataTableSortChangeEvent,
   TdDataTableSortingOrder, TdDataTableService, CovalentExpansionPanelModule,
@@ -62,7 +61,6 @@ export class RoadrunnerComponent implements OnInit {
   constructor(private titleService: Title,
     private router: Router,
     private loadingService: TdLoadingService,
-    private snackBarService: MatSnackBar,
     private userDataContext: UserDataContext,
     private facultyDataContext: FacultyDataContextService,
     private _dataTableService: TdDataTableService,

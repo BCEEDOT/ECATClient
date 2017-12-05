@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MatSnackBar } from '@angular/material';
 
 import { SpProviderService } from "../sp-provider.service";
 import { StudSpComment } from '../../../core/entities/student';
@@ -25,7 +24,6 @@ export class CommentDialog implements OnInit {
 
   constructor(private studentDataContext: StudentDataContext,
     private facultyDataContext: FacultyDataContextService,
-    private snackBarService: MatSnackBar,
     private loadingService: TdLoadingService,
     private dialogService: TdDialogService,
     private global: GlobalService,
@@ -74,7 +72,7 @@ export class CommentDialog implements OnInit {
       this.studentDataContext.commit()
         .then(result => {
           this.loadingService.resolve(this.commentLoad);
-          this.snackBarService.open(snackBarText, 'Dismiss', { duration: 2000 })
+          this.global.showSnackBar(snackBarText);
           this.dialogRef.close();
         })
         .catch(result => {
@@ -88,7 +86,7 @@ export class CommentDialog implements OnInit {
       this.facultyDataContext.commit()
         .then(result => {
           this.loadingService.resolve(this.commentLoad);
-          this.snackBarService.open(snackBarText, 'Dismiss', { duration: 2000 })
+          this.global.showSnackBar(snackBarText);
           this.dialogRef.close();
         })
         .catch(result => {

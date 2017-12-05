@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Course, CrseStudentInGroup, WorkGroup, SpResult } from '../../core/entities/student';
@@ -25,7 +24,7 @@ export class ResultsComponent implements OnInit {
 
   constructor(private workGroupService: WorkGroupService, private global: GlobalService, private route: ActivatedRoute,
     private studentDataContext: StudentDataContext, private dialogService: TdDialogService,
-    private loadingService: TdLoadingService, private snackBarService: MatSnackBar, private spProvider: SpProviderService) {
+    private loadingService: TdLoadingService, private spProvider: SpProviderService) {
 
     this.route.params.subscribe((params: any) => {
       this.paramWorkGroupId = +params['wrkGrpId'];

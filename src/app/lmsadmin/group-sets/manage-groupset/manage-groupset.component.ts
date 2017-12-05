@@ -9,9 +9,10 @@ import 'rxjs/add/operator/takeUntil';
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 import { DragulaService } from "ng2-dragula";
-import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
 import { DOCUMENT } from '@angular/platform-browser';
 
+import { GlobalService } from "../../../core/services/global.service";
 import { MpEntityType, MpGroupCategory, MpSpStatus } from '../../../core/common/mapStrings';
 import { Course, CrseStudentInGroup, WorkGroup, StudentInCourse } from '../../../core/entities/lmsadmin';
 import { LmsadminDataContextService } from '../../services/lmsadmin-data-context.service';
@@ -67,9 +68,9 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
     private location: Location,
     private router: Router,
     private route: ActivatedRoute,
+    private global: GlobalService,
     private dialogService: TdDialogService,
     private loadingService: TdLoadingService,
-    private snackBar: MatSnackBar,
     public editDialog: MatDialog, @Inject(DOCUMENT) editDoc: any,
     public addDialog: MatDialog, @Inject(DOCUMENT) addDoc: any,
     public moveDialog: MatDialog, @Inject(DOCUMENT) moveDoc: any,) {
@@ -268,7 +269,7 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
             workGroup['canEdit'] = true;
             this.workGroups.push(workGroup);
             this.getFlightNames();
-            this.snackBar.open('WorkGroup Created!', 'Dismiss', { duration: 2000 });
+            this.global.showSnackBar('WorkGroup Created!');
 
           }).catch((error) => {
             this.reset(true);
@@ -651,7 +652,7 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
             this.changes = this.lmsadminDataContext.getChanges();
             //this.location.back();
             this.startOver();
-            this.snackBar.open('All Changes Saved', 'Dismiss', { duration: 2000 });
+            this.global.showSnackBar('All Changes Saved');
           }).catch((errors) => {
             this.loadingService.resolve();
             this.reset(true);
@@ -743,7 +744,7 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
     })
 
     if (!studentsFound) {
-      this.snackBar.open('No Students found', 'Dismiss', { duration: 3000 });
+      this.global.showSnackBar('No Students Found');
     }
 
   }
@@ -841,8 +842,8 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
           student.changeDescription = `${student.rankName} moved from ${this.flights[+fromGroupId]} to ${this.flights[+toGroupId]}`;
         }
       }
-
-      this.snackBar.open(`${studentName} has been moved to ${toGroupName}`, 'Dismiss', { duration: 2000 });
+      
+      this.global.showSnackBar(`${studentName} has been moved to ${toGroupName}`)
     }
 
   }

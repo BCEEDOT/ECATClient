@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { Location } from '@angular/common';
-import { MatSnackBar } from '@angular/material';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 import { Subscription } from "rxjs/Subscription";
 
+import { GlobalService } from "../../../../core/services/global.service";
 import { WorkGroup, CrseStudentInGroup, StudSpComment } from "../../../../core/entities/faculty";
 import { ActivatedRoute } from "@angular/router";
 import { FacultyDataContextService } from "../../../services/faculty-data-context.service";
@@ -31,9 +31,9 @@ export class CommentsComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private route: ActivatedRoute,
     private location: Location,
     private ctx: FacultyDataContextService,
-    private snackBar: MatSnackBar,
     private dialogService: TdDialogService,
     private loadingService: TdLoadingService,
+    private global: GlobalService,
     private facWorkGroupService: FacWorkgroupService, ) { }
 
   @Input() members: CrseStudentInGroup[];
@@ -151,7 +151,7 @@ export class CommentsComponent implements OnInit, OnDestroy, OnChanges {
     this.loadingService.register();
     this.ctx.commit().then(fulfilled => {
       this.facWorkGroupService.isLoading(false);
-      this.snackBar.open('Comment Flags Saved!', 'Dismiss', { duration: 2000 });
+      this.global.showSnackBar('Comment Flags Saved!');
       this.loadingService.resolve();
       this.activate();
     }, (reject => {

@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from "rxjs/Observable";
-import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/pluck';
 
 import { TdLoadingService, TdDialogService } from '@covalent/core';
 
+import { GlobalService } from "../../core/services/global.service";
 import { CogInstrument } from '../../core/entities/user';
 import { CogInventory } from '../../core/entities/user/cogInventory';
 import { CogAssessService } from '../services/cog-assess.service';
@@ -27,10 +27,11 @@ export class AssessComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute, private cogAssessService: CogAssessService,
+        private global: GlobalService,
         private dialogService: TdDialogService,
         private loadingService: TdLoadingService,
         private router: Router,
-        private snackBarService: MatSnackBar,
+   
     ) {
         this.route.params.subscribe(params => {
             this.cogAssessId = params['cogId'];
@@ -85,7 +86,7 @@ export class AssessComponent implements OnInit {
                     this.router.navigate(['/cognitives/result/' + this.cogAssessId]);
                 }),
                     (error) => {
-                        this.snackBarService.open('Error saving assessment, please try again', 'Dismiss', { duration: 2000 })
+                        this.global.showSnackBar('Error saving assessment, please try again');
                     };
 
             }

@@ -2,7 +2,6 @@ import { MpSpStatus } from '../core/common/mapStrings';
 import { Component, AfterViewInit, OnInit, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -44,7 +43,6 @@ export class StudentComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private loadingService: TdLoadingService,
     private dialogService: TdDialogService,
-    private snackBarService: MatSnackBar,
     public media: TdMediaService,
     private workGroupService: WorkGroupService,
     private studentDataContext: StudentDataContext,

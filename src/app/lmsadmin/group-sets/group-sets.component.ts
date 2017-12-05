@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-import { MatSnackBar, MatDialog, MatDialogRef } from "@angular/material";
+import { MatDialog, MatDialogRef } from "@angular/material";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 
+import { GlobalService } from "../../core/services/global.service";
 import { LmsadminDataContextService } from "../services/lmsadmin-data-context.service";
 import { WorkGroupModel, Course, WorkGroup } from "../../core/entities/lmsadmin";
 import { MpSpStatus, MpGroupCategory } from "../../core/common/mapStrings";
@@ -32,11 +33,11 @@ export class GroupSetsComponent implements OnInit {
   
   constructor(private lmsadminDataContext: LmsadminDataContextService, 
    private lmsadminWorkGroupService: LmsadminWorkgroupService,
+   private global: GlobalService,
     private router: Router,
     private route: ActivatedRoute,
     private dialogService: TdDialogService,
     private loadingService: TdLoadingService,
-    private snackBar: MatSnackBar,
     private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -124,7 +125,7 @@ export class GroupSetsComponent implements OnInit {
             grp.mpSpStatus = MpSpStatus.open;
           })
           this.lmsadminDataContext.commit().then((fulfilled) => {
-            this.snackBar.open(model.mpWgCategory + ' Status Updated!', 'Dismiss', {duration: 2000});
+            this.global.showSnackBar(model.mpWgCategory + ' Status Updated!')
             this.activate();
           }, (rejected) => {
             this.dialogService.openAlert({message: 'There was a problem saving, please refresh data and try again.', title: 'Save Error'});

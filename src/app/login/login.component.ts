@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import { TdLoadingService } from '@covalent/core';
 // import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
+import { GlobalService } from "../core/services/global.service";
 import { AuthService } from '../core/services/auth.service';
 // import { AuthUtilityService } from '../core/services/auth-utility.service';
 
@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router,
               private loadingService: TdLoadingService, 
               private authService: AuthService, 
-              // private jwt: JwtHelperService,
-              private snackBar: MatSnackBar,) { }
+              private global: GlobalService,
+              ) { }
 
   ngOnInit(): void {
 
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
       }
     }, (error: any) => {
       this.loadingService.resolve();
-      this.snackBar.open(error, 'Close', { duration: 2000 });
+      this.global.showSnackBar(error);
       console.log(error);
     });
   }
