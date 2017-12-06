@@ -21,6 +21,8 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
 
     event: RoadRunner[];
     eventSub: Subscription;
+    signedOut: boolean;
+    soSub: Subscription;
     leavedate: string;
     oneEvent: RoadRunner;
     tempEvent: RoadRunner;
@@ -54,6 +56,7 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
         });
         this.checkNew = (this.route.snapshot.params['id']);
 
+        this.soSub = this.roadRunnerService.signedOut$.subscribe(so => this.signedOut = so);
         if (isEmpty(this.event) && this.checkNew !== 'New') {
             this.router.navigate(['roadrunner/student/']);
         }
@@ -86,6 +89,7 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.eventSub.unsubscribe();
+        this.soSub.unsubscribe();
     }
 
     cancel(): void {

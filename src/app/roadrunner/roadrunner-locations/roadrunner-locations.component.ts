@@ -13,6 +13,8 @@ import { RoadrunnerService } from '../services/roadrunner.service';
 export class RoadrunnerLocationsComponent implements OnInit, OnDestroy {
   signedOut: boolean;
   soSub: Subscription;
+  count: number;
+  countSub: Subscription;
   roadRunnerEvent: RoadRunner;
   noRRs: boolean = false;
 
@@ -24,12 +26,14 @@ export class RoadrunnerLocationsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.soSub = this.roadRunnerService.signedOut$.subscribe(signedOut => { this.signedOut = signedOut });
+    this.countSub = this.roadRunnerService.count$.subscribe(count => {this.count = count});
 
     console.log(this.roadRunnerInfos);
   }
 
   ngOnDestroy() {
     this.soSub.unsubscribe();
+    this.countSub.unsubscribe();
   }
 
   signOutButton(location: RoadRunner) {

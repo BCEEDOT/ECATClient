@@ -88,9 +88,9 @@
     </div>
     </div>
     <div *ngIf="roadRunnerInfos">
-      <div *ngIf="roadRunnerInfos?.length === 0">
+      <div *ngIf="roadRunnerInfos?.length === count || roadRunnerInfos?.length === 0">
 
-        <span class="md-title">You have no locations to sign out to</span>
+        <p class="md-title text-center">You have no locations to sign out to. Add an location using the + or Clone buttons.</p>
       </div>
     </div>
 

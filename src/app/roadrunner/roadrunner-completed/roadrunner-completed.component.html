@@ -10,9 +10,9 @@
 
   <mat-list class="will-load">
     <div *ngIf="roadRunnerInfos">
-      <div *ngIf="roadRunnerInfos?.length === 0 || count === 0">
+      <div *ngIf="count === 0 || roadRunnerInfos?.length === 0">
 
-        <span class="md-title">You have not signed in from any locations</span>
+        <p class="md-title text-center">You have not signed in from any locations.</p>
       </div>
     </div>
     <div *ngIf="roadRunnerInfos">
@@ -38,7 +38,7 @@
           </div>
           </span>
           <span>
-            <button mat-raised-button color="primary" [routerLink]="[rData.id]">Clone</button>
+            <button mat-raised-button *ngIf="!signedOut"color="primary" [routerLink]="[rData.id]">Clone</button>
       </span>
           </mat-list-item>
       </div>

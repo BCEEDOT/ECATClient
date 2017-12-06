@@ -78,7 +78,7 @@
           <span style="padding-right:10px;">
             <button mat-raised-button color="primary" [disabled]="!roadRunnerForm.valid || !leaveForm.valid || !returnForm.valid" (click)="save()">Save</button>
           </span>
-          <button mat-raised-button color="primary" *ngIf="!(checkNew === 'New') && !clone" (click)="delete()">Delete</button>
+          <button mat-raised-button color="primary" *ngIf="!(checkNew === 'New') && !clone && !signedOut" (click)="delete()">Delete</button>
         </div>
       </form>
     </div>
