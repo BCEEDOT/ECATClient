@@ -117,6 +117,7 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
 
         this.userDataContext.commit()
             .then((res) => {
+                this.global.showSnackBar('Location Deleted');
                 this.router.navigate(['roadrunner/student/']);
             }).catch((error: Event) => {
                 this.dialogService.openAlert({

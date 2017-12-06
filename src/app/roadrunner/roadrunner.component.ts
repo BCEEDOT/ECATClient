@@ -144,6 +144,7 @@ export class RoadrunnerComponent implements OnInit {
     this.loadingService.register(this.roadRunnerLoading);
     this.userDataContext.commit()
       .then((res) => {
+        this.global.showSnackBar('Status Updated');
         this.loadingService.resolve(this.roadRunnerLoading);
       })
     this.roadRunnerInfos.sort((x, y) => { if (y.signOut === true) return 1; });
