@@ -30,6 +30,7 @@ export class RoadrunnerComponent implements OnInit {
   allStudents: boolean = true;
   studentsOut: IStudentOut[] = [];
   allStudentsOut: IStudentOut[] = [];
+  noSignedOutStudents: boolean = true;
   flights: string[] = [];
   stringAllFlights: string[] = [];
   flightsModel: string[] = [];
@@ -218,7 +219,8 @@ export class RoadrunnerComponent implements OnInit {
 
           this.activeCourseId = courses[0].id;
 
-          this.flightDisplayed = (courses[0].academyId + courses[0].classNumber)
+          // this.flightDisplayed = (courses[0].academyId + courses[0].classNumber)
+          this.flightDisplayed = `${courses[0].academyId} ${courses[0].classNumber}`
 
           this.facultyDataContext.fetchRoadRunnerWorkGroups(this.activeCourseId)
             .then(initFacultyResponse)
@@ -248,11 +250,12 @@ export class RoadrunnerComponent implements OnInit {
 
     this.workGroups.forEach(wg => wg.groupMembers.forEach(gm => {
       let outAdd = gm.studentProfile.person.roadRunnerAddresses.filter(rra => rra.signOut === true)[0];
-
-      this.flights.push(gm.workGroup.defaultName);
+      
+      
 
       if (outAdd != null || outAdd != undefined) {
-
+        this.flights.push(gm.workGroup.defaultName);
+        
         memsAdd.push({
           firstName: outAdd.person.firstName,
           lastName: outAdd.person.lastName,
@@ -264,9 +267,14 @@ export class RoadrunnerComponent implements OnInit {
           name: outAdd.person.firstName + ' ' + outAdd.person.lastName
         });
       }
+
     }));
     this.allStudents = true;
     this.studentsOut = memsAdd;
+    if (this.studentsOut.length > 0) {
+      this.noSignedOutStudents = false;
+    }
+
     this.allStudentsOut = this.studentsOut;
     this.flights = this.flights.filter(function (elem, index, self) {
       return index == self.indexOf(elem);
