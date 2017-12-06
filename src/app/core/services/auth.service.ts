@@ -14,6 +14,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
 // import { AuthUtilityService } from "./auth-utility.service";
+import { environment } from "../../../environments/environment";
 import { Person } from "../entities/user";
 import { GlobalService, ILoggedInUser } from "./global.service";
 import { EmProviderService } from "./em-provider.service";
@@ -51,7 +52,8 @@ export class AuthService {
 
     // TODO: Update for environment
     // dev
-    return this.http.post<ILoginResponse>('http://localhost:62187/connect/token', body,
+    // return this.http.post<ILoginResponse>('http://localhost:62187/connect/token', body,
+    return this.http.post<ILoginResponse>( environment.api_url + 'connect/token', body,
       // awstesting
       // return this.http.post('http://ec2-34-237-207-101.compute-1.amazonaws.com/connect/token',
       { headers: headers}).map((loginResponse: ILoginResponse) => {

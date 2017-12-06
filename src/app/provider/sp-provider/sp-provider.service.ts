@@ -1,7 +1,7 @@
-import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { isNumeric } from 'rxjs/util/isNumeric';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/util/isNumeric';
 import 'rxjs/add/observable/of';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';

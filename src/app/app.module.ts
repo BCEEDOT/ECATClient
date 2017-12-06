@@ -59,7 +59,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:62187'],
+        whitelistedDomains: ['localhost:62187', 'ec2-34-237-207-101.compute-1.amazonaws.com'],
         throwNoTokenError: false,
         skipWhenExpired: true,
       },

@@ -16,7 +16,8 @@ import 'breeze-client/breeze.uriBuilder.odata';
 
 import { EntityTypeAnnotation } from './../entities/entity-type-annotation';
 import { IRegistrationHelper } from './../entities/IRegistrationHelper';
-import { DEV_API } from './../../../config/api.config';
+// import { DEV_API } from './../../../config/api.config';
+import { environment } from "./../../../environments/environment";
 import { DataContext, ResourceEndPoint } from '../../app-constants';
 
 export interface IManager {
@@ -61,7 +62,8 @@ export class EmProviderService {
 
     if (!emStatus.promise) {
 
-      let serviceEndPoint = DEV_API + resourceEndPoint;
+      // let serviceEndPoint = DEV_API + resourceEndPoint;
+      let serviceEndPoint = environment.api_url+ 'breeze/' + resourceEndPoint;
 
       console.log(serviceEndPoint);
 
