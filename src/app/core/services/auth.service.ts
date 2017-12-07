@@ -53,10 +53,10 @@ export class AuthService {
     // TODO: Update for environment
     // dev
     // return this.http.post<ILoginResponse>('http://localhost:62187/connect/token', body,
-    return this.http.post<ILoginResponse>( environment.api_url + 'connect/token', body,
+    return this.http.post<ILoginResponse>(environment.api_url + 'connect/token', body,
       // awstesting
       // return this.http.post('http://ec2-34-237-207-101.compute-1.amazonaws.com/connect/token',
-      { headers: headers}).map((loginResponse: ILoginResponse) => {
+      { headers: headers }).map((loginResponse: ILoginResponse) => {
         console.log(loginResponse);
         let accessToken = loginResponse.access_token;
         let idToken = loginResponse.id_token;
@@ -68,8 +68,6 @@ export class AuthService {
 
           return false;
         }
-      }, (error: HttpErrorResponse) => {
-        console.log(error.error.message);
       });
   }
 

@@ -20,10 +20,10 @@ export class LoginComponent implements OnInit {
   password: string;
 
   constructor(private router: Router,
-              private loadingService: TdLoadingService, 
-              private authService: AuthService, 
-              private global: GlobalService,
-              ) { }
+    private loadingService: TdLoadingService,
+    private authService: AuthService,
+    private global: GlobalService,
+  ) { }
 
   ngOnInit(): void {
 
@@ -48,8 +48,8 @@ export class LoginComponent implements OnInit {
       }
     }, (error: any) => {
       this.loadingService.resolve();
-      this.global.showSnackBar(error);
-      console.log(error);
-    });
+      this.global.showSnackBar(error.error.error_description);
+    }
+    );
   }
 }
