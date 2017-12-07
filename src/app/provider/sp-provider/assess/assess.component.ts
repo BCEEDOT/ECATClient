@@ -132,7 +132,7 @@ export class AssessComponent implements OnInit {
 
     if (!this.inventories.some(inv => inv.behaviorEffect !== null || inv.behaviorFreq !== null)) {
       this.inventories.forEach(inv => inv.rejectChanges());
-      this.router.navigate(['../../'], { relativeTo: this.route })
+      this.location.back();
     }
 
 
