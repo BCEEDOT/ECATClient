@@ -231,8 +231,8 @@ export class EvaluateComponent implements OnInit, OnDestroy {
       });
 
     } else {
-      if (this.workGroup.spComments.some(comm => comm.flag.entityAspect.entityState.isAddedModifiedOrDeleted())) {
-        this.dialogService.openAlert({message: 'You have pending comment flag changes. Please cancel or save on the Review Comments tab before changing group status.', title: 'Unsaved Changes'});
+      if (this.workGroup.spComments.some(comm => comm.flag.entityAspect.entityState.isAddedModifiedOrDeleted()) || this.workGroup.facStratResponses.some(fstr => fstr.entityAspect.entityState.isModified())) {
+        this.dialogService.openAlert({message: 'You have pending changes. Please check the Strat and Review Comments tabs and cancel or save before changing group status.', title: 'Unsaved Changes'});
         return;
       }
 
@@ -296,8 +296,8 @@ export class EvaluateComponent implements OnInit, OnDestroy {
   }
 
   reopenFlight(){
-    if (this.workGroup.spComments.some(comm => comm.flag.entityAspect.entityState.isAddedModifiedOrDeleted())) {
-      this.dialogService.openAlert({message: 'You have pending comment flag changes. Please cancel or save on the Review Comments tab before changing group status.', title: 'Unsaved Changes'});
+    if (this.workGroup.spComments.some(comm => comm.flag.entityAspect.entityState.isAddedModifiedOrDeleted()) || this.workGroup.facStratResponses.some(fstr => fstr.entityAspect.entityState.isModified())) {
+      this.dialogService.openAlert({message: 'You have pending changes. Please check the Strat and Review Comments tabs and cancel or save before changing group status.', title: 'Unsaved Changes'});
       return;
     }
 
