@@ -131,6 +131,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       cancelButton: 'No'
     }).afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
+        this.loadingService.register();
         this.unstratted = [];
         this.stratted = [];
 
@@ -142,6 +143,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
           str.entityAspect.rejectChanges();
         });
 
+        this.loadingService.resolve();
         this.activate();
         //this.activeWorkGroup.groupMembers.forEach(gm => {
         //gm.stratValidationErrors = [];
@@ -197,6 +199,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
 
   saveChanges(): void {
     const that = this;
+    this.loadingService.register();
     //this.evaluateStrat(true);
 
     //const hasErrors = this.activeWorkGroup.groupMembers
@@ -232,10 +235,12 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
         });
       this.workGroupService.stratComplete(true);
       this.activeWorkGroup.groupMembers.filter(gm => { if (gm.studentId === this.userId) { return true; } })[0].updateStatusOfPeer();
+      this.loadingService.resolve();
       this.activate();
       this.global.showSnackBar("Success, Strats Updated!");
     }).catch((error) => {
       this.activeWorkGroup.groupMembers.filter(gm => { if (gm.studentId === this.userId) { return true; } })[0].updateStatusOfPeer();
+      this.loadingService.resolve();
       this.dialogService.openAlert({
         message: 'There was an error saving your changes, please try again.'
       })

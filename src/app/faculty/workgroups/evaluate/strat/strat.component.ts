@@ -125,13 +125,14 @@ export class StratComponent implements OnInit, OnDestroy {
             cancelButton: 'No'
         }).afterClosed().subscribe((confirmed: boolean) => {
             if (confirmed) {
+                this.loadingService.register();
                 this.groupMembers.forEach(gm => {
                     gm.facultyStrat.entityAspect.rejectChanges();
                 });
 
                 this.unstratted = [];
                 this.stratted = [];
-                
+                this.loadingService.resolve();
                 this.activate();
                 // if (this.groupMembers[0].workGroup.facStratResponses.length > 0){
                 //     this.stratted = this.groupMembers[0].workGroup.facStratResponses.sort((a: FacStratResponse, b: FacStratResponse) => {
