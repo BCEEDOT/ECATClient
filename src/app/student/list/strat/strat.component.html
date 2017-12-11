@@ -17,7 +17,7 @@
             <mat-icon style="padding-top: 7px; vertical-align: middle;">drag_handle</mat-icon>
             <div>{{strat?.assessee?.rankName}}</div>
             <div fxFlex></div> 
-            <div><span style="color: #3e6d92; font-size:large"><strong>{{strat?.stratPosition}}</strong></span></div>
+            <div><span style="color: #3e6d92; font-size:large" *ngIf="!showUnstrat"><strong>{{strat?.stratPosition}}</strong></span></div>
           </div>
         </button>
       </mat-list-item>

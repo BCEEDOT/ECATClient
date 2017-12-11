@@ -107,13 +107,18 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       this.stratted[i].stratPosition = i + 1;
 
       //Fix for safari not repainting strat positions 
-      let sel = document.getElementById(this.stratted[i].assesseePersonId.toString());
-      sel.style.display = 'none';
-      sel.offsetHeight;
-      sel.style.display = '';
+      //stopped working for some reason...
+      // let sel = document.getElementById(this.stratted[i].assesseePersonId.toString());
+      // sel.style.display = 'none';
+      // sel.offsetHeight;
+      // sel.style.display = '';
 
     }
 
+    if (this.showUnstrat && this.unstratted.length === 0)
+    {
+      this.showUnstrat = false;
+    }
     
   }
 
