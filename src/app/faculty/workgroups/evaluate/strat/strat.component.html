@@ -13,7 +13,7 @@
     <mat-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
       <button mat-raised-button fxFlex style="cursor: move;">
         <div fxFlexLayout="row"  fxLayoutGap="10px">
-          <mat-icon style="padding-top: 7px; vertical-align: middle;">drag_handle</mat-icon>
+          <mat-icon style="padding-top: 7px; vertical-align: middle;">reorder</mat-icon>
           <div>{{strat?.studentAssessee?.rankName}}</div>
           <div fxFlex></div> 
           <div><span style="color: #3e6d92; font-size:large" *ngIf="!showUnstrat"><strong>{{strat?.stratPosition}}</strong></span></div>
