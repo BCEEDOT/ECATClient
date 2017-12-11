@@ -12,7 +12,7 @@ import {
     MatButtonModule, MatListModule, MatIconModule, MatCardModule, MatMenuModule, MatInputModule, MatButtonToggleModule,
     MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule, MatDialogModule, MatSnackBarModule, MatToolbarModule,
     MatTabsModule, MatSidenavModule, MatTooltipModule, MatCheckboxModule, MatRadioModule, MatGridListModule,
-    MatProgressBarModule, MatSliderModule, MatChipsModule, MatRippleModule,
+    MatProgressBarModule, MatSliderModule, MatChipsModule, MatRippleModule, MatExpansionModule
 } from '@angular/material';
 import { BarChartModule, LineChartComponent, PieChartModule } from '@swimlane/ngx-charts';
 import { DragulaModule } from 'ng2-dragula';
@@ -50,6 +50,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
         MatChipsModule,
         MatGridListModule,
         MatRippleModule,
+        MatExpansionModule,
         CovalentCommonModule,
         CovalentLayoutModule,
         CovalentMediaModule,
@@ -104,6 +105,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
         MatChipsModule,
         MatGridListModule,
         MatRippleModule,
+        MatExpansionModule,
         CovalentCommonModule,
         CovalentLayoutModule,
         CovalentMediaModule,
