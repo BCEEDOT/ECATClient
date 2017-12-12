@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-import { MdSnackBar } from "@angular/material";
-
 import { TdLoadingService, TdDialogService } from "@covalent/core";
 
+import { GlobalService } from "../../../core/services/global.service";
 import { WorkGroupModel, WorkGroup } from "../../../core/entities/lmsadmin/index";
 import { LmsadminDataContextService } from "../../services/lmsadmin-data-context.service";
 import { LmsadminWorkgroupService } from "../../services/lmsadmin-workgroup.service";
@@ -34,8 +33,8 @@ export class ConfigGroupsetComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private loadingService: TdLoadingService,
-    private dialogService: TdDialogService,
-    private snackBar: MdSnackBar) { }
+    private global: GlobalService,
+    private dialogService: TdDialogService) { }
 
   ngOnInit() {
     this.loadingService.register();
@@ -219,7 +218,7 @@ export class ConfigGroupsetComponent implements OnInit {
     this.lmsAdminDataCtx.commit().then(res => {
       if (res){
         this.loadingService.resolve();
-        this.snackBar.open('Groups and memberships created!', 'Dismiss', {duration: 2000});
+        this.global.showSnackBar('Groups and memberships created!');
         this.router.navigate(['../manage'], {relativeTo: this.route});
       }
     }, res => {
@@ -244,7 +243,7 @@ export class ConfigGroupsetComponent implements OnInit {
     this.lmsAdminDataCtx.commit().then(res => {
       if (res){
         this.loadingService.resolve();
-        this.snackBar.open('Groups and memberships created!', 'Dismiss', {duration: 2000});
+        this.global.showSnackBar('Groups and memberships created!');        
         this.router.navigate(['../manage'], {relativeTo: this.route});
       }
     }, res => {

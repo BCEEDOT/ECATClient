@@ -1,4 +1,4 @@
-import { EntityBase } from '../EntityBase';
+import { EntityBase } from '../entitybase';
 
 /// <code-import> Place custom imports between <code-import> tags
 

@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { MdSnackBar } from '@angular/material';
 
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/pluck';
@@ -45,7 +44,6 @@ export class AssessComponent implements OnInit {
     private global: GlobalService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBarService: MdSnackBar,
     private location: Location) {
 
     this.inventories$ = route.data.pluck('inventories');
@@ -134,7 +132,7 @@ export class AssessComponent implements OnInit {
 
     if (!this.inventories.some(inv => inv.behaviorEffect !== null || inv.behaviorFreq !== null)) {
       this.inventories.forEach(inv => inv.rejectChanges());
-      this.router.navigate(['../../'], { relativeTo: this.route })
+      this.location.back();
     }
 
 
@@ -169,7 +167,7 @@ export class AssessComponent implements OnInit {
       this.studentDataContext.commit()
         .then(result => {
           this.loadingService.resolve(this.assessLoad);
-          this.snackBarService.open("Success, Asessment Saved!", 'Dismiss', { duration: 2000 })
+          this.global.showSnackBar('Success, Asessment Saved!');
           this.location.back();
         })
         .catch(result => {
@@ -183,7 +181,7 @@ export class AssessComponent implements OnInit {
       this.facultyDataContext.commit()
         .then(result => {
           this.loadingService.resolve(this.assessLoad);
-          this.snackBarService.open("Success, Asessment Saved!", 'Dismiss', { duration: 2000 })
+          this.global.showSnackBar('Success, Asessment Saved!');          
           this.location.back();
         })
         .catch(result => {
@@ -199,19 +197,19 @@ export class AssessComponent implements OnInit {
   getResponseString(inv: IStudSpInventory | IFacSpInventory): string {
     switch (inv.responseForAssessee.mpItemResponse) {
       case MpSpItemResponse.iea:
-        return 'Always Ineffective';
+        return 'Ineffective Always';
       case MpSpItemResponse.ieu:
-        return 'Usually Ineffective';
+        return 'Ineffective Usually';
       case MpSpItemResponse.nd:
         return 'Not Displayed';
       case MpSpItemResponse.eu:
-        return 'Usually Effective';
+        return 'Effective Usually';
       case MpSpItemResponse.ea:
-        return 'Always Effective';
+        return 'Effective Always';
       case MpSpItemResponse.heu:
-        return 'Usually Highly Effective';
+        return 'Highly Effective Usually';
       case MpSpItemResponse.hea:
-        return 'Always Highly Effective';
+        return 'Highly Effective Always';
       default:
         return '';
     }

@@ -2,25 +2,25 @@ import { NgModule } from '@angular/core';
 import { ActivatedRouteSnapshot, RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 
 import { StudentAuthGuard } from './services/student-auth-guard.service';
-import { StudentDataContext } from "./services/student-data-context.service";
-import { GlobalService } from "../core/services/global.service";
+import { StudentDataContext } from './services/student-data-context.service';
+import { GlobalService } from '../core/services/global.service';
 import { StudentComponent } from './student.component';
-import { ListComponent } from "./list/list.component";
-import { ResultsComponent } from "./results/results.component";
-import { AssessComponent } from '../provider/sp-provider/assess/assess.component'
-import { RouteBackComponent } from "./shared/route-back/route-back.component";
+import { ListComponent } from './list/list.component';
+import { ResultsComponent } from './results/results.component';
+import { AssessComponent } from '../provider/sp-provider/assess/assess.component';
+import { RouteBackComponent } from './shared/route-back/route-back.component';
 
 const studentRoutes: Routes = [
   {
     path: '',
-    //Check if role is student, spin up Student Data Context
+    // Check if role is student, spin up Student Data Context
     canActivate: [StudentAuthGuard],
     children: [
       {
         path: 'assessment',
         component: StudentComponent,
         canActivateChild: [StudentAuthGuard],
-        //Get the students courses
+        // Get the students courses
         resolve: { assess: 'assessmentResolver' },
         children: [
 
@@ -28,13 +28,13 @@ const studentRoutes: Routes = [
 
           {
             path: 'list/:crsId/:wrkGrpId',
-            //set to most recent course, allow student to switch between courses.
+            // set to most recent course, allow student to switch between courses.
             component: ListComponent,
           },
           {
             path: 'results/:crsId/:wrkGrpId',
             component: ResultsComponent,
-            //resolve: { results: 'resultsResolver' },
+            // resolve: { results: 'resultsResolver' },
           },
           {
             path: 'results/:crsId/:wrkGrpId/assess/:assesseeId',
@@ -50,7 +50,7 @@ const studentRoutes: Routes = [
             path: '',
             component: RouteBackComponent,
             pathMatch: 'full'
-            //Set active course and workgroup. Determine if results are published for active group. 
+            // Set active course and workgroup. Determine if results are published for active group. 
           },
           //  {
           //    path: '',
@@ -88,7 +88,8 @@ export function assessmentResolver(studentDataContext: StudentDataContext) {
 // }
 
 export function spAssessResolver(studentDataContext: StudentDataContext) {
-  return (route: ActivatedRouteSnapshot) => studentDataContext.getSpInventory(+route.params['crsId'], +route.params['wrkGrpId'], +route.params['assesseeId']);
+  return (route: ActivatedRouteSnapshot) => 
+  studentDataContext.getSpInventory(+route.params['crsId'], +route.params['wrkGrpId'], +route.params['assesseeId']);
 }
 
 // export function courseResolver(studentDataContext: StudentDataContext) {
@@ -113,20 +114,20 @@ export function spAssessResolver(studentDataContext: StudentDataContext) {
 
 @NgModule({
   imports: [
-    RouterModule.forChild(studentRoutes)
+    RouterModule.forChild(studentRoutes),
   ],
   exports: [
-    RouterModule
+    RouterModule,
   ],
   providers: [
     {
-      provide: 'assessmentResolver', useFactory: assessmentResolver, deps: [StudentDataContext]
+      provide: 'assessmentResolver', useFactory: assessmentResolver, deps: [StudentDataContext],
     },
     // {
     //   provide: 'workGroupResolver', useFactory: workGroupResolver, deps: [StudentDataContext]
     // },
     {
-      provide: 'spAssessResolver', useFactory: spAssessResolver, deps: [StudentDataContext]
+      provide: 'spAssessResolver', useFactory: spAssessResolver, deps: [StudentDataContext],
     }
   ]
 })

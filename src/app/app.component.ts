@@ -1,7 +1,7 @@
 import { Subscriber, Subscription } from 'rxjs/Rx';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MdIconRegistry } from '@angular/material';
+import { MatIconRegistry } from '@angular/material';
 import {
   RouterModule, Routes, Router,
   ActivatedRouteSnapshot, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, Event,
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   cleanName: string;
   @ViewChild('tokenref') tokenRef: ElementRef;
 
-  constructor(private _iconRegistry: MdIconRegistry,
+  constructor(private _iconRegistry: MatIconRegistry,
     private router: Router,
     private loadingService: TdLoadingService,
     private _domSanitizer: DomSanitizer,

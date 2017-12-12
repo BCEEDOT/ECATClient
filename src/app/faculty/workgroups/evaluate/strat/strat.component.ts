@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import { MdSnackBar } from '@angular/material';
+
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from "rxjs/Subscription";
 import { DragulaService } from "ng2-dragula";
 
+import { GlobalService } from "../../../../core/services/global.service";
 import { WorkGroup, CrseStudentInGroup, FacStratResponse } from "../../../../core/entities/faculty";
 import { SpProviderService } from "../../../../provider/sp-provider/sp-provider.service";
 import { FacultyDataContextService } from "../../../services/faculty-data-context.service";
@@ -30,7 +31,8 @@ export class StratComponent implements OnInit, OnDestroy {
     showUnstrat: boolean = false;
 
     constructor(private spProvider: SpProviderService, private facultyDataContext: FacultyDataContextService, private loadingService: TdLoadingService,
-        private dialogService: TdDialogService, private snackBarService: MdSnackBar, private route: ActivatedRoute, private facWorkGroupService: FacWorkgroupService,
+        private dialogService: TdDialogService, private route: ActivatedRoute, private facWorkGroupService: FacWorkgroupService,
+        private global: GlobalService,
         private dragulaService: DragulaService,) {
 
         this.route.params.subscribe(params => {
@@ -100,6 +102,18 @@ export class StratComponent implements OnInit, OnDestroy {
     private onDrop(args){
         for (var i = 0; i < this.stratted.length; i++) {
             this.stratted[i].stratPosition = i + 1;
+
+            //Fix for safari not repainting strat positions 
+            //stopped working for some reason...
+            // let sel = document.getElementById(this.stratted[i].assesseePersonId.toString());
+            // sel.style.display = 'none';
+            // sel.offsetHeight;
+            // sel.style.display = '';
+        }
+
+        if (this.showUnstrat && this.unstratted.length === 0)
+        {
+            this.showUnstrat = false;
         }
     }
 
@@ -111,13 +125,14 @@ export class StratComponent implements OnInit, OnDestroy {
             cancelButton: 'No'
         }).afterClosed().subscribe((confirmed: boolean) => {
             if (confirmed) {
+                this.loadingService.register();
                 this.groupMembers.forEach(gm => {
                     gm.facultyStrat.entityAspect.rejectChanges();
                 });
 
                 this.unstratted = [];
                 this.stratted = [];
-                
+                this.loadingService.resolve();
                 this.activate();
                 // if (this.groupMembers[0].workGroup.facStratResponses.length > 0){
                 //     this.stratted = this.groupMembers[0].workGroup.facStratResponses.sort((a: FacStratResponse, b: FacStratResponse) => {
@@ -133,7 +148,7 @@ export class StratComponent implements OnInit, OnDestroy {
                 //     this.activate();
                 // }
                 
-                this.snackBarService.open('Changes Discarded', 'Dismiss', { duration: 2000 });
+                this.global.showSnackBar('Changes Discarded');
                 //this.location.back();
             }
         });
@@ -206,7 +221,7 @@ export class StratComponent implements OnInit, OnDestroy {
                     });
                 this.facWorkGroupService.stratComplete(true);
                 this.activate();
-                this.snackBarService.open("Success, Strats Updated!", 'Dismiss', { duration: 2000 });
+                this.global.showSnackBar('Success, Strats Updated!');
             }).catch((error) => {
                 this.loadingService.resolve();
                 this.dialogService.openAlert({

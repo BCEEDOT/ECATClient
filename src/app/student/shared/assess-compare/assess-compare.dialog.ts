@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild, TemplateRef, ContentChild } from '@angular/core';
-import { MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
 import { TdChipsComponent } from '@covalent/core';
 
 import { WorkGroup, SpResponse, CrseStudentInGroup } from '../../../core/entities/student/index';
@@ -39,8 +39,8 @@ export class AssessCompareDialog {
     // domain: ['#0D47A1', '#FFCC80', '#1976D2', '#039BE5', '#00BCD4', '#FB8C00', '#FFA726', '#FFCC80', '#FFECB3'],
   };
 
-  constructor(public dialogRef: MdDialogRef<AssessCompareDialog>, private chips: TdChipsComponent, private globalService: GlobalService,
-    @Inject(MD_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MatDialogRef<AssessCompareDialog>, private chips: TdChipsComponent, private globalService: GlobalService,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
 
     let grp: WorkGroup = data.workGroup;
 

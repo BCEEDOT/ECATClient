@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "covalent-quickstart"
+    "name": "ECAT"
   },
   "apps": [
     {
@@ -32,7 +32,8 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+        "prod": "environments/environment.prod.ts",
+        "stage": "environments/environment.stage.ts"
       }
     }
   ],
@@ -59,6 +60,9 @@
   },
   "defaults": {
     "styleExt": "scss",
+    "build": {
+      "preserveSymlinks": true
+    },
     "serve": {
         "port": 4200,
         "host": "localhost"

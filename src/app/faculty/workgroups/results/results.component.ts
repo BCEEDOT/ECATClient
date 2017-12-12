@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { Subject } from 'rxjs/Subject';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdSnackBar } from "@angular/material";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 import 'rxjs/add/operator/pluck';
 
@@ -36,7 +35,6 @@ export class ResultsComponent implements OnInit {
     private loadingService: TdLoadingService,
     private dialogService: TdDialogService,
     private facultyDataContext: FacultyDataContextService,
-    private snackBar: MdSnackBar
   ) { }
 
   ngOnInit() {

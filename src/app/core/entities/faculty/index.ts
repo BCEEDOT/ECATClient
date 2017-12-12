@@ -24,4 +24,3 @@ export * from './profileFaculty';
 export * from './roadRunner';
 export * from './faculty-entity.module';
 export * from './regHelper';
-

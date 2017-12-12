@@ -3,7 +3,7 @@ import * as mpe from "./mapEnum"
 import * as cm from "../entities/client-models"
 import * as user from "../entities/user";
 import * as student from "./../entities/student";
-import * as faculty from "./../entities/faculty";
+// import * as faculty from "./../entities/faculty";
 
 export class EcLocalDataService {
     static serviceId = 'data.static';

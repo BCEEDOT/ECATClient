@@ -1,15 +1,17 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { MdSnackBar } from '@angular/material';
-import { TdLoadingService, TdMediaService, ITdDataTableColumn, ITdDataTableSortChangeEvent, TdDataTableSortingOrder, TdDataTableService, CovalentExpansionPanelModule } from '@covalent/core';
+import {
+  TdLoadingService, TdMediaService, ITdDataTableColumn, ITdDataTableSortChangeEvent,
+  TdDataTableSortingOrder, TdDataTableService, CovalentExpansionPanelModule,
+} from '@covalent/core';
 
-import { Person, RoadRunner } from "../core/entities/user";
-import { GlobalService, ILoggedInUser } from "../core/services/global.service";
-import { UserDataContext } from "../core/services/data/user-data-context.service";
+import { Person, RoadRunner } from '../core/entities/user';
+import { GlobalService, ILoggedInUser } from '../core/services/global.service';
+import { UserDataContext } from '../core/services/data/user-data-context.service';
 import { RoadrunnerService } from './services/roadrunner.service';
-import { FacultyDataContextService } from "../faculty/services/faculty-data-context.service";
-import { Course, WorkGroup } from "../core/entities/faculty";
+import { FacultyDataContextService } from '../faculty/services/faculty-data-context.service';
+import { Course, WorkGroup } from '../core/entities/faculty';
 
 @Component({
   selector: 'qs-roadrunner',
@@ -28,6 +30,7 @@ export class RoadrunnerComponent implements OnInit {
   allStudents: boolean = true;
   studentsOut: IStudentOut[] = [];
   allStudentsOut: IStudentOut[] = [];
+  noSignedOutStudents: boolean = true;
   flights: string[] = [];
   stringAllFlights: string[] = [];
   flightsModel: string[] = [];
@@ -37,7 +40,6 @@ export class RoadrunnerComponent implements OnInit {
   signedOut: boolean = false;
 
   dateFormat = new Intl.DateTimeFormat('en-US');
-
 
   columns: ITdDataTableColumn[] = [
     { name: 'flight', label: 'Flight', sortable: false },
@@ -60,15 +62,14 @@ export class RoadrunnerComponent implements OnInit {
   constructor(private titleService: Title,
     private router: Router,
     private loadingService: TdLoadingService,
-    private snackBarService: MdSnackBar,
     private userDataContext: UserDataContext,
     private facultyDataContext: FacultyDataContextService,
     private _dataTableService: TdDataTableService,
     public media: TdMediaService,
     private global: GlobalService,
     private roadRunnerService: RoadrunnerService,
-    
-    
+
+
   ) { }
 
 
@@ -121,7 +122,7 @@ export class RoadrunnerComponent implements OnInit {
   }
 
   signOut(edit): void {
-    
+
     if (edit.signOut) {
       edit.prevSignOut = true;
       this.count = this.count + 1;
@@ -135,7 +136,7 @@ export class RoadrunnerComponent implements OnInit {
       this.roadRunnerInfos.forEach(element => {
         element['signedOutSomewhere'] = true;
         this.signedOut = true;
-                this.roadRunnerService.signedOut(this.signedOut);
+        this.roadRunnerService.signedOut(this.signedOut);
 
       });
     }
@@ -144,6 +145,7 @@ export class RoadrunnerComponent implements OnInit {
     this.loadingService.register(this.roadRunnerLoading);
     this.userDataContext.commit()
       .then((res) => {
+        this.global.showSnackBar('Status Updated');
         this.loadingService.resolve(this.roadRunnerLoading);
       })
     this.roadRunnerInfos.sort((x, y) => { if (y.signOut === true) return 1; });
@@ -154,7 +156,7 @@ export class RoadrunnerComponent implements OnInit {
 
     this.titleService.setTitle('Road Runner');
     this.persona = this.global.persona.value;
-    
+
     this.activate();
 
   }
@@ -192,7 +194,7 @@ export class RoadrunnerComponent implements OnInit {
                 this.roadRunnerInfos.forEach(element => {
                   element['signedOutSomewhere'] = true;
                   this.signedOut = true;
-                          this.roadRunnerService.signedOut(this.signedOut);
+                  this.roadRunnerService.signedOut(this.signedOut);
 
                 });
               }
@@ -217,7 +219,8 @@ export class RoadrunnerComponent implements OnInit {
 
           this.activeCourseId = courses[0].id;
 
-          this.flightDisplayed = (courses[0].academyId + courses[0].classNumber)
+          // this.flightDisplayed = (courses[0].academyId + courses[0].classNumber)
+          this.flightDisplayed = `${courses[0].academyId} ${courses[0].classNumber}`
 
           this.facultyDataContext.fetchRoadRunnerWorkGroups(this.activeCourseId)
             .then(initFacultyResponse)
@@ -247,11 +250,12 @@ export class RoadrunnerComponent implements OnInit {
 
     this.workGroups.forEach(wg => wg.groupMembers.forEach(gm => {
       let outAdd = gm.studentProfile.person.roadRunnerAddresses.filter(rra => rra.signOut === true)[0];
-
-      this.flights.push(gm.workGroup.defaultName);
+      
+      
 
       if (outAdd != null || outAdd != undefined) {
-
+        this.flights.push(gm.workGroup.defaultName);
+        
         memsAdd.push({
           firstName: outAdd.person.firstName,
           lastName: outAdd.person.lastName,
@@ -263,9 +267,14 @@ export class RoadrunnerComponent implements OnInit {
           name: outAdd.person.firstName + ' ' + outAdd.person.lastName
         });
       }
+
     }));
     this.allStudents = true;
     this.studentsOut = memsAdd;
+    if (this.studentsOut.length > 0) {
+      this.noSignedOutStudents = false;
+    }
+
     this.allStudentsOut = this.studentsOut;
     this.flights = this.flights.filter(function (elem, index, self) {
       return index == self.indexOf(elem);

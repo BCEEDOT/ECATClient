@@ -1,10 +1,10 @@
-import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { isNumeric } from 'rxjs/util/isNumeric';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/util/isNumeric';
 import 'rxjs/add/observable/of';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CrseStudentInGroup as StuCrseStudentInGroup, WorkGroup, StudSpComment } from "../../core/entities/student";
@@ -20,7 +20,7 @@ import { CommentDialog } from "./comment/comment.dialog";
 
 @Injectable()
 export class SpProviderService {
-  dialogRef: MdDialogRef<CommentDialog>;
+  dialogRef: MatDialogRef<CommentDialog>;
   commentClosed$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   off: any;
@@ -31,7 +31,7 @@ export class SpProviderService {
     private facWorkGroupService: FacWorkgroupService,
     private facultyDataContext: FacultyDataContextService,
     private global: GlobalService,
-    private dialog: MdDialog) {
+    private dialog: MatDialog) {
   }
 
   save(): Promise<any> {
@@ -65,7 +65,7 @@ export class SpProviderService {
 
 
 
-  loadComment(recipient: StuCrseStudentInGroup | FacCrseStudentInGroup): Observable<MdDialogRef<CommentDialog>> {
+  loadComment(recipient: StuCrseStudentInGroup | FacCrseStudentInGroup): Observable<MatDialogRef<CommentDialog>> {
     let comment;
 
     if (this.global.persona.value.isStudent) {
@@ -77,6 +77,8 @@ export class SpProviderService {
     return this.dialog.open(CommentDialog, {
       disableClose: true,
       //hasBackdrop: true,
+      height: 'auto',
+      width: '600px',
       data: {
         comment: comment,
       }

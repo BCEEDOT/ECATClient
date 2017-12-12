@@ -11,6 +11,8 @@ import { Subscription } from "rxjs/Subscription";
 export class RoadrunnerCompletedComponent implements OnInit, OnDestroy {
   count:number;
   countSub: Subscription;
+  signedOut: boolean;
+  soSub: Subscription;
   @Input() roadRunnerInfos: RoadRunner[];
 
   constructor( private roadRunnerService:RoadrunnerService) { }
@@ -19,9 +21,11 @@ export class RoadrunnerCompletedComponent implements OnInit, OnDestroy {
 
     this.countSub = this.roadRunnerService.count$.subscribe(count => {this.count = count});
     console.log(this.roadRunnerInfos);
+    this.soSub = this.roadRunnerService.signedOut$.subscribe(so => this.signedOut = so);
   }
 
   ngOnDestroy(){
     this.countSub.unsubscribe();
+    this.soSub.unsubscribe();
   }
 }

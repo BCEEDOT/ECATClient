@@ -1,16 +1,16 @@
-import { EntityBase } from '../EntityBase';
-import { Course } from './Course';
-import { FacSpComment } from './FacSpComment';
-import { SpResponse } from './SpResponse';
-import { WorkGroup } from './WorkGroup';
-import { FacSpResponse } from './FacSpResponse';
-import { FacStratResponse } from './FacStratResponse';
-import { StudSpComment } from './StudSpComment';
-import { SpResult } from './SpResult';
-import { StratResponse } from './StratResponse';
-import { StratResult } from './StratResult';
-import { StudentInCourse } from './StudentInCourse';
-import { ProfileStudent } from './ProfileStudent';
+import { EntityBase } from '../entitybase';
+import { Course } from './course';
+import { FacSpComment } from './facSpComment';
+import { SpResponse } from './spResponse';
+import { WorkGroup } from './workGroup';
+import { FacSpResponse } from './facSpResponse';
+import { FacStratResponse } from './facStratResponse';
+import { StudSpComment } from './studSpComment';
+import { SpResult } from './spResult';
+import { StratResponse } from './stratResponse';
+import { StratResult } from './stratResult';
+import { StudentInCourse } from './studentInCourse';
+import { ProfileStudent } from './profileStudent';
 
 /// <code-import> Place custom imports between <code-import> tags
 import { EcLocalDataService } from "../../common/static";
@@ -470,23 +470,25 @@ export class CrseStudentInGroup extends EntityBase {
             i: this.spResult.breakOut.ineffA + this.spResult.breakOut.ineffU,
             nd: this.spResult.breakOut.notDisplay
         }
+
+        const total = counts.h + counts.e + counts.i + counts.nd;
         
         this.resultForStudent.breakOutReceived = [];
         this.resultForStudent.breakOutReceived.push({
             name: 'Highly Effective',
-            value: counts.h
+            value: Math.round((counts.h / total) * 100)
         });
         this.resultForStudent.breakOutReceived.push({
             name: 'Effective',
-            value: counts.e
+            value: Math.round((counts.e / total) * 100)
         });
         this.resultForStudent.breakOutReceived.push({
             name: 'Not Displayed',
-            value: counts.nd
+            value: Math.round((counts.nd / total) * 100)
         });
         this.resultForStudent.breakOutReceived.push({
             name: 'Ineffective',
-            value: counts.i
+            value: Math.round((counts.i / total) * 100)
         });
 
         this.resultForStudent.breakOutReceivedChartData = [ { "name": "% Recieved", "series": this.resultForStudent.breakOutReceived }];

@@ -1,9 +1,9 @@
-import { EntityBase } from '../EntityBase';
-import { Course } from './Course';
-import { FacultyInCourse } from './FacultyInCourse';
-import { FacSpCommentFlag } from './FacSpCommentFlag';
-import { CrseStudentInGroup } from './CrseStudentInGroup';
-import { WorkGroup } from './WorkGroup';
+import { EntityBase } from '../entitybase';
+import { Course } from './course';
+import { FacultyInCourse } from './facultyInCourse';
+import { FacSpCommentFlag } from './facSpCommentFlag';
+import { CrseStudentInGroup } from './crseStudentInGroup';
+import { WorkGroup } from './workGroup';
 
 /// <code-import> Place custom imports between <code-import> tags
 

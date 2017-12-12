@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 import { TdDialogService } from '@covalent/core';
 import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs/Subscription';
 import { ReactiveFormsModule, FormsModule, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { GlobalService } from "../../core/services/global.service";
 import { RoadrunnerService } from '../services/roadrunner.service';
 import { UserDataContext } from '../../core/services/data/user-data-context.service';
 import { RoadRunner } from '../../core/entities/user';
@@ -21,6 +21,8 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
 
     event: RoadRunner[];
     eventSub: Subscription;
+    signedOut: boolean;
+    soSub: Subscription;
     leavedate: string;
     oneEvent: RoadRunner;
     tempEvent: RoadRunner;
@@ -40,7 +42,7 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private dialogService: TdDialogService,
-        private snackBarService: MdSnackBar,
+        private global: GlobalService,
         private location: Location,
     ) {
 
@@ -54,6 +56,7 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
         });
         this.checkNew = (this.route.snapshot.params['id']);
 
+        this.soSub = this.roadRunnerService.signedOut$.subscribe(so => this.signedOut = so);
         if (isEmpty(this.event) && this.checkNew !== 'New') {
             this.router.navigate(['roadrunner/student/']);
         }
@@ -86,6 +89,7 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.eventSub.unsubscribe();
+        this.soSub.unsubscribe();
     }
 
     cancel(): void {
@@ -98,7 +102,7 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
     save(): void {
         this.userDataContext.commit()
             .then((res) => {
-                this.snackBarService.open('Roadrunner Data Saved', 'Dismiss', { duration: 2000 });
+                this.global.showSnackBar('Location Saved');
                 this.router.navigate(['roadrunner/student/']);
             }).catch((error: Event) => {
                 this.dialogService.openAlert({
@@ -113,6 +117,7 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
 
         this.userDataContext.commit()
             .then((res) => {
+                this.global.showSnackBar('Location Deleted');
                 this.router.navigate(['roadrunner/student/']);
             }).catch((error: Event) => {
                 this.dialogService.openAlert({

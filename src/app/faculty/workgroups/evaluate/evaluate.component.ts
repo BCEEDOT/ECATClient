@@ -4,10 +4,10 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { Subject } from 'rxjs/Subject';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdSnackBar } from "@angular/material";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 import 'rxjs/add/operator/pluck';
 
+import { GlobalService } from ".././../../core/services/global.service";
 import { WorkGroup, CrseStudentInGroup } from "../../../core/entities/faculty";
 import { FacWorkgroupService } from "../../services/facworkgroup.service";
 import { MpSpStatus } from "../../../core/common/mapStrings";
@@ -51,7 +51,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
     private location: Location,
     private dialogService: TdDialogService,
     private facultyDataContext: FacultyDataContextService,
-    private snackBar: MdSnackBar,
+    private global: GlobalService,
     private loadingService: TdLoadingService
   ) {
 
@@ -231,8 +231,8 @@ export class EvaluateComponent implements OnInit, OnDestroy {
       });
 
     } else {
-      if (this.workGroup.spComments.some(comm => comm.flag.entityAspect.entityState.isAddedModifiedOrDeleted())) {
-        this.dialogService.openAlert({message: 'You have pending comment flag changes. Please cancel or save on the Review Comments tab before changing group status.', title: 'Unsaved Changes'});
+      if (this.workGroup.spComments.some(comm => comm.flag.entityAspect.entityState.isAddedModifiedOrDeleted()) || this.workGroup.facStratResponses.some(fstr => fstr.entityAspect.entityState.isModified())) {
+        this.dialogService.openAlert({message: 'You have pending changes. Please check the Strat and Review Comments tabs and cancel or save before changing group status.', title: 'Unsaved Changes'});
         return;
       }
 
@@ -269,7 +269,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
           this.workGroup.mpSpStatus = setTo;
           this.facWorkGroupService.readOnly(setReadOnly);
           this.facultyDataContext.commit().then(success => {
-            this.snackBar.open('Group Status Updated!', 'Dismiss', { duration: 2000 });
+            this.global.showSnackBar('Group Status Updated!');
 
             this.facultyDataContext.fetchActiveWgSpComments(this.workGroup.courseId, this.workGroup.workGroupId, true).then(_ => {
               this.loadingService.resolve();
@@ -296,8 +296,8 @@ export class EvaluateComponent implements OnInit, OnDestroy {
   }
 
   reopenFlight(){
-    if (this.workGroup.spComments.some(comm => comm.flag.entityAspect.entityState.isAddedModifiedOrDeleted())) {
-      this.dialogService.openAlert({message: 'You have pending comment flag changes. Please cancel or save on the Review Comments tab before changing group status.', title: 'Unsaved Changes'});
+    if (this.workGroup.spComments.some(comm => comm.flag.entityAspect.entityState.isAddedModifiedOrDeleted()) || this.workGroup.facStratResponses.some(fstr => fstr.entityAspect.entityState.isModified())) {
+      this.dialogService.openAlert({message: 'You have pending changes. Please check the Strat and Review Comments tabs and cancel or save before changing group status.', title: 'Unsaved Changes'});
       return;
     }
 
@@ -334,7 +334,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
         this.facWorkGroupService.readOnly(setReadOnly);
         this.facultyDataContext.commit().then(success => {
           this.loadingService.resolve();
-          this.snackBar.open('Group Status Updated!', 'Dismiss', { duration: 2000 });
+          this.global.showSnackBar('Group Status Updated!');
           if (this.workGroup.mpSpStatus === MpSpStatus.open) {
             this.showComments = false;
             if (this.tabIndex === 2) { this.tabIndex = 0; }

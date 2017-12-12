@@ -1,6 +1,6 @@
 import {
     ModuleWithProviders, NgModule,
-    Optional, SkipSelf
+    Optional, SkipSelf,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRouteSnapshot, RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
@@ -8,18 +8,20 @@ import { ActivatedRouteSnapshot, RouteReuseStrategy, RouterModule, Routes } from
 import { EmProviderService } from './services/em-provider.service';
 import { UserAuthGuard } from './services/user-auth-guard.service';
 import { AuthService } from './services/auth.service';
-import { AuthUtilityService } from './services/auth-utility.service';
-import { EntityUserModule } from "./entities/user/user-entity.module";
-import { GlobalService } from "./services/global.service";
-import { UserDataContext } from './services/data/user-data-context.service'
-import { UserSaveChangesGuard } from "./services/user-savechangesguard.service";
-import { RoutereuseService } from "./services/routereuse.service";
+// import { AuthUtilityService } from './services/auth-utility.service';
+
+import { EntityUserModule } from './entities/user/user-entity.module';
+
+import { GlobalService } from './services/global.service';
+import { UserDataContext } from './services/data/user-data-context.service';
+import { UserSaveChangesGuard } from './services/user-savechangesguard.service';
+import { RoutereuseService } from './services/routereuse.service';
 
 // ATTENTION: Never import this module into a lazy loaded module. Only import into app module.
 @NgModule({
     imports: [
         CommonModule,
-        EntityUserModule
+        EntityUserModule,
     ],
     declarations: [],
     exports: [],
@@ -29,11 +31,11 @@ import { RoutereuseService } from "./services/routereuse.service";
         UserAuthGuard,
         UserSaveChangesGuard,
         AuthService,
-        AuthUtilityService,
+        // AuthUtilityService,
         GlobalService,
         {
             provide: RouteReuseStrategy,
-            useClass: RoutereuseService
+            useClass: RoutereuseService,
           },
     ]
 })

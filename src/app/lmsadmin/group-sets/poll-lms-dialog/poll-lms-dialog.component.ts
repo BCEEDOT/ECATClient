@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 import { TdLoadingService } from "@covalent/core";
 
@@ -25,8 +25,8 @@ export class PollLmsDialog implements OnInit {
 
   constructor(private lmsAdminDataCtx: LmsadminDataContextService,
     private loadingService: TdLoadingService, 
-    private dialogRef: MdDialogRef<PollLmsDialog>,
-    @Inject(MD_DIALOG_DATA) public data: any) { }
+    private dialogRef: MatDialogRef<PollLmsDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.courseId = this.data.courseId;

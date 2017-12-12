@@ -4,6 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-  api_url: 'http://localhost:62187/'
+  production: true,
+  api_url: 'http://ec2-34-237-207-101.compute-1.amazonaws.com/'
 };
