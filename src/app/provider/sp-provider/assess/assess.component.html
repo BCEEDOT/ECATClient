@@ -93,7 +93,7 @@
             </button>
           </div>
           <div fxFlex></div>
-          <div fxFlex="1 1 auto" fxFlexAlign="center">
+          <div fxFlex="1 1 auto" fxFlexAlign="center" class="pad-bottom-xs">
             {{activeInventory.displayOrder}} / {{inventories.length}}
           </div>
           <div FxFlex></div>
@@ -135,8 +135,8 @@
     <mat-nav-list>
       <h4>Behaviors</h4>
       <a mat-list-item *ngFor="let inventory of inventories" (click)="activeInventory=inventory; saveCheck()" [ngClass]="{'inv-selected': activeInventory.id===inventory.id}">
-        <p matLine class="md-title" style="color: #3e6d92">{{getShortBehavior(inventory)}}</p>
-        <p matLine [class]="inventory.responseForAssessee.mpItemResponse">{{getResponseString(inventory)}}</p>
+        <p matLine class="mat-title" style="color: #3e6d92">{{getShortBehavior(inventory)}}</p>
+        <p matLine class="mat-subheading-1">{{getResponseString(inventory)}}</p>
       </a>
     </mat-nav-list>
   </div>

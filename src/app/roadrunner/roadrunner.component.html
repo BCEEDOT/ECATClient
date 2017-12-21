@@ -12,8 +12,8 @@
   <mat-card *ngIf="persona.isFaculty">
     <p></p>
     <div class="text-center">
-      <span *ngIf="!noSignedOutStudents" class="md-title">Students Signed Out for {{flightDisplayed}}</span>
-      <span *ngIf="noSignedOutStudents" class="md-title">No Students Signed Out for {{flightDisplayed}}</span>
+      <span *ngIf="!noSignedOutStudents" class="mat-title">Students Signed Out for {{flightDisplayed}}</span>
+      <span *ngIf="noSignedOutStudents" class="mat-title">No Students Signed Out for {{flightDisplayed}}</span>
     </div>
     <div *tdLoading="'roadRunnerLoading'">
       <div *ngIf="!noSignedOutStudents">

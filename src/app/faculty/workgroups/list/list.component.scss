@@ -4,6 +4,11 @@
     margin: 0 auto;
 }
 
+.list-font {
+    font-size: 16px;
+    font-weight: 400;
+}
+
 :host /deep/ {
     .tab-icon {
     vertical-align: middle;

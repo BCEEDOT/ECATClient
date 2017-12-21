@@ -18,21 +18,21 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">assessment</mat-icon>
-          Assessment
+          <span class="pad-left-xs">Assessment</span>
         </ng-template>
         <assess [workGroup]="workGroup"></assess>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">assignment</mat-icon>
-          Feedback Results
+          <span class="pad-left-xs">Feedback Results</span>
         </ng-template>
         <behaviors [change]="change" [memberResults]="memberResults"></behaviors>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">comment</mat-icon>
-          Comments Recieved
+          <span class="pad-left-xs">Comments Recieved</span>
         </ng-template>
         <comments [memberResults]="memberResults"></comments>
       </mat-tab>

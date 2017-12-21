@@ -19,9 +19,9 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">local_library</mat-icon>
-          Students
+          <span class="pad-left-xs">Students</span>
         </ng-template>
-        <span fxFlex="100" class="text-center pad-top-xl md-title" *ngIf="course?.students.length === 0">No student enrollments for this course in ECAT.</span>
+        <span fxFlex="100" class="text-center pad-top-xl mat-title" *ngIf="course?.students.length === 0">No student enrollments for this course in ECAT.</span>
         <div *ngIf="course?.students.length > 0">
           <td-paging-bar #pagingBar pageLinkCount="10" [initialPage]="1" [firstLast]="true" [total]="course?.students.length" (change)="change($event)">
             <span td-paging-bar-label hide-xs>Row per page:</span> {{pagingBar.range}} <span hide-xs>of {{pagingBar.total}}</span>
@@ -47,10 +47,10 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">record_voice_over</mat-icon>
-          Faculty
+          <span class="pad-left-xs">Faculty</span>
         </ng-template>
         <div *ngIf="course?.faculty.length === 0">
-          <span fxFlex="100" class="text-center pad-top-xl md-title">No faculty enrollments for this course in ECAT.</span>
+          <span fxFlex="100" class="text-center pad-top-xl mat-title">No faculty enrollments for this course in ECAT.</span>
         </div>
         <div *ngIf="course?.faculty.length > 0">
           <mat-list>

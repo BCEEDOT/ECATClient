@@ -22,15 +22,15 @@
 <div fxHide fxShow.xs>
   <div class="pad-left-sm pad-right-sm" fxLayout="column">
     <div>
-      <h1 class="md-body-2 tc-grey-500 bold">Behavior</h1>
-      <h2 class="md-title text-center">{{activeInventory?.behavior}}.</h2>
+      <h1 class="mat-body-2 tc-grey-500 bold">Behavior</h1>
+      <h2 class="mat-title text-center">{{activeInventory?.behavior}}.</h2>
     </div>
     <div>
-      <h1 class="md-body-2 tc-grey-500 bold">Self</h1>
-      <h2 class="md-title text-center">{{activeInventory?.resultBreakOut?.selfResult}}</h2>
+      <h1 class="mat-body-2 tc-grey-500 bold">Self</h1>
+      <h2 class="mat-title text-center">{{activeInventory?.resultBreakOut?.selfResult}}</h2>
     </div>
     <div>
-      <h1 class="md-body-2 tc-grey-500 bold pull-bottom-md">Peers</h1>
+      <h1 class="mat-body-2 tc-grey-500 bold pull-bottom-md">Peers</h1>
       <div fxLayout="row" fxLayoutAlign="center center">
         <ngx-charts-pie-chart [view]="[135,90]" [scheme]="activeInventory?.resultBreakOut.peerBoChart.chartColors" [legend]="false"
           [results]="activeInventory?.resultBreakOut.peerBoChart" [arcWidth]=".45" [explodeSlices]="true" [doughnut]="true">
@@ -38,8 +38,8 @@
       </div>
     </div>
     <div>
-      <h1 class="md-body-2 tc-grey-500 bold">Instructor</h1>
-      <h2 class="md-title text-center">{{activeInventory?.resultBreakOut?.facultyResult}}</h2>
+      <h1 class="mat-body-2 tc-grey-500 bold">Instructor</h1>
+      <h2 class="mat-title text-center">{{activeInventory?.resultBreakOut?.facultyResult}}</h2>
     </div>
   </div>
   <div class="border-top pad-bottom-xs" fxLayout="row">

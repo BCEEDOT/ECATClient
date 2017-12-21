@@ -33,12 +33,17 @@ export class StratComponent implements OnInit, OnDestroy {
     constructor(private spProvider: SpProviderService, private facultyDataContext: FacultyDataContextService, private loadingService: TdLoadingService,
         private dialogService: TdDialogService, private route: ActivatedRoute, private facWorkGroupService: FacWorkgroupService,
         private global: GlobalService,
-        private dragulaService: DragulaService,) {
+        private dragulaService: DragulaService, ) {
 
         this.route.params.subscribe(params => {
             this.workGroupId = +params['wrkGrpId'];
             this.courseId = +params['crsId'];
 
+        });
+
+        dragulaService.drop.subscribe((value) => {
+            console.log(`drop: ${value[0]}`);
+            this.onDrop(value.slice(1));
         });
     }
 
@@ -58,6 +63,7 @@ export class StratComponent implements OnInit, OnDestroy {
         this.roSub.unsubscribe();
         this.dragSub.unsubscribe();
     }
+    
 
     activate() {
         this.groupMembers = this.members;
@@ -67,24 +73,24 @@ export class StratComponent implements OnInit, OnDestroy {
         });
 
         this.unstratted = this.groupMembers[0].workGroup.facStratResponses.filter(fstr => {
-            if(fstr.stratPosition === 0){return true;}
+            if (fstr.stratPosition === 0) { return true; }
         }).sort((a: FacStratResponse, b: FacStratResponse) => {
-            if (a.studentAssessee.studentProfile.person.lastName < b.studentAssessee.studentProfile.person.lastName) {return -1;}
-            if (a.studentAssessee.studentProfile.person.lastName > b.studentAssessee.studentProfile.person.lastName) {return 1;}
-            if (a.studentAssessee.studentProfile.person.firstName < b.studentAssessee.studentProfile.person.firstName) {return -1;}
-            if (a.studentAssessee.studentProfile.person.firstName > b.studentAssessee.studentProfile.person.firstName) {return 1;}
+            if (a.studentAssessee.studentProfile.person.lastName < b.studentAssessee.studentProfile.person.lastName) { return -1; }
+            if (a.studentAssessee.studentProfile.person.lastName > b.studentAssessee.studentProfile.person.lastName) { return 1; }
+            if (a.studentAssessee.studentProfile.person.firstName < b.studentAssessee.studentProfile.person.firstName) { return -1; }
+            if (a.studentAssessee.studentProfile.person.firstName > b.studentAssessee.studentProfile.person.firstName) { return 1; }
             return 0;
         });
 
         this.stratted = this.groupMembers[0].workGroup.facStratResponses.filter(fstr => {
-            if(fstr.stratPosition !== 0){return true;}
+            if (fstr.stratPosition !== 0) { return true; }
         }).sort((a: FacStratResponse, b: FacStratResponse) => {
-            if (a.stratPosition < b.stratPosition) {return -1;}
-            if (a.stratPosition > b.stratPosition) {return 1;}
+            if (a.stratPosition < b.stratPosition) { return -1; }
+            if (a.stratPosition > b.stratPosition) { return 1; }
             return 0;
         });
 
-        if (this.unstratted.length > 0){
+        if (this.unstratted.length > 0) {
             this.showUnstrat = true;
         } else {
             this.showUnstrat = false;
@@ -99,9 +105,13 @@ export class StratComponent implements OnInit, OnDestroy {
         });
     }
 
-    private onDrop(args){
+    private onDrop(args) {
+
+        console.log(args);
+
         for (var i = 0; i < this.stratted.length; i++) {
             this.stratted[i].stratPosition = i + 1;
+
 
             //Fix for safari not repainting strat positions 
             //stopped working for some reason...
@@ -111,8 +121,7 @@ export class StratComponent implements OnInit, OnDestroy {
             // sel.style.display = '';
         }
 
-        if (this.showUnstrat && this.unstratted.length === 0)
-        {
+        if (this.showUnstrat && this.unstratted.length === 0) {
             this.showUnstrat = false;
         }
     }
@@ -147,7 +156,7 @@ export class StratComponent implements OnInit, OnDestroy {
                 //     this.stratted = [];
                 //     this.activate();
                 // }
-                
+
                 this.global.showSnackBar('Changes Discarded');
                 //this.location.back();
             }
@@ -172,10 +181,10 @@ export class StratComponent implements OnInit, OnDestroy {
     }
 
     isDirty(): boolean {
-        if (this.stratted.length > 0){
+        if (this.stratted.length > 0) {
             return this.stratted.some(fstrat => fstrat.entityAspect.entityState.isAddedModifiedOrDeleted());
         }
-        
+
         return false;
     }
 
@@ -189,7 +198,7 @@ export class StratComponent implements OnInit, OnDestroy {
         //this.evaluateStrat(true);
 
         //const hasErrors = this.groupMembers
-            //.some(gm => !gm.stratIsValid);
+        //.some(gm => !gm.stratIsValid);
 
         // if (hasErrors) {
         //     this.loadingService.resolve();
@@ -198,36 +207,36 @@ export class StratComponent implements OnInit, OnDestroy {
         //     });
         // } else {
 
-            // const gmWithChanges = this.groupMembers
-            //     .filter(gm => gm.proposedStratPosition !== null);
+        // const gmWithChanges = this.groupMembers
+        //     .filter(gm => gm.proposedStratPosition !== null);
 
-            // const changeSet = [] as Array<number>;
+        // const changeSet = [] as Array<number>;
 
-            // gmWithChanges.forEach(gm => {
-            //     const stratResponse = this.facultyDataContext.getSingleStrat(this.courseId, this.workGroupId, gm.studentId);
-            //     stratResponse.stratPosition = gm.proposedStratPosition;
-            //     changeSet.push(gm.studentId);
-            // });
+        // gmWithChanges.forEach(gm => {
+        //     const stratResponse = this.facultyDataContext.getSingleStrat(this.courseId, this.workGroupId, gm.studentId);
+        //     stratResponse.stratPosition = gm.proposedStratPosition;
+        //     changeSet.push(gm.studentId);
+        // });
 
-            this.spProvider.save().then(() => {
-                this.loadingService.resolve();
-                this.groupMembers
-                    //.filter(gm => changeSet.some(cs => cs === gm.studentId))
-                    .forEach(gm => {
-                        gm.updateStatusOfStudent();
-                        gm.stratValidationErrors = [];
-                        gm.stratIsValid = true;
-                        gm.proposedStratPosition = null;
-                    });
-                this.facWorkGroupService.stratComplete(true);
-                this.activate();
-                this.global.showSnackBar('Success, Strats Updated!');
-            }).catch((error) => {
-                this.loadingService.resolve();
-                this.dialogService.openAlert({
-                    message: 'There was an error saving your changes, please try again.'
-                })
+        this.spProvider.save().then(() => {
+            this.loadingService.resolve();
+            this.groupMembers
+                //.filter(gm => changeSet.some(cs => cs === gm.studentId))
+                .forEach(gm => {
+                    gm.updateStatusOfStudent();
+                    gm.stratValidationErrors = [];
+                    gm.stratIsValid = true;
+                    gm.proposedStratPosition = null;
+                });
+            this.facWorkGroupService.stratComplete(true);
+            this.activate();
+            this.global.showSnackBar('Success, Strats Updated!');
+        }).catch((error) => {
+            this.loadingService.resolve();
+            this.dialogService.openAlert({
+                message: 'There was an error saving your changes, please try again.'
             })
+        })
 
         //}
     }

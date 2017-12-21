@@ -11,35 +11,35 @@
         <tr>
           <th></th>
           <th *ngFor="let memberResult of membersResults; let i=index; let odd=odd;" [ngClass]="{'selected': hovered === memberResult.studentId}">
-            <span class="md-caption">{{memberResult?.rankName}}</span>
+            <span class="mat-caption">{{memberResult?.rankName}}</span>
           </th>
 
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let memberResult of membersResults;">
-          <td class="md-caption">{{memberResult?.rankName}}</td>
+          <td class="mat-caption">{{memberResult?.rankName}}</td>
           <td align="center" *ngFor="let studentId of studentIds;" #td [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId"
             (mouseout)="hovered = null">
             <span [ngClass]="{'self': memberResult.studentId === studentId}">{{memberResult?.statusOfStudent.calcGaveStrats[studentId]}}</span>
           </td>
         </tr>
         <tr>
-          <td class="md-caption">Instructor</td>
+          <td class="mat-caption">Instructor</td>
           <td *ngFor="let studentId of studentIds;" [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId"
             (mouseout)="hovered = null">
             {{facultyStrat[studentId]}}
           </td>
         </tr>
         <tr>
-          <td class="md-subhead border">Final Strat</td>
+          <td class="mat-subheading-1 border">Final Strat</td>
           <td class="border" *ngFor="let studentId of studentIds;" [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId"
             (mouseout)="hovered = null">
             {{finalStrat[studentId]}}
           </td>
         </tr>
         <tr>
-          <td class="md-subhead space">
+          <td class="mat-subheading-1 space">
             <span matTooltip="Not used in Final Strat" matTooltipPosition="right"><mat-icon class="small-icon">info_outline</mat-icon>Self Strat</span>
           </td>
           <td class="tc-orange-900 space" style="font-weight: bold;" *ngFor="let studentId of studentIds;" [ngClass]="{'selected': hovered === studentId}" (mouseover)="hovered = studentId"

@@ -8,11 +8,11 @@
       <mat-icon>account_circle</mat-icon>
     </a>
   </div>
-  <div class="width">
+  <div class="width pad-bottom-sm">
     <div align="end" class="pad-right-md pad-top-sm" *ngIf="onListView">
-      <button mat-button [matMenuTriggerFor]="posXMenu" class="md-subhead">
+      <button mat-button [matMenuTriggerFor]="posXMenu" class="pad-top-xs" style="font-size: 16px;">
         {{activeCourse?.displayName}}
-        <mat-icon class="md-24">expand_more</mat-icon>
+        <mat-icon class="mat-24">expand_more</mat-icon>
       </button>
       <mat-menu x-position="before" #posXMenu="matMenu" class="before">
         <button *ngFor="let course of courses" mat-menu-item (click)="setActiveCourse(course, false)">
@@ -20,7 +20,7 @@
         </button>
       </mat-menu>
       <button mat-icon-button (click)="refreshData()">
-        <mat-icon class="md-24">autorenew</mat-icon>
+        <mat-icon class="mat-24">autorenew</mat-icon>
       </button>
     </div>
   </div>

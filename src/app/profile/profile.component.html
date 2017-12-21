@@ -10,7 +10,7 @@
   </div>
   <div class="width">
     <mat-card>
-      <mat-tab-group md-stretch-tabs>
+      <mat-tab-group>
         <mat-tab>
           <ng-template mat-tab-label>About Me</ng-template>
           <div *tdLoading="'profileLoading'">
@@ -21,7 +21,7 @@
                 <h4 matLine>{{prettyName}}</h4>
                 <p matLine>Name</p>
               </mat-list-item>
-              <mat-divider md-inset></mat-divider>
+              <mat-divider mat-inset></mat-divider>
               <mat-list-item>
                 <mat-icon matListAvatar>description</mat-icon>
                 <h4 matLine>{{user?.email}}</h4>
@@ -35,19 +35,19 @@
                   <h4 matLine>{{user?.mpGender}}</h4>
                   <p matLine>Gender</p>
                 </mat-list-item>
-                <mat-divider md-inset></mat-divider>
+                <mat-divider mat-inset></mat-divider>
                 <mat-list-item>
                   <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpAffiliation}}</h4>
                   <p matLine>Affiliation</p>
                 </mat-list-item>
-                <mat-divider md-inset></mat-divider>
+                <mat-divider mat-inset></mat-divider>
                 <mat-list-item>
                   <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpComponent}}</h4>
                   <p matLine>Military Component</p>
                 </mat-list-item>
-                <mat-divider md-inset></mat-divider>
+                <mat-divider mat-inset></mat-divider>
                 <mat-list-item>
                   <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpPaygrade}}</h4>

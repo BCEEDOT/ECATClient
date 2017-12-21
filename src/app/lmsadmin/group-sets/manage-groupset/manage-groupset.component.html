@@ -1,6 +1,6 @@
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav mode="side" color="primary" opened="true" style="width:257px;border-right:1px solid #ccc">
-    <div flex class="md-content ">
+    <div flex class="mat-content ">
       <mat-nav-list>
         <td-expansion-panel *ngIf="readOnly" label="Unassigned Students" [expand]="isUnassignedPanelExpanded">
           <div fxLayout="column" id="unassigned" style="min-height: 50px;">
@@ -8,7 +8,7 @@
               [myHighlight]="unassignedStudent.highlighted" 
               (mouseover)="hovered = unassignedStudent.studentId"
               (mouseout)="hovered = null" 
-              class="push-none pad-sm md-caption"
+              class="push-none pad-sm mat-caption"
               style="padding-left: 16px;"
               *ngFor="let unassignedStudent of unassignedStudents">
                 {{unassignedStudent.rankName}}
@@ -25,7 +25,7 @@
                   [ngClass]="{'selected': hovered === unassignedStudent.studentId}"
                   (mouseover)="hovered = unassignedStudent.studentId" 
                   (mouseout)="hovered = null" 
-                  class="push-none pad-sm md-caption"
+                  class="push-none pad-sm mat-caption"
                   style="padding-left: 16px;"
                   *ngFor="let unassignedStudent of unassignedStudents" 
                   (click)="studentClick(unassignedStudent)">
@@ -38,7 +38,7 @@
 
           <div *ngFor="let change of changes" fxLayout="row" fxLayoutAlign="start center">
             <div fxFlexOffset="5%"></div>
-            <p class="push-none pad-xs md-caption">
+            <p class="push-none pad-xs mat-caption">
               {{change.changeDescription}}
             </p>
             <div fxFlex></div>
@@ -85,7 +85,7 @@
           <mat-card-content>
             <div style="min-height: 50px" [id]="workGroup.workGroupId">
               <p *ngFor="let groupMember of workGroup.groupMembers trackBy:groupMember?.studentId" [id]="groupMember.studentId" [myHighlight]="groupMember.highlighted"
-                (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="md-caption push-none pad-xs">
+                (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="mat-caption push-none pad-xs">
                 {{groupMember.rankName}}
               </p>
             </div>
@@ -114,7 +114,7 @@
           <mat-card-content *ngIf="!workGroup.canEdit">
             <div style="min-height: 50px" [id]="workGroup.workGroupId">
               <p *ngFor="let groupMember of workGroup.groupMembers trackBy:groupMember?.studentId" [id]="groupMember.studentId" [myHighlight]="groupMember.highlighted"
-                (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="md-caption push-none pad-xs">
+                (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="mat-caption push-none pad-xs">
                 {{groupMember.rankName}}
               </p>
             </div>
@@ -123,7 +123,7 @@
             <div style="min-height: 50px" [id]="workGroup.workGroupId" [dragula]='"bag-one"' [dragulaModel]='workGroup.groupMembers'>
               <p *ngFor="let groupMember of workGroup.groupMembers trackBy:groupMember?.studentId" [id]="groupMember.studentId" [myHighlight]="groupMember.highlighted"
                 [ngClass]="{'selected': hovered === groupMember.studentId}" (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null"
-                class="md-caption push-none pad-xs" (click)="studentClick(groupMember)">
+                class="mat-caption push-none pad-xs" (click)="studentClick(groupMember)">
                 {{groupMember.rankName}}
               </p>
             </div>

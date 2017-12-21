@@ -14,34 +14,36 @@
     <h3 matLine> {{user?.rankName}} </h3>
     <div flex="20" *ngIf="readOnly">
       <div *ngIf="stratToggle">
-        <span class="md-title">{{user?.statusOfPeer[user?.studentId].stratedPosition}}</span>
+        <span class="mat-title">{{user?.statusOfPeer[user?.studentId].stratedPosition}}</span>
       </div>
     </div>
-    <span flex="70" class="pad-right-lg md-body-1 tc-grey-500">
+    <span flex="70" class="pad-right-lg tc-grey-500">
       <button mat-button (click)="assess(user.studentId)">
-        <mat-icon>{{user?.assessText}}</mat-icon> Assessment </button>
+        <mat-icon>{{user?.assessText}}</mat-icon> 
+        Assessment 
+      </button>
     </span>
-    <span flex="60" class="pad-right-lg md-body-1 tc-grey-500"></span>
+    <span flex="60" class="pad-right-lg tc-grey-500"></span>
     <span flex></span>
   </mat-list-item>
-  <mat-divider class="bgc-dark-orange-500" md-inset></mat-divider>
+  <mat-divider class="bgc-dark-orange-500" mat-inset></mat-divider>
   <ng-template let-peer let-last="last" ngFor [ngForOf]="peers">
     <mat-list-item>
       <mat-icon matListAvatar>person</mat-icon>
       <h3 matLine> {{peer?.rankName}} </h3>
       <div flex="20" *ngIf="readOnly">
         <div *ngIf="stratToggle">
-          <span class="md-title">{{user?.statusOfPeer[peer?.studentId].stratedPosition}}</span>
+          <span class="mat-title">{{user?.statusOfPeer[peer?.studentId].stratedPosition}}</span>
         </div>
       </div>
-      <span flex="70" class="pad-right-lg md-body-1 tc-grey-500">
+      <span flex="70" class="pad-right-lg tc-grey-500">
         <button mat-button (click)="assess(peer.studentId)">
           <mat-icon>{{peer?.assessText}}</mat-icon> Assessment</button>
       </span>
       <span *ngIf="peer?.commentText === 'not_interested'" flex="60" class="pad-right-lg">
 
       </span>
-      <span *ngIf="peer?.commentText !== 'not_interested'" flex="60" class="pad-right-lg md-body-1 tc-grey-500">
+      <span *ngIf="peer?.commentText !== 'not_interested'" flex="60" class="pad-right-lg tc-grey-500">
         <button mat-button *ngIf="peer?.commentText !== 'not_interested'" (click)="comment(peer)">
           <mat-icon>{{peer?.commentText}}</mat-icon> Comment</button>
         <!-- <span class="pad-left-sm" *ngIf="peer?.commentText === 'not_interested'">
@@ -49,7 +51,7 @@
       </span>
       <span flex></span>
     </mat-list-item>
-    <mat-divider *ngIf="!last" md-inset></mat-divider>
+    <mat-divider *ngIf="!last" mat-inset></mat-divider>
   </ng-template>
 </mat-list>
 
@@ -65,31 +67,31 @@
   </div>
 
   <div class="main-border-bottom pad-left-md pad-bottom-xs">
-    <h3 class="md-subhead pull-bottom-xs pad-bottom-xs">
+    <h3 class="mat-subheading-1 pull-bottom-xs pad-bottom-xs">
       {{user?.rankName}}
       <span *ngIf="stratToggle && readOnly">
-        <span class="md-title"> - {{user?.statusOfPeer[user?.studentId].stratedPosition}}</span>
+        <span class="mat-title"> - {{user?.statusOfPeer[user?.studentId].stratedPosition}}</span>
       </span>
     </h3>
-    <div class="tc-grey-500 md-body-1">
+    <div class="tc-grey-500 mat-body-1">
       <button mat-button (click)="assess(user.studentId)">
         <mat-icon>{{user?.assessText}}</mat-icon> Assessment </button>
     </div>
   </div>
   <ng-template let-peer let-last="last" ngFor [ngForOf]="peers">
     <div class="border-bottom pad-left-md pad-bottom-xs">
-      <h3 class="md-subhead pull-bottom-xs pad-bottom-sx">
+      <h3 class="mat-subheading-1 pull-bottom-xs pad-bottom-sx">
          {{peer?.rankName}} 
          <span *ngIf="stratToggle && readOnly">
-            <span class="md-title"> - {{user?.statusOfPeer[peer?.studentId].stratedPosition}}</span>
+            <span class="mat-title"> - {{user?.statusOfPeer[peer?.studentId].stratedPosition}}</span>
           </span>
         </h3>
       <div fxLayout="row">
-        <span fxFlex="50%" class="md-body-1 tc-grey-500">
+        <span fxFlex="50%" class="mat-body-1 tc-grey-500">
           <button mat-button (click)="assess(peer.studentId)">
             <mat-icon>{{peer?.assessText}}</mat-icon> Assessment</button>
         </span>
-        <span fxFlex="50%" class="md-body-1 tc-grey-500">
+        <span fxFlex="50%" class="mat-body-1 tc-grey-500">
           <button mat-button *ngIf="peer?.commentText !== 'not_interested'" (click)="comment(peer)">
             <mat-icon>{{peer?.commentText}}</mat-icon> Comment</button>
           <span class="pad-left-sm" *ngIf="peer?.commentText === 'not_interested'">

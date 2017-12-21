@@ -5,9 +5,9 @@
     <mat-list-item *ngFor="let author of memsWithComments" [ngClass]="{'selected': this.selectedAuthor == author }" (click)="this.changeAuthor(author)" style="cursor:pointer">
       <span>{{author?.rankName}}</span>
       <span fxFlex></span>
-      <span *ngIf="author.numRemaining > 0" class="md-caption pad-right-xs"><mat-icon>flag</mat-icon>{{author?.numRemaining}} </span>
-      <span *ngIf="author.apprFlags > 0" class="md-caption pad-right-xs"><mat-icon class="tc-green-700">done</mat-icon>{{author?.apprFlags}} </span>
-      <span *ngIf="author.inapprFlags > 0" class="md-caption"><mat-icon class="tc-red-700">highlight_off</mat-icon>{{author?.inapprFlags}}</span>
+      <span *ngIf="author.numRemaining > 0" class="mat-caption pad-right-xs"><mat-icon>flag</mat-icon>{{author?.numRemaining}} </span>
+      <span *ngIf="author.apprFlags > 0" class="mat-caption pad-right-xs"><mat-icon class="tc-green-700">done</mat-icon>{{author?.apprFlags}} </span>
+      <span *ngIf="author.inapprFlags > 0" class="mat-caption"><mat-icon class="tc-red-700">highlight_off</mat-icon>{{author?.inapprFlags}}</span>
     </mat-list-item>
   </mat-list>
   <span fxFlex=".1"></span>
@@ -34,9 +34,9 @@
   <mat-card fxFlex="50" style="align-self: flex-start">
     <mat-card-content style="word-break: break-all; min-height: 150px; overflow-x: auto">
       <div fxLayout="row">
-        <span class="md-subhead">Comment Type: {{selectedComment?.requestAnonymity ? 'Anonymous' : 'Signed'}}</span>
+        <span class="mat-subheading-1">Comment Type: {{selectedComment?.requestAnonymity ? 'Anonymous' : 'Signed'}}</span>
         <span fxFlex></span>
-        <span class="md-subhead">Last Modified: {{selectedComment?.displayDate}}</span>
+        <span class="mat-subheading-1">Last Modified: {{selectedComment?.displayDate}}</span>
       </div>
       <p>{{selectedComment?.commentText}}</p>
     </mat-card-content>

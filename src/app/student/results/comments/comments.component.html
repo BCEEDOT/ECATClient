@@ -5,11 +5,11 @@
       <mat-expansion-panel fxFlex [expanded]="true">
         <mat-expansion-panel-header>
           <mat-icon style="padding-top: 18px; padding-right: 5px; vertical-align: middle; color: #707070">person</mat-icon>
-          <h4 matLine>
-            <span class="tc-grey-800 md-title">{{comment?.authorName}}</span>
-          </h4>
+          <h3 matLine>
+            <span class="tc-grey-800">{{comment?.authorName}}</span>
+          </h3>
         </mat-expansion-panel-header>
-        <p class="pad-left pull-top-sm md-subhead" ngClass.xs="xs-pad-left">
+        <p class="pad-left-xs pull-top-sm mat-body-1" ngClass.xs="xs-pad-left">
             {{comment.commentText}}
           </p>
       </mat-expansion-panel>
@@ -22,12 +22,12 @@
     <div *ngFor="let comment of comments; let last = last">
       <mat-expansion-panel fxFlex [expanded]="true">
           <mat-expansion-panel-header>
-            <mat-icon style="padding-top: 18px; padding-right: 5px; vertical-align: middle; color: #707070">person</mat-icon>
-            <h4 matLine>
-              <span class="tc-grey-800 md-title">{{comment?.authorName}}</span>
-            </h4>
+            <mat-icon style="padding-top: 15px; padding-right: 5px; vertical-align: middle; color: #707070">person</mat-icon>
+            <h3 class="mat-subheading-1">
+              <span class="tc-grey-800">{{comment?.authorName}}</span>
+            </h3>
           </mat-expansion-panel-header>
-          <p class="pull-top-sm md-subhead">
+          <p class="pull-top-sm mat-body-1">
               {{comment.commentText}}
             </p>
         </mat-expansion-panel>

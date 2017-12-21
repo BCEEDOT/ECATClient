@@ -8,13 +8,14 @@
       </mat-card-content>
       <mat-divider></mat-divider>
       <mat-card-actions>
-        <button mat-button color="primary" class="text-upper" (click)="user.hasAcknowledged=true;">I AGREE</button>
+        <div fxFlex></div>
+        <button mat-raised-button color="primary" class="text-upper" (click)="user.hasAcknowledged=true;">I AGREE</button>
       </mat-card-actions>
     </mat-card>
 
     <mat-card *ngIf="user?.hasAcknowledged">
       <div *ngIf="readOnly">
-        <td-message label="This Group is currently Under Review" class="bgc-green-200" icon="error">
+        <td-message label="This Group is currently Under Review" class="bgc-green-200 mat-subheading-1 pull-bottom-none" icon="error">
         </td-message>
       </div>
       <mat-tab-group [(selectedIndex)]="activeTab" class="tab-group" dynamicHeight>
@@ -22,7 +23,7 @@
 
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">assessment</mat-icon>
-            ASSESS
+            <span class="pad-left-xs">ASSESS</span>
             <mat-icon *ngIf=assessComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
             <mat-icon *ngIf=!assessComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
           </ng-template>
@@ -32,7 +33,7 @@
         <mat-tab [disabled]="readOnly">
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">format_list_numbered</mat-icon>
-            STRAT
+            <span class="pad-left-xs">STRAT</span>
             <mat-icon *ngIf=stratComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
             <mat-icon *ngIf=!stratComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
           </ng-template>

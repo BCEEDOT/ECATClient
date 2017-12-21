@@ -23,7 +23,7 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">assessment</mat-icon>
-            Assess
+            <span class="pad-left-xs">Assess</span>
             <mat-icon class="small-tab-icon" *ngIf="workGroup.mpSpStatus !== statusMap.published" [ngClass]="(assessComplete) ? 'tc-green-700' : 'tc-red-700'">{{assessStatusIcon}}</mat-icon>
           </ng-template>
           <assess [members]="members"></assess>
@@ -31,7 +31,7 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">format_list_numbered</mat-icon>
-            Strat
+            <span class="pad-left-xs">Strat</span>
             <mat-icon class="small-tab-icon" *ngIf="workGroup.mpSpStatus !== statusMap.published" [ngClass]="(stratComplete) ? 'tc-green-700' : 'tc-red-700'">{{stratStatusIcon}}</mat-icon>
           </ng-template>
           <strat [members]="members"></strat>
@@ -39,7 +39,7 @@
         <mat-tab [disabled]="!showComments">
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">comment</mat-icon>
-            Review Comments
+            <span class="pad-left-xs">Review Comments</span>
             <mat-icon class="small-tab-icon" *ngIf="!showComments && workGroup.mpSpStatus !== statusMap.published">lock</mat-icon>
             <mat-icon class="small-tab-icon" *ngIf="showComments && workGroup.mpSpStatus !== statusMap.published" [ngClass]="(commentsComplete) ? 'tc-green-700' : 'tc-red-700'">{{commentStatusIcon}}</mat-icon>
           </ng-template>

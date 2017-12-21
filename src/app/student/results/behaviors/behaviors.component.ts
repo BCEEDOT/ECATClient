@@ -65,6 +65,8 @@ export class BehaviorsComponent implements OnChanges {
       inv.resultBreakOut.peerBoChart['chartColors'] = chartColors;
     });
 
+    console.log(this.inventories);
+
   }
 
   previousInv() {

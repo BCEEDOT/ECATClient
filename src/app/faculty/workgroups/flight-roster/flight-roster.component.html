@@ -28,16 +28,16 @@
         <mat-list-item>
 
           <mat-icon matListAvatar>person</mat-icon>
-          <div fxFlex="80" class="md-subhead text-left pad-sm">
+          <div fxFlex="80" class=" text-left pad-sm">
             {{member?.rankName}}
           </div>
 
-          <div fxFlex="20" *ngFor="let category of categoriesToDisplay" class="md-subhead text-center pad-sm">
+          <div fxFlex="20" *ngFor="let category of categoriesToDisplay" class="text-center pad-sm">
             {{(member?.flights[category]) ? member?.flights[category] : 'None'}}
           </div>
           <div fxFlex></div>
         </mat-list-item>
-        <mat-divider *ngIf="!last" md-inset></mat-divider>
+        <mat-divider *ngIf="!last" mat-inset></mat-divider>
 
 
       </ng-template>
@@ -74,7 +74,7 @@
         <h3 matLine> {{member?.rankName}} </h3>
 
       </mat-list-item>
-      <mat-divider *ngIf="!last" md-inset></mat-divider>
+      <mat-divider *ngIf="!last" mat-inset></mat-divider>
     </ng-template>
   </mat-list>
 </mat-card> -->
