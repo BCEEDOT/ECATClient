@@ -1,4 +1,5 @@
-import { Subscriber, Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
+import { Subscriber } from 'rxjs/Subscriber';
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
@@ -12,6 +13,7 @@ import { TdLoadingService } from '@covalent/core';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/groupBy';
 import 'rxjs/add/operator/mergeAll';
+import 'rxjs/add/operator/filter';
 
 import { GlobalService, ILoggedInUser } from './core/services/global.service';
 import { Person } from './core/entities/user/person';

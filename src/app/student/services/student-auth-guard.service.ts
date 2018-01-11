@@ -86,6 +86,7 @@ export class StudentAuthGuard implements CanActivate, CanActivateChild {
     // };
 
     // Navigate to the login page with extras
+    this.authService.logout();
     this.router.navigate(['/login']);
     return false;
   }

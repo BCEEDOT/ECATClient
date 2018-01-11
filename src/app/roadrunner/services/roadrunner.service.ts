@@ -33,7 +33,7 @@ import { RoadRunner } from "../../core/entities/user";
 import { UserDataContext } from "../../core/services/data/user-data-context.service";
 import { TdLoadingService } from '@covalent/core';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/RX';
+import { Subject } from 'rxjs/Subject';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 

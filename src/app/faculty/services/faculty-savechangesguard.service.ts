@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot } from '@angular/router';
 import { TdDialogService } from '@covalent/core';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
 
 import { FacStratResponse } from "./../../core/entities/faculty";
 import { FacultyComponent } from "../faculty.component";

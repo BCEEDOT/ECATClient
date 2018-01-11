@@ -68,6 +68,7 @@ export class UserAuthGuard implements CanActivate {
 
     }
 
+    this.authService.logout();
     this.router.navigate(['/login']);
     return false;
   }
