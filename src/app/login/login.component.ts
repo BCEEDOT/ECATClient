@@ -38,17 +38,23 @@ export class LoginComponent implements OnInit {
 
     this.loadingService.register();
     this.authService.login(this.username, this.password).subscribe(result => {
+
       if (result === true) {
         this.loadingService.resolve();
         this.router.navigate(['/dashboard']);
       } else {
         // replace with correct message box
-        alert('Login failed');
+        this.global.showSnackBar("Sorry, something went wrong. Please try again.");
         this.loadingService.resolve();
       }
     }, (error: any) => {
       this.loadingService.resolve();
-      this.global.showSnackBar(error.error.error_description);
+      if (error.status === 400) {
+        this.global.showSnackBar(error.error.error_description);
+      } else {
+        this.global.showSnackBar("Sorry, something went wrong. Please try again.");
+      }
+      
     }
     );
   }

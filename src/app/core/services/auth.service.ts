@@ -40,15 +40,10 @@ export class AuthService {
 
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');
-    // let options = new RequestOptions({ headers: headers });
-    const body = new HttpParams()
+     const body = new HttpParams()
       .set('grant_type', 'password')
       .set('username', username)
       .set('password', password);
-
-    // const body = { grant_type: 'password', username: username, password: password };
-
-    // console.log(params);
 
     // TODO: Update for environment
     // dev
@@ -77,11 +72,16 @@ export class AuthService {
     let idTokenSigned = localStorage.getItem('ecatUserIdToken');
 
     let accessToken = this.jwt.decodeToken(accessTokenSigned);
-    let idToken = this.jwt.decodeToken(idTokenSigned);
+    //TODO: .NET CORE
+    //let idToken = this.jwt.decodeToken(idTokenSigned);
+    let idToken = JSON.parse(idTokenSigned);
+
     var user: ILoggedInUser = <ILoggedInUser>{};
 
     var loggedInUser = {
-      personId: accessToken.sub,
+      //TODO: .NET CORE
+      //personId: accessToken.sub,
+      personId: accessToken.primarysid,
       lastName: idToken.lastName,
       firstName: idToken.firstName,
       isActive: true,
@@ -93,6 +93,8 @@ export class AuthService {
       registrationComplete: idToken.registrationComplete,
       mpInstituteRole: idToken.mpInstituteRole,
     } as Person;
+
+    console.log(loggedInUser);
 
     let entityUser = this.emProvider.getManager(DataContext.User).createEntity(MpEntityType.person, loggedInUser, EntityState.Unchanged);
     user.person = entityUser as Person;
@@ -126,11 +128,6 @@ export class AuthService {
       this.emProvider.clear(DataContext.Faculty);
       this.emProvider.clear(DataContext.LmsAdmin);
     }
-    // this.emProvider.clear(DataContext.User);
-    // this.emProvider.clear(DataContext.Student);
-    // this.emProvider.clear(DataContext.Faculty);
-
-    // this.emProvider.clearAll();
 
     this.global.user(undefined);
     this.global.userDataContext(false);

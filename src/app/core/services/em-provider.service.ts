@@ -93,6 +93,7 @@ export class EmProviderService {
           })
           .catch(e => {
             //If there is an error reset
+            console.log(emStatus.manager);
             emStatus.promise = null;
             console.log("Error retrieving metadata");
             console.log(`error from prepare em----- ${e}`)
