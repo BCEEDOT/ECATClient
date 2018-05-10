@@ -18,7 +18,7 @@
     <div *tdLoading="'roadRunnerLoading'">
       <div *ngIf="!noSignedOutStudents">
         <td-chips [(ngModel)]="flightsModel" (add)="add()" (remove)="remove()" (inputChange)="filterFlights($event)" [items]="flights"
-          placeholder="Click to filter by Flight" [readOnly]="readOnly" requireMatch>
+          placeholder="Click to filter by Flight" requireMatch>
         </td-chips>
         <div fxShow fxHide.xs="true">
           <td-data-table [data]="studentsOut" [columns]="columns">
