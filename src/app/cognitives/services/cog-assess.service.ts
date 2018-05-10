@@ -1,10 +1,9 @@
+
+import {throwError,  BehaviorSubject ,  Observable, of, } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Router } from "@angular/router";
 import { TdLoadingService, TdDialogService } from '@covalent/core';
 import { GlobalService } from "../../core/services/global.service";
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/observable/of';
 
 import { CogResultsService } from "./cog-results.service";
 import { CogInstrument, CogInventory, CogEcpeResult, CogEcmspeResult, CogEsalbResult, CogEtmpreResult } from "../../core/entities/user";
@@ -113,10 +112,10 @@ export class CogAssessService {
                     message: 'Your changes were not saved, please try again.',
                     title: 'Save Error',
                 });
-                return Observable.throw(result);
+                return throwError(result);
             })
 
-           return Observable.of('Success');
+           return of('Success');
 
     } //END SAVE ASSESS
 

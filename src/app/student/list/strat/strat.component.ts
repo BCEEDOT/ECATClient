@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, AfterViewInit, AfterViewChecked, Output, OnDestroy } from '@angular/core';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import 'rxjs/add/operator/debounceTime'
+
 import { Subscription } from 'rxjs';
 import { DragulaService } from "ng2-dragula";
 

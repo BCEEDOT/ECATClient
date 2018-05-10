@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseChartComponent } from '@swimlane/ngx-charts/release';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { BaseAssessService } from "../services/base-assess.service";
 import { CogInstrument, CogInventory, CogResponse } from "../../../core/entities/user";

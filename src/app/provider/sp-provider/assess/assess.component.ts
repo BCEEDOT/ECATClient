@@ -2,9 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/operator/pluck';
+import { Observable } from "rxjs";
+import { pluck } from "rxjs/Operators";
 
 import { StudentDataContext } from "../../../student/services/student-data-context.service";
 import { FacultyDataContextService } from "../../../faculty/services/faculty-data-context.service";
@@ -46,7 +45,7 @@ export class AssessComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location) {
 
-    this.inventories$ = route.data.pluck('inventories');
+    this.inventories$ = route.data.pipe(pluck('inventories'));
 
   }
 

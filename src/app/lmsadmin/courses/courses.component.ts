@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/operator/pluck';
+import { Observable } from "rxjs";
+import { pluck } from "rxjs/Operators";
 
 import { Course } from "../../core/entities/lmsadmin";
 import { LmsadminDataContextService } from "../services/lmsadmin-data-context.service";
@@ -25,7 +24,7 @@ export class CoursesComponent implements OnInit {
     private route: ActivatedRoute,
     private dialogService: TdDialogService,
     private loadingService: TdLoadingService) {
-      this.courses$ = route.data.pluck('courses');
+      this.courses$ = route.data.pipe(pluck('courses'));
     }
 
   ngOnInit() {

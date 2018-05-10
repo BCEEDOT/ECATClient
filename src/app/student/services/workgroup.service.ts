@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Course, WorkGroup } from '../../core/entities/student';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class WorkGroupService {

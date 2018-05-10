@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 import { ActivatedRoute, Router } from "@angular/router";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/operator/pluck';
+import { Observable } from "rxjs";
+import { pluck } from "rxjs/Operators";
 
 import { WorkGroup, CrseStudentInGroup } from "../../../core/entities/faculty";
 import { FacultyDataContextService } from "../../services/faculty-data-context.service";
@@ -49,7 +48,8 @@ export class StatusComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private facWorkGroupService: FacWorkgroupService) {
-      this.workGroup$ = route.data.pluck('workGroup');
+
+      this.workGroup$ = route.data.pipe(pluck('workGroup'));
     }
 
   ngOnInit() {

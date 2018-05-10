@@ -1,8 +1,7 @@
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription ,  Observable } from 'rxjs';
 import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
-import 'rxjs/add/operator/pluck';
+
 import { TdLoadingService, TdDialogService } from '@covalent/core';
 
 import { Course, WorkGroup, CrseStudentInGroup, SpInstrument } from '../../core/entities/student';

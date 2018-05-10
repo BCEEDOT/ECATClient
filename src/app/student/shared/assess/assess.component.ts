@@ -1,8 +1,9 @@
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from "rxjs/Operators";
 import { Component, OnInit, OnChanges, Input, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import 'rxjs/add/operator/takeUntil';
+
 
 import { Course, WorkGroup, CrseStudentInGroup } from '../../../core/entities/student';
 import { WorkGroupService } from '../../services/workgroup.service';
@@ -76,7 +77,7 @@ export class AssessComponent implements OnChanges, OnDestroy {
   }
 
   comment(recipient: CrseStudentInGroup): any {
-    this.spProvider.loadComment(recipient).takeUntil(this.ngUnsubscribe).subscribe(() => { this.activate() });
+    this.spProvider.loadComment(recipient).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => { this.activate() });
   }
 
   assess(assesseeId: number): void {

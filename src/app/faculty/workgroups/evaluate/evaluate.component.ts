@@ -1,18 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common'
-import { Observable } from 'rxjs/Observable';
-import { Subscriber } from 'rxjs/Subscriber';
-import { Subject } from 'rxjs/Subject';
+import { Observable ,  Subscriber ,  Subject ,  Subscription } from 'rxjs';
+import { pluck } from "rxjs/Operators";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import 'rxjs/add/operator/pluck';
 
 import { GlobalService } from ".././../../core/services/global.service";
 import { WorkGroup, CrseStudentInGroup } from "../../../core/entities/faculty";
 import { FacWorkgroupService } from "../../services/facworkgroup.service";
 import { MpSpStatus } from "../../../core/common/mapStrings";
 import { FacultyDataContextService } from "../../services/faculty-data-context.service";
-import { Subscription } from "rxjs/Subscription";
 
 @Component({
   templateUrl: './evaluate.component.html',
@@ -55,7 +52,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
     private loadingService: TdLoadingService
   ) {
 
-    this.workGroup$ = route.data.pluck('workGroup');
+    this.workGroup$ = route.data.pipe(pluck('workGroup'));
 
     this.route.params.subscribe(params => {
       this.paramWorkGroupId = +params['wrkGrpId'];

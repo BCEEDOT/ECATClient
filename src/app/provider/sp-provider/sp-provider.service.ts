@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { isNumeric } from 'rxjs/util/isNumeric';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/util/isNumeric';
-import 'rxjs/add/observable/of';
+import { Observable ,  BehaviorSubject } from 'rxjs';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CrseStudentInGroup as StuCrseStudentInGroup, WorkGroup, StudSpComment } from "../../core/entities/student";
 import { CrseStudentInGroup as FacCrseStudentInGroup } from "../../core/entities/faculty";
@@ -149,7 +146,7 @@ export class SpProviderService {
         }
 
         if (member.proposedStratPosition) {
-          if (!isNumeric(member.proposedStratPosition)) {
+          if (isNaN(member.proposedStratPosition)) {
             member.stratValidationErrors.push({
               cat: 'Value must be a number',
               text: 'The proposed change should be a number.'

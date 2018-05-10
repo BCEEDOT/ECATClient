@@ -4,7 +4,7 @@ import { isEmpty } from "lodash"
 
 import { CogEcpeResult } from "../../../core/entities/user";
 import { CogResultsService } from "../../services/cog-results.service";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'ecpe-result',

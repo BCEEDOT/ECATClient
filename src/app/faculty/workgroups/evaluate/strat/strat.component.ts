@@ -3,7 +3,7 @@ import { TdDialogService, TdLoadingService } from "@covalent/core";
 
 import { ActivatedRoute } from '@angular/router';
 
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 import { DragulaService } from "ng2-dragula";
 
 import { GlobalService } from "../../../../core/services/global.service";

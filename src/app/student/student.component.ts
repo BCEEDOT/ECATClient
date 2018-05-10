@@ -3,9 +3,8 @@ import { Component, AfterViewInit, OnInit, Inject, OnDestroy } from '@angular/co
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/pluck';
+import { Observable ,  Subscription } from 'rxjs';
+import { pluck } from "rxjs/Operators";
 import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
 import { DOCUMENT } from '@angular/platform-browser';
 
@@ -48,7 +47,7 @@ export class StudentComponent implements OnInit, OnDestroy {
     private studentDataContext: StudentDataContext,
     public dialog: MatDialog, @Inject(DOCUMENT) doc: any) {
 
-    this.courses$ = route.data.pluck('assess');
+    this.courses$ = route.data.pipe(pluck('assess'));
 
   }
 

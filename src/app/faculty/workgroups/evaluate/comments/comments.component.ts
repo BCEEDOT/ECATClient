@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { Location } from '@angular/common';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 import { GlobalService } from "../../../../core/services/global.service";
 import { WorkGroup, CrseStudentInGroup, StudSpComment } from "../../../../core/entities/faculty";

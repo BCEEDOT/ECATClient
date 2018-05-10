@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityManager, Entity, EntityQuery, FetchStrategy, SaveOptions, EntityChangedEventArgs } from 'breeze-client';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 import { EmProviderService } from '../../core/services/em-provider.service';
 import { DataContext } from '../../app-constants';

@@ -1,14 +1,13 @@
 import { Component, AfterViewInit, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  Subscription } from 'rxjs';
+import { pluck } from "rxjs/Operators";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import 'rxjs/add/operator/pluck';
 
 import { Course, WorkGroup } from '../core/entities/faculty';
 import { FacultyDataContextService } from './services/faculty-data-context.service';
 import { FacWorkgroupService } from "./services/facworkgroup.service";
-import { Subscription } from "rxjs/Subscription";
 
 @Component({
   templateUrl: './faculty.component.html',
@@ -31,7 +30,7 @@ export class FacultyComponent implements OnInit, OnDestroy {
     private facultyDataContext: FacultyDataContextService,
     private facWorkGroupService: FacWorkgroupService,
   ) {
-    this.courses$ = route.data.pluck('courses');
+    this.courses$ = route.data.pipe(pluck('courses'));
   }
 
   ngOnInit(): void {
