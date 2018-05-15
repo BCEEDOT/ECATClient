@@ -9,18 +9,16 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { BreezeBridgeHttpClientModule } from 'breeze-bridge2-angular';
 // import { BreezeBridgeAngularModule } from 'breeze-bridge-angular';
 
+import { StudentModule } from "./student/student.module";
+import { FacultyModule } from "./faculty/faculty.module";
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-import { StudentModule } from './student/student.module';
-import { FacultyModule } from './faculty/faculty.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ProfileModule } from './profile/profile.module';
-import { RoadrunnerModule } from './roadrunner/roadrunner.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
-import { CognitivesModule } from './cognitives/cognitives.module';
-import { LmsadminModule } from './lmsadmin/lmsadmin.module';
+
 
 // export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 //   return new AuthHttp(new AuthConfig({
@@ -47,19 +45,16 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     SharedModule,
     CoreModule,
-    FacultyModule,
-    LmsadminModule,
-    StudentModule,
     ProfileModule,
     DashboardModule,
+    StudentModule,
+    FacultyModule,
     AppRoutingModule,
-    RoadrunnerModule, // Add feature modules/routes before main routing module
-    CognitivesModule, // Add feature modules/routes before main routing module
     HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:62187', 'ec2-34-237-207-101.compute-1.amazonaws.com', 'localhost:61642'],
+        whitelistedDomains: ['localhost:50421', 'ec2-34-237-207-101.compute-1.amazonaws.com', 'localhost:61642'],
         throwNoTokenError: false,
         skipWhenExpired: true,
       },

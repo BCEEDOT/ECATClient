@@ -1,4 +1,3 @@
-import { LineChartModule } from '@swimlane/ngx-charts/release';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,7 +13,7 @@ import {
     MatTabsModule, MatSidenavModule, MatTooltipModule, MatCheckboxModule, MatRadioModule, MatGridListModule,
     MatProgressBarModule, MatSliderModule, MatChipsModule, MatRippleModule, MatExpansionModule
 } from '@angular/material';
-import { BarChartModule, LineChartComponent, PieChartModule } from '@swimlane/ngx-charts';
+import { LineChartModule, PieChartModule, BarChartModule } from '@swimlane/ngx-charts';
 import { DragulaModule } from 'ng2-dragula';
 
 import { LoggerService } from './services/logger.service';
@@ -71,7 +70,9 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
         // CovalentMarkdownModule,
         DragulaModule,
         // NgxChartsModule
-        BarChartModule, LineChartModule, PieChartModule,
+         LineChartModule,
+         PieChartModule,
+         BarChartModule
 
     ],
     declarations: [
@@ -125,7 +126,9 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
         CovalentMessageModule,
         // CovalentMarkdownModule,
         DragulaModule,
-        BarChartModule, LineChartModule, PieChartModule,
+        LineChartModule,
+        PieChartModule,
+        BarChartModule
     ],
     providers: [
         LoggerService,

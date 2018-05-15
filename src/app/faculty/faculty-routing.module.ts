@@ -19,7 +19,7 @@ import { RoutebackComponent } from "./workgroups/routeback/routeback.component";
 
 const facultyRoutes: Routes = [
   {
-    path: '',
+    path: 'faculty',
     // Check if role is student, spin up Student Data Context
     canActivate: [FacultyAuthGuardService],
     children: [

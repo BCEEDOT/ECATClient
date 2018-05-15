@@ -12,7 +12,7 @@ import { RouteBackComponent } from './shared/route-back/route-back.component';
 
 const studentRoutes: Routes = [
   {
-    path: '',
+    path: 'student',
     // Check if role is student, spin up Student Data Context
     canActivate: [StudentAuthGuard],
     children: [
