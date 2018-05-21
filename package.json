@@ -52,6 +52,7 @@
     "hammerjs": "^2.0.8",
     "highlight.js": "9.10.0",
     "ng2-dragula": "^1.5.0",
+    "npm": "^6.0.1",
     "rxjs": "^6.1.0",
     "showdown": "^1.8.2",
     "zone.js": "^0.8.5"

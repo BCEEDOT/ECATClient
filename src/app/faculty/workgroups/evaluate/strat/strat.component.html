@@ -19,7 +19,7 @@
     *ngIf='!readOnly' [ngClass]="(!showUnstrat)?'notopen':''">
     <mat-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
       <button mat-raised-button fxFlex style="cursor: move;">
-        <div fxFlexLayout="row" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutGap="10px">
           <mat-icon style="padding-top: 7px; vertical-align: middle;">reorder</mat-icon>
           <div style="padding-top: 2px;" class="strat-font">{{strat?.studentAssessee?.rankName}}</div>
           <div fxFlex></div>
@@ -36,7 +36,7 @@
   <mat-list id="stratted" fxFlex class="notopen" style="min-height: 50px;" *ngIf='readOnly' [ngClass]="(!showUnstrat)?'notopen':''">
     <mat-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
       <button mat-raised-button disableRipple fxFlex style="cursor:default">
-        <div fxFlexLayout="row" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutGap="10px">
           <mat-icon style="padding-top: 7px; vertical-align: middle;">person</mat-icon>
           <div class="strat-font">{{strat?.studentAssessee?.rankName}}</div>
           <div fxFlex></div>

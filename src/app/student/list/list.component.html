@@ -23,7 +23,7 @@
 
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">assessment</mat-icon>
-            <span class="pad-left-xs md-body-2">ASSESS</span>
+            <span class="pad-left-xs">ASSESS</span>
             <mat-icon *ngIf=assessComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
             <mat-icon *ngIf=!assessComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
           </ng-template>
@@ -33,7 +33,7 @@
         <mat-tab [disabled]="readOnly">
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">format_list_numbered</mat-icon>
-            <span class="pad-left-xs md-body-2">STRAT</span>
+            <span class="pad-left-xs">STRAT</span>
             <mat-icon *ngIf=stratComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
             <mat-icon *ngIf=!stratComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
           </ng-template>

@@ -15,11 +15,11 @@
 
 <div class="width" *ngIf="!isLoading">
   <mat-card>
-    <mat-card-title>
+    <mat-card-title fxLayout="row">
       <div fxFlex>
         <button mat-raised-button color="primary" [routerLink]="['../..']">Back</button>
       </div>
-      <div fxFlex="100" class="text-center">
+      <div fxFlex="grow" class="text-center">
         {{workGroupName}} - Results
       </div>
       <span fxFlex></span>

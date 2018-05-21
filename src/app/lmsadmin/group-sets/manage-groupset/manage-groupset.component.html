@@ -64,7 +64,7 @@
     </mat-slide-toggle>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-around start" fxLayoutWrap class="pad-bottom-xl">
+  <div fxLayout="row wrap" fxLayoutAlign="space-around start" class="pad-bottom-xl">
     <div fxFlex="25%" *ngFor="let workGroup of workGroups">
       <!-- Workgroup cards if the group published  -->
       <mat-card *ngIf="readOnly">
@@ -133,7 +133,7 @@
     </div>
   </div>
 </mat-sidenav-container>
-<a *ngIf="!readOnly" mat-fab (click)="addGroup()" color="primary" class="mat-fab-bottom-right fixed fab-pad" matTooltip="Add Flight"
+<button *ngIf="!readOnly" mat-fab (click)="addGroup()" color="primary" class="mat-fab-bottom-right fixed fab-pad" matTooltip="Add Flight"
   matTooltipPosition="left">
   <mat-icon>add</mat-icon>
-</a>
+</button>
