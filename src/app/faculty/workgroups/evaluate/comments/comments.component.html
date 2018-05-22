@@ -1,5 +1,5 @@
 <mat-card-title *ngIf="!grpHasComments">This group did not leave any comments.</mat-card-title>
-<mat-card-content *ngIf="grpHasComments">
+<mat-card-content *ngIf="grpHasComments" fxLayout="row">
   <mat-list fxFlex="30">
     <mat-list-item>AUTHORS</mat-list-item>
     <mat-list-item *ngFor="let author of memsWithComments" [ngClass]="{'selected': this.selectedAuthor == author }" (click)="this.changeAuthor(author)" style="cursor:pointer">
