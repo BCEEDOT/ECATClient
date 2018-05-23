@@ -4,31 +4,17 @@
       <mat-nav-list>
         <td-expansion-panel *ngIf="readOnly" label="Unassigned Students" [expand]="isUnassignedPanelExpanded">
           <div fxLayout="column" id="unassigned" style="min-height: 50px;">
-            <p [id]="unassignedStudent.studentId" 
-              [myHighlight]="unassignedStudent.highlighted" 
-              (mouseover)="hovered = unassignedStudent.studentId"
-              (mouseout)="hovered = null" 
-              class="push-none pad-sm mat-caption"
-              style="padding-left: 16px;"
-              *ngFor="let unassignedStudent of unassignedStudents">
-                {{unassignedStudent.rankName}}
+            <p [id]="unassignedStudent.studentId" [myHighlight]="unassignedStudent.highlighted" (mouseover)="hovered = unassignedStudent.studentId"
+              (mouseout)="hovered = null" class="push-none pad-sm mat-caption" style="padding-left: 16px;" *ngFor="let unassignedStudent of unassignedStudents">
+              {{unassignedStudent.rankName}}
             </p>
           </div>
         </td-expansion-panel>
         <td-expansion-panel *ngIf="!readOnly" label="Unassigned Students" [expand]="isUnassignedPanelExpanded">
-          <div fxLayout="column" id="unassigned" 
-              style="min-height: 50px;" 
-              [dragula]='"bag-one"' 
-              [dragulaModel]='unassignedStudents'>
-              <p [id]="unassignedStudent.studentId" 
-                  [myHighlight]="unassignedStudent.highlighted" 
-                  [ngClass]="{'selected': hovered === unassignedStudent.studentId}"
-                  (mouseover)="hovered = unassignedStudent.studentId" 
-                  (mouseout)="hovered = null" 
-                  class="push-none pad-sm mat-caption"
-                  style="padding-left: 16px;"
-                  *ngFor="let unassignedStudent of unassignedStudents" 
-                  (click)="studentClick(unassignedStudent)">
+          <div fxLayout="column" id="unassigned" style="min-height: 50px;" [dragula]='"bag-one"' [dragulaModel]='unassignedStudents'>
+            <p [id]="unassignedStudent.studentId" [myHighlight]="unassignedStudent.highlighted" [ngClass]="{'selected': hovered === unassignedStudent.studentId}"
+              (mouseover)="hovered = unassignedStudent.studentId" (mouseout)="hovered = null" class="push-none pad-sm mat-caption"
+              style="padding-left: 16px;" *ngFor="let unassignedStudent of unassignedStudents" (click)="studentClick(unassignedStudent)">
 
               {{unassignedStudent.rankName}}
             </p>
@@ -130,10 +116,10 @@
           </mat-card-content>
         </td-expansion-panel>
       </mat-card>
+      <button *ngIf="!readOnly" mat-fab (click)="addGroup()" color="primary" class="mat-fab-bottom-right fixed fab-pad" matTooltip="Add Flight"
+        matTooltipPosition="left">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
   </div>
 </mat-sidenav-container>
-<button *ngIf="!readOnly" mat-fab (click)="addGroup()" color="primary" class="mat-fab-bottom-right fixed fab-pad" matTooltip="Add Flight"
-  matTooltipPosition="left">
-  <mat-icon>add</mat-icon>
-</button>
