@@ -3,8 +3,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutGap="75px" class="pad-left-md pad-right-md pad-bottom-md pad-top-md">
-  <mat-list id="unstratted" [dragula]='"bag-one"' [dragulaModel]='unstratted' fxFlex *ngIf='showUnstrat && !readOnly' 
-  style="background-color: #f9f9f9; min-height: 50px; border-width: 2px; border-style:dashed; border-color: #e0e0e0; padding-bottom: 10px">
+  <mat-list id="unstratted" [dragula]='"bag-one"' [dragulaModel]='unstratted' fxFlex *ngIf='showUnstrat && !readOnly' style="background-color: #f9f9f9; min-height: 50px; border-width: 2px; border-style:dashed; border-color: #e0e0e0; padding-bottom: 10px">
     <mat-list-item *ngFor="let unstrat of unstratted" [id]="unstrat?.assesseePersonId">
       <button mat-raised-button fxFlex class="text-left" style="cursor: move;">
         <div fxLayout="row" fxLayoutGap="10px">
@@ -23,10 +22,13 @@
           <mat-icon style="padding-top: 7px; vertical-align: middle;">reorder</mat-icon>
           <div style="padding-top: 2px;" class="strat-font">{{strat?.studentAssessee?.rankName}}</div>
           <div fxFlex></div>
-          <div>
-            <span class="strat-font-bold" *ngIf="!showUnstrat">
-              <strong>{{strat?.stratPosition}}</strong>
-            </span>
+          <div *ngIf="!showUnstrat" fxLayout="row">
+            <div class="strat-font-bold">{{strat?.stratPosition}}</div>
+            <div *ngIf="strat?.entityAspect.entityState.isModified()">
+              <div *ngIf="strat?.stratPosition !== strat?.entityAspect.originalValues?.stratPosition" class="strat-font-bold changed">
+                ({{strat?.entityAspect.originalValues?.stratPosition}})
+              </div>
+            </div>
           </div>
         </div>
       </button>

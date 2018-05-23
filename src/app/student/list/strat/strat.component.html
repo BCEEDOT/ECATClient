@@ -14,6 +14,7 @@
     </mat-list-item>
   </mat-list>
 
+
   <mat-list id="stratted" [dragula]='"bag-one"' [dragulaModel]='stratted' fxFlex style="background-color: #f9f9f9; min-height: 50px; border-width: 2px; border-style:dashed; border-color:#e0e0e0; padding-bottom:10px"
     *ngIf='!readOnly' [ngClass]="(!showUnstrat)?'notopen':''">
     <mat-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
@@ -22,7 +23,15 @@
           <mat-icon style="padding-top: 5px;">reorder</mat-icon>
           <div class="strat-font">{{strat?.assessee?.rankName}}</div>
           <div fxFlex></div>
-          <div *ngIf="!showUnstrat" class="strat-font-bold">{{strat?.stratPosition}}</div>
+          <div *ngIf="!showUnstrat" fxLayout="row">
+            <div class="strat-font-bold">{{strat?.stratPosition}}</div>
+            <div *ngIf="strat?.entityAspect.entityState.isModified()">
+              <div *ngIf="strat?.stratPosition !== strat?.entityAspect.originalValues?.stratPosition" class="strat-font-bold changed">
+                ({{strat?.entityAspect.originalValues?.stratPosition}})
+              </div>
+            </div>
+          </div>
+          <!-- <div *ngIf="!showUnstrat && strat?.entityAspect.entityState.isModified()" class="strat-font-bold">{{strat?.entityAspect.originalValues?.stratPosition}}</div> -->
         </div>
       </button>
     </mat-list-item>
