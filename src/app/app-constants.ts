@@ -6,10 +6,10 @@ export class ResourceEndPoint {
 }
 
 export enum DataContext {
-    User,
-    Student,
-    Faculty,
-    LmsAdmin,
+    User = 'user',
+    Student = 'student',
+    Faculty = 'faculty',
+    LmsAdmin = 'lmsadmin',
 }
 
 export class UserEntityType {
