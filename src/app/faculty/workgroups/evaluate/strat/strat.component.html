@@ -7,7 +7,7 @@
     <mat-list-item *ngFor="let unstrat of unstratted" [id]="unstrat?.assesseePersonId">
       <button mat-raised-button fxFlex class="text-left" style="cursor: move;">
         <div fxLayout="row" fxLayoutGap="10px">
-          <mat-icon style="padding-top: 5px;">drag_handle</mat-icon>
+          <mat-icon style="padding-top: 5px;">reorder</mat-icon>
           <div class="strat-font">{{unstrat?.studentAssessee?.rankName}}</div>
         </div>
       </button>
@@ -19,7 +19,7 @@
     <mat-list-item *ngFor="let strat of stratted" [id]="strat?.assesseePersonId">
       <button mat-raised-button fxFlex style="cursor: move;">
         <div fxLayout="row" fxLayoutGap="10px">
-          <mat-icon style="padding-top: 7px; vertical-align: middle;">reorder</mat-icon>
+          <mat-icon style="padding-top: 7px; vertical-align: middle;">drag_handle</mat-icon>
           <div style="padding-top: 2px;" class="strat-font">{{strat?.studentAssessee?.rankName}}</div>
           <div fxFlex></div>
           <div *ngIf="!showUnstrat" fxLayout="row">

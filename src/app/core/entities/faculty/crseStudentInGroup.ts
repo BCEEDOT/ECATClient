@@ -99,6 +99,14 @@ export class CrseStudentInGroup extends EntityBase {
         return (!p) ? 'Unk' : `${_salutation} ${this.studentProfile.person.lastName}, ${this.studentProfile.person.firstName}`;
     }
 
+    get prettyName(): string {
+        const p = (this.studentProfile) ? this.studentProfile : null;
+
+        if (p) {
+            return (!p) ? 'Unk' : `${this.studentProfile.person.lastName}, ${this.studentProfile.person.firstName}`;
+        }
+    }
+
     get statusOfPeer(): any {
         if (!this.workGroup) {
             return null;
