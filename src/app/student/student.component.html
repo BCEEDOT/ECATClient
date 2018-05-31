@@ -42,8 +42,8 @@
 
   </router-outlet>
 </td-layout-nav>
-<div fxHide.xs *ngIf="activeWorkGroup && onListView">
-  <a style="z-index: 9999;" mat-fab color="primary" class="mat-fab-bottom-right" (click)="assessCompare()" matTooltip="Compare"
+<div fxHide.xs *ngIf="activeWorkGroup">
+  <a *ngIf="onListView$ | async" style="z-index: 9999;" mat-fab color="primary" class="mat-fab-bottom-right" (click)="assessCompare()" matTooltip="Compare"
     matTooltipPosition="left">
     <mat-icon>show_chart</mat-icon>
   </a>
