@@ -1,4 +1,3 @@
-export * from './metadata';
 export * from './spResultBreakOut';
 export * from './facSpCommentFlag';
 export * from './course';

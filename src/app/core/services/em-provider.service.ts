@@ -3,7 +3,7 @@ import {
   EntityManager, NamingConvention, DataService, DataType, MetadataStore,
   EntityType, NavigationProperty, DataProperty, EntityQuery, DataServiceOptions, config, promises, ValidationOptionsConfiguration, ValidationOptions
 } from 'breeze-client';
-import { includes, remove } from "lodash";
+import { includes, remove } from "lodash-es";
 // import { AuthHttp } from 'angular2-jwt';
 // import { AjaxAngularAdapter } from "breeze-bridge-angular";
 

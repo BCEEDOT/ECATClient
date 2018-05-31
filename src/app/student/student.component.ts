@@ -1,5 +1,5 @@
 import { MpSpStatus } from '../core/common/mapStrings';
-import { Component, AfterViewInit, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Inject, OnDestroy, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
@@ -22,7 +22,7 @@ import { AssessCompareDialog } from './shared/assess-compare/assess-compare.dial
   // Limits only to current view and not children
   // viewProviders: [ UsersService ],
 })
-export class StudentComponent implements OnInit, OnDestroy {
+export class StudentComponent implements OnInit, OnDestroy, AfterContentChecked {
 
   activeCourseId: number;
   activeWorkGroupId: number;
@@ -34,10 +34,12 @@ export class StudentComponent implements OnInit, OnDestroy {
   grpDisplayName: string = 'Not Set';
   assessIsLoaded: string = 'assessIsLoaded';
   dialogRef: MatDialogRef<AssessCompareDialog>;
-  onListView: boolean = true;
+  //onListView: boolean = true;
+  onListView$: Observable<boolean>;
   viewSub: Subscription;
 
   constructor(private titleService: Title,
+    private changeDetector: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
     private loadingService: TdLoadingService,
@@ -48,6 +50,35 @@ export class StudentComponent implements OnInit, OnDestroy {
     public dialog: MatDialog, @Inject(DOCUMENT) doc: any) {
 
     this.courses$ = route.data.pipe(pluck('assess'));
+    
+
+  }
+
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.workGroupService.workGroup(undefined);
+    //this.viewSub.unsubscribe();
+  }
+
+  ngOnInit(): void {
+
+    this.titleService.setTitle('Assessment Center');
+    this.courses$.subscribe((courses: Course[]) => {
+      this.courses = courses;
+      if (courses.length > 0) {
+
+        this.activate(false);
+      }
+    });
+
+    this.onListView$ = this.workGroupService.onListView$.asObservable();
+
+    // this.viewSub = this.workGroupService.onListView$.subscribe((value: boolean) => {
+    //   this.onListView = value;
+    // });
 
   }
 
@@ -92,27 +123,7 @@ export class StudentComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(): void {
-    this.workGroupService.workGroup(undefined);
-    this.viewSub.unsubscribe();
-  }
-
-  ngOnInit(): void {
-
-    this.titleService.setTitle('Assessment Center');
-    this.courses$.subscribe((courses: Course[]) => {
-      this.courses = courses;
-      if (courses.length > 0) {
-
-        this.activate(false);
-      }
-    });
-
-    this.viewSub = this.workGroupService.onListView$.subscribe((value: boolean) => {
-      this.onListView = value;
-    });
-
-  }
+  
 
   activate(force?: boolean): void {
     this.courses.sort((crseA: Course, crseB: Course) => {

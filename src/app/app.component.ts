@@ -10,10 +10,6 @@ import {
 } from '@angular/router';
 import { TdLoadingService } from '@covalent/core';
 
-
-
-
-
 import { GlobalService, ILoggedInUser } from './core/services/global.service';
 import { Person } from './core/entities/user/person';
 import { AuthService } from './core/services/auth.service';

@@ -97,7 +97,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
   }
 
   activate() {
-    this.loadingService.register();
+    //this.loadingService.register();
     //this.facWorkGroupService.readOnly(false);
     this.workGroupId = this.workGroup.workGroupId;
     this.wgName = (this.workGroup.customName) ? `${this.workGroup.defaultName} ${this.workGroup.customName}` : this.workGroup.defaultName;
@@ -170,7 +170,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
         break;
     }
     this.members = this.members.slice();
-    this.loadingService.resolve();
+    //this.loadingService.resolve();
   }
 
   canReviewCheck() {

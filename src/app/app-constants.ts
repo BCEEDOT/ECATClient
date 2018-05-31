@@ -5,6 +5,7 @@ export class ResourceEndPoint {
     static LmsAdmin = 'lmsadmin';
 }
 
+//Assigned string to enum to fix Angular-cli not working with enums. 
 export enum DataContext {
     User = 'user',
     Student = 'student',

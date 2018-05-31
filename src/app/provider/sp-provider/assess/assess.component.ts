@@ -148,6 +148,12 @@ export class AssessComponent implements OnInit {
         }
       });
     } else {
+      console.log('')
+      console.log(this.inventories);
+      this.inventories.forEach(inv => {
+        console.log(inv);
+      });
+      console.log(this.location);
       this.location.back();
     }
   }
@@ -180,7 +186,7 @@ export class AssessComponent implements OnInit {
       this.facultyDataContext.commit()
         .then(result => {
           this.loadingService.resolve(this.assessLoad);
-          this.global.showSnackBar('Success, Asessment Saved!');          
+          this.global.showSnackBar('Success, Asessment Saved!');
           this.location.back();
         })
         .catch(result => {

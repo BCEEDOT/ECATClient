@@ -1,6 +1,6 @@
 <mat-card-title *ngIf="!grpHasComments">This group did not leave any comments.</mat-card-title>
 <mat-card-content *ngIf="grpHasComments" fxLayout="row">
-  <mat-list fxFlex="1 1 calc(20em + 20px)">
+  <mat-list fxFlex="1 1 calc(17em)">
     <mat-list-item>AUTHORS</mat-list-item>
     <mat-list-item *ngFor="let author of memsWithComments" [ngClass]="{'selected': this.selectedAuthor == author }" (click)="this.changeAuthor(author)" style="cursor:pointer">
       <span>{{author?.prettyName}}</span>
@@ -11,7 +11,7 @@
     </mat-list-item>
   </mat-list>
   <span fxFlex=".1"></span>
-  <mat-list fxFlex="1 1 calc(20em + 20px)">
+  <mat-list fxFlex="1 1 calc(17em)">
     <mat-list-item>
       <button mat-raised-button [mat-menu-trigger-for]="menu" class="selected" fxFlex="stretch" [disabled]="viewOnly">Mass Flag<mat-icon style="color:white">expand_more</mat-icon></button>
       <span></span>
@@ -33,14 +33,13 @@
   <span fxFlex=".5"></span>
   <mat-card fxFlex="grow" style="align-self: flex-start">
     <mat-card-content style="word-break: break-all; min-height: 150px; overflow-x: auto">
-      <div fxLayout="row">
+      <div fxLayout="column" fxLayoutGap="5px">
         <span class="mat-subheading-1">Comment Type: {{selectedComment?.requestAnonymity ? 'Anonymous' : 'Signed'}}</span>
-        <span fxFlex></span>
         <span class="mat-subheading-1">Last Modified: {{selectedComment?.displayDate}}</span>
       </div>
       <p>{{selectedComment?.commentText}}</p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions fxLayoutAlign="end">
       <button mat-raised-button [ngClass]="{'appr': this.selectedComment?.flag?.mpFaculty === this.commFlagMap.appr}" (click)="this.selectedComment?.flag.mpFaculty = this.commFlagMap.appr; this.checkComplete()" [disabled]="viewOnly && this.selectedComment?.flag?.mpFaculty !== this.commFlagMap.appr">Appropriate</button>
       <button mat-raised-button [ngClass]="{'inappr': this.selectedComment?.flag?.mpFaculty === this.commFlagMap.inappr}"  (click)="this.selectedComment?.flag.mpFaculty = this.commFlagMap.inappr; this.checkComplete()" [disabled]="viewOnly && this.selectedComment?.flag?.mpFaculty !== this.commFlagMap.inappr">Inappropriate</button>
     </mat-card-actions>

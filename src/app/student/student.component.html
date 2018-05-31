@@ -9,7 +9,7 @@
     </a>
   </div>
   <div class="width">
-    <div fxLayout="row" fxLayoutAlign="end" class="pad-top-sm" *ngIf="onListView">
+    <div fxLayout="row" fxLayoutAlign="end" class="pad-top-sm" *ngIf="onListView$ | async">
       <div fxFlex></div>
       <div *ngIf="activeWorkGroup" class="">
         <button class="pad-top-xs" mat-button [matMenuTriggerFor]="posXMenu" style="font-size: 16px">

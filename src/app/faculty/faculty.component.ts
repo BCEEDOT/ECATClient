@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Inject, OnDestroy, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable ,  Subscription } from 'rxjs';
@@ -13,17 +13,19 @@ import { FacWorkgroupService } from "./services/facworkgroup.service";
   templateUrl: './faculty.component.html',
   styleUrls: ['./faculty.component.scss']
 })
-export class FacultyComponent implements OnInit, OnDestroy {
+export class FacultyComponent implements OnInit, AfterContentChecked {
 
   courses$: Observable<Course[]>;
   courses: Course[];
   activeCourse: Course;
   activeCourseId: number;
-  onListView: boolean = true;
+ //onListView: boolean = true;
+  onListView$: Observable<boolean>;
   viewSub: Subscription;
 
   constructor(private titleService: Title,
     private router: Router,
+    private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute,
     private loadingService: TdLoadingService,
     private dialogService: TdDialogService,
@@ -33,20 +35,23 @@ export class FacultyComponent implements OnInit, OnDestroy {
     this.courses$ = route.data.pipe(pluck('courses'));
   }
 
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+
   ngOnInit(): void {
     this.courses$.subscribe((courses: Course[]) => {
       this.courses = courses;
       this.activate();
     });
 
-    this.viewSub = this.facWorkGroupService.onListView$.subscribe(value => {
-      this.onListView = value;
-    });
-    this.titleService.setTitle('WorkGroup Center');
-  }
+    this.onListView$ = this.facWorkGroupService.onListView$.asObservable();
 
-  ngOnDestroy() {
-    this.viewSub.unsubscribe();
+    // this.viewSub = this.facWorkGroupService.onListView$.subscribe(value => {
+    //   this.onListView = value;
+    // });
+
+    this.titleService.setTitle('WorkGroup Center');
   }
 
   setActiveCourse(course: Course): void {
