@@ -44,10 +44,25 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   ngOnInit() {
     this.grpSub = this.workGroupService.workGroup$.subscribe(grp => {
       this.activeWorkGroup = grp;
-      this.activate();
+    });
+
+    this.workGroupService.stratTabActive$.subscribe(stratTabActive => {
+
+      console.log('It triggred a change');
+
+      if (stratTabActive === true) {
+
+        this.activeWorkGroup.groupMembers.forEach(gm => {
+          this.studentDataContext.getSingleStrat(gm.studentId, this.activeWorkGroup.workGroupId, this.activeWorkGroup.courseId);
+        });
+
+        this.activate();
+      }
+      
     });
 
     this.activate();
+
   }
 
   ngOnDestroy() {
@@ -60,11 +75,11 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   // }
 
   activate() {
+    console.log(this.activeWorkGroup)
+    console.log(this.studentDataContext._manager.getChanges());
     this.activeWorkGroup = this.workGroupService.workGroup$.getValue();
 
-    this.activeWorkGroup.groupMembers.forEach(gm => {
-      this.studentDataContext.getSingleStrat(gm.studentId, this.activeWorkGroup.workGroupId, this.activeWorkGroup.courseId);
-    });
+
 
     this.unstratted = this.activeWorkGroup.spStratResponses.filter(str => {
       if (str.stratPosition === 0 && !str.entityAspect.entityState.isDetached()) { return true; }
@@ -103,6 +118,9 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   }
 
   private onDrop(args) {
+
+    console.log(this.stratted);
+
     for (var i = 0; i < this.stratted.length; i++) {
       this.stratted[i].stratPosition = i + 1;
 
@@ -115,11 +133,10 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
 
     }
 
-    if (this.showUnstrat && this.unstratted.length === 0)
-    {
+    if (this.showUnstrat && this.unstratted.length === 0) {
       this.showUnstrat = false;
     }
-    
+
   }
 
   cancel() {
@@ -142,6 +159,12 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
         notDetached.forEach(str => {
           str.entityAspect.rejectChanges();
         });
+
+        
+        this.activeWorkGroup.groupMembers.forEach(gm => {
+          this.studentDataContext.getSingleStrat(gm.studentId, this.activeWorkGroup.workGroupId, this.activeWorkGroup.courseId);
+        });
+
 
         this.loadingService.resolve();
         this.activate();

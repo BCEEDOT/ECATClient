@@ -8,7 +8,8 @@
       </mat-card-content>
       <mat-divider></mat-divider>
       <mat-card-actions fxLayoutAlign="end">
-        <button mat-raised-button color="primary" class="text-upper" (click)="user.hasAcknowledged=true;">I AGREE</button>
+        <!-- <button mat-raised-button color="primary" class="text-upper" (click)="user.hasAcknowledged=true;">I AGREE</button> -->
+        <button mat-raised-button color="primary" class="text-upper" (click)="saveIAgree();">I AGREE</button>
       </mat-card-actions>
     </mat-card>
 
@@ -17,7 +18,7 @@
         <td-message label="This Group is currently Under Review" class="bgc-green-200 mat-subheading-1 pull-bottom-none" icon="error">
         </td-message>
       </div>
-      <mat-tab-group [(selectedIndex)]="activeTab" class="tab-group" dynamicHeight>
+      <mat-tab-group [(selectedIndex)]="activeTab" (selectedTabChange)="tabChanged($event)" class="tab-group" dynamicHeight>
         <mat-tab>
 
           <ng-template mat-tab-label>
@@ -36,11 +37,14 @@
             <mat-icon *ngIf=stratComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
             <mat-icon *ngIf=!stratComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
           </ng-template>
-
-          <strat [workGroup]="activeWorkGroup"></strat>
+          <!-- <ng-template matTabContent> -->
+            <strat [workGroup]="activeWorkGroup"></strat>
+          <!-- </ng-template> -->
         </mat-tab>
       </mat-tab-group>
 
     </mat-card>
   </ng-template>
+
+  <button (click)="changes()">Changes</button>
 </div>
