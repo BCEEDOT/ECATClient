@@ -50,6 +50,9 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
 
       console.log('It triggred a change');
 
+      console.log('This is the stratTabActive');
+      console.log(stratTabActive);
+
       if (stratTabActive === true) {
 
         this.activeWorkGroup.groupMembers.forEach(gm => {
@@ -67,6 +70,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
 
   ngOnDestroy() {
     this.grpSub.unsubscribe();
+    this.workGroupService.onListView(false);
     this.dragSub.unsubscribe();
   }
 
