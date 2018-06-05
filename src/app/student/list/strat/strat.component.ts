@@ -30,6 +30,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   showUnstrat: boolean = false;
   dragSub: Subscription;
   grpSub: Subscription;
+  atSub: Subscription;
 
   constructor(private workGroupService: WorkGroupService, private global: GlobalService,
     private loadingService: TdLoadingService,
@@ -46,7 +47,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       this.activeWorkGroup = grp;
     });
 
-    this.workGroupService.stratTabActive$.subscribe(stratTabActive => {
+    this.atSub = this.workGroupService.stratTabActive$.subscribe(stratTabActive => {
 
       console.log('It triggred a change');
 
@@ -67,6 +68,10 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   ngOnDestroy() {
     this.grpSub.unsubscribe();
     this.workGroupService.stratTabActive(false);
+    if (this.studentDataContext.hasChanges()) {
+      this.studentDataContext.rollback();
+    }
+    this.atSub.unsubscribe();
     this.dragSub.unsubscribe();
   }
 

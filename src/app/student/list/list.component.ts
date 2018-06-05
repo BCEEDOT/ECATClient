@@ -143,6 +143,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
   changes(): void {
     console.log(this.studentDataContext.getChanges());
+    console.log(this.workGroupService.stratTabActive$.value);
   }
 
   tabChanged(tabChanged: MatTabChangeEvent): void {

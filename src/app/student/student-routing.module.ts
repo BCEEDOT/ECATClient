@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ActivatedRouteSnapshot, RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 
+import { StudentSavechangesguardService } from './services/student-savechangesguard.service';
 import { StudentAuthGuard } from './services/student-auth-guard.service';
 import { StudentDataContext } from './services/student-data-context.service';
 import { GlobalService } from '../core/services/global.service';
@@ -30,6 +31,7 @@ const studentRoutes: Routes = [
             path: 'list/:crsId/:wrkGrpId',
             // set to most recent course, allow student to switch between courses.
             component: ListComponent,
+            canDeactivate: [StudentSavechangesguardService]
           },
           {
             path: 'results/:crsId/:wrkGrpId',

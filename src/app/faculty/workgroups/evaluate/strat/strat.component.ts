@@ -3,7 +3,7 @@ import { TdDialogService, TdLoadingService } from "@covalent/core";
 
 import { ActivatedRoute } from '@angular/router';
 
-import { Subscription } from "rxjs";
+import { Subscription, Subject } from "rxjs";
 import { DragulaService } from "ng2-dragula";
 
 import { GlobalService } from "../../../../core/services/global.service";
@@ -27,6 +27,7 @@ export class StratComponent implements OnInit, OnDestroy {
     courseId: number;
     readOnly: boolean = false;
     roSub: Subscription;
+    atSub: Subscription;
     dragSub: Subscription;
     showUnstrat: boolean = false;
 
@@ -51,7 +52,7 @@ export class StratComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
 
-        this.facWorkGroupService.stratTabActive$.subscribe(stratTabActive => {
+        this.atSub = this.facWorkGroupService.stratTabActive$.subscribe(stratTabActive => {
 
             console.log('It triggred a change');
             console.log('This is the stratTabActive');
@@ -65,6 +66,7 @@ export class StratComponent implements OnInit, OnDestroy {
         });
 
         this.roSub = this.facWorkGroupService.readOnly$.subscribe(status => {
+            console.log('It is in the readonly');
             this.readOnly = status;
             this.activate();
         });
@@ -79,7 +81,8 @@ export class StratComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.roSub.unsubscribe();
-        this.facWorkGroupService.stratTabActive(false);
+        this.atSub.unsubscribe();
+        //this.facWorkGroupService.stratTabActive(false);
         if (this.facultyDataContext.hasChanges()) {
             this.facultyDataContext.rollback();
         }
