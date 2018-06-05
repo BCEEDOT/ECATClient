@@ -70,7 +70,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
 
   ngOnDestroy() {
     this.grpSub.unsubscribe();
-    this.workGroupService.onListView(false);
+    this.workGroupService.stratTabActive(false);
     this.dragSub.unsubscribe();
   }
 
