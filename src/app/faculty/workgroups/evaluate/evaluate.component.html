@@ -19,7 +19,7 @@
           </div>
         </div>
       </mat-card-title>
-      <mat-tab-group [(selectedIndex)]="tabIndex">
+      <mat-tab-group [(selectedIndex)]="tabIndex"  (selectedTabChange)="tabChanged($event)">
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">assessment</mat-icon>
@@ -46,8 +46,10 @@
           <comments *ngIf="showComments" [members]="members"></comments>
         </mat-tab>
       </mat-tab-group>
+
     </mat-card>
   </ng-template>
+  
 </div>
 <a style="z-index: 9999;" mat-fab color="primary" class="mat-fab-bottom-right fixed" [routerLink]="['../../status', workGroupId]" *ngIf="workGroup.mpSpStatus !== statusMap.published"
 matTooltip="Go To Status" matTooltipPosition="left">
@@ -57,3 +59,8 @@ matTooltip="Go To Status" matTooltipPosition="left">
 matTooltip="Go To Results" matTooltipPosition="left">
   <mat-icon>data_usage</mat-icon>
 </a>
+
+<button mat-button (click)="changes();">Changes</button>
+
+
+

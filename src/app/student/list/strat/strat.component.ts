@@ -54,14 +54,10 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       console.log(stratTabActive);
 
       if (stratTabActive === true) {
-
-        this.activeWorkGroup.groupMembers.forEach(gm => {
-          this.studentDataContext.getSingleStrat(gm.studentId, this.activeWorkGroup.workGroupId, this.activeWorkGroup.courseId);
-        });
-
+        this.createStratEntities();
         this.activate();
       }
-      
+
     });
 
     this.activate();
@@ -143,6 +139,12 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
 
   }
 
+  createStratEntities(): void {
+    this.activeWorkGroup.groupMembers.forEach(gm => {
+      this.studentDataContext.getSingleStrat(gm.studentId, this.activeWorkGroup.workGroupId, this.activeWorkGroup.courseId);
+    });
+  }
+
   cancel() {
     //if (this.activeWorkGroup.groupMembers.some(gm => gm.proposedStratPosition !== null)) {
     this.dialogService.openConfirm({
@@ -164,12 +166,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
           str.entityAspect.rejectChanges();
         });
 
-        
-        this.activeWorkGroup.groupMembers.forEach(gm => {
-          this.studentDataContext.getSingleStrat(gm.studentId, this.activeWorkGroup.workGroupId, this.activeWorkGroup.courseId);
-        });
-
-
+        this.createStratEntities();
         this.loadingService.resolve();
         this.activate();
         //this.activeWorkGroup.groupMembers.forEach(gm => {

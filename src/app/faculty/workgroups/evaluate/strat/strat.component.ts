@@ -51,26 +51,44 @@ export class StratComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
 
+        this.facWorkGroupService.stratTabActive$.subscribe(stratTabActive => {
+
+            console.log('It triggred a change');
+            console.log('This is the stratTabActive');
+            console.log(stratTabActive);
+
+            if (stratTabActive === true) {
+                this.createStratEntities()
+                this.activate();
+            }
+
+        });
+
         this.roSub = this.facWorkGroupService.readOnly$.subscribe(status => {
             this.readOnly = status;
             this.activate();
         });
 
-        this.activate();
+    }
+
+    createStratEntities(): void {
+        this.groupMembers.forEach(gm => {
+            this.facultyDataContext.getSingleStrat(this.courseId, this.workGroupId, gm.studentId);
+        });
     }
 
     ngOnDestroy() {
         this.roSub.unsubscribe();
+        this.facWorkGroupService.stratTabActive(false);
+        if (this.facultyDataContext.hasChanges()) {
+            this.facultyDataContext.rollback();
+        }
         this.dragSub.unsubscribe();
     }
-    
+
 
     activate() {
         this.groupMembers = this.members;
-
-        this.groupMembers.forEach(gm => {
-            this.facultyDataContext.getSingleStrat(this.courseId, this.workGroupId, gm.studentId);
-        });
 
         this.unstratted = this.groupMembers[0].workGroup.facStratResponses.filter(fstr => {
             if (fstr.stratPosition === 0) { return true; }
@@ -142,6 +160,7 @@ export class StratComponent implements OnInit, OnDestroy {
                 this.unstratted = [];
                 this.stratted = [];
                 this.loadingService.resolve();
+                this.createStratEntities();
                 this.activate();
                 // if (this.groupMembers[0].workGroup.facStratResponses.length > 0){
                 //     this.stratted = this.groupMembers[0].workGroup.facStratResponses.sort((a: FacStratResponse, b: FacStratResponse) => {

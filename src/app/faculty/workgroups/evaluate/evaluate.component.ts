@@ -4,9 +4,10 @@ import { Observable ,  Subscriber ,  Subject ,  Subscription } from 'rxjs';
 import { pluck } from "rxjs/Operators";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
+import { MatTabChangeEvent } from "@angular/material";
 
 import { GlobalService } from ".././../../core/services/global.service";
-import { WorkGroup, CrseStudentInGroup } from "../../../core/entities/faculty";
+import { WorkGroup, CrseStudentInGroup, StratResponse } from "../../../core/entities/faculty";
 import { FacWorkgroupService } from "../../services/facworkgroup.service";
 import { MpSpStatus } from "../../../core/common/mapStrings";
 import { FacultyDataContextService } from "../../services/faculty-data-context.service";
@@ -36,7 +37,6 @@ export class EvaluateComponent implements OnInit, OnDestroy {
   reopenBtnText: string = 'Return Stat';
   statusMap = MpSpStatus;
   subscriptions: Subscription[] = [];
-
   assessComplete: boolean;
   stratComplete: boolean;
   commentsComplete: boolean;
@@ -402,5 +402,59 @@ export class EvaluateComponent implements OnInit, OnDestroy {
     })
 
     this.location.back();
+  }
+
+  tabChanged(tabChanged: MatTabChangeEvent): void {
+    console.log(tabChanged);
+    console.log('Test');
+    console.log(tabChanged.index);
+    console.log(this.facultyDataContext.getChanges());
+    if (tabChanged.index === 1) {
+      console.log('One the strat tab');
+      this.facWorkGroupService.stratTabActive(true);
+    }
+
+    if (tabChanged.index === 0 || tabChanged.index === 2  ) {
+      console.log('On a tab other than strat');
+      this.facWorkGroupService.stratTabActive(false);
+
+      console.log(this.facultyDataContext.getChanges());
+
+      if (this.facultyDataContext.hasChanges() && this.facultyDataContext.getChanges().some((entity: StratResponse) => entity.stratPosition !== 0 )) {
+
+        this.tabIndex = 1;
+
+        this.dialogService.openConfirm({
+          message: 'Are you sure you want to leave this page?',
+          title: 'Unsaved Changes',
+          acceptButton: 'Yes',
+          cancelButton: 'No'
+        }).afterClosed().subscribe((confirmed: boolean) => {
+          if (confirmed) {
+            this.facultyDataContext.rollback();
+            this.tabIndex = 0;
+            this.global.showSnackBar('Changes Discarded');
+               
+          } else {
+            this.tabIndex = 1;
+          }
+        });
+
+
+      }
+
+      if (this.facultyDataContext.hasChanges() && this.facultyDataContext.getChanges().every((entity: StratResponse) => entity.stratPosition === 0))
+      {
+        this.facultyDataContext.rollback();
+      }
+
+    }
+    
+
+    
+  }
+
+  changes(): void {
+    console.log(this.facultyDataContext.getChanges());
   }
 }
