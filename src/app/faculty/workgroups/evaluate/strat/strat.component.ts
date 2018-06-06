@@ -82,10 +82,10 @@ export class StratComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.roSub.unsubscribe();
         this.atSub.unsubscribe();
-        //this.facWorkGroupService.stratTabActive(false);
-        if (this.facultyDataContext.hasChanges()) {
-            this.facultyDataContext.rollback();
-        }
+        this.facWorkGroupService.stratTabActive(false);
+        // if (this.facultyDataContext.hasChanges()) {
+        //     this.facultyDataContext.rollback();
+        // }
         this.dragSub.unsubscribe();
     }
 

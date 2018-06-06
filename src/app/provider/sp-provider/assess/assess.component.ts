@@ -53,8 +53,13 @@ export class AssessComponent implements OnInit {
     this.inventories$.subscribe(invs => {
       this.inventories = invs;
       console.log(this.inventories);
-    });
+      this.activate();
+    }); 
 
+  }
+
+  activate(): void {
+    console.log(this.studentDataContext.getChanges());
     this.inventories.sort((a, b) => {
       if (a.displayOrder < b.displayOrder) { return -1; }
       if (a.displayOrder > b.displayOrder) { return 1; }
@@ -62,6 +67,7 @@ export class AssessComponent implements OnInit {
     });
 
     this.isStudent = this.global.persona.value.isStudent;
+    console.log(this.inventories);
     this.isSelf = this.inventories[0].responseForAssessee.assessee.studentProfile.person.personId === this.global.persona.value.person.personId;
 
     if (this.isStudent) {
@@ -82,6 +88,7 @@ export class AssessComponent implements OnInit {
       //instructors can still add assessments when Under Review
       this.viewOnly = this.activeInventory.responseForAssessee.workGroup.mpSpStatus !== MpSpStatus.open && this.activeInventory.responseForAssessee.workGroup.mpSpStatus !== MpSpStatus.underReview;
     }
+
   }
 
   onLeftArrow(event: Event) {

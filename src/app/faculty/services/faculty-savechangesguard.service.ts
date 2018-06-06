@@ -17,22 +17,15 @@ export class FacultySaveChangesGuard implements CanDeactivate<FacultyComponent> 
     let changes = [];
     changes = this.facultyDataContext.getChanges();
 
+    console.log(this.facultyDataContext.getChanges());
 
-    // changes = changes.filter(change => {
-    //   if (change.entityType.shortName === 'FacStratResponse') {
-    //     const stratResponse = change as FacStratResponse;
-    //     if (stratResponse.stratPosition === 0) {
-    //       console.log('This strat response was just added');          
-    //       return false;
-    //     } else {
-    //       return true;
-    //     }
-    //   } else {
-    //     return true;
-    //   }
-    // });
+    let onlyStratChanges = changes.every((change: FacStratResponse) => 
+                  change.entityType.shortName === 'FacStratResponse' && change.stratPosition === 0);
 
-    console.log(changes);
+    if (onlyStratChanges) {
+      this.facultyDataContext.rollback();
+      return true;
+    }
 
 
     if (changes.length === 0) {

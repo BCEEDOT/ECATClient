@@ -45,6 +45,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   ngOnInit() {
     this.grpSub = this.workGroupService.workGroup$.subscribe(grp => {
       this.activeWorkGroup = grp;
+      this.activate();
     });
 
     this.atSub = this.workGroupService.stratTabActive$.subscribe(stratTabActive => {
@@ -66,11 +67,14 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   }
 
   ngOnDestroy() {
+    console.log('It is in the strat on destroy');
     this.grpSub.unsubscribe();
-    this.workGroupService.stratTabActive(false);
-    if (this.studentDataContext.hasChanges()) {
-      this.studentDataContext.rollback();
-    }
+    //this.workGroupService.stratTabActive(false);
+    console.log(this.studentDataContext.getChanges());
+    // if (this.studentDataContext.hasChanges()) {
+    //   console.log('It has changes in the ngondestroy of strat');
+    //   this.studentDataContext.rollback();
+    // }
     this.atSub.unsubscribe();
     this.dragSub.unsubscribe();
   }
@@ -84,6 +88,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
     console.log(this.studentDataContext._manager.getChanges());
     this.activeWorkGroup = this.workGroupService.workGroup$.getValue();
 
+    //this.createStratEntities();
 
 
     this.unstratted = this.activeWorkGroup.spStratResponses.filter(str => {

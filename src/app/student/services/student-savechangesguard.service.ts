@@ -25,6 +25,14 @@ export class StudentSavechangesguardService implements CanDeactivate<StudentComp
       return true;
     }
 
+    let onlyStratChanges = changes.every((change: StratResponse) => 
+                  change.entityType.shortName === 'StratResponse' && change.stratPosition === 0);
+
+    if (onlyStratChanges) {
+      this.studentDataContext.rollback();
+      return true;
+    }
+
     return Observable.create((observer: Observer<boolean>) => {
       this.dialogService.openConfirm({
         message: 'Are you sure you want to leave this page?',
