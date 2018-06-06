@@ -65,18 +65,18 @@ export class CommentDialog implements OnInit {
       return;
     }
 
-    this.loadingService.register(this.commentLoad);
+    this.loadingService.register();
 
     if (this.isStudent) {
 
       this.studentDataContext.commit()
         .then(result => {
-          this.loadingService.resolve(this.commentLoad);
+          this.loadingService.resolve();
           this.global.showSnackBar(snackBarText);
           this.dialogRef.close();
         })
         .catch(result => {
-          this.loadingService.resolve(this.commentLoad);
+          this.loadingService.resolve();
           this.dialogService.openAlert({
             message: 'Your changes were not saved, please try again.',
             title: 'Save Error.',
@@ -85,12 +85,12 @@ export class CommentDialog implements OnInit {
     } else {
       this.facultyDataContext.commit()
         .then(result => {
-          this.loadingService.resolve(this.commentLoad);
+          this.loadingService.resolve();
           this.global.showSnackBar(snackBarText);
           this.dialogRef.close();
         })
         .catch(result => {
-          this.loadingService.resolve(this.commentLoad);
+          this.loadingService.resolve();
           this.dialogService.openAlert({
             message: 'Your changes were not saved, please try again.',
             title: 'Save Error.',

@@ -174,16 +174,16 @@ export class AssessComponent implements OnInit {
       return;
     }
 
-    this.loadingService.register(this.assessLoad);
+    this.loadingService.register();
     if (this.isStudent) {
       this.studentDataContext.commit()
         .then(result => {
-          this.loadingService.resolve(this.assessLoad);
+          this.loadingService.resolve();
           this.global.showSnackBar('Success, Asessment Saved!');
           this.location.back();
         })
         .catch(result => {
-          this.loadingService.resolve(this.assessLoad);
+          this.loadingService.resolve();
           this.dialogService.openAlert({
             message: 'Your changes were not saved, please try again.',
             title: 'Save Error',
@@ -192,12 +192,12 @@ export class AssessComponent implements OnInit {
     } else {
       this.facultyDataContext.commit()
         .then(result => {
-          this.loadingService.resolve(this.assessLoad);
+          this.loadingService.resolve();
           this.global.showSnackBar('Success, Asessment Saved!');
           this.location.back();
         })
         .catch(result => {
-          this.loadingService.resolve(this.assessLoad);
+          this.loadingService.resolve();
           this.dialogService.openAlert({
             message: 'Your changes were not saved, please try again.',
             title: 'Save Error',
