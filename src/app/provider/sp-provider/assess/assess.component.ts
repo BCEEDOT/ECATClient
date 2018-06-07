@@ -59,7 +59,7 @@ export class AssessComponent implements OnInit {
   }
 
   activate(): void {
-    console.log(this.studentDataContext.getChanges());
+    //console.log(this.studentDataContext.getChanges());
     this.inventories.sort((a, b) => {
       if (a.displayOrder < b.displayOrder) { return -1; }
       if (a.displayOrder > b.displayOrder) { return 1; }
