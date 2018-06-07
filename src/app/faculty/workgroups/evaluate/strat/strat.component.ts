@@ -256,7 +256,8 @@ export class StratComponent implements OnInit, OnDestroy {
         }).catch((error) => {
             this.loadingService.resolve();
             this.dialogService.openAlert({
-                message: 'There was an error saving your changes, please try again.'
+                message: error,
+                title: 'Save Error'
             })
         })
 

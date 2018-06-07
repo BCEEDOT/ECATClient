@@ -276,7 +276,8 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       this.activeWorkGroup.groupMembers.filter(gm => { if (gm.studentId === this.userId) { return true; } })[0].updateStatusOfPeer();
       this.loadingService.resolve();
       this.dialogService.openAlert({
-        message: 'There was an error saving your changes, please try again.'
+        message: error,
+        title: 'Save Error'
       })
     })
 

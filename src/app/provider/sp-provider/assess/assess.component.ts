@@ -182,10 +182,10 @@ export class AssessComponent implements OnInit {
           this.global.showSnackBar('Success, Asessment Saved!');
           this.location.back();
         })
-        .catch(result => {
+        .catch(error => {
           this.loadingService.resolve();
           this.dialogService.openAlert({
-            message: 'Your changes were not saved, please try again.',
+            message: error,
             title: 'Save Error',
           });
         })
@@ -196,10 +196,10 @@ export class AssessComponent implements OnInit {
           this.global.showSnackBar('Success, Asessment Saved!');
           this.location.back();
         })
-        .catch(result => {
+        .catch(error => {
           this.loadingService.resolve();
           this.dialogService.openAlert({
-            message: 'Your changes were not saved, please try again.',
+            message: error,
             title: 'Save Error',
           });
         })

@@ -10,6 +10,7 @@ import { GlobalService } from "../../../core/services/global.service";
 import { StudentDataContext } from "../../../student/services/student-data-context.service";
 import { FacultyDataContextService } from "../../../faculty/services/faculty-data-context.service";
 
+
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.dialog.html',
@@ -75,11 +76,11 @@ export class CommentDialog implements OnInit {
           this.global.showSnackBar(snackBarText);
           this.dialogRef.close();
         })
-        .catch(result => {
+        .catch((error) => {
           this.loadingService.resolve();
           this.dialogService.openAlert({
-            message: 'Your changes were not saved, please try again.',
-            title: 'Save Error.',
+            message: error,
+            title: 'Save Error',
           });
         })
     } else {
@@ -89,11 +90,11 @@ export class CommentDialog implements OnInit {
           this.global.showSnackBar(snackBarText);
           this.dialogRef.close();
         })
-        .catch(result => {
+        .catch((error) => {
           this.loadingService.resolve();
           this.dialogService.openAlert({
-            message: 'Your changes were not saved, please try again.',
-            title: 'Save Error.',
+            message: error,
+            title: 'Save Error',
           });
         })
     }
