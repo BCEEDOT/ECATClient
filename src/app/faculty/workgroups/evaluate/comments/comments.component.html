@@ -47,6 +47,6 @@
 </mat-card-content>
 <mat-divider></mat-divider>
 <mat-card-actions fxLayout="row" fxLayoutAlign="end">
-  <button mat-raised-button color="primary" (click)="this.discard()" [disabled]="!hasChanges || viewOnly">Cancel</button>
+  <button mat-stroked-button color="primary" (click)="this.discard()" [disabled]="!hasChanges || viewOnly">Cancel</button>
   <button mat-raised-button color="primary" (click)="this.save()" [disabled]="!hasChanges || viewOnly">Save</button>
 </mat-card-actions>

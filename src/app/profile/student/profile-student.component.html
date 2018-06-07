@@ -83,7 +83,7 @@
         <div class="pad-top-sm pad-bottom-sm" fxLayout="row">
           <div fxFlex></div>
 
-          <button mat-raised-button color="primary" type="button" class="text-upper" (click)="cancelStudentSave();">Cancel</button>
+          <button mat-stroked-button color="primary" type="button" class="text-upper" (click)="cancelStudentSave();">Cancel</button>
 
           <span class="pad-right-xs"></span>
           <button mat-raised-button color="primary" type="button" [disabled]="studentProfileForm.pristine || !studentProfileForm.valid" (click)="saveStudentProfile()"
