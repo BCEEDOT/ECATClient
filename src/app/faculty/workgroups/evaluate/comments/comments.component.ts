@@ -26,6 +26,8 @@ export class CommentsComponent implements OnInit, OnDestroy, OnChanges {
   commFlagMap = MpCommentFlag;
   hasChanges: boolean = false;
   viewOnly: boolean = true;
+  isOverAuthor: number;
+  isOverRecipient: number;
   roSub: Subscription;
 
   constructor(private route: ActivatedRoute,
