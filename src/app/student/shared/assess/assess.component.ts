@@ -103,9 +103,17 @@ export class AssessComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   assess(assesseeId: number): void {
-    this.router.navigate(["../" + "assess/" + assesseeId], {
-      relativeTo: this.route
-    });
     this.workGroupService.onListView(false);
+
+    if (this.activeWorkGroup.mpSpStatus === MpSpStatus.published) {
+      this.router.navigate(["assess/" + assesseeId], {
+        relativeTo: this.route
+      });
+    } else {
+      this.router.navigate(["../" + "assess/" + assesseeId], {
+        relativeTo: this.route
+      });
+    }
+    
   }
 }
