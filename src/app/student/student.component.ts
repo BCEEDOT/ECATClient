@@ -225,26 +225,31 @@ export class StudentComponent
   }
 
   setActiveCourse(course: Course): void {
-    this.workGroupService.isLoading(true);
+    this.canRoute().subscribe(canRoute => {
+      if (canRoute) {
+        this.workGroupService.isLoading(true);
 
-    this.studentDataContext
-      .fetchActiveCourse(course.id, true)
-      .then((courseValue: Course) => {
-        this.activeCourse = courseValue;
-        this.activeCourseId = this.activeCourse.id;
+        this.studentDataContext
+          .fetchActiveCourse(course.id, true)
+          .then((courseValue: Course) => {
+            this.activeCourse = courseValue;
+            this.activeCourseId = this.activeCourse.id;
 
-        if (this.activeCourse.workGroups.length > 0) {
-          this.initWorkGroups(this.activeCourse.workGroups);
-        }
-        this.workGroupService.isLoading(false);
-      })
-      .catch((error: Event) => {
-        this.dialogService.openAlert({
-          message: "There was a problem loading your course, please try again.",
-          title: "Load Error"
-        });
-        this.workGroupService.isLoading(false);
-      });
+            if (this.activeCourse.workGroups.length > 0) {
+              this.initWorkGroups(this.activeCourse.workGroups);
+            }
+            this.workGroupService.isLoading(false);
+          })
+          .catch((error: Event) => {
+            this.dialogService.openAlert({
+              message:
+                "There was a problem loading your course, please try again.",
+              title: "Load Error"
+            });
+            this.workGroupService.isLoading(false);
+          });
+      }
+    });
   }
 
   nav(workGroup: WorkGroup): void {
@@ -284,7 +289,6 @@ export class StudentComponent
           });
       }
     });
-
   }
 
   canRoute(): Observable<boolean> {
