@@ -40,7 +40,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
   assessComplete: boolean;
   stratComplete: boolean;
   commentsComplete: boolean;
-  tabIndex: number;
+  //tabIndex: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -335,7 +335,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
           this.global.showSnackBar('Group Status Updated!');
           if (this.workGroup.mpSpStatus === MpSpStatus.open) {
             this.showComments = false;
-            if (this.tabIndex === 2) { this.tabIndex = 0; }
+            //if (this.tabIndex === 2) { this.tabIndex = 0; }
           }
           this.refreshData();
         }, rejected => {
@@ -387,7 +387,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
     }
 
     this.facWorkGroupService.readOnly(false);
-    this.tabIndex = 0;
+    //this.tabIndex = 0;
 
   }
 

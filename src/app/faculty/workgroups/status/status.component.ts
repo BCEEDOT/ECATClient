@@ -131,7 +131,7 @@ export class StatusComponent implements OnInit {
         return;
       case MpSpStatus.underReview:
       case MpSpStatus.reviewed:
-        this.router.navigate(['list', this.workGroup.courseId, 'evaluate', this.workGroup.workGroupId], {relativeTo: this.route.parent});
+        this.router.navigate(['list', this.workGroup.courseId, 'evaluate', this.workGroup.workGroupId, 'main'], {relativeTo: this.route.parent});
         break;
     }
 
@@ -153,7 +153,7 @@ export class StatusComponent implements OnInit {
           if (confirmed) {
             this.workGroup.mpSpStatus = MpSpStatus.underReview;
             this.ctx.commit().then(_ => {
-                this.router.navigate(['list', this.workGroup.courseId, 'evaluate', this.workGroup.workGroupId], {relativeTo: this.route.parent});
+                this.router.navigate(['list', this.workGroup.courseId, 'evaluate', this.workGroup.workGroupId, 'main'], {relativeTo: this.route.parent});
               }
             )
           }

@@ -1,5 +1,6 @@
-<mat-card-title *ngIf="!grpHasComments">This group did not leave any comments.</mat-card-title>
-<mat-card-content *ngIf="grpHasComments" fxLayout="row">
+<mat-card-title *ngIf="!grpHasComments && !groupIsOpen">This group did not leave any comments.</mat-card-title>
+<mat-card-title *ngIf="groupIsOpen">This group is currently Open. Comments will be available when placed Under Review.</mat-card-title>
+<mat-card-content *ngIf="grpHasComments && !groupIsOpen" fxLayout="row">
   <mat-list fxFlex="1 1 calc(17em)">
     <mat-list-item>AUTHORS</mat-list-item>
     <mat-list-item (mouseenter)="isOverAuthor = author.studentId" (mouseleave)="isOverAuthor = null"

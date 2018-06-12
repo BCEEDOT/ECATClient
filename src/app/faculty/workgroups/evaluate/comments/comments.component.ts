@@ -26,6 +26,7 @@ export class CommentsComponent implements OnInit, OnDestroy, OnChanges {
   selectedComment: StudSpComment;
   grpHasComments: boolean = true;
   commFlagMap = MpCommentFlag;
+  groupIsOpen: boolean = false;
   hasChanges: boolean = false;
   viewOnly: boolean = true;
   isOverAuthor: number;
@@ -72,8 +73,10 @@ export class CommentsComponent implements OnInit, OnDestroy, OnChanges {
   activate() {
     this.memsWithComments = [];
     this.members = this.workGroup.groupMembers;
+    this.groupIsOpen = this.workGroup.mpSpStatus !== MpSpStatus.open ? false : true; 
+    this.grpHasComments = true;
+   
 
-    console.log(this.members);
     this.members.forEach(mem => {
       if (mem.authorOfComments.length > 0) {
         mem["numRemaining"] = mem.authorOfComments.filter(
@@ -89,11 +92,15 @@ export class CommentsComponent implements OnInit, OnDestroy, OnChanges {
       }
     });
 
+    console.log(this.memsWithComments);
     if (this.memsWithComments.length === 0) {
       this.grpHasComments = false;
       this.facWorkGroupService.commentsComplete(true);
       return;
     }
+
+    console.log(this.groupIsOpen);
+    console.log(this.grpHasComments);
 
     this.selectedAuthor = this.memsWithComments[0];
 
