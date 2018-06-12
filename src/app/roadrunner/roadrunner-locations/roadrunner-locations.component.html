@@ -81,7 +81,7 @@
     </div>
 
     <div *ngIf="!rrData?.prevSignOut && !rrData?.signedOutSomewhere">
-      <mat-divider *ngIf="!last" mat-inset></mat-divider>
+      <mat-divider *ngIf="!last" [inset]="true"></mat-divider>
     </div>
     </ng-template>
 
