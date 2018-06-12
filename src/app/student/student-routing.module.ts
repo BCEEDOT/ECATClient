@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { ActivatedRouteSnapshot, RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 
 import { StudentSavechangesguardService } from './services/student-savechangesguard.service';
@@ -8,7 +8,9 @@ import { GlobalService } from '../core/services/global.service';
 import { StudentComponent } from './student.component';
 import { ListComponent } from './list/list.component';
 import { ResultsComponent } from './results/results.component';
-import { AssessComponent } from '../provider/sp-provider/assess/assess.component';
+import { AssessComponent as SPProviderAssessComponent } from '../provider/sp-provider/assess/assess.component';
+import { AssessComponent } from "./shared/assess/assess.component";
+import { StratComponent } from "./list/strat/strat.component";
 import { RouteBackComponent } from './shared/route-back/route-back.component';
 
 const studentRoutes: Routes = [
@@ -24,14 +26,22 @@ const studentRoutes: Routes = [
         // Get the students courses
         resolve: { assess: 'assessmentResolver' },
         children: [
-
-
-
           {
             path: 'list/:crsId/:wrkGrpId',
             // set to most recent course, allow student to switch between courses.
             component: ListComponent,
-            canDeactivate: [StudentSavechangesguardService]
+            // canDeactivate: [StudentSavechangesguardService]
+            children: [
+              {
+                path: 'main',
+                component: AssessComponent
+              },
+              {
+                path: 'strat',
+                component: StratComponent,
+                canDeactivate: [StudentSavechangesguardService]
+              }
+            ]
           },
           {
             path: 'results/:crsId/:wrkGrpId',
@@ -40,12 +50,12 @@ const studentRoutes: Routes = [
           },
           {
             path: 'results/:crsId/:wrkGrpId/assess/:assesseeId',
-            component: AssessComponent,
+            component: SPProviderAssessComponent,
             resolve: { inventories: 'spAssessResolver' }
           },
           {
             path: 'list/:crsId/:wrkGrpId/assess/:assesseeId',
-            component: AssessComponent,
+            component: SPProviderAssessComponent,
             resolve: { inventories: 'spAssessResolver' }
           },
           {

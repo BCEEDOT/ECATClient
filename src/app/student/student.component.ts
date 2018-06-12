@@ -216,8 +216,10 @@ export class StudentComponent implements OnInit, OnDestroy, AfterContentChecked 
   nav(workGroup: WorkGroup): void {
     const resultsPublished: boolean = this.activeWorkGroup.mpSpStatus === MpSpStatus.published;
 
+    console.log('It is in the nav');
+
     resultsPublished ? this.router.navigate(['results', this.activeCourseId, this.activeWorkGroupId], { relativeTo: this.route })
-                     : this.router.navigate(['list', this.activeCourseId, this.activeWorkGroupId], { relativeTo: this.route });
+                     : this.router.navigate(['list', this.activeCourseId, this.activeWorkGroupId, 'main'], { relativeTo: this.route });
 
   }
 
