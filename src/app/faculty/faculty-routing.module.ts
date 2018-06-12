@@ -10,7 +10,12 @@ import { GlobalService } from '../core/services/global.service';
 import { StatusComponent } from './workgroups/status/status.component'
 import { EvaluateComponent } from './workgroups/evaluate/evaluate.component';
 import { FlightRosterComponent } from './workgroups/flight-roster/flight-roster.component';
-import { AssessComponent } from '../provider/sp-provider/assess/assess.component'
+import { AssessComponent as SPProviderAssessComponent } from '../provider/sp-provider/assess/assess.component'
+
+import { AssessComponent as EvaluateAssessComponent } from "./workgroups/evaluate/assess/assess.component";
+import { StratComponent } from "./workgroups/evaluate/strat/strat.component";
+import { CommentsComponent } from "./workgroups/evaluate/comments/comments.component";
+
 import { ResultsComponent } from "./workgroups/results/results.component";
 import { Course } from '../core/entities/faculty';
 import { ResultsDetailsComponent } from "./workgroups/results/results-details/results-details.component";
@@ -45,7 +50,25 @@ const facultyRoutes: Routes = [
             path: 'list/:crsId/evaluate/:wrkGrpId',
             component: EvaluateComponent,
             resolve: { workGroup: 'facWorkGroupResolver' },
-            canDeactivate: [FacultySaveChangesGuard],
+            // canDeactivate: [FacultySaveChangesGuard],
+            children: [
+              {
+                path: 'main',
+                component: EvaluateAssessComponent,
+                
+              },
+              {
+                path: 'strat',
+                component: StratComponent,
+                canDeactivate: [FacultySaveChangesGuard]
+              },
+              {
+                path: 'comment',
+                component: CommentsComponent,
+                canDeactivate: [FacultySaveChangesGuard]
+              }
+
+            ]
           },
 
           {
@@ -57,7 +80,7 @@ const facultyRoutes: Routes = [
 
           {
             path: 'list/:crsId/evaluate/:wrkGrpId/assess/:assesseeId',
-            component: AssessComponent,
+            component: SPProviderAssessComponent,
             resolve: { inventories: 'facSpAssessResolver' },
             canDeactivate: [FacultySaveChangesGuard],
           },
@@ -104,9 +127,13 @@ export function facSpAssessResolver(facultyDataContext: FacultyDataContextServic
 // }
 
 export function facWorkGroupResolver(facultyDataContext: FacultyDataContextService) {
+  
   return (route: ActivatedRouteSnapshot) => {
+    console.log(route);
     return facultyDataContext.fetchActiveWorkGroup(+route.params['crsId'], +route.params['wrkGrpId']).then(workGroup => {
+      console.log(workGroup.mpSpStatus);
       if (workGroup.mpSpStatus !== 'Open') {
+        console.log(route.params);
         return facultyDataContext.fetchActiveWgSpComments(+route.params['crsId'], +route.params['wrkGrpId'], true).then(_ => {
           return workGroup;
         });

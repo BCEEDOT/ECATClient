@@ -44,6 +44,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private facWorkGroupService: FacWorkgroupService,
     private location: Location,
     private dialogService: TdDialogService,
@@ -391,70 +392,8 @@ export class EvaluateComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.members.forEach(mem => {
-      if (mem.facultyStrat){
-        if (mem.facultyStrat.entityAspect.entityState.isAdded()){
-          if (mem.facultyStrat.stratPosition === 0) {
-            mem.facultyStrat.entityAspect.rejectChanges();
-          }
-        }
-      }
-    })
 
-    this.location.back();
+    this.router.navigate(['../../'], {relativeTo: this.route});
   }
 
-  tabChanged(tabChanged: MatTabChangeEvent): void {
-    console.log(tabChanged);
-    console.log('Test');
-    console.log(tabChanged.index);
-    console.log(this.facultyDataContext.getChanges());
-    if (tabChanged.index === 1) {
-      console.log('One the strat tab');
-      this.facWorkGroupService.stratTabActive(true);
-    }
-
-    if (tabChanged.index === 0 || tabChanged.index === 2  ) {
-      console.log('On a tab other than strat');
-      this.facWorkGroupService.stratTabActive(false);
-
-      console.log(this.facultyDataContext.getChanges());
-
-      if (this.facultyDataContext.hasChanges() && this.facultyDataContext.getChanges().some((entity: StratResponse) => entity.stratPosition !== 0 )) {
-
-        this.tabIndex = 1;
-
-        this.dialogService.openConfirm({
-          message: 'Are you sure you want to leave this page?',
-          title: 'Unsaved Changes',
-          acceptButton: 'Yes',
-          cancelButton: 'No'
-        }).afterClosed().subscribe((confirmed: boolean) => {
-          if (confirmed) {
-            this.facultyDataContext.rollback();
-            this.tabIndex = 0;
-            this.global.showSnackBar('Changes Discarded');
-               
-          } else {
-            this.tabIndex = 1;
-          }
-        });
-
-
-      }
-
-      if (this.facultyDataContext.hasChanges() && this.facultyDataContext.getChanges().every((entity: StratResponse) => entity.stratPosition === 0))
-      {
-        this.facultyDataContext.rollback();
-      }
-
-    }
-    
-
-    
-  }
-
-  changes(): void {
-    console.log(this.facultyDataContext.getChanges());
-  }
 }

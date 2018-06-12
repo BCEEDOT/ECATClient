@@ -4,7 +4,7 @@
         <mat-icon matListAvatar>person</mat-icon>
         <h3 matLine> {{member?.rankName}} </h3>
         <span flex="70" class="pad-right-lg mat-body-1 tc-grey-500">
-          <button mat-button [routerLink]="['assess/' + member.studentId]"><mat-icon>{{member?.assessText}}</mat-icon> Assessment</button>
+          <button mat-button [routerLink]="['../' + 'assess/' + member.studentId]"><mat-icon>{{member?.assessText}}</mat-icon> Assessment</button>
         </span>
         <span flex="60" *ngIf="member?.commentText === 'not_interested'" class="pad-right-lg">
 
