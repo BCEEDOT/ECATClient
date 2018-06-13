@@ -143,56 +143,9 @@ export class ListComponent implements OnInit, OnDestroy {
 
   changes(): void {
     console.log(this.studentDataContext.getChanges());
-    console.log(this.workGroupService.stratTabActive$.value);
   }
 
-  tabChanged(tabChanged: MatTabChangeEvent): void {
-    console.log(tabChanged);
-    console.log('Test');
-    console.log(this.studentDataContext.getChanges());
-    if (tabChanged.index === 1) {
-      console.log('One the strat tab');
-      this.workGroupService.stratTabActive(true);
-    }
 
-    if (tabChanged.index === 0 ) {
-      console.log('On the assessment tab');
-      this.workGroupService.stratTabActive(false);
-
-      console.log(this.studentDataContext.getChanges());
-
-      if (this.studentDataContext.hasChanges() && this.studentDataContext.getChanges().some((entity: StratResponse) => entity.stratPosition !== 0 )) {
-
-        this.activeTab = 1;
-
-        this.dialogService.openConfirm({
-          message: 'Are you sure you want to leave this page?',
-          title: 'Unsaved Changes',
-          acceptButton: 'Yes',
-          cancelButton: 'No'
-        }).afterClosed().subscribe((confirmed: boolean) => {
-          if (confirmed) {
-            this.studentDataContext.rollback();
-            this.activeTab = 0;
-            this.global.showSnackBar('Changes Discarded');
-               
-          } else {
-            this.activeTab = 1;
-          }
-        });
-
-
-      }
-
-      if (this.studentDataContext.hasChanges() && this.studentDataContext.getChanges().every((entity: StratResponse) => entity.stratPosition === 0))
-      {
-        this.studentDataContext.rollback();
-      }
-
-    }
-    
-
-    
-  }
+  
 
 }

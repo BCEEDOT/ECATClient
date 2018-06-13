@@ -20,7 +20,7 @@ export class RouteBackComponent implements OnInit {
         if (workGroup.mpSpStatus === 'Published') {
           this.router.navigate(['results', workGroup.courseId, workGroup.workGroupId], { relativeTo: this.route });
         } else {
-          this.router.navigate(['list', workGroup.courseId, workGroup.workGroupId], { relativeTo: this.route });
+          this.router.navigate(['list', workGroup.courseId, workGroup.workGroupId, 'main'], { relativeTo: this.route });
         }
       }
     }

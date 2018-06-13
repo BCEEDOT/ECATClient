@@ -30,7 +30,6 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   showUnstrat: boolean = false;
   dragSub: Subscription;
   grpSub: Subscription;
-  atSub: Subscription;
 
   constructor(private workGroupService: WorkGroupService, private global: GlobalService,
     private loadingService: TdLoadingService,
@@ -40,7 +39,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
     //this.workGroupService.isLoading$.subscribe(value => this.isLoading = value);
   }
 
-  @Input() workGroup: WorkGroup;
+  //@Input() workGroup: WorkGroup;
 
   ngOnInit() {
     this.grpSub = this.workGroupService.workGroup$.subscribe(grp => {
@@ -48,34 +47,12 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       this.activate();
     });
 
-    this.atSub = this.workGroupService.stratTabActive$.subscribe(stratTabActive => {
-
-      console.log('It triggred a change');
-
-      console.log('This is the stratTabActive');
-      console.log(stratTabActive);
-
-      if (stratTabActive === true) {
-        this.createStratEntities();
-        this.activate();
-      }
-
-    });
-
-    this.activate();
+  
 
   }
 
   ngOnDestroy() {
-    console.log('It is in the strat on destroy');
     this.grpSub.unsubscribe();
-    //this.workGroupService.stratTabActive(false);
-    console.log(this.studentDataContext.getChanges());
-    // if (this.studentDataContext.hasChanges()) {
-    //   console.log('It has changes in the ngondestroy of strat');
-    //   this.studentDataContext.rollback();
-    // }
-    this.atSub.unsubscribe();
     this.dragSub.unsubscribe();
   }
 
@@ -84,12 +61,10 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   // }
 
   activate() {
-    console.log(this.activeWorkGroup)
-    console.log(this.studentDataContext._manager.getChanges());
+
     this.activeWorkGroup = this.workGroupService.workGroup$.getValue();
 
-    //this.createStratEntities();
-
+    this.createStratEntities();
 
     this.unstratted = this.activeWorkGroup.spStratResponses.filter(str => {
       if (str.stratPosition === 0 && !str.entityAspect.entityState.isDetached()) { return true; }
