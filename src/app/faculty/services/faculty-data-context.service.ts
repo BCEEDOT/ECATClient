@@ -268,7 +268,7 @@ export class FacultyDataContextService extends BaseDataContext {
     let inventoryList = workGroup.assignedSpInstr.inventoryCollection as IFacSpInventory[];
 
     return inventoryList.map((invItem: IFacSpInventory) => {
-      const key = { assesseePersonId: assesseeId, courseId: courseId, workGroupId: workGroupId, inventoryItemId: invItem.id };
+      let key = { assesseePersonId: assesseeId, courseId: courseId, workGroupId: workGroupId, inventoryItemId: invItem.id };
 
       let facSpReponse = this.manager.getEntityByKey(MpEntityType.facSpResponse, [assesseeId, courseId, workGroupId, invItem.id]) as FacSpResponse;
 

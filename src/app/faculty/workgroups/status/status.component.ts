@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 import { ActivatedRoute, Router } from "@angular/router";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/operator/pluck';
+import { Observable } from "rxjs";
+import { pluck } from "rxjs/Operators";
 
 import { WorkGroup, CrseStudentInGroup } from "../../../core/entities/faculty";
 import { FacultyDataContextService } from "../../services/faculty-data-context.service";
@@ -49,7 +48,8 @@ export class StatusComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private facWorkGroupService: FacWorkgroupService) {
-      this.workGroup$ = route.data.pluck('workGroup');
+
+      this.workGroup$ = route.data.pipe(pluck('workGroup'));
     }
 
   ngOnInit() {
@@ -62,7 +62,7 @@ export class StatusComponent implements OnInit {
   }
 
   activate() {
-    this.wgName = (this.workGroup.customName) ? `${this.workGroup.defaultName} ${this.workGroup.customName}` : this.workGroup.defaultName;
+    this.wgName = (this.workGroup.customName) ? `${this.workGroup.defaultName} (${this.workGroup.customName})` : this.workGroup.defaultName;
     this.members = this.workGroup.groupMembers as Array<CrseStudExtended>;
     this.members.sort((a: CrseStudExtended, b: CrseStudExtended) => {
       if (a.studentProfile.person.lastName > b.studentProfile.person.lastName) {return 1;}
@@ -131,7 +131,7 @@ export class StatusComponent implements OnInit {
         return;
       case MpSpStatus.underReview:
       case MpSpStatus.reviewed:
-        this.router.navigate(['list', this.workGroup.courseId, 'evaluate', this.workGroup.workGroupId], {relativeTo: this.route.parent});
+        this.router.navigate(['list', this.workGroup.courseId, 'evaluate', this.workGroup.workGroupId, 'main'], {relativeTo: this.route.parent});
         break;
     }
 
@@ -153,7 +153,7 @@ export class StatusComponent implements OnInit {
           if (confirmed) {
             this.workGroup.mpSpStatus = MpSpStatus.underReview;
             this.ctx.commit().then(_ => {
-                this.router.navigate(['list', this.workGroup.courseId, 'evaluate', this.workGroup.workGroupId], {relativeTo: this.route.parent});
+                this.router.navigate(['list', this.workGroup.courseId, 'evaluate', this.workGroup.workGroupId, 'main'], {relativeTo: this.route.parent});
               }
             )
           }

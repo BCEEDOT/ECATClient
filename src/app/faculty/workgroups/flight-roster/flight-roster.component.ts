@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common'
-import { Subscriber } from 'rxjs/Subscriber';
+import { Subscriber } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TdLoadingService } from "@covalent/core";
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TdDialogService, TdLoadingService, TdMediaService } from '@covalent/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/pluck';
+import { Observable } from 'rxjs';
+
 
 import { Course, WorkGroup } from '../../../core/entities/faculty';
 import { FacultyDataContextService } from '../../services/faculty-data-context.service';

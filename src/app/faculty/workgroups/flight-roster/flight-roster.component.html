@@ -1,13 +1,16 @@
 <div class="width">
   <mat-card>
     <mat-card-title>
-      <div fxFlex>
-        <button mat-raised-button color="primary" mat-raised-button (click)="back()">
-        <!--mat-icon class="tc-white-700">arrow_back</mat-icon-->Back
-      </button>
-      </div>
-      <div class="text-center" fxFlex="100">
-        {{workGroup?.mpCategory}} - {{workGroup?.defaultName}} {{workGroup?.customName}}
+      <div fxLayout="row">
+        <div fxFlex="20">
+          <button mat-raised-button color="primary" mat-raised-button (click)="back()">
+            <!--mat-icon class="tc-white-700">arrow_back</mat-icon-->Back
+          </button>
+        </div>
+        <div fxFlex="grow" class="text-center">
+          {{workGroup?.mpCategory}} - {{workGroup?.defaultName}} <span *ngIf="workGroup?.customName"> ({{workGroup?.customName}})</span> 
+        </div>
+        <div fxFlex="20"></div>
       </div>
     </mat-card-title>
 
@@ -20,30 +23,19 @@
           {{category}} Flight
         </div>
       </mat-list-item>
-
-      <mat-divider></mat-divider>
-
       <ng-template let-member let-last="last" ngFor [ngForOf]="rosterInfos">
-
         <mat-list-item>
-
           <mat-icon matListAvatar>person</mat-icon>
           <div fxFlex="80" class=" text-left pad-sm">
             {{member?.rankName}}
           </div>
-
           <div fxFlex="20" *ngFor="let category of categoriesToDisplay" class="text-center pad-sm">
             {{(member?.flights[category]) ? member?.flights[category] : 'None'}}
           </div>
-          <div fxFlex></div>
+          <mat-divider inset *ngIf="!last"></mat-divider>
         </mat-list-item>
-        <mat-divider *ngIf="!last" mat-inset></mat-divider>
-
-
       </ng-template>
-
     </mat-list>
-
   </mat-card>
 </div>
 

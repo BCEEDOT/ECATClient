@@ -2,9 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/operator/pluck';
+import { Observable } from "rxjs";
+import { pluck } from "rxjs/Operators";
 
 import { StudentDataContext } from "../../../student/services/student-data-context.service";
 import { FacultyDataContextService } from "../../../faculty/services/faculty-data-context.service";
@@ -46,7 +45,7 @@ export class AssessComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location) {
 
-    this.inventories$ = route.data.pluck('inventories');
+    this.inventories$ = route.data.pipe(pluck('inventories'));
 
   }
 
@@ -54,8 +53,13 @@ export class AssessComponent implements OnInit {
     this.inventories$.subscribe(invs => {
       this.inventories = invs;
       console.log(this.inventories);
-    });
+      this.activate();
+    }); 
 
+  }
+
+  activate(): void {
+    //console.log(this.studentDataContext.getChanges());
     this.inventories.sort((a, b) => {
       if (a.displayOrder < b.displayOrder) { return -1; }
       if (a.displayOrder > b.displayOrder) { return 1; }
@@ -63,6 +67,7 @@ export class AssessComponent implements OnInit {
     });
 
     this.isStudent = this.global.persona.value.isStudent;
+    console.log(this.inventories);
     this.isSelf = this.inventories[0].responseForAssessee.assessee.studentProfile.person.personId === this.global.persona.value.person.personId;
 
     if (this.isStudent) {
@@ -83,6 +88,7 @@ export class AssessComponent implements OnInit {
       //instructors can still add assessments when Under Review
       this.viewOnly = this.activeInventory.responseForAssessee.workGroup.mpSpStatus !== MpSpStatus.open && this.activeInventory.responseForAssessee.workGroup.mpSpStatus !== MpSpStatus.underReview;
     }
+
   }
 
   onLeftArrow(event: Event) {
@@ -149,6 +155,12 @@ export class AssessComponent implements OnInit {
         }
       });
     } else {
+      console.log('')
+      console.log(this.inventories);
+      this.inventories.forEach(inv => {
+        console.log(inv);
+      });
+      console.log(this.location);
       this.location.back();
     }
   }
@@ -162,32 +174,32 @@ export class AssessComponent implements OnInit {
       return;
     }
 
-    this.loadingService.register(this.assessLoad);
+    this.loadingService.register();
     if (this.isStudent) {
       this.studentDataContext.commit()
         .then(result => {
-          this.loadingService.resolve(this.assessLoad);
+          this.loadingService.resolve();
           this.global.showSnackBar('Success, Asessment Saved!');
           this.location.back();
         })
-        .catch(result => {
-          this.loadingService.resolve(this.assessLoad);
+        .catch(error => {
+          this.loadingService.resolve();
           this.dialogService.openAlert({
-            message: 'Your changes were not saved, please try again.',
+            message: error,
             title: 'Save Error',
           });
         })
     } else {
       this.facultyDataContext.commit()
         .then(result => {
-          this.loadingService.resolve(this.assessLoad);
-          this.global.showSnackBar('Success, Asessment Saved!');          
+          this.loadingService.resolve();
+          this.global.showSnackBar('Success, Asessment Saved!');
           this.location.back();
         })
-        .catch(result => {
-          this.loadingService.resolve(this.assessLoad);
+        .catch(error => {
+          this.loadingService.resolve();
           this.dialogService.openAlert({
-            message: 'Your changes were not saved, please try again.',
+            message: error,
             title: 'Save Error',
           });
         })

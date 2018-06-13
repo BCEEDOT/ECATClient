@@ -142,11 +142,11 @@ export class RoadrunnerComponent implements OnInit {
     }
 
     edit.signOut = !edit.signOut;
-    this.loadingService.register(this.roadRunnerLoading);
+    this.loadingService.register();
     this.userDataContext.commit()
       .then((res) => {
         this.global.showSnackBar('Status Updated');
-        this.loadingService.resolve(this.roadRunnerLoading);
+        this.loadingService.resolve();
       })
     this.roadRunnerInfos.sort((x, y) => { if (y.signOut === true) return 1; });
 
@@ -164,12 +164,12 @@ export class RoadrunnerComponent implements OnInit {
   activate(): void {
     var that = this;
     if (this.persona.isStudent) {
-      this.loadingService.register(this.roadRunnerLoading);
+      this.loadingService.register();
       this.userDataContext.getRoadRunnerInfos(true)
         .then((roadRunnerData: RoadRunner[]) => {
           this.roadRunnerService.count(this.count);
           this.roadRunnerService.signedOut(this.signedOut);
-          this.loadingService.resolve(this.roadRunnerLoading);
+          this.loadingService.resolve();
           this.roadRunnerService.roadRunnerData(roadRunnerData);
           console.log("roadrunner update")
           this.roadRunnerInfos = roadRunnerData;
@@ -205,7 +205,7 @@ export class RoadrunnerComponent implements OnInit {
         })
     }
     else {
-      this.loadingService.register(this.roadRunnerLoading);
+      this.loadingService.register();
       this.facultyDataContext.initCourses()
         .then((courses: Course[]) => {
           this.courses = courses;
@@ -281,7 +281,7 @@ export class RoadrunnerComponent implements OnInit {
     })
 
     this.stringAllFlights = this.flights;
-    this.loadingService.resolve(this.roadRunnerLoading);
+    this.loadingService.resolve();
 
   }
 

@@ -4,7 +4,7 @@
 
         <div fxLayout="column">
 
-            <div *ngIf="!activeInventory.isReversed">
+            <div fxLayout="row" *ngIf="!activeInventory.isReversed">
                 <div fxFlex="40" class="mat-caption">
                     {{activeInventory.adaptiveDescription}}
                 </div>
@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div *ngIf="activeInventory.isReversed">
+            <div fxLayout="row" *ngIf="activeInventory.isReversed">
                 <div fxFlex="40" class="mat-caption">
                     {{activeInventory.innovativeDescription}}
                 </div>

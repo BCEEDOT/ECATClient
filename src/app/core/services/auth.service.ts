@@ -2,16 +2,12 @@ import { Injectable } from '@angular/core';
 // import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/common/http';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Params, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from "rxjs/Operators";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { EntityState } from 'breeze-client';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
+
 
 // import { AuthUtilityService } from "./auth-utility.service";
 import { environment } from "../../../environments/environment";
@@ -51,7 +47,7 @@ export class AuthService {
     return this.http.post<ILoginResponse>(environment.api_url + 'connect/token', body,
       // awstesting
       // return this.http.post('http://ec2-34-237-207-101.compute-1.amazonaws.com/connect/token',
-      { headers: headers }).map((loginResponse: ILoginResponse) => {
+      { headers: headers }).pipe(map((loginResponse: ILoginResponse) => {
         console.log(loginResponse);
         let accessToken = loginResponse.access_token;
         let idToken = loginResponse.id_token;
@@ -63,7 +59,7 @@ export class AuthService {
 
           return false;
         }
-      });
+      }));
   }
 
   activateUser(): void {

@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Entity, EntityQuery, EntityManager, Predicate, FilterQueryOp } from "breeze-client";
 
 import { EmProviderService } from "../../core/services/em-provider.service";

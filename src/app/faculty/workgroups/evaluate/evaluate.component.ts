@@ -1,18 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common'
-import { Observable } from 'rxjs/Observable';
-import { Subscriber } from 'rxjs/Subscriber';
-import { Subject } from 'rxjs/Subject';
+import { Observable ,  Subscriber ,  Subject ,  Subscription } from 'rxjs';
+import { pluck } from "rxjs/Operators";
 import { Router, ActivatedRoute } from '@angular/router';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import 'rxjs/add/operator/pluck';
+import { MatTabChangeEvent } from "@angular/material";
 
 import { GlobalService } from ".././../../core/services/global.service";
-import { WorkGroup, CrseStudentInGroup } from "../../../core/entities/faculty";
+import { WorkGroup, CrseStudentInGroup, StratResponse } from "../../../core/entities/faculty";
 import { FacWorkgroupService } from "../../services/facworkgroup.service";
 import { MpSpStatus } from "../../../core/common/mapStrings";
 import { FacultyDataContextService } from "../../services/faculty-data-context.service";
-import { Subscription } from "rxjs/Subscription";
 
 @Component({
   templateUrl: './evaluate.component.html',
@@ -39,14 +37,14 @@ export class EvaluateComponent implements OnInit, OnDestroy {
   reopenBtnText: string = 'Return Stat';
   statusMap = MpSpStatus;
   subscriptions: Subscription[] = [];
-
   assessComplete: boolean;
   stratComplete: boolean;
   commentsComplete: boolean;
-  tabIndex: number;
+  //tabIndex: number;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private facWorkGroupService: FacWorkgroupService,
     private location: Location,
     private dialogService: TdDialogService,
@@ -55,7 +53,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
     private loadingService: TdLoadingService
   ) {
 
-    this.workGroup$ = route.data.pluck('workGroup');
+    this.workGroup$ = route.data.pipe(pluck('workGroup'));
 
     this.route.params.subscribe(params => {
       this.paramWorkGroupId = +params['wrkGrpId'];
@@ -100,7 +98,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
   }
 
   activate() {
-    this.loadingService.register();
+    //this.loadingService.register();
     //this.facWorkGroupService.readOnly(false);
     this.workGroupId = this.workGroup.workGroupId;
     this.wgName = (this.workGroup.customName) ? `${this.workGroup.defaultName} ${this.workGroup.customName}` : this.workGroup.defaultName;
@@ -173,7 +171,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
         break;
     }
     this.members = this.members.slice();
-    this.loadingService.resolve();
+    //this.loadingService.resolve();
   }
 
   canReviewCheck() {
@@ -337,7 +335,7 @@ export class EvaluateComponent implements OnInit, OnDestroy {
           this.global.showSnackBar('Group Status Updated!');
           if (this.workGroup.mpSpStatus === MpSpStatus.open) {
             this.showComments = false;
-            if (this.tabIndex === 2) { this.tabIndex = 0; }
+            //if (this.tabIndex === 2) { this.tabIndex = 0; }
           }
           this.refreshData();
         }, rejected => {
@@ -389,21 +387,13 @@ export class EvaluateComponent implements OnInit, OnDestroy {
     }
 
     this.facWorkGroupService.readOnly(false);
-    this.tabIndex = 0;
+    //this.tabIndex = 0;
 
   }
 
   back() {
-    this.members.forEach(mem => {
-      if (mem.facultyStrat){
-        if (mem.facultyStrat.entityAspect.entityState.isAdded()){
-          if (mem.facultyStrat.stratPosition === 0) {
-            mem.facultyStrat.entityAspect.rejectChanges();
-          }
-        }
-      }
-    })
 
-    this.location.back();
+    this.router.navigate(['../../'], {relativeTo: this.route});
   }
+
 }

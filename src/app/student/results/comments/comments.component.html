@@ -5,7 +5,7 @@
       <mat-expansion-panel fxFlex [expanded]="true">
         <mat-expansion-panel-header>
           <mat-icon style="padding-top: 18px; padding-right: 5px; vertical-align: middle; color: #707070">person</mat-icon>
-          <h3 matLine>
+          <h3 mat-line>
             <span class="tc-grey-800">{{comment?.authorName}}</span>
           </h3>
         </mat-expansion-panel-header>
@@ -22,8 +22,8 @@
     <div *ngFor="let comment of comments; let last = last">
       <mat-expansion-panel fxFlex [expanded]="true">
           <mat-expansion-panel-header>
-            <mat-icon style="padding-top: 15px; padding-right: 5px; vertical-align: middle; color: #707070">person</mat-icon>
-            <h3 class="mat-subheading-1">
+            <mat-icon style="padding-top: 18px; padding-right: 5px; vertical-align: middle; color: #707070">person</mat-icon>
+            <h3 mat-line>
               <span class="tc-grey-800">{{comment?.authorName}}</span>
             </h3>
           </mat-expansion-panel-header>

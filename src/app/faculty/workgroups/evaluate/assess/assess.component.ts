@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 import { MpCommentType } from '../../../../core/common/mapStrings';
 import { CrseStudentInGroup, WorkGroup } from '../../../../core/entities/faculty';
@@ -16,29 +15,37 @@ import { FacWorkgroupService } from '../../../services/facworkgroup.service';
 export class AssessComponent implements OnInit, OnDestroy {
 
   groupMembers: CrseStudentInGroup[];
+  workGroup: WorkGroup;
   readOnly: boolean = false;
   roSub: Subscription;
+  wgSub: Subscription;
 
   constructor(private spProvider: SpProviderService,
   private facWorkGroupService: FacWorkgroupService) { }
 
-  @Input() members: CrseStudentInGroup[];
-
   ngOnInit() {
     this.roSub = this.facWorkGroupService.readOnly$.subscribe(status => {
       this.readOnly = status;
+      if (this.workGroup) {
+        this.activate();
+      }
+      
+    });
+
+    this.wgSub = this.facWorkGroupService.facWorkGroup$.subscribe(workGroup => {
+      this.workGroup = workGroup;
       this.activate();
     });
-    
-    this.activate();
+  
   }
 
   ngOnDestroy() {
     this.roSub.unsubscribe();
+    this.wgSub.unsubscribe();
   }
 
   activate():void {
-    this.groupMembers = this.members;
+    this.groupMembers = this.workGroup.groupMembers as CrseStudentInGroup[];
 
     this.groupMembers.forEach(gm => {
       gm.updateStatusOfStudent();

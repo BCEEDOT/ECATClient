@@ -3,11 +3,8 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from "@angular/router";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 import { EntityAction } from 'breeze-client';
-import 'rxjs/add/operator/pluck';
-import 'rxjs/add/operator/zip';
-import 'rxjs/add/operator/takeUntil';
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
+import { pluck, takeUntil } from "rxjs/Operators";
+import { Observable ,  Subject, zip } from "rxjs";
 import { DragulaService } from "ng2-dragula";
 import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
 import { DOCUMENT } from '@angular/platform-browser';
@@ -75,8 +72,8 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
     public addDialog: MatDialog, @Inject(DOCUMENT) addDoc: any,
     public moveDialog: MatDialog, @Inject(DOCUMENT) moveDoc: any,) {
 
-    this.workGroups$ = route.data.pluck('groupSetMembers');
-    this.course$ = route.data.pluck('courseMembers');
+    this.workGroups$ = route.data.pipe(pluck('groupSetMembers'));
+    this.course$ = route.data.pipe(pluck('courseMembers'));
 
     this.route.params.subscribe(params => {
 
@@ -84,12 +81,12 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
       this.courseId = params['crsId'];
     });
 
-    dragulaService.drop.takeUntil(this.ngUnsubscribe)
+    dragulaService.drop.pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((value) => {
         this.onDrop(value.slice(1));
       });
 
-    this.lmsadminDataContext.entityChanged.takeUntil(this.ngUnsubscribe).subscribe(value => {
+    this.lmsadminDataContext.entityChanged.pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
 
       let action = value.entityAction;
 
@@ -179,7 +176,7 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     //Wait for both observables to emit a value before continuing.
-    this.workGroups$.zip(this.course$).takeUntil(this.ngUnsubscribe).subscribe(data => {
+    zip(this.workGroups$, this.course$).pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
       this.workGroups = data[0];
       this.course = data[1];
       this.activate();

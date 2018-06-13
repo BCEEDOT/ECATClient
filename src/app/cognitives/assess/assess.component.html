@@ -33,17 +33,16 @@
 
       <mat-divider></mat-divider>
 
-      <mat-card-actions *ngIf="showInstructions">
-        <div fxFlex></div>
-        <button mat-raised-button color="primary" (click)="cancelAssess();">Cancel</button>
+      <mat-card-actions *ngIf="showInstructions" fxLayoutAlign="end">
+        <button mat-stroked-button color="primary" (click)="cancelAssess();">Cancel</button>
         <button mat-raised-button color="primary" (click)="showInstructions = false">Continue Assessment</button>
 
       </mat-card-actions>
 
       <mat-card-actions fxLayout="row" *ngIf="!showInstructions">
-        <button mat-raised-button color="primary" (click)="showInstructions = true">Show Instructions</button>
+        <button mat-stroked-button color="primary" (click)="showInstructions = true">Show Instructions</button>
         <div fxFlex></div>
-        <button mat-raised-button color="primary" (click)="cancelAssess();">Cancel</button>
+        <button mat-stroked-button color="primary" (click)="cancelAssess();">Cancel</button>
         <button mat-raised-button color="primary" [disabled]="!readyToSave" (click)="saveAssess();">Complete Assessment</button>
       </mat-card-actions>
 

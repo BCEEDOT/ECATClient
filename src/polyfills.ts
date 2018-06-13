@@ -50,6 +50,8 @@ import 'core-js/es7/reflect';
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
 
+//Used to fix dragula. Angular 6 dropped the global shim
+(window as any).global = window;
 
 /***************************************************************************************************
  * Zone JS is required by Angular itself.

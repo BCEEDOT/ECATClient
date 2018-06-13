@@ -73,12 +73,12 @@
 
         <div layout-gt-xs="row" layout-margin class="button-row">
           <span style="padding-right:10px;">
-            <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+            <button mat-stroked-button color="primary" *ngIf="!(checkNew === 'New') && !clone && !signedOut" (click)="delete()">Delete</button>
           </span>
           <span style="padding-right:10px;">
-            <button mat-raised-button color="primary" [disabled]="!roadRunnerForm.valid || !leaveForm.valid || !returnForm.valid" (click)="save()">Save</button>
+            <button mat-stroked-button color="primary" (click)="cancel()">Cancel</button>
           </span>
-          <button mat-raised-button color="primary" *ngIf="!(checkNew === 'New') && !clone && !signedOut" (click)="delete()">Delete</button>
+            <button mat-raised-button color="primary" [disabled]="!roadRunnerForm.valid || !leaveForm.valid || !returnForm.valid" (click)="save()">Save</button>          
         </div>
       </form>
     </div>

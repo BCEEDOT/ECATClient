@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { RoadRunner } from '../../core/entities/user';
 import { RoadrunnerService } from '../services/roadrunner.service';

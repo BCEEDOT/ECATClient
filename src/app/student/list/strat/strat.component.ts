@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, AfterViewInit, AfterViewChecked, Output, OnDestroy } from '@angular/core';
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import 'rxjs/add/operator/debounceTime'
+
 import { Subscription } from 'rxjs';
 import { DragulaService } from "ng2-dragula";
 
@@ -39,7 +39,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
     //this.workGroupService.isLoading$.subscribe(value => this.isLoading = value);
   }
 
-  @Input() workGroup: WorkGroup;
+  //@Input() workGroup: WorkGroup;
 
   ngOnInit() {
     this.grpSub = this.workGroupService.workGroup$.subscribe(grp => {
@@ -47,7 +47,8 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       this.activate();
     });
 
-    this.activate();
+  
+
   }
 
   ngOnDestroy() {
@@ -60,11 +61,10 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   // }
 
   activate() {
+
     this.activeWorkGroup = this.workGroupService.workGroup$.getValue();
 
-    this.activeWorkGroup.groupMembers.forEach(gm => {
-      this.studentDataContext.getSingleStrat(gm.studentId, this.activeWorkGroup.workGroupId, this.activeWorkGroup.courseId);
-    });
+    this.createStratEntities();
 
     this.unstratted = this.activeWorkGroup.spStratResponses.filter(str => {
       if (str.stratPosition === 0 && !str.entityAspect.entityState.isDetached()) { return true; }
@@ -103,6 +103,9 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   }
 
   private onDrop(args) {
+
+    console.log(this.stratted);
+
     for (var i = 0; i < this.stratted.length; i++) {
       this.stratted[i].stratPosition = i + 1;
 
@@ -115,11 +118,16 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
 
     }
 
-    if (this.showUnstrat && this.unstratted.length === 0)
-    {
+    if (this.showUnstrat && this.unstratted.length === 0) {
       this.showUnstrat = false;
     }
-    
+
+  }
+
+  createStratEntities(): void {
+    this.activeWorkGroup.groupMembers.forEach(gm => {
+      this.studentDataContext.getSingleStrat(gm.studentId, this.activeWorkGroup.workGroupId, this.activeWorkGroup.courseId);
+    });
   }
 
   cancel() {
@@ -143,6 +151,7 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
           str.entityAspect.rejectChanges();
         });
 
+        this.createStratEntities();
         this.loadingService.resolve();
         this.activate();
         //this.activeWorkGroup.groupMembers.forEach(gm => {
@@ -242,7 +251,8 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
       this.activeWorkGroup.groupMembers.filter(gm => { if (gm.studentId === this.userId) { return true; } })[0].updateStatusOfPeer();
       this.loadingService.resolve();
       this.dialogService.openAlert({
-        message: 'There was an error saving your changes, please try again.'
+        message: error,
+        title: 'Save Error'
       })
     })
 

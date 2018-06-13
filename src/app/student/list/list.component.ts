@@ -1,15 +1,16 @@
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, Observable } from 'rxjs';
 import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
-import 'rxjs/add/operator/pluck';
+import { MatTabChangeEvent } from "@angular/material";
+
 import { TdLoadingService, TdDialogService } from '@covalent/core';
 
-import { Course, WorkGroup, CrseStudentInGroup, SpInstrument } from '../../core/entities/student';
+import { Course, WorkGroup, CrseStudentInGroup, SpInstrument, StratResponse } from '../../core/entities/student';
 import { WorkGroupService } from '../services/workgroup.service';
 import { GlobalService } from '../../core/services/global.service';
 import { StudentDataContext } from '../services/student-data-context.service';
 import { MpSpStatus } from '../../core/common/mapStrings';
+import { Entity } from 'breeze-client';
 
 @Component({
   selector: 'app-list',
@@ -49,6 +50,16 @@ export class ListComponent implements OnInit, OnDestroy {
 
     });
 
+
+  }
+
+  ngOnInit(): void {
+    console.log('It is in the ngONInit in list view of component');
+    this.subs.push(this.workGroupService.workGroup$.subscribe((workGroup: WorkGroup) => {
+      this.activeWorkGroup = workGroup;
+      this.activate();
+    }));
+
     this.subs.push(this.workGroupService.isLoading$.subscribe((value: boolean) => {
       this.isLoading = value;
     }));
@@ -65,21 +76,15 @@ export class ListComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit(): void {
-    this.subs.push(this.workGroupService.workGroup$.subscribe((workGroup: WorkGroup) => {
-      this.activeWorkGroup = workGroup;
-      this.activate();
-    }));
-
-  }
-
   ngOnDestroy(): void {
+    console.log('It is in the ngONdestroy');
     this.subs.forEach((sub: Subscription) => {
       sub.unsubscribe();
     });
   }
 
   activate(force?: boolean): void {
+
     this.workGroupService.onListView(true);
     this.activeTab = 0;
 
@@ -127,5 +132,20 @@ export class ListComponent implements OnInit, OnDestroy {
     this.change++;
 
   }
+
+  saveIAgree(): void {
+    this.user.hasAcknowledged = true;
+    this.studentDataContext.commit().then(() => {
+      this.global.showSnackBar('Acknowledgement Saved!');
+    }).catch((error) => this.global.showSnackBar('Error Saving Acknowledgement, please try again'));
+
+  }
+
+  changes(): void {
+    console.log(this.studentDataContext.getChanges());
+  }
+
+
+  
 
 }

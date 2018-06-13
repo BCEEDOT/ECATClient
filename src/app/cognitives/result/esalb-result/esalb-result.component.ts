@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router";
-import { isEmpty } from "lodash"
-import { Subscription } from "rxjs/Subscription";
+import { isEmpty } from "lodash-es"
+import { Subscription } from "rxjs";
 
 import { CogEsalbResult } from "../../../core/entities/user";
 import { CogResultsService } from "../../services/cog-results.service";

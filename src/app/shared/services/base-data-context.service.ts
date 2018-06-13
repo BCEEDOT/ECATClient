@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { EntityManager, Entity, EntityQuery, FetchStrategy, SaveOptions, EntityChangedEventArgs } from 'breeze-client';
-import { Subject } from 'rxjs/Subject';
+import { EntityManager, Entity, EntityQuery, FetchStrategy, SaveOptions, EntityChangedEventArgs, EntityError } from 'breeze-client';
+import { Subject } from 'rxjs';
 
+import { MpEntityError } from "../../core/common/mapStrings";
 import { EmProviderService } from '../../core/services/em-provider.service';
 import { DataContext } from '../../app-constants';
 
@@ -73,12 +74,11 @@ export class BaseDataContext {
             .then((saveResult) => {
                 return saveResult.entities;
             }).catch((errors) => {
-                console.log("errors from the commit");
                 console.log(errors);
-                if (errors.status == 401) {
-                    console.log('You have been logged out due to time. Please go in again');
-                }
-                throw errors;
+                console.log(errors.entityErrors);
+                let message = this.processSaveErrors(errors);
+
+                throw message;
             });
     }
 
@@ -89,20 +89,41 @@ export class BaseDataContext {
         //return <any>this.manager.saveChanges(null, saveOptions)
         return <any>this.manager.saveChanges()
             .then((saveResult) => {
-                // UnitOfWork.savedOrRejectedSubject.next({
-                //     entities: saveResult.entities,
-                //     rejected: false
-                // });
-
                 return saveResult.entities;
             }).catch((errors) => {
-                console.log("errors from the commit");
+                
                 console.log(errors);
-                if (errors.status == 401) {
-                    console.log('You have been logged out due to time. Please go in again');
-                }
-                throw errors;
+                console.log(errors.entityErrors);
+                let message = this.processSaveErrors(errors);
+
+                throw message;
             });
+    }
+
+    processSaveErrors(errors): string {
+
+        const entityErrors = errors.entityErrors;
+
+        if (errors.status === 401) {
+            return "You have meen logged out due to time. Please login and try";
+        }
+        const monitorErrors = entityErrors
+            .filter(error => error.errorName === MpEntityError.crseNotOpen || error.errorName === MpEntityError.wgNotOpen);
+
+        if (monitorErrors.length > 0) {
+            monitorErrors.forEach(error => error.entity.entityAspect.rejectChanges());
+        }
+
+        if (monitorErrors.some(error => error.errorName === MpEntityError.crseNotOpen)) {
+            return 'The Course is currently closed for Review, please refresh the screen';
+        }
+
+        if (monitorErrors.some(error => error.errorName === MpEntityError.wgNotOpen)) {
+            return 'The Group is currently Under Review, please refresh the screen';
+        }
+
+        return 'An unexpected error occured, your changes were not saved. Please try again.';
+
     }
 
     rollback(): void {

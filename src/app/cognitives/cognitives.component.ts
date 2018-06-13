@@ -3,9 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TdLoadingService, TdDialogService, TdMediaService } from '@covalent/core';
 import { QueryResult } from 'breeze-client';
-import { Observable } from 'rxjs/Observable';
-
-import 'rxjs/add/operator/pluck';
+import { Observable } from 'rxjs';
+import { pluck } from "rxjs/Operators";
 
 import { CogEcmspeResult, CogEcpeResult, CogEsalbResult, CogEtmpreResult, CogInstrument } from "../core/entities/user";
 import { GlobalService } from "../core/services/global.service";
@@ -49,7 +48,7 @@ export class CognitivesComponent implements OnInit {
         private global: GlobalService,
         private cogResultsService: CogResultsService) {
 
-        this.cogResults$ = route.data.pluck('results');
+        this.cogResults$ = route.data.pipe(pluck('results'));
 
     }
 

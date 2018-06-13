@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { TdDialogService } from '@covalent/core';
-import { isEmpty } from 'lodash';
-import { Subscription } from 'rxjs/Subscription';
+import { isEmpty } from 'lodash-es';
+import { Subscription } from 'rxjs';
 import { ReactiveFormsModule, FormsModule, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { GlobalService } from "../../core/services/global.service";

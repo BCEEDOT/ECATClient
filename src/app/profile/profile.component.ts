@@ -106,19 +106,19 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   saveProfile() {
-    this.loadingService.register(this.profileLoading);
+    this.loadingService.register();
     if (this.user.mpAffiliation !== MpAffiliation.unk && this.user.mpComponent !== MpComponent.unk && this.user.mpGender !== MpGender.unk && this.user.mpPaygrade !== MpPaygrade.unk) {
       this.user.registrationComplete = true;
     }
 
     this.userDataContext.commit()
       .then((res) => {
-        this.loadingService.resolve(this.profileLoading);
+        this.loadingService.resolve();
         this.global.showSnackBar('Profile Updated');
         this.isEditing = false;
       })
       .catch((error) => {
-        this.loadingService.resolve(this.profileLoading);
+        this.loadingService.resolve();
         this.dialogService.openAlert({
           message: 'There was an error updating your profile. Please try again.',
           title: 'Error',

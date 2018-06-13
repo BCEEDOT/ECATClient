@@ -105,13 +105,12 @@
           <div fxFlex="37" fxFlex.xs="25"></div>
           <!-- <button mat-raised-button color="primary" [disabled]="activeInventory.id===inventories[inventories.length - 1].id" (click)="nextInv()">Next</button> -->
         </div>
-        <mat-divider class="pad-top-md"></mat-divider>
 
         <div fxLayout="row">
           <div fxFlex></div>
           <div fxShow fxHide.xs>
             <button mat-raised-button color="primary" *ngIf="viewOnly" (click)="cancel()">Exit</button>
-            <button mat-raised-button color="primary" *ngIf="!viewOnly" (click)="cancel()">Cancel</button>
+            <button mat-stroked-button color="primary" *ngIf="!viewOnly" (click)="cancel()">Cancel</button>
             <button mat-raised-button color="primary" *ngIf="!viewOnly" [disabled]="!canSave" (click)="save()">Save</button>
           </div>
           <div fxHide fxShow.xs>

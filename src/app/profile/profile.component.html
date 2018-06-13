@@ -21,7 +21,7 @@
                 <h4 matLine>{{prettyName}}</h4>
                 <p matLine>Name</p>
               </mat-list-item>
-              <mat-divider mat-inset></mat-divider>
+              <mat-divider [inset]="true"></mat-divider>
               <mat-list-item>
                 <mat-icon matListAvatar>description</mat-icon>
                 <h4 matLine>{{user?.email}}</h4>
@@ -35,19 +35,19 @@
                   <h4 matLine>{{user?.mpGender}}</h4>
                   <p matLine>Gender</p>
                 </mat-list-item>
-                <mat-divider mat-inset></mat-divider>
+                <mat-divider [inset]="true"></mat-divider>
                 <mat-list-item>
                   <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpAffiliation}}</h4>
                   <p matLine>Affiliation</p>
                 </mat-list-item>
-                <mat-divider mat-inset></mat-divider>
+                <mat-divider [inset]="true"></mat-divider>
                 <mat-list-item>
                   <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpComponent}}</h4>
                   <p matLine>Military Component</p>
                 </mat-list-item>
-                <mat-divider mat-inset></mat-divider>
+                <mat-divider [inset]="true"></mat-divider>
                 <mat-list-item>
                   <mat-icon matListAvatar>description</mat-icon>
                   <h4 matLine>{{user?.mpPaygrade}}</h4>
@@ -130,7 +130,7 @@
 
 
                     <div fxFlex></div>
-                    <button mat-raised-button color="primary" type="button" class="text-upper" (click)="cancelSave();">Cancel</button>
+                    <button mat-stroked-button color="primary" type="button" class="text-upper" (click)="cancelSave();">Cancel</button>
                     <span class="pad-right-xs"></span>
                     <button mat-raised-button color="primary" type="button" [disabled]="profileForm.pristine || !profileForm.valid" (click)="saveProfile()"
                       class="text-upper">Save</button>
@@ -142,8 +142,7 @@
             </mat-list>
             <div *ngIf="!isEditing">
               <mat-divider></mat-divider>
-              <mat-card-actions>
-                <div fxFlex></div>
+              <mat-card-actions fxLayoutAlign="end">
                 <button mat-raised-button color="primary" (click)="editProfile()" type="button" mat-button color="primary" class="text-upper">Edit</button>
               </mat-card-actions>
             </div>
