@@ -2,17 +2,15 @@
   <mat-card>
     <mat-card-title>
       <div fxLayout="row">
-        <div fxFlex>
+        <div fxFlex="20">
           <button mat-raised-button color="primary" mat-raised-button (click)="back()">
             <!--mat-icon class="tc-white-700">arrow_back</mat-icon-->Back
           </button>
         </div>
-
         <div fxFlex="grow" class="text-center">
-          {{workGroup?.mpCategory}} - {{workGroup?.defaultName}} ({{workGroup?.customName}})
+          {{workGroup?.mpCategory}} - {{workGroup?.defaultName}} <span *ngIf="workGroup?.customName"> ({{workGroup?.customName}})</span> 
         </div>
-        <div fxFlex></div>
-        <div></div>
+        <div fxFlex="20"></div>
       </div>
     </mat-card-title>
 

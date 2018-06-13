@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-title fxLayout="row">
       <button mat-raised-button color="primary" (click)="back()">Back</button>
-      <span fxFlex="grow" class="text-center">BC{{workGroup.groupNumber}} - {{wgName}} Status</span>
+      <span fxFlex="grow" class="text-center">{{workGroup.mpCategory}} - {{wgName}} Status</span>
       <span fxFlex></span>
       <button mat-raised-button (click)="this.reviewFlight()" [ngClass]="canReview ? 'can-review' : 'no-review'" *ngIf="workGroup.mpSpStatus !== statusMap.created && workGroup.mpSpStatus !== statusMap.published">Review</button>
       <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
