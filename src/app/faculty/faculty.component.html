@@ -9,7 +9,7 @@
     </a>
   </div>
   <div class="width pad-bottom-sm">
-    <div align="end" class="pad-right-md pad-top-sm" *ngIf="onListView$ | async">
+    <div fxLayoutAlign="end" class="pad-right-md pad-top-sm" *ngIf="onListView$ | async">
       <button mat-button [matMenuTriggerFor]="posXMenu" class="pad-top-xs" style="font-size: 16px;">
         {{activeCourse?.displayName}}
         <mat-icon class="mat-24">expand_more</mat-icon>
