@@ -27,7 +27,7 @@
           <span fxFlex="20" class="text-center">
           <ngx-charts-bar-horizontal-stacked
             [view]="[150, 50]"
-            [scheme]="chartColors"
+            [scheme]="student.statusOfStudent.gaveBreakoutChartDataColors"
             [results]="student.statusOfStudent.gaveBreakOutChartData"
             [showGridLines]="false"
             *ngIf="student.hasChartData">

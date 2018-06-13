@@ -15,7 +15,7 @@
       <span fxFlex="20" class="text-center">
           <ngx-charts-bar-horizontal-stacked
             [view]="[150, 50]"
-            [scheme]="chartColors"
+            [scheme]="memberResult?.statusOfStudent?.gaveBreakoutChartDataColors"
             [results]="memberResult?.statusOfStudent?.gaveBreakOutChartData"
             [showGridLines]="false">
           </ngx-charts-bar-horizontal-stacked>
@@ -23,7 +23,7 @@
       <span fxFlex="20" class="text-center">
           <ngx-charts-bar-horizontal-stacked
             [view]="[150, 50]"
-            [scheme]="chartColors"
+            [scheme]="memberResult?.resultForStudent?.breakOutReceivedChartDataColors"
             [results]="memberResult?.resultForStudent?.breakOutReceivedChartData"
             [showGridLines]="false">
           </ngx-charts-bar-horizontal-stacked>
