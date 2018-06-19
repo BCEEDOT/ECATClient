@@ -21,6 +21,7 @@ import { EditGroupDialogComponent } from './group-sets/manage-groupset/edit-grou
 import { AddGroupDialogComponent } from './group-sets/manage-groupset/add-group-dialog/add-group-dialog.component';
 import { PollLmsDialog } from './group-sets/poll-lms-dialog/poll-lms-dialog.component';
 import { PublishGroupsetComponent } from './group-sets/publish-groupset/publish-groupset.component';
+import { LmsadminSavechangesguardService } from "./services/lmsadmin-savechangesguard.service";
 import { MoveStudentDialogComponent } from './group-sets/manage-groupset/move-student-dialog/move-student-dialog.component';
 
 @NgModule({
@@ -47,6 +48,7 @@ import { MoveStudentDialogComponent } from './group-sets/manage-groupset/move-st
     LmsadminAuthGuardService,
     LmsadminDataContextService,
     LmsadminWorkgroupService,
+    LmsadminSavechangesguardService
   ],
   entryComponents: [
     EditGroupDialogComponent,

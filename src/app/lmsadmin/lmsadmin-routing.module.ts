@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes, ActivatedRouteSnapshot } from '@angular/router';
 
 import { LmsadminAuthGuardService } from './services/lmsadmin-auth-guard.service';
+import { LmsadminSavechangesguardService } from "./services/lmsadmin-savechangesguard.service";
 import { LmsadminDataContextService } from './services/lmsadmin-data-context.service';
 import { CoursesComponent } from './courses/courses.component';
 import { GroupSetsComponent } from './group-sets/group-sets.component';
@@ -43,8 +44,8 @@ const lmsadminRoutes: Routes = [
       {
         path: 'courses/:crsId/groupsets/:catId/manage',
         component: ManageGroupsetComponent,
-        resolve: { groupSetMembers: 'isaGroupSetMembersResolver', courseMembers: 'isaCourseMembersResolver' }
-
+        resolve: { groupSetMembers: 'isaGroupSetMembersResolver', courseMembers: 'isaCourseMembersResolver' },
+        canDeactivate: [LmsadminSavechangesguardService]
       },
       {
         path: 'courses/:crsId/groupsets/:catId/config',

@@ -2,28 +2,37 @@
   <mat-card class="width">
     <mat-card-title class="text-center">Configure Group Creation for {{currentModel?.mpWgCategory}} - {{currentModel?.name}}</mat-card-title>
     <mat-card-content>
-      <div *ngIf="!finalFlight">
-        <mat-checkbox [(ngModel)]="reuseFlights" (click)="reuseCheck()"><h4>Use Flights from {{previousModel?.mpWgCategory}} {{previousModel?.name}}</h4></mat-checkbox>
+      <div *ngIf="!finalFlight" fxLayout="column">
+        <mat-checkbox [(ngModel)]="reuseFlights" (click)="reuseCheck()">
+          <h4>Use Flights from {{previousModel?.mpWgCategory}} {{previousModel?.name}}</h4>
+        </mat-checkbox>
         <div *ngIf="reuseFlights" class="pad-left-sm pad-bottom-sm">
           <mat-checkbox [(ngModel)]="keepNames">Apply Previous Flight Nicknames</mat-checkbox>
           <br/>
           <mat-checkbox [(ngModel)]="keepSizes">Maintain Previous Flight Sizes</mat-checkbox>
-            <div class="pad-left-sm pad-top-sm" *ngIf="!keepSizes">
-              <mat-form-field>
-                <input matInput #maxSizeInput="ngModel" placeholder="Max Flight Size" [(ngModel)]="maxSize" name="maxSize" max="20" min="2" tdAutoTrim [disabled]="keepSizes"/>
-              </mat-form-field>
-            </div>
+          <div class="pad-left-sm pad-top-sm" *ngIf="!keepSizes">
+            <mat-form-field>
+              <input matInput #maxSizeInput="ngModel" placeholder="Max Flight Size" [(ngModel)]="maxSize" name="maxSize" max="20" min="2"
+                tdAutoTrim [disabled]="keepSizes" />
+            </mat-form-field>
+          </div>
         </div>
-        <mat-divider></mat-divider>
-        <mat-checkbox [(ngModel)]="newFlights" (click)="newCheck()"><h4>Create New Flights</h4></mat-checkbox>
+        <div>
+          <mat-divider></mat-divider>
+        </div>
+        <mat-checkbox [(ngModel)]="newFlights" (click)="newCheck()">
+          <h4>Create New Flights</h4>
+        </mat-checkbox>
         <div *ngIf="newFlights" class="pad-left-sm">
           <div class="pad-left-sm pad-top-sm">
             <mat-form-field>
-              <input matInput #newNumFlights="ngModel" placeholder="Number of Flights" [(ngModel)]="numFlights" name="numFlights" max="100" min="2" tdAutoTrim/>
+              <input matInput #newNumFlights="ngModel" placeholder="Number of Flights" [(ngModel)]="numFlights" name="numFlights" max="100"
+                min="2" tdAutoTrim/>
             </mat-form-field>
             <br/>
             <mat-form-field class="pad-top-sm">
-              <input matInput #newMaxSizeInput="ngModel" placeholder="Max Flight Size" [(ngModel)]="maxSize" name="newMaxSize" max="20" min="2" tdAutoTrim/>
+              <input matInput #newMaxSizeInput="ngModel" placeholder="Max Flight Size" [(ngModel)]="maxSize" name="newMaxSize" max="20"
+                min="2" tdAutoTrim/>
             </mat-form-field>
           </div>
         </div>
@@ -33,11 +42,11 @@
         <p>Flights, sizes, and memberships for this category will be copied from {{previousModel?.mpWgCategory}} {{previousModel?.name}}.</p>
       </div>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions fxLayoutAlign="end">
       <span fxFlex></span>
-      <button mat-raised-button color="primary" [routerLink]="['../..']">Cancel</button>
-      <button mat-raised-button color="primary" *ngIf="!finalFlight" (click)="this.scatter()" >Scatter</button>
-      <button mat-raised-button color="primary" *ngIf="finalFlight" (click)="this.scatter()" >Create</button>
+      <button mat-stroked-button color="primary" [routerLink]="['../..']">Cancel</button>
+      <button mat-raised-button color="primary" *ngIf="!finalFlight" (click)="this.scatter()">Scatter</button>
+      <button mat-raised-button color="primary" *ngIf="finalFlight" (click)="this.scatter()">Create</button>
     </mat-card-actions>
   </mat-card>
 </div>
