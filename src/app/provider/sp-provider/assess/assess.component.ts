@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TdLoadingService, TdDialogService } from '@covalent/core';
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { pluck } from "rxjs/Operators";
 
 import { StudentDataContext } from "../../../student/services/student-data-context.service";
@@ -21,6 +21,7 @@ import { GlobalService } from "../../../core/services/global.service";
 export class AssessComponent implements OnInit {
   inventories: Array<IStudSpInventory | IFacSpInventory>;
   inventories$: Observable<Array<IStudSpInventory | IFacSpInventory>>;
+  inventoriesSub: Subscription;
   isStudent: boolean;
   isSelf: boolean;
   perspective: string;
@@ -50,16 +51,15 @@ export class AssessComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inventories$.subscribe(invs => {
+   this.inventoriesSub = this.inventories$.subscribe(invs => {
       this.inventories = invs;
-      console.log(this.inventories);
       this.activate();
     }); 
 
   }
 
   activate(): void {
-    //console.log(this.studentDataContext.getChanges());
+
     this.inventories.sort((a, b) => {
       if (a.displayOrder < b.displayOrder) { return -1; }
       if (a.displayOrder > b.displayOrder) { return 1; }
@@ -67,7 +67,6 @@ export class AssessComponent implements OnInit {
     });
 
     this.isStudent = this.global.persona.value.isStudent;
-    console.log(this.inventories);
     this.isSelf = this.inventories[0].responseForAssessee.assessee.studentProfile.person.personId === this.global.persona.value.person.personId;
 
     if (this.isStudent) {
@@ -136,9 +135,9 @@ export class AssessComponent implements OnInit {
 
   cancel() {
 
-    if (!this.inventories.some(inv => inv.behaviorEffect !== null || inv.behaviorFreq !== null)) {
+     if (!this.inventories.some(inv => inv.behaviorEffect !== null || inv.behaviorFreq !== null)) {
       this.inventories.forEach(inv => inv.rejectChanges());
-      this.location.back();
+      this.router.navigate(['../../main'], { relativeTo: this.route });
     }
 
 
@@ -151,17 +150,13 @@ export class AssessComponent implements OnInit {
       }).afterClosed().subscribe((confirmed: boolean) => {
         if (confirmed) {
           this.inventories.forEach(inv => inv.rejectChanges());
-          this.location.back();
+          this.router.navigate(['../../main'], { relativeTo: this.route });
+          // this.location.back();
         }
       });
     } else {
-      console.log('')
-      console.log(this.inventories);
-      this.inventories.forEach(inv => {
-        console.log(inv);
-      });
-      console.log(this.location);
-      this.location.back();
+      this.router.navigate(['../../main'], { relativeTo: this.route });
+      // this.location.back();
     }
   }
 
@@ -178,9 +173,10 @@ export class AssessComponent implements OnInit {
     if (this.isStudent) {
       this.studentDataContext.commit()
         .then(result => {
+    
+          this.global.showSnackBar('Success, Assessment Saved!');
+          this.router.navigate(['../../main'], { relativeTo: this.route });
           this.loadingService.resolve();
-          this.global.showSnackBar('Success, Asessment Saved!');
-          this.location.back();
         })
         .catch(error => {
           this.loadingService.resolve();
@@ -192,9 +188,9 @@ export class AssessComponent implements OnInit {
     } else {
       this.facultyDataContext.commit()
         .then(result => {
+          this.global.showSnackBar('Success, Assessment Saved!');
+          this.router.navigate(['../../main'], { relativeTo: this.route });
           this.loadingService.resolve();
-          this.global.showSnackBar('Success, Asessment Saved!');
-          this.location.back();
         })
         .catch(error => {
           this.loadingService.resolve();
