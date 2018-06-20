@@ -54,7 +54,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:50000', 'ec2-34-237-207-101.compute-1.amazonaws.com'],
+        whitelistedDomains: ['localhost:50000', 'augateway.maxwell.af.mil'],
         throwNoTokenError: false,
         skipWhenExpired: true,
       },

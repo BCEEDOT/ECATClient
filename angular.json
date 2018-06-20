@@ -36,7 +36,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "baseHref": "/",
+              "baseHref": "/ecat2/app/",
               "showCircularDependencies": true,
               "statsJson": true,
               "extractCss": true,
