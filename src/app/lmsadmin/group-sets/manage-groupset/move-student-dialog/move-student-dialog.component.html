@@ -18,10 +18,13 @@
       </div>
     </mat-list-item>
     <mat-list-item>
-      <button mat-raised-button (click)="unassign = !unassign" [ngClass]="{'btn-selected': unassign===true}" [disabled]="fromUnassigned">
-        Set Unassigned
-      </button>
+      <div class="pad-left-xs">
+        <button mat-raised-button (click)="unassign = !unassign" [ngClass]="{'btn-selected': unassign===true}" [disabled]="fromUnassigned">
+          Set Unassigned
+        </button>
+      </div>
     </mat-list-item>
+
   </div>
 </mat-list>
 <mat-card-actions class="pad-top-sm pad-bottom-none pull-bottom-none" fxLayoutAlign="end">
