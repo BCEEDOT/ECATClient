@@ -80,7 +80,7 @@ export class BaseDataContext {
     return this.manager.getChanges();
   }
 
-  namedCommit(selectedEntities: Entity[]) {
+  namedCommit(selectedEntities: Entity[]): Promise<any> {
     return <any>this.manager
       .saveChanges(selectedEntities)
       .then(saveResult => {
