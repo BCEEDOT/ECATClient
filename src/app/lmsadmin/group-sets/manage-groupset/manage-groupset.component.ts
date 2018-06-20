@@ -363,7 +363,7 @@ export class ManageGroupsetComponent implements OnInit, OnDestroy {
       disableClose: true,
       hasBackdrop: true,
       backdropClass: '',
-      width: '325px',
+      width: '450px',
       height: '',
       position: {
         top: '',

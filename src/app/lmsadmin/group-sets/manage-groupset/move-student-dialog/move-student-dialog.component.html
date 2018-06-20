@@ -1,31 +1,30 @@
 <mat-card-title>Move {{student.rankName}}</mat-card-title>
-<mat-list>
+<mat-divider></mat-divider>
+<mat-list class="pad-bottom-md" fxLayout="column" fxLayoutAlign="center center">
   <mat-list-item>
-    <mat-icon mat-list-avatar>description</mat-icon>
     <div class="pad-left-sm">
-      <p *ngIf="!fromUnassigned">From: Flight {{fromNum}}</p>
-      <p *ngIf="fromUnassigned">From: Unassigned</p>
+      <h5 class="mat-subheading-1" *ngIf="!fromUnassigned">From: Flight {{fromNum}}</h5>
+      <h5 *ngIf="fromUnassigned">From: Unassigned</h5>
     </div>
   </mat-list-item>
-  <mat-list-item>
-    <mat-icon mat-list-avatar>description</mat-icon>
-    <div class="pad-left-sm">
-      <mat-select placeholder="To Flight:" [disabled]="unassign === true" [(ngModel)]="selFlight">
-        <mat-option *ngFor="let flight of flightNums" [value]="flight">{{ flight }}</mat-option>
-      </mat-select>
-    </div>
-  </mat-list-item>
-  <mat-list-item>
-    <div class="pad-left-md">
-      <button mat-raised-button (click)="unassign = !unassign" [ngClass]="{'btn-selected': unassign===true}" [disabled]="fromUnassigned"> 
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-list-item>
+      <div class="pad-left-sm">
+        <mat-form-field>
+          <mat-select placeholder="To Flight:" [disabled]="unassign === true" [(ngModel)]="selFlight">
+            <mat-option *ngFor="let flight of flightNums" [value]="flight">{{ flight }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-raised-button (click)="unassign = !unassign" [ngClass]="{'btn-selected': unassign===true}" [disabled]="fromUnassigned">
         Set Unassigned
       </button>
-    </div>
-  </mat-list-item>
-</mat-list>
-<mat-card-actions class="pad-top-sm pad-bottom-none pull-bottom-none">
-  <div class="pad-left-md" fxLayout="row" fxLayoutAlign="start center">
-    <button mat-raised-button color="primary" type="button" (click)="ok()" class="text-upper" [disabled]="selFlight === '' && unassign === false">Ok</button>
-    <button mat-raised-button color="primary" type="button" class="text-upper" (click)="close();">Cancel</button>
+    </mat-list-item>
   </div>
+</mat-list>
+<mat-card-actions class="pad-top-sm pad-bottom-none pull-bottom-none" fxLayoutAlign="end">
+  <button mat-stroked-button color="primary" type="button" class="text-upper" (click)="close();">Cancel</button>
+  <button mat-raised-button color="primary" type="button" (click)="ok()" class="text-upper" [disabled]="selFlight === '' && unassign === false">Ok</button>
 </mat-card-actions>

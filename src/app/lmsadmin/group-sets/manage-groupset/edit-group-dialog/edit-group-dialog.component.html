@@ -1,16 +1,17 @@
 <mat-card-title>Edit Flight</mat-card-title>
-<mat-list>
+<mat-divider></mat-divider>
+<mat-list class="pad-top-md" fxLayoutAlign="center center">
   <form [formGroup]="editGroupForm" (ngSubmit)="ok()">
     <mat-list-item class="pull-left-md">
-      <mat-icon mat-list-avatar>description</mat-icon>
       <div class="pad-left-sm">
-        <mat-select required selected="workGroup.groupNumber" formControlName="groupNumber" placeholder="Flight Number">
-          <mat-option *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
-        </mat-select>
+        <mat-form-field>
+          <mat-select required selected="workGroup.groupNumber" formControlName="groupNumber" placeholder="Flight Number">
+            <mat-option *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </mat-list-item>
-    <mat-list-item class="pull-left-md">
-      <mat-icon mat-list-avatar>description</mat-icon>
+    <mat-list-item class="pull-left-md pad-top-sm">
       <mat-form-field class="pad-left-sm">
         <input matInput placeholder="Nickname" id="customName" [value]="workGroup.customName" type="text" formControlName="customName"
         />
@@ -18,11 +19,9 @@
     </mat-list-item>
   </form>
 </mat-list>
-<mat-card-actions class="pad-top-sm pad-bottom-none pull-left-sm pull-bottom-none">
-  <div class="pad-left-sm" fxLayout="row" fxLayoutAlign="start center">
-    <button *ngIf="canDelete" mat-stroked-button color="primary" type="button" class="text-upper" (click)="delete()">Delete</button>    
+<mat-list>
+<mat-card-actions class="pad-top-md pull-bottom-none pad-right-sm" fxLayoutAlign="end" fxLayoutGap="2px">
+    <button *ngIf="canDelete" mat-stroked-button color="primary" type="button" class="text-upper" (click)="delete()">Delete</button>
     <button mat-stroked-button color="primary" type="button" class="text-upper" (click)="close();">Cancel</button>
     <button mat-raised-button color="primary" type="button" [disabled]="isDisabled()" (click)="ok()" class="text-upper">Ok</button>
-
-  </div>
 </mat-card-actions>
