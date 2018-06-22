@@ -2,12 +2,6 @@
     <button mat-icon-button td-menu-button tdLayoutToggle>
         <mat-icon>menu</mat-icon>
     </button>
-    <div td-toolbar-content fxLayout="row" fxLayoutAlign="center center" fxFlex>
-        <span fxFlex></span>
-        <a mat-icon-button matTooltip="Profile" routerLink="/profile">
-            <mat-icon>account_circle</mat-icon>
-        </a>
-    </div>
     <td-layout-card-over cardTitle="Welcome" cardWidth="75">
         <mat-card-content>
             <h2 class="tc-red-800 mat-title">Notice - Message From Admin</h2>
@@ -16,7 +10,13 @@
                 or Microsoft Edge (formerly IE) or ask your Instructor for assistance.</p>
         </mat-card-content>
     </td-layout-card-over>
-    <td-layout-footer>
-        Barnes Center for Enlisted Education
+    <td-layout-footer fxLayout="row">
+        <div>
+            Barnes Center for Enlisted Education
+        </div>
+        <div fxFlex></div>
+        <div fxFlexAlign="end" class="version">
+            v2.0Alpha1.2
+        </div>
     </td-layout-footer>
 </td-layout-nav>

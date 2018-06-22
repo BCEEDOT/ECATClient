@@ -2,24 +2,8 @@
   <button mat-icon-button td-menu-button tdLayoutToggle>
     <mat-icon>menu</mat-icon>
   </button>
-  <div td-toolbar-content fxLayout="row" fxLayoutAlign="center center" fxFlex>
-    <span fxFlex></span>
-    <a mat-icon-button matTooltip="Profile" routerLink="/profile">
-      <mat-icon>account_circle</mat-icon>
-    </a>
-  </div>
   <div class="width">
     <div align="end" class="pad-right-md pad-top-sm">
-      <!--<button mat-button [matMenuTriggerFor]="posXMenu" class="mat-subheading-1">
-        {{activeCourse?.displayName}}
-        <mat-icon class="mat-24">expand_more</mat-icon>
-      </button>-->
-      <!--<mat-menu x-position="before" #posXMenu="matMenu" class="before">
-        <button *ngFor="let course of courses" mat-menu-item (click)="setActiveCourse(course, false)">
-          {{course.displayName}}
-        </button>
-      </mat-menu>-->
-      <!-- <button mat-icon-button><mat-icon class="mat-24">autorenew</mat-icon></button> -->
     </div>
   </div>
   <router-outlet></router-outlet>

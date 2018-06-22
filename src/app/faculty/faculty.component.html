@@ -2,12 +2,6 @@
   <button mat-icon-button td-menu-button tdLayoutToggle>
     <mat-icon>menu</mat-icon>
   </button>
-  <div td-toolbar-content fxLayout="row" fxLayoutAlign="center center" fxFlex>
-    <span fxFlex></span>
-    <a mat-icon-button matTooltip="Profile" routerLink="/profile">
-      <mat-icon>account_circle</mat-icon>
-    </a>
-  </div>
   <div class="width pad-bottom-sm">
     <div fxLayoutAlign="end" class="pad-right-md pad-top-sm" *ngIf="onListView$ | async">
       <button mat-button [matMenuTriggerFor]="posXMenu" class="pad-top-xs" style="font-size: 16px;">
