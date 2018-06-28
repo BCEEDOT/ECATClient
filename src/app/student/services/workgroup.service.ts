@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Course, WorkGroup } from '../../core/entities/student';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class WorkGroupService {
@@ -10,6 +10,7 @@ export class WorkGroupService {
     assessComplete$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     stratComplete$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     onListView$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    stratTabActive$: BehaviorSubject<boolean> = new BehaviorSubject(false); 
 
     workGroup(workGroup: WorkGroup): void {
         this.workGroup$.next(workGroup);
@@ -29,6 +30,10 @@ export class WorkGroupService {
 
     onListView(onListView: boolean): void {
         this.onListView$.next(onListView);
+    }
+
+    stratTabActive(stratTabActive: boolean): void {
+        this.stratTabActive$.next(stratTabActive);
     }
 
 }

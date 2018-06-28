@@ -3,7 +3,7 @@ import {
   EntityManager, NamingConvention, DataService, DataType, MetadataStore,
   EntityType, NavigationProperty, DataProperty, EntityQuery, DataServiceOptions, config, promises, ValidationOptionsConfiguration, ValidationOptions
 } from 'breeze-client';
-import { includes, remove } from "lodash";
+import { includes, remove } from "lodash-es";
 // import { AuthHttp } from 'angular2-jwt';
 // import { AjaxAngularAdapter } from "breeze-bridge-angular";
 
@@ -93,6 +93,7 @@ export class EmProviderService {
           })
           .catch(e => {
             //If there is an error reset
+            console.log(emStatus.manager);
             emStatus.promise = null;
             console.log("Error retrieving metadata");
             console.log(`error from prepare em----- ${e}`)

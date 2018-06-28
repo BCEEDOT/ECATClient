@@ -99,6 +99,14 @@ export class CrseStudentInGroup extends EntityBase {
         return (!p) ? 'Unk' : `${_salutation} ${this.studentProfile.person.lastName}, ${this.studentProfile.person.firstName}`;
     }
 
+    get prettyName(): string {
+        const p = (this.studentProfile) ? this.studentProfile : null;
+
+        if (p) {
+            return (!p) ? 'Unk' : `${this.studentProfile.person.lastName}, ${this.studentProfile.person.firstName}`;
+        }
+    }
+
     get statusOfPeer(): any {
         if (!this.workGroup) {
             return null;
@@ -412,6 +420,7 @@ export class CrseStudentInGroup extends EntityBase {
                         gaveCummScore += 6;
                         break;
                     default:
+
                         break;
                 }
             });
@@ -431,15 +440,28 @@ export class CrseStudentInGroup extends EntityBase {
         const { gaveHE, gaveE, gaveIE, gaveND } = gaveBo;
 
         const gaveChartData = [];
-
-        gaveChartData.push({ name: 'Highly Effective', value: gaveHE });
-        gaveChartData.push({ name: 'Effective', value: gaveE });
-        gaveChartData.push({ name: 'Not Displayed', value: gaveND });
-        gaveChartData.push({ name: 'Ineffective', value: gaveIE });
-        // gaveChartData.push({ label: 'Highly Effective', data: gaveHE, color: '#00308F' });
-        // gaveChartData.push({ label: 'Effective', data: gaveE, color: '#00AA58' });
-        // gaveChartData.push({ label: 'Ineffective', data: gaveIE, color: '#AA0000' });
-        // gaveChartData.push({ label: 'Not Display', data: gaveND, color: '#AAAAAA' });
+        const gaveBreakoutChartDataColors =  {domain: []};
+        //chartColors = {domain: ['#00308F', '#00AA58', '#AAAAAA', '#AA0000']};
+        if (gaveBo.gaveHE > 1) {
+          gaveChartData.push({ name: 'Highly Effective', value: gaveHE });
+          gaveBreakoutChartDataColors.domain.push('#00308F'); 
+        }
+        if (gaveBo.gaveE > 1) {
+          gaveChartData.push({ name: 'Effective', value: gaveE });
+          gaveBreakoutChartDataColors.domain.push('#00AA58');
+        }
+        if (gaveBo.gaveND > 1) {
+            gaveChartData.push({ name: 'Not Displayed', value: gaveND });
+            gaveBreakoutChartDataColors.domain.push('#AAAAAA');
+          }
+        if (gaveBo.gaveIE > 1){
+          gaveChartData.push({ name: 'Ineffective', value: gaveIE });
+          gaveBreakoutChartDataColors.domain.push('#AA0000');
+        }
+        //gaveChartData.push({ name: 'Highly Effective', value: gaveHE });
+        //gaveChartData.push({ name: 'Effective', value: gaveE });
+        //gaveChartData.push({ name: 'Not Displayed', value: gaveND });
+        //gaveChartData.push({ name: 'Ineffective', value: gaveIE });
 
         const gaveBreakOutChartData = [{ "name": "% Given", "series": gaveChartData }];
 
@@ -455,6 +477,7 @@ export class CrseStudentInGroup extends EntityBase {
             gaveBreakOut: gaveBo,
             breakOutChartData: gaveChartData,
             gaveBreakOutChartData: gaveBreakOutChartData,
+            gaveBreakoutChartDataColors: gaveBreakoutChartDataColors,
             compositeScore: composite,
             gaveCompositeScore: gaveComposite,
             stratedPosition: stratedPosition
@@ -472,27 +495,44 @@ export class CrseStudentInGroup extends EntityBase {
         }
 
         const total = counts.h + counts.e + counts.i + counts.nd;
-        
+
+        const receivedBo = {
+            receivedHE: null,
+            receivedIE: null,
+            receivedE: null,
+            receivedND: null
+        };
+
+        receivedBo.receivedHE = Math.round((counts.h / total) * 100);
+        receivedBo.receivedE = Math.round((counts.e / total) * 100);
+        receivedBo.receivedND = Math.round((counts.nd / total) * 100);
+        receivedBo.receivedIE = Math.round((counts.i / total) * 100);
+
+        const { receivedHE, receivedE, receivedIE, receivedND } = receivedBo;
+
         this.resultForStudent.breakOutReceived = [];
-        this.resultForStudent.breakOutReceived.push({
-            name: 'Highly Effective',
-            value: Math.round((counts.h / total) * 100)
-        });
-        this.resultForStudent.breakOutReceived.push({
-            name: 'Effective',
-            value: Math.round((counts.e / total) * 100)
-        });
-        this.resultForStudent.breakOutReceived.push({
-            name: 'Not Displayed',
-            value: Math.round((counts.nd / total) * 100)
-        });
-        this.resultForStudent.breakOutReceived.push({
-            name: 'Ineffective',
-            value: Math.round((counts.i / total) * 100)
-        });
+        this.resultForStudent.breakOutReceivedChartDataColors =  {domain: []};
+
+        if (receivedBo.receivedHE > 1) {
+            this.resultForStudent.breakOutReceived.push({ name: 'Highly Effective', value: receivedHE });
+            this.resultForStudent.breakOutReceivedChartDataColors.domain.push('#00308F'); 
+        }
+
+        if (receivedBo.receivedE > 1) {
+            this.resultForStudent.breakOutReceived.push({ name: 'Effective', value: receivedE });
+            this.resultForStudent.breakOutReceivedChartDataColors.domain.push('#00AA58'); 
+        }
+        if (receivedBo.receivedND > 1) {
+            this.resultForStudent.breakOutReceived.push({ name: 'Not Displayed', value: receivedND });
+            this.resultForStudent.breakOutReceivedChartDataColors.domain.push('#AAAAAA'); 
+        }
+
+        if (receivedBo.receivedIE > 1) {
+            this.resultForStudent.breakOutReceived.push({ name: 'Ineffective', value: receivedIE });
+            this.resultForStudent.breakOutReceivedChartDataColors.domain.push('#AA0000'); 
+        }
 
         this.resultForStudent.breakOutReceivedChartData = [ { "name": "% Recieved", "series": this.resultForStudent.breakOutReceived }];
-
 
         this.resultForStudent.outcome = this.spResult.mpAssessResult;
         this.resultForStudent.finalStrat = this.stratResult.finalStratPosition;

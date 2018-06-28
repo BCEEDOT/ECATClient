@@ -1,9 +1,9 @@
 <mat-list>
   <mat-list-item>
     <div fxFlex="40"></div>
-    <div fxFlex="10" class="md-body-1 tc-grey-500">Final Strat</div>
-    <div fxFlex="20" class="pad-left-xl md-body-1 tc-grey-500">Given</div>
-    <div fxFlex="20" class="pad-left-lg md-body-1 tc-grey-500">Recieved</div>
+    <div fxFlex="10" class="mat-body-1 tc-grey-500">Final Strat</div>
+    <div fxFlex="20" class="pad-left-xl mat-body-1 tc-grey-500">Given</div>
+    <div fxFlex="20" class="pad-left-lg mat-body-1 tc-grey-500">Recieved</div>
     <div fxFlex="10"></div>
   </mat-list-item>
   <mat-divider></mat-divider>
@@ -11,11 +11,11 @@
     <mat-list-item>
       <mat-icon matListAvatar>person</mat-icon>
       <span class="pad-left-sm" fxFlex="40">{{memberResult?.rankName}} </span>
-      <span class="pad-left-md md-title" fxFlex="10">{{memberResult?.resultForStudent?.finalStrat}}</span>
+      <span class="pad-left-md mat-title" fxFlex="10">{{memberResult?.resultForStudent?.finalStrat}}</span>
       <span fxFlex="20" class="text-center">
           <ngx-charts-bar-horizontal-stacked
             [view]="[150, 50]"
-            [scheme]="chartColors"
+            [scheme]="memberResult?.statusOfStudent?.gaveBreakoutChartDataColors"
             [results]="memberResult?.statusOfStudent?.gaveBreakOutChartData"
             [showGridLines]="false">
           </ngx-charts-bar-horizontal-stacked>
@@ -23,7 +23,7 @@
       <span fxFlex="20" class="text-center">
           <ngx-charts-bar-horizontal-stacked
             [view]="[150, 50]"
-            [scheme]="chartColors"
+            [scheme]="memberResult?.resultForStudent?.breakOutReceivedChartDataColors"
             [results]="memberResult?.resultForStudent?.breakOutReceivedChartData"
             [showGridLines]="false">
           </ngx-charts-bar-horizontal-stacked>
@@ -32,6 +32,6 @@
         <mat-icon mat-list-icon>open_in_new</mat-icon>
       </a>
     </mat-list-item>
-    <mat-divider *ngIf="!last" md-inset></mat-divider>
+    <mat-divider *ngIf="!last" [inset]="true"></mat-divider>
   </ng-template>
 </mat-list>

@@ -4,7 +4,7 @@
       placeholder="Click to filter by flight" (inputChange)="filterStrings($event)" requireMatch>
     </td-chips>
     <mat-list *ngIf="workGroups?.length < 1">
-      <p class=" text-center md-subhead pad-bottom-md">No Flights</p>
+      <p class=" text-center mat-subheading-1 pad-bottom-md">No Flights</p>
     </mat-list>
 
     <mat-list *ngIf="workGroups?.length > 0">
@@ -12,13 +12,13 @@
       <ng-template let-workGroup let-last="last" ngFor [ngForOf]="workGroups">
         <div #row fxLayout="row" fxLayoutGap="20px" (mouseover)="row.options = true" (mouseout)="row.options = false">
           <mat-list-item fxFlex="20">
-            <h3 class="md-subhead tc-grey-700"> {{workGroup?.mpCategory}}</h3>
+            <h3 class="list-font tc-grey-700"> {{workGroup?.mpCategory}}</h3>
           </mat-list-item>
           <mat-list-item fxFlex="50">
-            <h3 class="md-subhead"> {{workGroup?.defaultName}}  {{workGroup?.customName}}</h3>
+            <h3 class="list-font"> {{workGroup?.defaultName}}  {{workGroup?.customName}}</h3>
           </mat-list-item>
           <mat-list-item fxFlex="20">
-            <h3 class="md-subhead"> {{workGroup?.mpSpStatus}}</h3>
+            <h3 class="list-font"> {{workGroup?.mpSpStatus}}</h3>
             <div *ngIf="workGroup?.mpSpStatus === 'Open'">
               <mat-icon class="small-tab-icon tc-green-700" *ngIf="workGroup.canPublish">check_cirlce</mat-icon>
               <mat-icon class="small-tab-icon tc-red-700" *ngIf="!workGroup.canPublish">error_outline</mat-icon>
@@ -28,19 +28,19 @@
             <mat-menu #appMenu="matMenu" yPosition="below" xPosition="before">
               <button mat-menu-item [routerLink]="['flight-roster/' + workGroup.workGroupId]"> 
                 <mat-icon> list </mat-icon>
-                <span class="md-subhead"> Flight Roster </span>
+                <span>Flight Roster</span>
               </button>
-              <button mat-menu-item [routerLink]="['evaluate/' + workGroup.workGroupId]"> 
+              <button mat-menu-item [routerLink]="['evaluate/' + workGroup.workGroupId + '/main']"> 
                 <mat-icon> assessment </mat-icon>
-                <span class="md-subhead"> {{workGroup?.statusText}} </span>
+                <span>{{workGroup?.statusText}}</span>
               </button>
               <button *ngIf="workGroup.mpSpStatus !== statusMap.published" mat-menu-item [routerLink]="['status/' + workGroup.workGroupId]"> 
                 <mat-icon> check_circle </mat-icon>
-                <span class="md-subhead"> Status </span>
+                <span>Status</span>
               </button>
               <button *ngIf="workGroup.mpSpStatus === statusMap.published" mat-menu-item [routerLink]="['results/' + workGroup.workGroupId]"> 
                 <mat-icon> data_usage </mat-icon>
-                <span class="md-subhead"> Results </span>
+                <span>Results</span>
               </button>
             </mat-menu>
 

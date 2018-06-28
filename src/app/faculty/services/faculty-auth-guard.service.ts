@@ -92,6 +92,7 @@ export class FacultyAuthGuardService implements CanActivate, CanActivateChild {
     // };
 
     // Navigate to the login page with extras
+    this.authService.logout();
     this.router.navigate(['/login']);
     return false;
   }

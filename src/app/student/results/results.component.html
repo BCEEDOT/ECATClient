@@ -1,7 +1,7 @@
 <div class="width" *ngIf="isLoading">
   <mat-card>
     <div fxLayout="row" fxLayoutAlign="center center">
-      <img class="pad-top-md" src="../../../../assets/resultsloading.png" height="150" width="150">
+      <img class="pad-top-md" src="assets/resultsloading.png" height="150" width="150">
     </div>
     <h4 class="text-center pad-bottom-md">Results loading... please wait. </h4>
     <mat-card-footer>
@@ -18,21 +18,21 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">assessment</mat-icon>
-          Assessment
+          <span class="pad-left-xs">Assessment</span>
         </ng-template>
-        <assess [workGroup]="workGroup"></assess>
+        <assess></assess>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">assignment</mat-icon>
-          Feedback Results
+          <span class="pad-left-xs">Feedback Results</span>
         </ng-template>
         <behaviors [change]="change" [memberResults]="memberResults"></behaviors>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">comment</mat-icon>
-          Comments Recieved
+          <span class="pad-left-xs">Comments Recieved</span>
         </ng-template>
         <comments [memberResults]="memberResults"></comments>
       </mat-tab>

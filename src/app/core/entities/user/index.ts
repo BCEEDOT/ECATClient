@@ -1,4 +1,3 @@
-export * from './metadata';
 export * from './cogEcmspeResult';
 export * from './cogInstrument';
 export * from './cogInventory';

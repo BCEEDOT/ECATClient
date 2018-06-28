@@ -1,7 +1,7 @@
 import * as user from "./user";
 import * as student from "./student";
 import * as faculty from "./faculty";
-import { EntityBase } from "./EntityBase";
+import { EntityBase } from "./entitybase";
 
 export interface IApiResource {
     resource: string;

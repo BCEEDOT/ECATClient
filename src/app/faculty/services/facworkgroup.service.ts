@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 import { Course, WorkGroup } from "../../core/entities/faculty";
 
@@ -15,6 +15,7 @@ export class FacWorkgroupService {
     commentsComplete$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     onListView$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     readOnly$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    stratTabActive$: BehaviorSubject<boolean> = new BehaviorSubject(false); 
 
     facWorkGroup(facWorkGroup: WorkGroup) {
         this.facWorkGroup$.next(facWorkGroup);
@@ -46,6 +47,10 @@ export class FacWorkgroupService {
 
     readOnly(readOnly: boolean) {
         this.readOnly$.next(readOnly);
+    }
+
+    stratTabActive(stratTabActive: boolean): void {
+        this.stratTabActive$.next(stratTabActive);
     }
 
 }

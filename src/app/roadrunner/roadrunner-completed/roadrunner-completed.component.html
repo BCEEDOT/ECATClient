@@ -3,7 +3,7 @@
   <mat-toolbar td-sidenav-content>
     <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
 
-      <span class="md-title">Completed</span>
+      <span class="mat-title">Completed</span>
 
     </div>
   </mat-toolbar>
@@ -12,7 +12,7 @@
     <div *ngIf="roadRunnerInfos">
       <div *ngIf="count === 0 || roadRunnerInfos?.length === 0">
 
-        <p class="md-title text-center">You have not signed in from any locations.</p>
+        <p class="mat-title text-center">You have not signed in from any locations.</p>
       </div>
     </div>
     <div *ngIf="roadRunnerInfos">
@@ -32,7 +32,7 @@
               <span flex></span>
 
               <span fxFlex="50">
-          <div class="md-caption tc-grey-500">
+          <div class="mat-caption tc-grey-500">
                     Start Date: 
                     <span [innerHtml]="rData?.leaveDate | date:'dd MMM yyyy'">{{ rData?.leaveDate }}</span>
           </div>
@@ -50,7 +50,7 @@
           <p matLine *ngIf="rData.splitLocation.length > 1">{{rData?.splitLocation[1]}}</p>
           <h4 matLine *ngIf="rData.splitLocation.length === 1"> {{rData?.splitLocation[0]}}</h4>
           <p matLine></p>
-          <p matLine class="md-caption" [innerHtml]="rData?.leaveDate | date:'dd MMM yyyy'">{{ rData?.leaveDate }} </p>
+          <p matLine class="mat-caption" [innerHtml]="rData?.leaveDate | date:'dd MMM yyyy'">{{ rData?.leaveDate }} </p>
           <span matLine>
                 <a mat-icon-button  color="primary" [routerLink]="[rData.id]">
                   <mat-icon >content_copy</mat-icon>
@@ -60,7 +60,7 @@
 
       </div>
       <div *ngIf="rData?.prevSignOut">
-        <mat-divider *ngIf="!last" md-inset></mat-divider>
+        <mat-divider *ngIf="!last" [inset]="true"></mat-divider>
       </div>
 
       </ng-template>

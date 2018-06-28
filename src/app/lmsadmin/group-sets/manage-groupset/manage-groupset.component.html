@@ -1,34 +1,20 @@
 <mat-sidenav-container fullscreen>
   <mat-sidenav #sidenav mode="side" color="primary" opened="true" style="width:257px;border-right:1px solid #ccc">
-    <div flex class="md-content ">
+    <div flex class="mat-content ">
       <mat-nav-list>
         <td-expansion-panel *ngIf="readOnly" label="Unassigned Students" [expand]="isUnassignedPanelExpanded">
           <div fxLayout="column" id="unassigned" style="min-height: 50px;">
-            <p [id]="unassignedStudent.studentId" 
-              [myHighlight]="unassignedStudent.highlighted" 
-              (mouseover)="hovered = unassignedStudent.studentId"
-              (mouseout)="hovered = null" 
-              class="push-none pad-sm md-caption"
-              style="padding-left: 16px;"
-              *ngFor="let unassignedStudent of unassignedStudents">
-                {{unassignedStudent.rankName}}
+            <p [id]="unassignedStudent.studentId" [myHighlight]="unassignedStudent.highlighted" (mouseover)="hovered = unassignedStudent.studentId"
+              (mouseout)="hovered = null" class="push-none pad-sm mat-caption" style="padding-left: 16px;" *ngFor="let unassignedStudent of unassignedStudents">
+              {{unassignedStudent.rankName}}
             </p>
           </div>
         </td-expansion-panel>
         <td-expansion-panel *ngIf="!readOnly" label="Unassigned Students" [expand]="isUnassignedPanelExpanded">
-          <div fxLayout="column" id="unassigned" 
-              style="min-height: 50px;" 
-              [dragula]='"bag-one"' 
-              [dragulaModel]='unassignedStudents'>
-              <p [id]="unassignedStudent.studentId" 
-                  [myHighlight]="unassignedStudent.highlighted" 
-                  [ngClass]="{'selected': hovered === unassignedStudent.studentId}"
-                  (mouseover)="hovered = unassignedStudent.studentId" 
-                  (mouseout)="hovered = null" 
-                  class="push-none pad-sm md-caption"
-                  style="padding-left: 16px;"
-                  *ngFor="let unassignedStudent of unassignedStudents" 
-                  (click)="studentClick(unassignedStudent)">
+          <div fxLayout="column" id="unassigned" style="min-height: 50px;" [dragula]='"bag-one"' [dragulaModel]='unassignedStudents'>
+            <p [id]="unassignedStudent.studentId" [myHighlight]="unassignedStudent.highlighted" [ngClass]="{'selected': hovered === unassignedStudent.studentId}"
+              (mouseover)="hovered = unassignedStudent.studentId" (mouseout)="hovered = null" class="push-none pad-sm mat-caption"
+              style="padding-left: 16px;" *ngFor="let unassignedStudent of unassignedStudents" (click)="studentClick(unassignedStudent)">
 
               {{unassignedStudent.rankName}}
             </p>
@@ -38,7 +24,7 @@
 
           <div *ngFor="let change of changes" fxLayout="row" fxLayoutAlign="start center">
             <div fxFlexOffset="5%"></div>
-            <p class="push-none pad-xs md-caption">
+            <p class="push-none pad-xs mat-caption">
               {{change.changeDescription}}
             </p>
             <div fxFlex></div>
@@ -56,15 +42,17 @@
     <button type="button" mat-raised-button color="primary" [routerLink]="['../..']">Back</button>
     <td-search-box [showUnderline]="true" (search)="search($event)" (clear)="clear($event)" backIcon="arrow_back" placeholder="Search here"
       [alwaysVisible]="false" flex></td-search-box>
-    <button [ngClass]="canSaveFlag ? '' : 'can-save'" [disabled]="!changesToSave()" (click)="save()" type="button" mat-raised-button
-      color="primary">Save</button>
-    <button (click)="reset(false)" type="button" mat-raised-button color="primary">Reset</button>
+    
+    
     <mat-slide-toggle class="example-margin" [(ngModel)]="allExpanded" (change)="expandOrCollapseAll()">
       {{(allExpanded) ? 'Collapse' : 'Expand'}} All
     </mat-slide-toggle>
+    <button (click)="reset(false)" type="button" mat-stroked-button color="primary">Reset</button>
+    <button [ngClass]="canSaveFlag ? '' : 'can-save'" [disabled]="!changesToSave()" (click)="save()" type="button" mat-raised-button
+      color="primary">Save</button>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-around start" fxLayoutWrap class="pad-bottom-xl">
+  <div fxLayout="row wrap" fxLayoutAlign="space-around start" class="pad-bottom-xl">
     <div fxFlex="25%" *ngFor="let workGroup of workGroups">
       <!-- Workgroup cards if the group published  -->
       <mat-card *ngIf="readOnly">
@@ -85,7 +73,7 @@
           <mat-card-content>
             <div style="min-height: 50px" [id]="workGroup.workGroupId">
               <p *ngFor="let groupMember of workGroup.groupMembers trackBy:groupMember?.studentId" [id]="groupMember.studentId" [myHighlight]="groupMember.highlighted"
-                (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="md-caption push-none pad-xs">
+                (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="mat-caption push-none pad-xs">
                 {{groupMember.rankName}}
               </p>
             </div>
@@ -114,7 +102,7 @@
           <mat-card-content *ngIf="!workGroup.canEdit">
             <div style="min-height: 50px" [id]="workGroup.workGroupId">
               <p *ngFor="let groupMember of workGroup.groupMembers trackBy:groupMember?.studentId" [id]="groupMember.studentId" [myHighlight]="groupMember.highlighted"
-                (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="md-caption push-none pad-xs">
+                (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null" class="mat-caption push-none pad-xs">
                 {{groupMember.rankName}}
               </p>
             </div>
@@ -123,17 +111,18 @@
             <div style="min-height: 50px" [id]="workGroup.workGroupId" [dragula]='"bag-one"' [dragulaModel]='workGroup.groupMembers'>
               <p *ngFor="let groupMember of workGroup.groupMembers trackBy:groupMember?.studentId" [id]="groupMember.studentId" [myHighlight]="groupMember.highlighted"
                 [ngClass]="{'selected': hovered === groupMember.studentId}" (mouseover)="hovered = groupMember.studentId" (mouseout)="hovered = null"
-                class="md-caption push-none pad-xs" (click)="studentClick(groupMember)">
+                class="mat-caption push-none pad-xs" (click)="studentClick(groupMember)">
                 {{groupMember.rankName}}
               </p>
             </div>
           </mat-card-content>
         </td-expansion-panel>
       </mat-card>
+      <button *ngIf="!readOnly" mat-fab (click)="addGroup()" color="primary" class="mat-fab-bottom-right fixed fab-pad" matTooltip="Add Flight"
+        matTooltipPosition="left">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
   </div>
 </mat-sidenav-container>
-<a *ngIf="!readOnly" mat-fab (click)="addGroup()" color="primary" class="mat-fab-bottom-right fixed fab-pad" matTooltip="Add Flight"
-  matTooltipPosition="left">
-  <mat-icon>add</mat-icon>
-</a>
+

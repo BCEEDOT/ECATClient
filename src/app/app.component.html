@@ -1,7 +1,6 @@
 <div #tokenref></div>
 <td-layout #layout>
-  <td-navigation-drawer name={{cleanName}}
-    email={{persona?.person?.email}}>
+  <td-navigation-drawer name={{cleanName}} email={{persona?.person?.email}}>
     <mat-nav-list>
       <a mat-list-item routerLink="/dashboard" (click)="layout.close()">
         <mat-icon>dashboard</mat-icon>Dashboard</a>
@@ -19,13 +18,11 @@
       <a *ngIf="isFaculty" mat-list-item routerLink="/roadrunner/faculty" (click)="layout.close()">
         <mat-icon>android</mat-icon>Road Runner</a>
       <mat-divider></mat-divider>
-    </mat-nav-list>
-    <mat-nav-list td-navigation-drawer-menu>
-    
-      <a mat-list-item (click)="logout(); layout.close();">
-        <mat-icon>exit_to_app</mat-icon>Sign out</a>
+      <a mat-list-item class="subnav pad-left-xs" routerLink="/profile" (click)="layout.close()">
+        My Profile</a>
+      <a mat-list-item class="subnav pad-left-xs" (click)="logout(); layout.close()">
+        Sign Out</a>
     </mat-nav-list>
   </td-navigation-drawer>
- 
   <router-outlet></router-outlet>
 </td-layout>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot } from '@angular/router';
 import { TdDialogService } from '@covalent/core';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Observable ,  Observer } from 'rxjs';
 
 import { AppComponent } from "../../../app/app.component";
 import { UserDataContext } from "./data/user-data-context.service";

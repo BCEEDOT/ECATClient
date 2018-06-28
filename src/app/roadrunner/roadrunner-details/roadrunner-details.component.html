@@ -2,13 +2,6 @@
   <button mat-icon-button td-menu-button tdLayoutToggle>
     <mat-icon>menu</mat-icon>
   </button>
-  <div td-toolbar-content fxLayout="row" fxLayoutAlign="center center" fxFlex>
-    <span fxFlex></span>
-    <a mat-icon-button matTooltip="Profile" routerLink="/profile">
-      <mat-icon>account_circle</mat-icon>
-    </a>
-  </div>
-
   <mat-card>
 
     <div *ngIf="event.length > 0 || checkNew == 'New'">
@@ -16,8 +9,8 @@
         <mat-toolbar>
           <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
 
-            <span *ngIf="checkNew === 'New'" class="md-title">Create a location</span>
-            <span *ngIf="!(checkNew === 'New')" class="md-title">Edit the location</span>
+            <span *ngIf="checkNew === 'New'" class="mat-title">Create a location</span>
+            <span *ngIf="!(checkNew === 'New')" class="mat-title">Edit the location</span>
 
 
           </div>
@@ -73,12 +66,12 @@
 
         <div layout-gt-xs="row" layout-margin class="button-row">
           <span style="padding-right:10px;">
-            <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+            <button mat-stroked-button color="primary" *ngIf="!(checkNew === 'New') && !clone && !signedOut" (click)="delete()">Delete</button>
           </span>
           <span style="padding-right:10px;">
-            <button mat-raised-button color="primary" [disabled]="!roadRunnerForm.valid || !leaveForm.valid || !returnForm.valid" (click)="save()">Save</button>
+            <button mat-stroked-button color="primary" (click)="cancel()">Cancel</button>
           </span>
-          <button mat-raised-button color="primary" *ngIf="!(checkNew === 'New') && !clone && !signedOut" (click)="delete()">Delete</button>
+            <button mat-raised-button color="primary" [disabled]="!roadRunnerForm.valid || !leaveForm.valid || !returnForm.valid" (click)="save()">Save</button>          
         </div>
       </form>
     </div>

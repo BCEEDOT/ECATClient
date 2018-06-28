@@ -59,15 +59,19 @@ export class UserAuthGuard implements CanActivate {
           return true;
         })
         .catch(e => {
-          console.log('Error creating user em' + e);
+          console.log('Error creating user em ' + e);
           if (e.status === 401) {
             this.router.navigate(['/login']);
             return false;
-          }
-        })
+          } 
+          else {
+            return false;
+          }   
+        });
 
     }
 
+    this.authService.logout();
     this.router.navigate(['/login']);
     return false;
   }

@@ -1,46 +1,38 @@
 <div class="width pad-bottom-xxl">
   <ng-template tdLoading [tdLoadingUntil]="!isLoading" tdLoadingStrategy="overlay">
-    <mat-card *ngIf="!user?.hasAcknowledged">
-      <mat-card-title>Instructions</mat-card-title>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <div [innerHTML]="instructions"></div>
-      </mat-card-content>
-      <mat-divider></mat-divider>
-      <mat-card-actions>
-        <button mat-button color="primary" class="text-upper" (click)="user.hasAcknowledged=true;">I AGREE</button>
-      </mat-card-actions>
-    </mat-card>
-
-    <mat-card *ngIf="user?.hasAcknowledged">
-      <div *ngIf="readOnly">
-        <td-message label="This Group is currently Under Review" class="bgc-green-200" icon="error">
-        </td-message>
+    <mat-card>
+      <div [hidden]="user?.hasAcknowledged">
+        <mat-card-title>Instructions</mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div [innerHTML]="instructions"></div>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions fxLayoutAlign="end">
+          <button mat-raised-button color="primary" class="text-upper" (click)="saveIAgree();">I AGREE</button>
+        </mat-card-actions>
       </div>
-      <mat-tab-group [(selectedIndex)]="activeTab" class="tab-group" dynamicHeight>
-        <mat-tab>
-
-          <ng-template mat-tab-label>
+      <div [hidden]="!user?.hasAcknowledged">
+        <div *ngIf="readOnly">
+          <td-message label="This Group is currently Under Review" class="bgc-green-200 mat-subheading-1 pull-bottom-none" icon="error">
+          </td-message>
+        </div>
+        <nav mat-tab-nav-bar>
+          <a mat-tab-link routerLink="main" routerLinkActive #main="routerLinkActive" [active]="main.isActive">
             <mat-icon class="tab-icon">assessment</mat-icon>
-            ASSESS
+            <span class="pad-left-xs">ASSESS</span>
             <mat-icon *ngIf=assessComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
             <mat-icon *ngIf=!assessComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
-          </ng-template>
-
-          <assess [change]="change" [workGroup]="activeWorkGroup"></assess>
-        </mat-tab>
-        <mat-tab [disabled]="readOnly">
-          <ng-template mat-tab-label>
+          </a>
+          <a mat-tab-link *ngIf="!readOnly" routerLink="strat" routerLinkActive #strat="routerLinkActive" [active]="strat.isActive">
             <mat-icon class="tab-icon">format_list_numbered</mat-icon>
-            STRAT
+            <span class="pad-left-xs">STRAT</span>
             <mat-icon *ngIf=stratComplete matTooltip="Complete" matTooltipPosition="right" class="small-tab-icon tc-green-700">check_circle</mat-icon>
             <mat-icon *ngIf=!stratComplete matTooltip="Incomplete" matTooltipPosition="right" class="small-tab-icon tc-red-700">error_outline</mat-icon>
-          </ng-template>
-
-          <strat [workGroup]="activeWorkGroup"></strat>
-        </mat-tab>
-      </mat-tab-group>
-
+          </a>
+        </nav>
+        <router-outlet></router-outlet>
+      </div>
     </mat-card>
   </ng-template>
 </div>

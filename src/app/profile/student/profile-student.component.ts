@@ -34,16 +34,16 @@ export class ProfileStudentComponent implements OnInit {
   }
 
   saveStudentProfile() {
-    this.loadingService.register(this.profileLoading);
+    this.loadingService.register();
 
     this.userDataContext.commit()
       .then((res) => {
-        this.loadingService.resolve(this.profileLoading);
+        this.loadingService.resolve();
         this.global.showSnackBar('Student Profile Updated');
         this.isEditing = false;
       })
       .catch((error) => {
-        this.loadingService.resolve(this.profileLoading);
+        this.loadingService.resolve();
         this.dialogService.openAlert({
           message: 'There was an error updating your student profile. Please try again.',
           title: 'Error',

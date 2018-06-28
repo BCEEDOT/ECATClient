@@ -4,3 +4,24 @@
     margin-right: auto;
     margin-left: auto;
 }
+
+.strat-font {
+    font-size: 16px;
+}
+
+.strat-font-bold {
+    font-size: 16px;
+    font-weight: 500;
+    color: #3e6d92;
+}
+
+.changed {
+    color: darkgrey;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .notopen {
+       max-width: 1200px;
+    }
+ }
+ 

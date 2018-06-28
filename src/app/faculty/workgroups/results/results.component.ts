@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
-import { Observable } from 'rxjs/Observable';
-import { Subscriber } from 'rxjs/Subscriber';
-import { Subject } from 'rxjs/Subject';
+import { Observable ,  Subscriber ,  Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import 'rxjs/add/operator/pluck';
+
 
 import { WorkGroup, CrseStudentInGroup } from "../../../core/entities/faculty";
 import { FacWorkgroupService } from "../../services/facworkgroup.service";

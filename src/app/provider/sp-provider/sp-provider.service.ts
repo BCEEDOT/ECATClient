@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { isNumeric } from 'rxjs/util/isNumeric';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/util/isNumeric';
-import 'rxjs/add/observable/of';
+import { Observable ,  BehaviorSubject } from 'rxjs';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CrseStudentInGroup as StuCrseStudentInGroup, WorkGroup, StudSpComment } from "../../core/entities/student";
 import { CrseStudentInGroup as FacCrseStudentInGroup } from "../../core/entities/faculty";
 import { GlobalService, ILoggedInUser } from "../../core/services/global.service";
-import { Person } from "../../core/entities/user/Person";
+import { Person } from "../../core/entities/user/person";
 import { StudentDataContext } from "../../student/services/student-data-context.service";
 import { FacultyDataContextService } from "../../faculty/services/faculty-data-context.service";
 import { WorkGroupService } from "../../student/services/workgroup.service";
 import { FacWorkgroupService } from "../../faculty/services/facworkgroup.service";
-import { FacSpComment } from "../../core/entities/faculty/FacSpComment";
+import { FacSpComment } from "../../core/entities/faculty/facSpComment";
 import { CommentDialog } from "./comment/comment.dialog";
 
 @Injectable()
@@ -149,7 +146,7 @@ export class SpProviderService {
         }
 
         if (member.proposedStratPosition) {
-          if (!isNumeric(member.proposedStratPosition)) {
+          if (isNaN(member.proposedStratPosition)) {
             member.stratValidationErrors.push({
               cat: 'Value must be a number',
               text: 'The proposed change should be a number.'

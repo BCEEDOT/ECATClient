@@ -1,37 +1,42 @@
-import { Component, AfterViewInit, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Inject, OnDestroy, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  Subscription } from 'rxjs';
+import { pluck } from "rxjs/Operators";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
-import 'rxjs/add/operator/pluck';
 
 import { Course, WorkGroup } from '../core/entities/faculty';
 import { FacultyDataContextService } from './services/faculty-data-context.service';
 import { FacWorkgroupService } from "./services/facworkgroup.service";
-import { Subscription } from "rxjs/Subscription";
 
 @Component({
   templateUrl: './faculty.component.html',
   styleUrls: ['./faculty.component.scss']
 })
-export class FacultyComponent implements OnInit, OnDestroy {
+export class FacultyComponent implements OnInit, AfterContentChecked {
 
   courses$: Observable<Course[]>;
   courses: Course[];
   activeCourse: Course;
   activeCourseId: number;
-  onListView: boolean = true;
+ //onListView: boolean = true;
+  onListView$: Observable<boolean>;
   viewSub: Subscription;
 
   constructor(private titleService: Title,
     private router: Router,
+    private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute,
     private loadingService: TdLoadingService,
     private dialogService: TdDialogService,
     private facultyDataContext: FacultyDataContextService,
     private facWorkGroupService: FacWorkgroupService,
   ) {
-    this.courses$ = route.data.pluck('courses');
+    this.courses$ = route.data.pipe(pluck('courses'));
+  }
+
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
   }
 
   ngOnInit(): void {
@@ -40,14 +45,13 @@ export class FacultyComponent implements OnInit, OnDestroy {
       this.activate();
     });
 
-    this.viewSub = this.facWorkGroupService.onListView$.subscribe(value => {
-      this.onListView = value;
-    });
-    this.titleService.setTitle('WorkGroup Center');
-  }
+    this.onListView$ = this.facWorkGroupService.onListView$.asObservable();
 
-  ngOnDestroy() {
-    this.viewSub.unsubscribe();
+    // this.viewSub = this.facWorkGroupService.onListView$.subscribe(value => {
+    //   this.onListView = value;
+    // });
+
+    this.titleService.setTitle('WorkGroup Center');
   }
 
   setActiveCourse(course: Course): void {

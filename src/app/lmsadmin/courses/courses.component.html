@@ -15,7 +15,7 @@
     </mat-card-title>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <span fxFlex="100" class="text-center pad-top-xl md-title" *ngIf="!this.courses">No courses for this academy.</span>
+      <span fxFlex="100" class="text-center pad-top-xl mat-title" *ngIf="!this.courses">No courses for this academy.</span>
       <div *ngIf="courses?.length > 0">
         <mat-list>
           <mat-list-item>
@@ -27,31 +27,31 @@
           </mat-list-item>
           <mat-list-item *ngFor="let course of courses">
             <span fxFlex="30">
-              <h3 class="md-subhead">{{course.name}}</h3>
+              <p>{{course.name}}</p>
             </span>
             <span fxFlex="30">
-              <h3 class="md-subhead">{{course.classNumber}}</h3>
+              <p>{{course.classNumber}}</p>
             </span>
             <span fxFlex="30">
-              <h3 class="md-subhead">{{course.displayStart}}</h3>
+              <p>{{course.displayStart}}</p>
             </span>
             <span fxFlex="30">
-              <h3 class="md-subhead">{{course.displayGrad}}</h3>
+              <p>{{course.displayGrad}}</p>
             </span>
             <div fxFlex="10">
               <mat-menu #appMenu="matMenu" yPosition="below" xPosition="before">
                 <button mat-menu-item [routerLink]="[course.id + '/info']"> 
                   <mat-icon> info_outline </mat-icon>
-                  <span class="md-subhead"> Course Information </span>
+                  <span class="mat-subheading-1"> Course Information </span>
                 </button>
                 <mat-divider></mat-divider>
                 <button mat-menu-item [routerLink]="[course.id + '/enrollments']" [disabled]="course.classNumber===null || course.classNumber === '' || course.name === null || course.name === ''"> 
                   <mat-icon> people_outline </mat-icon>
-                  <span class="md-subhead"> Course Enrollments </span>
+                  <span class="mat-subheading-1"> Course Enrollments </span>
                 </button>
                 <button mat-menu-item [routerLink]="[course.id + '/groupsets']" [disabled]="course.classNumber===null || course.classNumber === '' || course.name === null || course.name === ''"> 
                   <mat-icon> library_books </mat-icon>
-                  <span class="md-subhead"> Group Management </span>
+                  <span class="mat-subheading-1"> Group Management </span>
                 </button>
               </mat-menu>
 

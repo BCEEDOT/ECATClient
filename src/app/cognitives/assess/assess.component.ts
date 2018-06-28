@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/operator/pluck';
+import { Observable } from "rxjs";
+import { pluck } from "rxjs/Operators";
 
 import { TdLoadingService, TdDialogService } from '@covalent/core';
 
@@ -36,7 +36,7 @@ export class AssessComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.cogAssessId = params['cogId'];
         });
-        this.cogInventories$ = route.data.pluck('assess')
+        this.cogInventories$ = route.data.pipe(pluck('assess'));
     }
 
     ngOnDestroy() {

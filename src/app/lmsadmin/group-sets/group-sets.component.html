@@ -1,7 +1,7 @@
 <mat-card class="width">
-  <mat-card-title>
+  <mat-card-title fxLayout="row">
     <button mat-raised-button color="primary" [routerLink]="['../..']">Back</button>
-    <div fxFlex="100" class="text-center">
+    <div fxFlex="grow" class="text-center">
       {{course?.name}} - {{course?.classNumber}} Group Management
     </div>
     <span fxFlex></span>
@@ -27,25 +27,25 @@
             <mat-menu #appMenu="matMenu" yPosition="below" xPosition="before">
               <button mat-menu-item [routerLink]="[model.mpWgCategory + '/config']" *ngIf="model.status === testStatus.await && model.mpWgCategory !== catMap.bc1"> 
                 <mat-icon> group_add </mat-icon>
-                <span class="md-subhead"> Create </span>
+                <span class="mat-subheading-1"> Create </span>
               </button>
               <button mat-menu-item (click)="pollLmsGroups()" *ngIf="model.status !== testStatus.reviewed && model.status !== testStatus.pub && model.mpWgCategory === catMap.bc1"> 
                 <mat-icon> file_download </mat-icon>
-                <span class="md-subhead"> Poll LMS </span>
+                <span class="mat-subheading-1"> Poll LMS </span>
               </button>
               <button mat-menu-item [routerLink]="[model.mpWgCategory + '/manage']" *ngIf="model.status !== testStatus.await"> 
                 <mat-icon> group </mat-icon>
-                <span class="md-subhead" *ngIf="model.status === testStatus.created || model.status === testStatus.inUse || model.status === testStatus.reviewed"> Manage </span>
-                <span class="md-subhead" *ngIf="model.status === testStatus.pub"> View </span>
+                <span class="mat-subheading-1" *ngIf="model.status === testStatus.created || model.status === testStatus.inUse || model.status === testStatus.reviewed"> Manage </span>
+                <span class="mat-subheading-1" *ngIf="model.status === testStatus.pub"> View </span>
               </button>
               <button mat-menu-item (click)="advance(model)" *ngIf="model.status !== testStatus.pub && model.status !== testStatus.await"> 
                 <mat-icon> forward </mat-icon>
-                <span class="md-subhead" *ngIf="model.status === testStatus.created"> Open </span>
-                <span class="md-subhead" *ngIf="model.status === testStatus.inUse || model.status === testStatus.reviewed"> Publish </span>
+                <span class="mat-subheading-1" *ngIf="model.status === testStatus.created"> Open </span>
+                <span class="mat-subheading-1" *ngIf="model.status === testStatus.inUse || model.status === testStatus.reviewed"> Publish </span>
               </button>
               <button mat-menu-item (click)="syncGrades(model)" *ngIf="model.status === testStatus.pub">
                 <mat-icon>file_upload</mat-icon>
-                <span class="md-subhead">Push Grades</span>
+                <span class="mat-subheading-1">Push Grades</span>
               </button>
             </mat-menu>
             <button mat-icon-button [matMenuTriggerFor]="appMenu">

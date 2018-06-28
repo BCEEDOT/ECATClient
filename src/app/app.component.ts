@@ -1,4 +1,6 @@
-import { Subscriber, Subscription } from 'rxjs/Rx';
+import { Subscription ,  Subscriber ,  Observable ,  Observer } from 'rxjs';
+import { filter, map, distinctUntilChanged } from "rxjs/Operators";
+
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
@@ -6,12 +8,7 @@ import {
   RouterModule, Routes, Router,
   ActivatedRouteSnapshot, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, Event,
 } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 import { TdLoadingService } from '@covalent/core';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/groupBy';
-import 'rxjs/add/operator/mergeAll';
 
 import { GlobalService, ILoggedInUser } from './core/services/global.service';
 import { Person } from './core/entities/user/person';
@@ -38,10 +35,10 @@ export class AppComponent implements OnInit {
     private global: GlobalService,
     private authService: AuthService) {
 
-    router.events.
-      filter((e: Event) => isStart(e) || isEnd(e))
-      .map((e: Event) => isStart(e))
-      .distinctUntilChanged()
+    router.events.pipe(
+      filter((e: Event) => isStart(e) || isEnd(e)),
+      map((e: Event) => isStart(e)),
+      distinctUntilChanged())
       .subscribe((showLoader: boolean) => {
         if (showLoader) {
           this.loadingService.register();

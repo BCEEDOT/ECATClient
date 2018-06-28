@@ -20,7 +20,6 @@ export class BehaviorsComponent implements OnChanges {
   @Input() memberResults: SpResult;
   @Input() change: number;
 
-  chartColors: any = { domain: [] };
   activeInventory: SpInventory;
 
   ngOnChanges(): void {
@@ -28,6 +27,7 @@ export class BehaviorsComponent implements OnChanges {
   }
 
   activate(): void {
+    console.log(this.inventories);
     this.inventories = this.memberResults.resultFor.workGroup.assignedSpInstr.inventoryCollection.sort((a, b) => {
       if (a.displayOrder < b.displayOrder) { return -1; }
       if (a.displayOrder > b.displayOrder) { return 1; }
@@ -37,34 +37,37 @@ export class BehaviorsComponent implements OnChanges {
     this.activeInventory = this.inventories[0];
 
     this.inventories.forEach((inv: SpInventory) => {
-      // let chartColors = {  domain: [] };
+      let chartColors = {  domain: [] };
       inv.resultBreakOut.peerBoChart.forEach((data: any) => {
         if (data.name === MpSpItemResponse.hea) {
-          this.chartColors.domain.push('#00308F');
+          chartColors.domain.push('#00308F');
         }
         if (data.name === MpSpItemResponse.heu) {
-          this.chartColors.domain.push('#0056FF');
+          chartColors.domain.push('#0056FF');
         }
         if (data.name === MpSpItemResponse.ea) {
-          this.chartColors.domain.push('#00AA58');
+          chartColors.domain.push('#00AA58');
         }
         if (data.name === MpSpItemResponse.eu) {
-          this.chartColors.domain.push('#00FF84');
+          chartColors.domain.push('#00FF84');
         }
         if (data.name === MpSpItemResponse.nd) {
-          this.chartColors.domain.push('#AAAAAA');
+          chartColors.domain.push('#AAAAAA');
         }
         if (data.name === MpSpItemResponse.ieu) {
-          this.chartColors.domain.push('#AA0000');
+          chartColors.domain.push('#AA0000');
         }
         if (data.name === MpSpItemResponse.iea) {
-          this.chartColors.domain.push('#FF0000');
+          chartColors.domain.push('#FF0000');
         }
 
-        inv.resultBreakOut.peerBoChart['chartColors'] = this.chartColors;
+      });
 
-      })
-    })
+      inv.resultBreakOut.peerBoChart['chartColors'] = chartColors;
+    });
+
+    console.log(this.inventories);
+
   }
 
   previousInv() {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { RoadrunnerService } from '../services/roadrunner.service';
 import { RoadRunner } from "../../core/entities/user";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'roadrunner-completed',

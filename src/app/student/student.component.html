@@ -2,19 +2,13 @@
   <button mat-icon-button td-menu-button tdLayoutToggle>
     <mat-icon>menu</mat-icon>
   </button>
-  <div td-toolbar-content fxLayout="row" fxLayoutAlign="center center" fxFlex>
-    <span fxFlex></span>
-    <a mat-icon-button matTooltip="Profile" routerLink="/profile">
-      <mat-icon>account_circle</mat-icon>
-    </a>
-  </div>
   <div class="width">
-    <div fxLayout="row" fxLayoutAlign="end" class="pad-top-sm" *ngIf="onListView">
+    <div fxLayout="row" fxLayoutAlign="end" class="pad-top-sm" *ngIf="onListView$ | async">
       <div fxFlex></div>
-      <div *ngIf="activeWorkGroup" class="pad-top-sm">
-        <button mat-button [matMenuTriggerFor]="posXMenu" class="md-subhead">
+      <div *ngIf="activeWorkGroup" class="">
+        <button class="pad-top-xs" mat-button [matMenuTriggerFor]="posXMenu" style="font-size: 16px">
           {{activeWorkGroup?.displayName}}
-          <mat-icon class="md-24">expand_more</mat-icon>
+          <mat-icon class="mat-24 pad-bottom-xs">expand_more</mat-icon>
         </button>
         <mat-menu x-position="before" #posXMenu="matMenu" class="before">
           <button *ngFor="let workGroup of workGroups" mat-menu-item (click)="setActiveWorkGroup(workGroup)">
@@ -24,7 +18,7 @@
       </div>
       <div *ngIf="activeCourse">
 
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="md-subhead">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="mat-subheading-1">
           <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #menu="matMenu" x-position="before" class="before">
@@ -34,7 +28,7 @@
         </mat-menu>
       </div>
       <button mat-icon-button (click)="refreshFromServer()">
-        <mat-icon class="md-24">autorenew</mat-icon>
+        <mat-icon class="mat-24">autorenew</mat-icon>
       </button>
     </div>
   </div>
@@ -42,8 +36,8 @@
 
   </router-outlet>
 </td-layout-nav>
-<div fxHide.xs *ngIf="activeWorkGroup && onListView">
-  <a style="z-index: 9999;" mat-fab color="primary" class="mat-fab-bottom-right" (click)="assessCompare()" matTooltip="Compare"
+<div fxHide.xs *ngIf="activeWorkGroup">
+  <a *ngIf="onListView$ | async" style="z-index: 9999;" mat-fab color="primary" class="mat-fab-bottom-right" (click)="assessCompare()" matTooltip="Compare"
     matTooltipPosition="left">
     <mat-icon>show_chart</mat-icon>
   </a>

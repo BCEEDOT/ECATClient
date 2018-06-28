@@ -1,6 +1,6 @@
 <div fxLayout="row" class="pull-top-xs">
-  <h4 class="md-title">
-    <span *ngIf="comment.requestAnonymity" class="md-title">Anonymous </span>Comment for {{comment?.recipient?.rankName}}</h4>
+  <h4 class="mat-title">
+    <span *ngIf="comment.requestAnonymity" class="mat-title">Anonymous </span>Comment for {{comment?.recipient?.rankName}}</h4>
   <!-- <div fxFlex></div>
   <div class="pull-top-xs">
     <button mat-icon-button color="accent" (click)="cancel()">
@@ -10,7 +10,7 @@
 </div>
 
 <mat-dialog-content>
-  <mat-form-field class="md-block full-width">
+  <mat-form-field class="mat-block full-width">
     <textarea matInput placeholder="Comment (3000 characters max)" [(ngModel)]="comment.commentText" maxlength="3000" rows="15"
       cols="75" [disabled]="viewOnly" #commentText="ngModel" required></textarea>
   </mat-form-field>
@@ -27,14 +27,14 @@
       (click)="commentText.control.markAsDirty()" [disabled]="viewOnly && comment.requestAnonymity!==true">Anonymous</mat-checkbox>
   </div>
   <span fxFlex></span>
-  <div *ngIf="comment.entityAspect.entityState.isAdded()">
-    <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+  <div *ngIf="comment.entityAspect.entityState.isAdded()" fxLayout="row" fxLayoutGap="3px">
+    <button mat-stroked-button color="primary" (click)="cancel()">Cancel</button>
     <button mat-raised-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">Save</button>
   </div>
   <div fxLayout="row" fxLayoutGap="3px" *ngIf="!comment.entityAspect.entityState.isAdded()">
     <div fxFlex></div>
-    <button *ngIf="!viewOnly" mat-raised-button color="primary" [disabled]="viewOnly" (click)="delete()">Delete</button>
-    <button *ngIf="!viewOnly" mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+    <button *ngIf="!viewOnly" mat-stroked-button color="primary" [disabled]="viewOnly" (click)="delete()">Delete</button>
+    <button *ngIf="!viewOnly" mat-stroked-button color="primary" (click)="cancel()">Cancel</button>
     <button *ngIf="viewOnly" mat-raised-button color="primary" (click)="cancel()">Exit</button>
     <button *ngIf="!viewOnly" mat-raised-button color="primary" [disabled]="viewOnly || !commentText.dirty || !commentText.valid" (click)="save()">Save</button>
   </div>

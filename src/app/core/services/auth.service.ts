@@ -2,16 +2,12 @@ import { Injectable } from '@angular/core';
 // import { Http, Headers, Response, RequestOptions, URLSearchParams } from '@angular/common/http';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Params, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from "rxjs/Operators";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { EntityState } from 'breeze-client';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
+
 
 // import { AuthUtilityService } from "./auth-utility.service";
 import { environment } from "../../../environments/environment";
@@ -40,15 +36,10 @@ export class AuthService {
 
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');
-    // let options = new RequestOptions({ headers: headers });
-    const body = new HttpParams()
+     const body = new HttpParams()
       .set('grant_type', 'password')
       .set('username', username)
       .set('password', password);
-
-    // const body = { grant_type: 'password', username: username, password: password };
-
-    // console.log(params);
 
     // TODO: Update for environment
     // dev
@@ -56,7 +47,7 @@ export class AuthService {
     return this.http.post<ILoginResponse>(environment.api_url + 'connect/token', body,
       // awstesting
       // return this.http.post('http://ec2-34-237-207-101.compute-1.amazonaws.com/connect/token',
-      { headers: headers }).map((loginResponse: ILoginResponse) => {
+      { headers: headers }).pipe(map((loginResponse: ILoginResponse) => {
         console.log(loginResponse);
         let accessToken = loginResponse.access_token;
         let idToken = loginResponse.id_token;
@@ -68,7 +59,7 @@ export class AuthService {
 
           return false;
         }
-      });
+      }));
   }
 
   activateUser(): void {
@@ -77,11 +68,16 @@ export class AuthService {
     let idTokenSigned = localStorage.getItem('ecatUserIdToken');
 
     let accessToken = this.jwt.decodeToken(accessTokenSigned);
-    let idToken = this.jwt.decodeToken(idTokenSigned);
+    //TODO: .NET CORE
+    //let idToken = this.jwt.decodeToken(idTokenSigned);
+    let idToken = JSON.parse(idTokenSigned);
+
     var user: ILoggedInUser = <ILoggedInUser>{};
 
     var loggedInUser = {
-      personId: accessToken.sub,
+      //TODO: .NET CORE
+      //personId: accessToken.sub,
+      personId: accessToken.primarysid,
       lastName: idToken.lastName,
       firstName: idToken.firstName,
       isActive: true,
@@ -93,6 +89,8 @@ export class AuthService {
       registrationComplete: idToken.registrationComplete,
       mpInstituteRole: idToken.mpInstituteRole,
     } as Person;
+
+    console.log(loggedInUser);
 
     let entityUser = this.emProvider.getManager(DataContext.User).createEntity(MpEntityType.person, loggedInUser, EntityState.Unchanged);
     user.person = entityUser as Person;
@@ -126,11 +124,6 @@ export class AuthService {
       this.emProvider.clear(DataContext.Faculty);
       this.emProvider.clear(DataContext.LmsAdmin);
     }
-    // this.emProvider.clear(DataContext.User);
-    // this.emProvider.clear(DataContext.Student);
-    // this.emProvider.clear(DataContext.Faculty);
-
-    // this.emProvider.clearAll();
 
     this.global.user(undefined);
     this.global.userDataContext(false);
