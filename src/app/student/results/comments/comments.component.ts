@@ -8,7 +8,7 @@ import { MpSpStatus } from '../../../core/common/mapStrings';
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.scss']
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent implements OnInit, OnChanges {
 
   comments: SanitizedSpComment[];
   memHasComments: boolean = false;
@@ -16,23 +16,22 @@ export class CommentsComponent implements OnInit {
 
   @Input() memberResults: SpResult;
 
+  ngOnChanges(): void {
+    this.activate();
+  }
+
   ngOnInit(): void {
-    this.comments = this.memberResults.sanitizedComments;
-
-    if (this.comments && this.comments.length > 0) {
-      this.memHasComments = true;
-
-      this.activate();
-    }
-
+    this.activate();
   }
 
   activate(): void {
-    this.selectedComment = this.comments[0];
-  }
-
-  changeComment(comment: SanitizedSpComment): void {
-    this.selectedComment = comment;
+    this.comments = this.memberResults.sanitizedComments;
+    if (this.comments && this.comments.length > 0)
+    {
+      this.memHasComments = true;
+    } else {
+      this.memHasComments = false;
+    }
   }
 
 }

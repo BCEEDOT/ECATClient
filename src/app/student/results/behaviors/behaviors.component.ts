@@ -18,7 +18,6 @@ export class BehaviorsComponent implements OnChanges {
   // chartColors = {domain: ['#00308F','#0056FF', '#00AA58', '#00FF84', '#AAAAAA', '#AA0000', 'FF0000']};
 
   @Input() memberResults: SpResult;
-  @Input() change: number;
 
   activeInventory: SpInventory;
 
