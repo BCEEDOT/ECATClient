@@ -44,7 +44,6 @@ export class ResultsComponent implements OnInit {
       .then((results: SpResult) => {
         this.memberResults = results;
         this.workGroup = this.memberResults.workGroup;
-        console.log(this.memberResults);
         this.isLoading = false;
       }).catch((error: Event) => {
         this.dialogService.openAlert({

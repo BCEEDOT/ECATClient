@@ -33,7 +33,6 @@ export class CommentDialog implements OnInit {
 
   ngOnInit() {
     this.comment = this.data.comment as StudSpComment & FacSpComment;
-    console.log(this.comment);
     this.isStudent = this.global.persona.value.isStudent;
 
     if (this.isStudent) {

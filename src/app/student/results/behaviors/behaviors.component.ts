@@ -26,7 +26,6 @@ export class BehaviorsComponent implements OnChanges {
   }
 
   activate(): void {
-    console.log(this.inventories);
     this.inventories = this.memberResults.resultFor.workGroup.assignedSpInstr.inventoryCollection.sort((a, b) => {
       if (a.displayOrder < b.displayOrder) { return -1; }
       if (a.displayOrder > b.displayOrder) { return 1; }
@@ -64,8 +63,6 @@ export class BehaviorsComponent implements OnChanges {
 
       inv.resultBreakOut.peerBoChart['chartColors'] = chartColors;
     });
-
-    console.log(this.inventories);
 
   }
 

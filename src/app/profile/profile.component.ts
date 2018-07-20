@@ -95,7 +95,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       .then(() => {
         //No processing of results. The getProfile method attaches the profiles to the global person object
         this.userRoles = this.global.persona.value;
-        console.log(this.user);
         this.setPrettyName();
         this.checkComplete();
         this.loadingService.resolve(this.profileLoading);

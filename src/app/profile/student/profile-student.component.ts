@@ -20,8 +20,7 @@ export class ProfileStudentComponent implements OnInit {
   private dialogService: TdDialogService, private userDataContext: UserDataContext) { }
 
   ngOnInit() {
-    //console.log("this is the profile from profile-main");
-    console.log(this.profile);
+
   }
 
   cancelStudentSave() {

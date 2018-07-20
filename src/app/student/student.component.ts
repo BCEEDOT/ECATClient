@@ -256,8 +256,6 @@ export class StudentComponent
     const resultsPublished: boolean =
       this.activeWorkGroup.mpSpStatus === MpSpStatus.published;
 
-    console.log("It is in the nav");
-
     resultsPublished
       ? this.router.navigate(
           ["results", this.activeCourseId, this.activeWorkGroupId],

@@ -92,15 +92,11 @@ export class CommentsComponent implements OnInit, OnDestroy, OnChanges {
       }
     });
 
-    console.log(this.memsWithComments);
     if (this.memsWithComments.length === 0) {
       this.grpHasComments = false;
       this.facWorkGroupService.commentsComplete(true);
       return;
     }
-
-    console.log(this.groupIsOpen);
-    console.log(this.grpHasComments);
 
     this.selectedAuthor = this.memsWithComments[0];
 

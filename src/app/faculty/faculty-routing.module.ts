@@ -129,11 +129,8 @@ export function facSpAssessResolver(facultyDataContext: FacultyDataContextServic
 export function facWorkGroupResolver(facultyDataContext: FacultyDataContextService) {
   
   return (route: ActivatedRouteSnapshot) => {
-    console.log(route);
     return facultyDataContext.fetchActiveWorkGroup(+route.params['crsId'], +route.params['wrkGrpId']).then(workGroup => {
-      console.log(workGroup.mpSpStatus);
       if (workGroup.mpSpStatus !== 'Open') {
-        console.log(route.params);
         return facultyDataContext.fetchActiveWgSpComments(+route.params['crsId'], +route.params['wrkGrpId'], true).then(_ => {
           return workGroup;
         });

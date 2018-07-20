@@ -8,8 +8,7 @@ export class MyhighlightDirective {
   @Input('myHighlight') cellNumber: number;
 
   constructor(el: ElementRef) {
-    console.log(el);
-    console.log(el.nativeElement.cellIndex);
+
    }
 
    @HostListener('mouseenter') onMouseEnter() {
@@ -21,7 +20,6 @@ export class MyhighlightDirective {
   }
  
   highlight(color: string) {
-    console.log(this.cellNumber);
     
   }
 

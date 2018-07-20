@@ -103,9 +103,6 @@ export class StratComponent implements OnInit, OnDestroy {//, OnChanges {
   }
 
   private onDrop(args) {
-
-    console.log(this.stratted);
-
     for (var i = 0; i < this.stratted.length; i++) {
       this.stratted[i].stratPosition = i + 1;
 

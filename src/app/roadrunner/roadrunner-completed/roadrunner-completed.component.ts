@@ -20,7 +20,6 @@ export class RoadrunnerCompletedComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.countSub = this.roadRunnerService.count$.subscribe(count => {this.count = count});
-    console.log(this.roadRunnerInfos);
     this.soSub = this.roadRunnerService.signedOut$.subscribe(so => this.signedOut = so);
   }
 

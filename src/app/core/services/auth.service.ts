@@ -48,7 +48,6 @@ export class AuthService {
       // awstesting
       // return this.http.post('http://ec2-34-237-207-101.compute-1.amazonaws.com/connect/token',
       { headers: headers }).pipe(map((loginResponse: ILoginResponse) => {
-        console.log(loginResponse);
         let accessToken = loginResponse.access_token;
         let idToken = loginResponse.id_token;
         if (accessToken && idToken) {
@@ -90,7 +89,6 @@ export class AuthService {
       mpInstituteRole: idToken.mpInstituteRole,
     } as Person;
 
-    console.log(loggedInUser);
 
     let entityUser = this.emProvider.getManager(DataContext.User).createEntity(MpEntityType.person, loggedInUser, EntityState.Unchanged);
     user.person = entityUser as Person;
@@ -108,7 +106,6 @@ export class AuthService {
     }
 
     this.global.user(user);
-    console.log(user);
 
     // set a timer for warning the user when they are 5 minutes from token expiring
     // token.exp is in seconds, Date.now in milliseconds, and tokenTimer wants milliseconds

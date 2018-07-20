@@ -17,8 +17,6 @@ export class FacultySaveChangesGuard implements CanDeactivate<FacultyComponent> 
     let changes = [];
     changes = this.facultyDataContext.getChanges();
 
-    console.log(this.facultyDataContext.getChanges());
-
     let onlyStratChanges = changes.every((change: FacStratResponse) => 
                   change.entityType.shortName === 'FacStratResponse' && change.stratPosition === 0);
 
