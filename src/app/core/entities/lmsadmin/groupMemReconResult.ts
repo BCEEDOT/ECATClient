@@ -18,7 +18,7 @@ export class GroupMemReconResult extends EntityBase {
    groupMembers: CrseStudentInGroup[];
 
    /// <code> Place custom code between <code> tags
-   
+   hasToken: boolean;
    /// </code>
 
 }

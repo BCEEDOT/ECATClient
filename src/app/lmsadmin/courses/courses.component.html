@@ -7,8 +7,8 @@
         </div>
         <div fxFlex></div>
         <div fxLayout="row">
-          <button mat-raised-button color="primary" (click)="this.pollCourses()">Poll LMS Courses</button>
-          <button md-raised-button color="primary" (click)="this.pollCanvasCourses()">Poll Canvas</button>
+          <!-- <button mat-raised-button color="primary" (click)="this.pollCourses()">Poll LMS Courses</button> -->
+          <button mat-raised-button color="primary" (click)="this.pollCanvasCourses()">Sync Courses</button>
           <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
         </div>
       </div>
@@ -53,6 +53,12 @@
                   <mat-icon> library_books </mat-icon>
                   <span class="mat-subheading-1"> Group Management </span>
                 </button>
+                <mat-divider></mat-divider>          
+                <button mat-menu-item (click)="pollLmsCourseDetails(course.id)" [disabled]="course.classNumber===null || course.classNumber === '' || course.name === null || course.name === ''"> 
+                  <mat-icon> file_download </mat-icon>
+                  <span class="mat-subheading-1">Sync LMS Course Details </span>
+                </button>
+                
               </mat-menu>
 
               <button mat-icon-button [matMenuTriggerFor]="appMenu">

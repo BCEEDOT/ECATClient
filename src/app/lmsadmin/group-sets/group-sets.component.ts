@@ -8,7 +8,6 @@ import { LmsadminDataContextService } from "../services/lmsadmin-data-context.se
 import { WorkGroupModel, Course, WorkGroup } from "../../core/entities/lmsadmin";
 import { MpSpStatus, MpGroupCategory } from "../../core/common/mapStrings";
 import { LmsadminWorkgroupService } from "../services/lmsadmin-workgroup.service";
-import { PollLmsDialog } from "./poll-lms-dialog/poll-lms-dialog.component";
 import { ISaveGradesResult } from "../../core/entities/client-models";
 
 @Component({
@@ -29,7 +28,7 @@ export class GroupSetsComponent implements OnInit {
     pub: 'Published',
   };
   catMap = MpGroupCategory;
-  dialogRef: MatDialogRef<PollLmsDialog>;
+  hasSyncedCourseDetails: boolean = false;
   
   constructor(private lmsadminDataContext: LmsadminDataContextService, 
    private lmsadminWorkGroupService: LmsadminWorkgroupService,
@@ -37,8 +36,7 @@ export class GroupSetsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dialogService: TdDialogService,
-    private loadingService: TdLoadingService,
-    private dialog: MatDialog) { }
+    private loadingService: TdLoadingService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -60,14 +58,21 @@ export class GroupSetsComponent implements OnInit {
   }
 
   activate(){
+
+    if (this.wgModels.find(mdl => mdl.mpWgCategory === MpGroupCategory.bc1).workGroups.length > 0){
+      this.hasSyncedCourseDetails = true;
+    }
+
     this.wgModels.forEach(mdl => {
+    
       if (mdl.workGroups.some(grp => grp.mpSpStatus === MpSpStatus.created)) {
         mdl['status'] = this.testStatus.created;
         return;
-      } 
+      }
       
       if (mdl.workGroups.length === 0) {
         mdl['status'] = this.testStatus.await;
+      
         return;
       } 
 
@@ -109,7 +114,8 @@ export class GroupSetsComponent implements OnInit {
 
       //if we somehow don't meet any of the above, just show in use
       mdl['status'] = this.testStatus.inUse;
-    })
+    });
+
   }
 
   advance(model: WorkGroupModel){
@@ -180,14 +186,14 @@ export class GroupSetsComponent implements OnInit {
       });
   }
 
-  pollLmsGroups() {
-    this.dialog.open(PollLmsDialog, {
-      disableClose: true,
-      data: {
-        courseId: this.course.id,
-      }
-    }).afterClosed().subscribe(() => {this.activate()});
-  }
+  // pollLmsGroups() {
+  //   this.dialog.open(PollLmsDialog, {
+  //     disableClose: true,
+  //     data: {
+  //       courseId: this.course.id,
+  //     }
+  //   }).afterClosed().subscribe(() => {this.activate()});
+  // }
 
   syncGrades(model: WorkGroupModel){
     this.loadingService.register();

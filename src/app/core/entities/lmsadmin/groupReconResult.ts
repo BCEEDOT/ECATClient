@@ -14,7 +14,7 @@ export class GroupReconResult extends EntityBase {
    groups: WorkGroup[];
 
    /// <code> Place custom code between <code> tags
-   
+   hasToken: boolean;
    /// </code>
 
 }

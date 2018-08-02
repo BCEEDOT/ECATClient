@@ -19,5 +19,6 @@ export * from './person';
 export * from './profileFaculty';
 export * from './courseReconResult';
 export * from './lmsadmin-entity.module';
+export * from './courseDetailsReconResult';
 export * from './regHelper';
 

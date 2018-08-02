@@ -19,7 +19,7 @@ import { LmsadminWorkgroupService } from "./services/lmsadmin-workgroup.service"
 import { MyHighlightDirective } from './directives/my-highlight.directive';
 import { EditGroupDialogComponent } from './group-sets/manage-groupset/edit-group-dialog/edit-group-dialog.component';
 import { AddGroupDialogComponent } from './group-sets/manage-groupset/add-group-dialog/add-group-dialog.component';
-import { PollLmsDialog } from './group-sets/poll-lms-dialog/poll-lms-dialog.component';
+import { PollLmsDialog } from './courses/poll-lms-dialog/poll-lms-dialog.component';
 import { PublishGroupsetComponent } from './group-sets/publish-groupset/publish-groupset.component';
 import { LmsadminSavechangesguardService } from "./services/lmsadmin-savechangesguard.service";
 import { MoveStudentDialogComponent } from './group-sets/manage-groupset/move-student-dialog/move-student-dialog.component';

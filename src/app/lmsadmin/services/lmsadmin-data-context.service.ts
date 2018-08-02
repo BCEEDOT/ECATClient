@@ -8,7 +8,9 @@ import { LoggerService } from "../../shared/services/logger.service";
 import { DataContext } from "../../app-constants";
 import { ILmsAdminApiResources, ISaveGradesResult } from '../../core/entities/client-models';
 import { MpEntityType, MpSpStatus } from '../../core/common/mapStrings';
-import { Course, WorkGroup, WorkGroupModel, StudentInCourse, CourseReconResult, MemReconResult, GroupReconResult, GroupMemReconResult, CrseStudentInGroup } from "../../core/entities/lmsadmin";
+import { Course, WorkGroup, WorkGroupModel, 
+  StudentInCourse, CourseReconResult, MemReconResult, GroupReconResult, CourseDetailsReconResult,
+  GroupMemReconResult, CrseStudentInGroup } from "../../core/entities/lmsadmin";
 
 @Injectable()
 export class LmsadminDataContextService extends BaseDataContext {
@@ -46,6 +48,14 @@ export class LmsadminDataContextService extends BaseDataContext {
       returnedEntityType: MpEntityType.memRecon,
       resource: 'PollCourseMembers',
     },
+    pollCanvasSections: {
+      returnedEntityType: MpEntityType.groupRecon,
+      resource: 'PollCanvasSections',
+    },
+    pollCanvasCourseDetails: {
+      returnedEntityType: MpEntityType.groupRecon,
+      resource: 'PollCanvasCourseDetails',
+    },
     pollGroups: {
       returnedEntityType: MpEntityType.groupRecon,
       resource: 'PollGroups',
@@ -73,7 +83,8 @@ export class LmsadminDataContextService extends BaseDataContext {
   };
 
   //TODO: Update for production
-  public canvasAuthUrl: string = "https://ec2-34-215-69-52.us-west-2.compute.amazonaws.com/login/oauth2/auth?client_id=10000000000002&response_type=code&redirect_uri=https://augateway.maxwell.af.mil";
+  //public canvasAuthUrl: string = "https://ec2-34-215-69-52.us-west-2.compute.amazonaws.com/login/oauth2/auth?client_id=10000000000002&response_type=code&redirect_uri=https://augateway.maxwell.af.mil";
+    public canvasAuthUrl: string = "https://lms.stag.af.edu/login/oauth2/auth?client_id=10000000000036&response_type=code&redirect_uri=https://aupublicdev.maxwell.af.mil/au/barnes/aa/ecat/development/canvasauth/tokenrequest";
 
   constructor(emProvider: EmProviderService, private global: GlobalService, private logger: LoggerService) {
     super(DataContext.LmsAdmin, emProvider)
@@ -313,61 +324,171 @@ export class LmsadminDataContextService extends BaseDataContext {
   }
 
   pollCourseMembers(courseId: number): Promise < MemReconResult > {
-    const params: any = { courseId: courseId };
-    let query: any = EntityQuery.from(this.lmsAdminApiResource.pollCourseMembers.resource).withParameters(params);
+  const params: any = { courseId: courseId };
+  let query: any = EntityQuery.from(this.lmsAdminApiResource.pollCourseMembers.resource).withParameters(params);
 
 
-    return<Promise<MemReconResult >> this.manager.executeQuery(query)
-      .then(allCoursesResp)
-      .catch((e: Event) => {
-        console.log('Did not retrieve course members ' + e);
-        return Promise.reject(e);
-      });
+  return<Promise<MemReconResult >> this.manager.executeQuery(query)
+    .then(allCoursesResp)
+    .catch((e: Event) => {
+      console.log('Did not retrieve course members ' + e);
+      return Promise.reject(e);
+    });
 
-      function allCoursesResp(data: QueryResult): MemReconResult {
-        let memRecon = data.results[0] as MemReconResult;
-        if (memRecon) {
-          console.log('Course members loaded from remote store', memRecon, false);
-          return memRecon;
-        }
+    function allCoursesResp(data: QueryResult): MemReconResult {
+      let memRecon = data.results[0] as MemReconResult;
+      if (memRecon) {
+        console.log('Course members loaded from remote store', memRecon, false);
+        return memRecon;
       }
     }
+  }
 
   pollGroups(courseId: number): Promise < GroupReconResult > {
-    const params: any = { courseId: courseId };
-    let query: any = EntityQuery.from(this.lmsAdminApiResource.pollGroups.resource).withParameters(params);
+  const params: any = { courseId: courseId };
+  let query: any = EntityQuery.from(this.lmsAdminApiResource.pollGroups.resource).withParameters(params);
 
 
-    return<Promise<GroupReconResult >> this.manager.executeQuery(query)
-      .then(groupsResp)
-      .catch((e: Event) => {
-        console.log('Did not retrieve groups ' + e);
-        return Promise.reject(e);
-      });
+  return<Promise<GroupReconResult >> this.manager.executeQuery(query)
+    .then(groupsResp)
+    .catch((e: Event) => {
+      console.log('Did not retrieve groups ' + e);
+      return Promise.reject(e);
+    });
 
-      function groupsResp(data: QueryResult): GroupReconResult {
-        let grpRecon = data.results[0] as GroupReconResult;
-        if (grpRecon) {
-          console.log('Groups loaded from remote store', grpRecon, false);
-          return grpRecon;
-        }
+    function groupsResp(data: QueryResult): GroupReconResult {
+      let grpRecon = data.results[0] as GroupReconResult;
+      if (grpRecon) {
+        console.log('Groups loaded from remote store', grpRecon, false);
+        return grpRecon;
       }
     }
+  }
 
   pollAllGroupMembers(courseId: number): Promise < Array < GroupMemReconResult >> {
+  const params: any = { courseId: courseId };
+  let query: any = EntityQuery.from(this.lmsAdminApiResource.pollAllGroupMembers.resource).withParameters(params);
+
+
+  return<Promise<Array < GroupMemReconResult >>> this.manager.executeQuery(query)
+    .then(grpMemResp)
+    .catch((e: Event) => {
+      console.log('Did not retrieve group members ' + e);
+      return Promise.reject(e);
+    });
+
+    function grpMemResp(data: QueryResult): Array<GroupMemReconResult> {
+      let grpMemRecon = data.results as Array<GroupMemReconResult>;
+      if (grpMemRecon) {
+        console.log('Group members loaded from remote store', grpMemRecon, false);
+        return grpMemRecon;
+      }
+    }
+  }
+
+  syncBbGrades(courseId: number, category: string): Promise < ISaveGradesResult > {
+  const params: any = { crseId: courseId, wgCategory: category };
+  let query: any = EntityQuery.from(this.lmsAdminApiResource.syncBbGrades.resource).withParameters(params);
+
+    return<Promise<ISaveGradesResult >> this.manager.executeQuery(query)
+    .then(syncGradesResp)
+    .catch((e: Event) => {
+      console.log('Bb Gradebook Sync error ' + e);
+      return Promise.reject(e);
+    });
+
+    function syncGradesResp(data: QueryResult): ISaveGradesResult {
+      let syncResult = data.results[0] as ISaveGradesResult;
+      if (syncResult) {
+        console.log('Bb Gradebook Sync ' + syncResult.message, syncResult, false);
+        return syncResult;
+      }
+    }
+  }
+
+  pollCanvasCourses(): Promise<CourseReconResult> {
+    let query: any = EntityQuery.from(this.lmsAdminApiResource.pollCanvasCourses.resource);
+
+    return <Promise<CourseReconResult>>this.manager.executeQuery(query)
+      .then(allCoursesResp)
+      .catch((e: Event) => {
+        console.log('Did not retrieve courses ' + e);
+        return Promise.reject(e);
+      });
+  
+
+    function allCoursesResp(data: QueryResult): CourseReconResult {
+      let courseRecon = data.results[0] as CourseReconResult;
+      if (courseRecon) {
+        if (courseRecon.hasToken){
+          console.log('Courses loaded from remote store', courseRecon, false);
+        } else {
+          console.log('Failed to poll LMS, did not have a working token for this user.')
+        }
+        return courseRecon;
+      }
+    }
+  }
+
+  // pollCanvasCourseMembers(courseId: number): Promise < MemReconResult > {
+  //   const params: any = { courseId: courseId };
+  //   let query: any = EntityQuery.from(this.lmsAdminApiResource.pollCanvasMembers.resource).withParameters(params);
+
+
+  //   return<Promise<MemReconResult >> this.manager.executeQuery(query)
+  //     .then(allCoursesResp)
+  //     .catch((e: Event) => {
+  //       console.log('Did not retrieve course members ' + e);
+  //       return Promise.reject(e);
+  //     });
+
+  //     function allCoursesResp(data: QueryResult): MemReconResult {
+  //       let memRecon = data.results[0] as MemReconResult;
+  //       if (memRecon) {
+  //         if (memRecon.hasToken){
+  //           console.log('Course members loaded from remote store', memRecon, false);
+  //         } else {
+  //           console.log('Failed to poll LMS, did not have a working token for this user.')
+  //         }
+  //         return memRecon;
+  //       }
+  //     }
+  // }
+
+  // pollCanvasSections(courseId: number): Promise < GroupReconResult > {
+  //   const params: any = { courseId: courseId };
+  //   let query: any = EntityQuery.from(this.lmsAdminApiResource.pollCanvasSections.resource).withParameters(params);
+  
+  
+  //   return<Promise<GroupReconResult >> this.manager.executeQuery(query)
+  //     .then(groupsResp)
+  //     .catch((e: Event) => {
+  //       console.log('Did not retrieve groups ' + e);
+  //       return Promise.reject(e);
+  //     });
+  
+  //     function groupsResp(data: QueryResult): GroupReconResult {
+  //       let grpRecon = data.results[0] as GroupReconResult;
+  //       if (grpRecon) {
+  //         console.log('Groups loaded from remote store', grpRecon, false);
+  //         return grpRecon;
+  //       }
+  //     }
+  // }
+
+  pollCanvasCourseDetails(courseId: number): Promise < CourseDetailsReconResult> {
     const params: any = { courseId: courseId };
-    let query: any = EntityQuery.from(this.lmsAdminApiResource.pollAllGroupMembers.resource).withParameters(params);
-
-
-    return<Promise<Array < GroupMemReconResult >>> this.manager.executeQuery(query)
-      .then(grpMemResp)
+    let query: any = EntityQuery.from(this.lmsAdminApiResource.pollCanvasCourseDetails.resource).withParameters(params);
+  
+    return<Promise<CourseDetailsReconResult>> this.manager.executeQuery(query)
+      .then(courseDetailsResultsResponse)
       .catch((e: Event) => {
         console.log('Did not retrieve group members ' + e);
         return Promise.reject(e);
       });
-
-      function grpMemResp(data: QueryResult): Array<GroupMemReconResult> {
-        let grpMemRecon = data.results as Array<GroupMemReconResult>;
+  
+      function courseDetailsResultsResponse(data: QueryResult): CourseDetailsReconResult {
+        let grpMemRecon = data.results[0] as CourseDetailsReconResult;
         if (grpMemRecon) {
           console.log('Group members loaded from remote store', grpMemRecon, false);
           return grpMemRecon;
@@ -375,96 +496,27 @@ export class LmsadminDataContextService extends BaseDataContext {
       }
     }
 
-  syncBbGrades(courseId: number, category: string): Promise < ISaveGradesResult > {
-    const params: any = { crseId: courseId, wgCategory: category };
-    let query: any = EntityQuery.from(this.lmsAdminApiResource.syncBbGrades.resource).withParameters(params);
+  syncCanvasGrades(courseId: number): Promise < ISaveGradesResult > {
+    const params: any = { crseId: courseId };
+    let query: any = EntityQuery.from(this.lmsAdminApiResource.SyncCanvasGrades.resource).withParameters(params);
 
-      return<Promise<ISaveGradesResult >> this.manager.executeQuery(query)
-      .then(syncGradesResp)
-      .catch((e: Event) => {
-        console.log('Bb Gradebook Sync error ' + e);
-        return Promise.reject(e);
-      });
+    return<Promise<ISaveGradesResult>> this.manager.executeQuery(query)
+    .then(syncGradesResp)
+    .catch((e: Event) => {
+      console.log('Bb Gradebook Sync error ' + e);
+      return Promise.reject(e);
+    });
 
-      function syncGradesResp(data: QueryResult): ISaveGradesResult {
-        let syncResult = data.results[0] as ISaveGradesResult;
-        if (syncResult) {
+    function syncGradesResp(data: QueryResult): ISaveGradesResult {
+      let syncResult = data.results[0] as ISaveGradesResult;
+      if (syncResult) {
+        if (syncResult.hasToken){
           console.log('Bb Gradebook Sync ' + syncResult.message, syncResult, false);
-          return syncResult;
+        } else {
+          console.log('Failed to poll LMS, did not have a working token for this user.')
         }
+        return syncResult;
       }
     }
-
-    pollCanvasCourses(): Promise<CourseReconResult> {
-      let query: any = EntityQuery.from(this.lmsAdminApiResource.pollCanvasCourses.resource);
-  
-      return <Promise<CourseReconResult>>this.manager.executeQuery(query)
-        .then(allCoursesResp)
-        .catch((e: Event) => {
-          console.log('Did not retrieve courses ' + e);
-          return Promise.reject(e);
-        });
-    
-  
-      function allCoursesResp(data: QueryResult): CourseReconResult {
-        let courseRecon = data.results[0] as CourseReconResult;
-        if (courseRecon) {
-          if (courseRecon.hasToken){
-            console.log('Courses loaded from remote store', courseRecon, false);
-          } else {
-            console.log('Failed to poll LMS, did not have a working token for this user.')
-          }
-          return courseRecon;
-        }
-      }
-    }
-
-    pollCanvasCourseMembers(courseId: number): Promise < MemReconResult > {
-      const params: any = { courseId: courseId };
-      let query: any = EntityQuery.from(this.lmsAdminApiResource.pollCanvasMembers.resource).withParameters(params);
-  
-  
-      return<Promise<MemReconResult >> this.manager.executeQuery(query)
-        .then(allCoursesResp)
-        .catch((e: Event) => {
-          console.log('Did not retrieve course members ' + e);
-          return Promise.reject(e);
-        });
-  
-        function allCoursesResp(data: QueryResult): MemReconResult {
-          let memRecon = data.results[0] as MemReconResult;
-          if (memRecon) {
-            if (memRecon.hasToken){
-              console.log('Course members loaded from remote store', memRecon, false);
-            } else {
-              console.log('Failed to poll LMS, did not have a working token for this user.')
-            }
-            return memRecon;
-          }
-        }
-      }
-
-      syncCanvasGrades(courseId: number): Promise < ISaveGradesResult > {
-        const params: any = { crseId: courseId };
-        let query: any = EntityQuery.from(this.lmsAdminApiResource.SyncCanvasGrades.resource).withParameters(params);
-    
-        return<Promise<ISaveGradesResult>> this.manager.executeQuery(query)
-        .then(syncGradesResp)
-        .catch((e: Event) => {
-          console.log('Bb Gradebook Sync error ' + e);
-          return Promise.reject(e);
-        });
-  
-        function syncGradesResp(data: QueryResult): ISaveGradesResult {
-          let syncResult = data.results[0] as ISaveGradesResult;
-          if (syncResult) {
-            if (syncResult.hasToken){
-              console.log('Bb Gradebook Sync ' + syncResult.message, syncResult, false);
-            } else {
-              console.log('Failed to poll LMS, did not have a working token for this user.')
-            }
-            return syncResult;
-          }
-        }
-      }
   }
+}

@@ -8,7 +8,7 @@
     <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
   </mat-card-title>
   <mat-divider></mat-divider>
-  <mat-card-content>
+  <mat-card-content *ngIf="hasSyncedCourseDetails">
     <mat-list>
       <mat-list-item>
         <span fxFlex="30">CATEGORY ID</span>
@@ -28,10 +28,6 @@
               <button mat-menu-item [routerLink]="[model.mpWgCategory + '/config']" *ngIf="model.status === testStatus.await && model.mpWgCategory !== catMap.bc1"> 
                 <mat-icon> group_add </mat-icon>
                 <span class="mat-subheading-1"> Create </span>
-              </button>
-              <button mat-menu-item (click)="pollLmsGroups()" *ngIf="model.status !== testStatus.reviewed && model.status !== testStatus.pub && model.mpWgCategory === catMap.bc1"> 
-                <mat-icon> file_download </mat-icon>
-                <span class="mat-subheading-1"> Poll LMS </span>
               </button>
               <button mat-menu-item [routerLink]="[model.mpWgCategory + '/manage']" *ngIf="model.status !== testStatus.await"> 
                 <mat-icon> group </mat-icon>
@@ -55,5 +51,8 @@
         </span>
       </mat-list-item>
     </mat-list>
+  </mat-card-content>
+  <mat-card-content *ngIf="!hasSyncedCourseDetails">
+    <h4>You must sync LMS Course Details prior to managing groups</h4>
   </mat-card-content>
 </mat-card>
