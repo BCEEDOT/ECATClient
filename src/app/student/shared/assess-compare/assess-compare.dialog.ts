@@ -35,7 +35,7 @@ export class AssessCompareDialog {
   yAxisLabel: string = 'Rating';
 
   blueOrangeScheme: any = {
-    domain: ['#FF0101', '#FF7800', '#FFF300', '#8BFF00', '#08FF00', '#00FFBD', '#00A6FF', '#0008FF', '#7000FF'],
+    domain: ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf', '#7000FF'],
     // domain: ['#0D47A1', '#FFCC80', '#1976D2', '#039BE5', '#00BCD4', '#FB8C00', '#FFA726', '#FFCC80', '#FFECB3'],
   };
 
@@ -93,11 +93,15 @@ export class AssessCompareDialog {
       this.multi.push(memData);
     });
     this.multiOriginal = this.multi;
+    
 
     this.multi.forEach((dataValue: any) => {
-      this.itemsRequireMatch.push(dataValue.name);
-    })
-
+      //this.itemsRequireMatch.push(dataValue.name);
+      this.items.push(dataValue.name);
+    });
+    
+    this.multi = [];
+    
   }
 
   add(value: string): void {
