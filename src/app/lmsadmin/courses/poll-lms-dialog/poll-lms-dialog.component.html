@@ -33,7 +33,7 @@
           <h5 mat-title>Group Memberships Results:</h5>
         </mat-list-item>
         <mat-list-item *ngFor="let result of grpMemResults">
-          {{result.workGroupName}} - Added: {{result.numAdded}} Removed: {{result.numRemoved}}
+         {{result.groupType}} : {{result.workGroupName}} - Added: {{result.numAdded}} Removed: {{result.numRemoved}}
         </mat-list-item>
         <mat-list-item *ngIf="grpMemResults.length === 0">No Changes </mat-list-item>
       </mat-list>
