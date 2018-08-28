@@ -198,14 +198,17 @@ export class GroupSetsComponent implements OnInit {
   syncGrades(model: WorkGroupModel){
     this.loadingService.register();
     let courseId = model.workGroups[0].courseId;
-    this.lmsadminDataContext.syncBbGrades(courseId, model.mpWgCategory)
+    this.lmsadminDataContext.syncCanvasGrades(courseId)
     .then((resp: ISaveGradesResult) => {
       this.loadingService.resolve();
       if (resp.success){
-        this.dialogService.openAlert({message: resp.returnedScores + ' scores recorded in LMS', title: 'Grades Pushed'});
+        this.dialogService.openAlert({message: resp.message, title: 'Grades Pushed'});
       } else {
         this.dialogService.openAlert({message: resp.message, title: 'Grade Push Error'});
       }
+    }).catch(e => {
+      this.loadingService.resolve();
+      this.dialogService.openAlert({message: e, title: 'Grade Push Error' });
     });
   }
 

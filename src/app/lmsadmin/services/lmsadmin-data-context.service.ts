@@ -503,7 +503,7 @@ export class LmsadminDataContextService extends BaseDataContext {
     return<Promise<ISaveGradesResult>> this.manager.executeQuery(query)
     .then(syncGradesResp)
     .catch((e: Event) => {
-      console.log('Bb Gradebook Sync error ' + e);
+      console.log('LMS Gradebook Sync error ' + e);
       return Promise.reject(e);
     });
 
@@ -511,7 +511,7 @@ export class LmsadminDataContextService extends BaseDataContext {
       let syncResult = data.results[0] as ISaveGradesResult;
       if (syncResult) {
         if (syncResult.hasToken){
-          console.log('Bb Gradebook Sync ' + syncResult.message, syncResult, false);
+          console.log('LMS Gradebook Sync ' + syncResult.message, syncResult, false);
         } else {
           console.log('Failed to poll LMS, did not have a working token for this user.')
         }

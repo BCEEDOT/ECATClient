@@ -12,7 +12,7 @@
             <form #loginForm="ngForm" (keyup.enter)="login()">
               <div layout="row">
                 <mat-form-field flex> 
-                  <input matInput #userElement #userControl="ngModel" placeholder="Username" type="text" maxlength="30" name="username" [(ngModel)]="username" required>             
+                  <input matInput #userElement #userControl="ngModel" placeholder="Username" type="text" maxlength="50" name="username" [(ngModel)]="username" required>             
                   <mat-hint align="start">
                     <span [hidden]="!userControl.errors?.required || userControl.pristine" class="tc-red-600">Required</span>
                   </mat-hint>
