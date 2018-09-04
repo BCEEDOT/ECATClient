@@ -8,14 +8,20 @@
     </td-chips>
   </div>
 
-<div *ngIf="multi?.length === 0" fxLayout="row" class="pad-xl" fxLayoutAlign="center center">
-  <h3>No Data</h3>
+  <div *ngIf="multiOriginal?.length === 0" fxLayout="row" class="pad-xl" fxLayoutAlign="center center">
+    <h3>No Data</h3>
+  </div>
+
+<div *ngIf="multi?.length === 0 && multiOriginal?.length > 0" fxLayout="row" class="pad-xl" fxLayoutAlign="center center">
+  <h3>Select students from list above to compare. </h3>
 </div>
 
 <div *ngIf="multi?.length > 0">
 
-  <ngx-charts-line-chart [view]="view" [scheme]="blueOrangeScheme" [results]="multi" [gradient]="gradient" [xAxis]="showXAxis"
-    [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+  <ngx-charts-line-chart [view]="view" [scheme]="blueOrangeScheme" 
+  [results]="multi" [gradient]="gradient" [xAxis]="showXAxis"
+    [yAxis]="showYAxis" 
+    [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel" [yAxisTickFormatting]="ratings" [activeEntries]="single">
     <!-- [autoScale]="autoScale" -->
     <!-- (select)="onSelect($event)" -->

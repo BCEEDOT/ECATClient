@@ -54,7 +54,6 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('It is in the ngONInit in list view of component');
     this.subs.push(this.workGroupService.workGroup$.subscribe((workGroup: WorkGroup) => {
       this.activeWorkGroup = workGroup;
       this.activate();
@@ -77,7 +76,6 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('It is in the ngONdestroy');
     this.subs.forEach((sub: Subscription) => {
       sub.unsubscribe();
     });
@@ -142,7 +140,6 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   changes(): void {
-    console.log(this.studentDataContext.getChanges());
   }
 
 

@@ -65,9 +65,6 @@ export class EmProviderService {
       // let serviceEndPoint = DEV_API + resourceEndPoint;
       let serviceEndPoint = environment.api_url+ 'breeze/' + resourceEndPoint;
 
-      console.log(serviceEndPoint);
-
-
       let dsconfig: DataServiceOptions = {
         serviceName: serviceEndPoint
       };
@@ -93,7 +90,6 @@ export class EmProviderService {
           })
           .catch(e => {
             //If there is an error reset
-            console.log(emStatus.manager);
             emStatus.promise = null;
             console.log("Error retrieving metadata");
             console.log(`error from prepare em----- ${e}`)

@@ -20,7 +20,6 @@ export class ResultsComponent implements OnInit {
   paramCourseId: number;
   isLoading: boolean = false;
   memberResults: SpResult;
-  change: number = 1;
 
   constructor(private workGroupService: WorkGroupService, private global: GlobalService, private route: ActivatedRoute,
     private studentDataContext: StudentDataContext, private dialogService: TdDialogService,
@@ -38,8 +37,6 @@ export class ResultsComponent implements OnInit {
   }
 
   activate(): void {
-
-    this.change++;
     this.isLoading = true;
     this.workGroupService.onListView(true);
 
@@ -47,7 +44,6 @@ export class ResultsComponent implements OnInit {
       .then((results: SpResult) => {
         this.memberResults = results;
         this.workGroup = this.memberResults.workGroup;
-        console.log(this.memberResults);
         this.isLoading = false;
       }).catch((error: Event) => {
         this.dialogService.openAlert({

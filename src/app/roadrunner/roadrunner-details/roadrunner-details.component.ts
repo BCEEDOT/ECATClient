@@ -51,7 +51,6 @@ export class RoadrunnerDetailsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
         this.eventSub = this.roadRunnerService.roadRunnerData$.subscribe((roadRunnerData: RoadRunner[]) => {
-            // console.log("roadrunner update")
             this.event = roadRunnerData;
         });
         this.checkNew = (this.route.snapshot.params['id']);

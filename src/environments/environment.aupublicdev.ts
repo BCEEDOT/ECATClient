@@ -5,5 +5,5 @@
 
 export const environment = {
   production: true,
-  api_url: 'http://ec2-34-237-207-101.compute-1.amazonaws.com/'
+  api_url: 'https://aupublicdev.maxwell.af.mil/au/barnes/aa/ecat/development/'
 };

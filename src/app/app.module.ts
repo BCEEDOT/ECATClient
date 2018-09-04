@@ -54,7 +54,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:50000', 'augateway.maxwell.af.mil', 'aupublicdev.maxwell.af.mil'],
+        whitelistedDomains: ['localhost:50000', 'augateway.maxwell.af.mil', 'aupublicdev.maxwell.af.mil', 'intranet.maxwell.af.mil'],
         throwNoTokenError: false,
         skipWhenExpired: true,
       },
@@ -75,7 +75,6 @@ export function tokenGetter() {
 export class AppModule {
   constructor(router: Router) {
 
-    // console.log('Routes', JSON.stringify(router.config, undefined, 2));
   }
 
 }

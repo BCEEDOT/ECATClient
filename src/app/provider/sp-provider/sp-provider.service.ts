@@ -36,21 +36,17 @@ export class SpProviderService {
     if (this.global.persona.value.isStudent) {
       return this.studentDataContext.commit()
         .then((result) => {
-          console.log('success');
           return result;
         })
         .catch((result) => {
-          console.log('error');
           throw result;
         })
     } else {
       return this.facultyDataContext.commit()
         .then((result) => {
-          console.log('success');
           return result;
         })
         .catch((result) => {
-          console.log('error');
           throw result;
         })
     }
@@ -81,10 +77,6 @@ export class SpProviderService {
       }
     }).afterClosed();
 
-    // this.dialogRef.afterClosed().subscribe(() => {
-    //   console.log('Comment closed');
-    //   this.commentClosed(true);
-    // });
   }
 
   evaluateStratification(isInstructor?: boolean, force?: boolean): Promise<Array<StuCrseStudentInGroup & FacCrseStudentInGroup>> {

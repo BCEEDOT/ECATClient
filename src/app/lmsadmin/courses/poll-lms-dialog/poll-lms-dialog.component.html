@@ -29,9 +29,7 @@
       </mat-list>
       <mat-divider></mat-divider>
       <mat-list>
-        <mat-list-item>
-          <h5 mat-title>Group Memberships Results:</h5>
-        </mat-list-item>
+        <mat-list-item><h5 mat-title>Group Memberships Results:</h5></mat-list-item>
         <mat-list-item *ngFor="let result of grpMemResults">
          {{result.groupType}} : {{result.workGroupName}} - Added: {{result.numAdded}} Removed: {{result.numRemoved}}
         </mat-list-item>

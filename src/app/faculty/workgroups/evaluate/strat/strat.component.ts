@@ -47,13 +47,11 @@ export class StratComponent implements OnInit, OnDestroy {
   ) {
 
     this.route.parent.params.subscribe(params => {
-      console.log(params);
       this.workGroupId = +params["wrkGrpId"];
       this.courseId = +params["crsId"];
     });
 
     dragulaService.drop.subscribe(value => {
-      console.log(`drop: ${value[0]}`);
       this.onDrop(value.slice(1));
     });
   }
@@ -61,7 +59,6 @@ export class StratComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.roSub = this.facWorkGroupService.readOnly$.subscribe(status => {
-      console.log("It is in the readonly");
       this.readOnly = status;
       if (this.workGroup) {
         this.activate();
@@ -153,17 +150,12 @@ export class StratComponent implements OnInit, OnDestroy {
     this.readOnly = this.facWorkGroupService.readOnly$.value;
     //this.evaluateStrat(true);
 
-    console.log(this.stratted);
-    console.log(this.unstratted);
-
     this.dragSub = this.dragulaService.drop.subscribe(value => {
       this.onDrop(value.slice(1));
     });
   }
 
   private onDrop(args) {
-    console.log(args);
-
     for (var i = 0; i < this.stratted.length; i++) {
       this.stratted[i].stratPosition = i + 1;
 
@@ -178,10 +170,6 @@ export class StratComponent implements OnInit, OnDestroy {
     if (this.showUnstrat && this.unstratted.length === 0) {
       this.showUnstrat = false;
     }
-  }
-
-  test() {
-    console.log(this.workGroup);
   }
 
   cancel() {

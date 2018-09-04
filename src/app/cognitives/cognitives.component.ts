@@ -69,7 +69,6 @@ export class CognitivesComponent implements OnInit {
 
         if (this.cogResults.length !== null) {
             this.cogResults.forEach(res => {
-                console.log(res.instrument.mpCogInstrumentType);
                 if (res.instrument.mpCogInstrumentType === _mp.MpCogInstrumentType.ecpe) {
                     that.cogResultsService.cogEcpeResult(res);
                     that.ecpeResult = res;

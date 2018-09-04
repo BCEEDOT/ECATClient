@@ -247,8 +247,6 @@ export class FacultyDataContextService extends BaseDataContext {
         console.log('Query succeeded, but no workgroup data was returned', data, false);
         return Promise.reject(() => error) as any;
       }
-
-      console.log(retGroup);
       return retGroup
     }
 

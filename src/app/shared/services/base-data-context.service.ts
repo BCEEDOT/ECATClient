@@ -87,8 +87,6 @@ export class BaseDataContext {
         return saveResult.entities;
       })
       .catch(errors => {
-        console.log(errors);
-        console.log(errors.entityErrors);
         let message = this.processSaveErrors(errors);
 
         throw message;
@@ -98,7 +96,6 @@ export class BaseDataContext {
   //This is save changes
   commit(): Promise<any> {
     //let saveOptions = new SaveOptions({ resourceName: 'savechanges' });
-    //console.log(this.getChanges());
     //return <any>this.manager.saveChanges(null, saveOptions)
     return <any>this.manager
       .saveChanges()
@@ -106,8 +103,6 @@ export class BaseDataContext {
         return saveResult.entities;
       })
       .catch(errors => {
-        console.log(errors);
-        console.log(errors.entityErrors);
         let message = this.processSaveErrors(errors);
 
         throw message;

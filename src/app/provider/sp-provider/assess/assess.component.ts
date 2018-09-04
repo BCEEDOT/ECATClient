@@ -155,6 +155,10 @@ export class AssessComponent implements OnInit {
         }
       });
     } else {
+      if (this.isStudent) {
+        this.location.back();
+        return;
+      }
       this.router.navigate(['../../main'], { relativeTo: this.route });
       // this.location.back();
     }
