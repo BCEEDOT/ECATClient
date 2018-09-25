@@ -13,8 +13,12 @@ export class CourseDetailsReconResult extends EntityBase {
 
   /// <code> Place custom code between <code> tags
   groupReconResult: GroupReconResult;
+  groupReconSuccess:  boolean;
   courseMemberReconResult: MemReconResult;
+  memReconSuccess: boolean;
   groupMemReconResults: GroupMemReconResult[];
+  groupMemReconSuccess: boolean;
+  errorMessage: string;
   hasToken: boolean;
   /// </code>
 }

@@ -1,15 +1,20 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 import { TdLoadingService, TdDialogService } from "@covalent/core";
 
 import { LmsadminDataContextService } from "../../services/lmsadmin-data-context.service";
-import { GroupReconResult, MemReconResult, GroupMemReconResult, CourseDetailsReconResult } from "../../../core/entities/lmsadmin";
+import {
+  GroupReconResult,
+  MemReconResult,
+  GroupMemReconResult,
+  CourseDetailsReconResult
+} from "../../../core/entities/lmsadmin";
 
 @Component({
-  selector: 'app-poll-lms-dialog',
-  templateUrl: './poll-lms-dialog.component.html',
-  styleUrls: ['./poll-lms-dialog.component.scss']
+  selector: "app-poll-lms-dialog",
+  templateUrl: "./poll-lms-dialog.component.html",
+  styleUrls: ["./poll-lms-dialog.component.scss"]
 })
 export class PollLmsDialog implements OnInit {
   courseId: number;
@@ -17,18 +22,20 @@ export class PollLmsDialog implements OnInit {
   groupsResult: GroupReconResult;
   grpMemResults: Array<GroupMemReconResult> = [];
   courseDetailsReconResults: CourseDetailsReconResult;
-  enrollComplete: boolean = false;
-  groupsComplete: boolean = false;
-  grpMemsComplete: boolean = false;
+  enrollSuccess: boolean = false;
+  groupsSuccess: boolean = false;
+  grpMemsSuccess: boolean = false;
   pollComplete: boolean = false;
   pollFail: boolean = false;
   failMessage: string;
 
-  constructor(private lmsAdminDataCtx: LmsadminDataContextService,
+  constructor(
+    private lmsAdminDataCtx: LmsadminDataContextService,
     private loadingService: TdLoadingService,
-    private dialogService: TdDialogService, 
+    private dialogService: TdDialogService,
     private dialogRef: MatDialogRef<PollLmsDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit() {
     this.courseId = this.data.courseId;
@@ -37,34 +44,56 @@ export class PollLmsDialog implements OnInit {
   }
 
   pollCanvasEnrollments() {
-    this.lmsAdminDataCtx.pollCanvasCourseDetails(this.courseId).then(data => {
-      if (data.hasToken) {
-        this.groupsResult = data.groupReconResult;
-        this.enrollResult = data.courseMemberReconResult;
-        this.grpMemResults = data.groupMemReconResults.filter(gmrr => gmrr.numAdded > 0 || gmrr.numRemoved > 0);
-        //this.enrollResult = data;
-        this.pollComplete = true;
-        //this.pollCanvasSections();
-      } else {
-        this.dialogService.openConfirm({
-          message: 'ECAT does not have a valid LMS token for your account. Please authorize with the LMS so ECAT can generate a token.',
-          title: 'Poll Failed.',
-          acceptButton: 'Authorize'
-        }).afterClosed().subscribe((confirmed: boolean) => {
-          if (confirmed){
-            window.open(this.lmsAdminDataCtx.canvasAuthUrl, '_blank');
+    this.lmsAdminDataCtx
+      .pollCanvasCourseDetails(this.courseId)
+      .then(data => {
+        if (data.hasToken) {
+          if (data.groupReconSuccess) {
+            this.groupsResult = data.groupReconResult;
+            this.groupsSuccess = true;
           }
-        })
-      }
-    }).catch((e: Event) => {
-      console.log('Error retrieving course enrollments ' + e);
-      this.pollFail = true;
-      this.dialogService.openAlert({
-        message: 'Error polling LMS for enrollments. Please try again.',
-        title: 'Poll Error',
-        closeButton: 'Dismiss'
+
+          if (data.memReconSuccess) {
+            this.enrollResult = data.courseMemberReconResult;
+            this.enrollSuccess = true;
+          }
+
+          if (data.groupMemReconSuccess) {
+            this.grpMemResults = data.groupMemReconResults.filter(
+              gmrr => gmrr.numAdded > 0 || gmrr.numRemoved > 0
+            );
+            this.grpMemsSuccess = true;
+          }
+
+          //this.enrollResult = data;
+          this.pollComplete = true;
+          console.log(data.errorMessage);
+          //this.pollCanvasSections();
+        } else {
+          this.dialogService
+            .openConfirm({
+              message:
+                "ECAT does not have a valid LMS token for your account. Please authorize with the LMS so ECAT can generate a token.",
+              title: "Poll Failed.",
+              acceptButton: "Authorize"
+            })
+            .afterClosed()
+            .subscribe((confirmed: boolean) => {
+              if (confirmed) {
+                window.open(this.lmsAdminDataCtx.canvasAuthUrl, "_blank");
+              }
+            });
+        }
+      })
+      .catch((e: Event) => {
+        console.log("Error retrieving course enrollments " + e);
+        this.pollFail = true;
+        this.dialogService.openAlert({
+          message: "Error polling LMS for enrollments. Please try again.",
+          title: "Poll Error",
+          closeButton: "Dismiss"
+        });
       });
-    });
   }
 
   close(): void {

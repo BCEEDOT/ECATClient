@@ -4,7 +4,7 @@
     <mat-list *ngIf="pollComplete == false">
       <mat-list-item>
         Getting Course Details...
-          <mat-progress-bar mode="indeterminate" *ngIf="grpMemsComplete == false"></mat-progress-bar>
+        <mat-progress-bar mode="indeterminate" *ngIf="grpMemsComplete == false"></mat-progress-bar>
         <mat-icon class="tc-green-700" *ngIf="grpMemsComplete == true">check</mat-icon>
       </mat-list-item>
     </mat-list>
@@ -13,27 +13,49 @@
         <mat-list-item>
           <h5 mat-title>Course Enrollment Results: </h5>
         </mat-list-item>
-        <mat-list-item *ngIf="enrollResult.numOfAccountCreated > 0">Accounts Created: {{enrollResult.numOfAccountCreated}} </mat-list-item>
-        <mat-list-item *ngIf="enrollResult.numAdded > 0">Enrollments Added: {{enrollResult.numAdded}}</mat-list-item>
-        <mat-list-item *ngIf="enrollResult.numRemoved > 0">Enrollments Removed: {{enrollResult.numRemoved}} </mat-list-item>
-        <mat-list-item *ngIf="enrollResult.numRemoved === 0 && enrollResult.numAdded === 0 && enrollResult.numOfAccountCreated === 0">No Changes </mat-list-item>
+        <div *ngIf="enrollSuccess">
+          <mat-list-item *ngIf="enrollResult.numOfAccountCreated > 0">Accounts Created:
+            {{enrollResult.numOfAccountCreated}} </mat-list-item>
+          <mat-list-item *ngIf="enrollResult.numAdded > 0">Enrollments Added: {{enrollResult.numAdded}}</mat-list-item>
+          <mat-list-item *ngIf="enrollResult.numRemoved > 0">Enrollments Removed: {{enrollResult.numRemoved}}
+          </mat-list-item>
+          <mat-list-item *ngIf="enrollResult.numRemoved === 0 && enrollResult.numAdded === 0 && enrollResult.numOfAccountCreated === 0">No
+            Changes </mat-list-item>
+        </div>
+        <div *ngIf="!enrollSuccess">
+          <mat-list-item  style="color: red">There was an error syncing course memberships. Please try again.</mat-list-item>
+        </div>
       </mat-list>
       <mat-divider></mat-divider>
       <mat-list>
         <mat-list-item>
           <h5 mat-title>Group Results: </h5>
         </mat-list-item>
-        <mat-list-item *ngIf="groupsResult.numAdded > 0">Groups Added: {{groupsResult.numAdded}} </mat-list-item>
-        <mat-list-item *ngIf="groupsResult.numRemoved > 0">Groups Removed: {{groupsResult.numRemoved}} </mat-list-item>
-        <mat-list-item *ngIf="groupsResult.numRemoved === 0 && groupsResult.numAdded === 0">No Changes </mat-list-item>
+        <div *ngIf="groupsSuccess">
+          <mat-list-item *ngIf="groupsResult.numAdded > 0">Groups Added: {{groupsResult.numAdded}} </mat-list-item>
+          <mat-list-item *ngIf="groupsResult.numRemoved > 0">Groups Removed: {{groupsResult.numRemoved}}
+          </mat-list-item>
+          <mat-list-item *ngIf="groupsResult.numRemoved === 0 && groupsResult.numAdded === 0">No Changes
+          </mat-list-item>
+        </div>
+        <div *ngIf="!groupsSuccess">
+          <mat-list-item  style="color: red">There was an error syncing course groups. Please try again.</mat-list-item>
+        </div>
       </mat-list>
       <mat-divider></mat-divider>
       <mat-list>
-        <mat-list-item><h5 mat-title>Group Memberships Results:</h5></mat-list-item>
-        <mat-list-item *ngFor="let result of grpMemResults">
-         {{result.groupType}} : {{result.workGroupName}} - Added: {{result.numAdded}} Removed: {{result.numRemoved}}
+        <mat-list-item>
+          <h5 mat-title>Group Memberships Results:</h5>
         </mat-list-item>
-        <mat-list-item *ngIf="grpMemResults.length === 0">No Changes </mat-list-item>
+        <div *ngIf="grpMemsSuccess">
+          <mat-list-item *ngFor="let result of grpMemResults">
+            {{result.groupType}} : {{result.workGroupName}} - Added: {{result.numAdded}} Removed: {{result.numRemoved}}
+          </mat-list-item>
+          <mat-list-item *ngIf="grpMemResults.length === 0">No Changes </mat-list-item>
+        </div>
+        <div *ngIf="!grpMemsSuccess">
+          <mat-list-item  style="color: red">There was an error syncing course group memberships. Please try again.</mat-list-item>
+        </div>
       </mat-list>
     </div>
     <div *ngIf="pollFail === true">
@@ -42,6 +64,6 @@
   </mat-dialog-content>
   <mat-dialog-actions fxLayoutAlign="end" class="pad-right-sm">
     <!-- <button [disabled]="!pollComplete && !pollFail" mat-raised-button color="primary" (click)="close()">Close</button> -->
-    <button  mat-raised-button color="primary" (click)="close()">Close</button>
+    <button mat-raised-button color="primary" (click)="close()">Close</button>
   </mat-dialog-actions>
 </div>
