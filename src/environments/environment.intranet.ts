@@ -5,5 +5,5 @@
 
 export const environment = {
   production: true,
-  api_url: 'https://intranet.maxwell.af.mil/barnes/ecat/development/'
+  api_url: 'https://intranet.maxwell.af.mil/barnes/ecat/development2/'
 };

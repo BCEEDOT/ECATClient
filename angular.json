@@ -54,7 +54,7 @@
             "aupublicdev": {
               "optimization": true,
               "outputHashing": "all",
-              "baseHref": "/au/barnes/aa/ecat/development/app/",
+              "baseHref": "/au/barnes/aa/ecat/development2/app/",
               "sourceMap": false,
               "showCircularDependencies": true,
               "extractCss": true,
@@ -69,12 +69,31 @@
                   "with": "src/environments/environment.aupublicdev.ts"
                 }
               ]
+            },         
+            "aupublicdevcanvas": {
+              "optimization": true,
+              "outputHashing": "all",
+              "baseHref": "/au/barnes/aa/ecat/development/app/",
+              "sourceMap": false,
+              "showCircularDependencies": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.aupublicdev.canvas.ts"
+                }
+              ]
             },
             "intranet": {
               "optimization": true,
               "outputHashing": "all",
               "showCircularDependencies": true,
-              "baseHref": "/barnes/ecat/development/app/",
+              "baseHref": "/barnes/ecat/development2/app/",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
