@@ -1,0 +1,67 @@
+<mat-card-title *ngIf="!grpHasComments && !groupIsOpen">This group did not leave any comments.</mat-card-title>
+<mat-card-title *ngIf="groupIsOpen">This group is currently Open. Comments will be available when placed Under Review.</mat-card-title>
+<mat-card-content *ngIf="grpHasComments && !groupIsOpen" fxLayout="row">
+  <mat-list fxFlex="1 1 calc(17em)">
+    <mat-list-item>AUTHORS</mat-list-item>
+    <mat-list-item (mouseenter)="isOverAuthor = author.studentId" (mouseleave)="isOverAuthor = null"
+    *ngFor="let author of memsWithComments" [ngClass]="{'selected': this.selectedAuthor == author, 'over': isOverAuthor === author.studentId && this.selectedAuthor != author }" (click)="this.changeAuthor(author)"
+      style="cursor:pointer">
+      <span>{{author?.prettyName}}</span>
+      <span fxFlex></span>
+      <span *ngIf="author.numRemaining > 0" class="mat-caption pad-right-xs">
+        <mat-icon>flag</mat-icon>{{author?.numRemaining}} </span>
+      <span *ngIf="author.apprFlags > 0" class="mat-caption pad-right-xs">
+        <mat-icon class="tc-green-700">done</mat-icon>{{author?.apprFlags}} </span>
+      <span *ngIf="author.inapprFlags > 0" class="mat-caption">
+        <mat-icon class="tc-red-700">highlight_off</mat-icon>{{author?.inapprFlags}}</span>
+    </mat-list-item>
+  </mat-list>
+  <span fxFlex=".1" style="border-left: 1px solid #e0e0e0"></span>
+  <mat-list fxFlex="1 1 calc(17em)">
+    <mat-list-item>
+      <button mat-raised-button [mat-menu-trigger-for]="menu" class="selected" fxFlex="stretch" [disabled]="viewOnly">Mass Flag
+        <mat-icon style="color:white">expand_more</mat-icon>
+      </button>
+      <span></span>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="massSetAll()">Set All</button>
+        <button mat-menu-item (click)="massResetAll()">Reset All</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="massSetAuthor()">Set Selected Author's</button>
+        <button mat-menu-item (click)="massResetAuthor()">Reset Selected Author's</button>
+      </mat-menu>
+    </mat-list-item>
+    <mat-list-item>RECIPIENTS</mat-list-item>
+    <mat-list-item (mouseenter)="isOverRecipient = comment.recipientPersonId" (mouseleave)="isOverRecipient = null" *ngFor="let comment of authoredComments"
+      [ngClass]="{'selected': this.selectedComment == comment, 'over': isOverRecipient === comment.recipientPersonId && this.selectedComment != comment  }" 
+      (click)="this.selectedComment = comment"
+      style="cursor:pointer">
+   
+        <span>{{comment?.recipient?.prettyName}}</span>
+        <span fxFlex></span>
+        <mat-icon [ngClass]="(comment?.flag?.mpFaculty === this.commFlagMap.inappr) ? 'tc-red-700' : 'tc-green-700'">{{comment.icon}}</mat-icon>
+      
+    </mat-list-item>
+  </mat-list>
+  <!-- <span fxFlex=".5"></span> -->
+  <div fxFlex="grow" style="align-self: flex-start; border-left: 1px solid #e0e0e0" class="pad-left-md">
+    <div style="word-break: break-all; min-height: 150px; overflow-x: auto">
+      <div fxLayout="column" fxLayoutGap="5px" class="pad-top-sm">
+        <span class="mat-subheading-1">Comment Type: {{selectedComment?.requestAnonymity ? 'Anonymous' : 'Signed'}}</span>
+        <span class="mat-subheading-1">Last Modified: {{selectedComment?.displayDate}}</span>
+      </div>
+      <p>{{selectedComment?.commentText}}</p>
+    </div>
+    <div fxLayoutAlign="end">
+      <button mat-raised-button [ngClass]="{'appr': this.selectedComment?.flag?.mpFaculty === this.commFlagMap.appr}" (click)="this.selectedComment?.flag.mpFaculty = this.commFlagMap.appr; this.checkComplete()"
+        [disabled]="viewOnly && this.selectedComment?.flag?.mpFaculty !== this.commFlagMap.appr">Appropriate</button>
+      <button mat-raised-button [ngClass]="{'inappr': this.selectedComment?.flag?.mpFaculty === this.commFlagMap.inappr}" (click)="this.selectedComment?.flag.mpFaculty = this.commFlagMap.inappr; this.checkComplete()"
+        [disabled]="viewOnly && this.selectedComment?.flag?.mpFaculty !== this.commFlagMap.inappr">Inappropriate</button>
+    </div>
+  </div>
+</mat-card-content>
+<mat-divider></mat-divider>
+<mat-card-actions fxLayout="row" fxLayoutAlign="end">
+  <button mat-stroked-button color="primary" (click)="this.discard()" [disabled]="!hasChanges || viewOnly">Cancel</button>
+  <button mat-raised-button color="primary" (click)="this.save()" [disabled]="!hasChanges || viewOnly">Save</button>
+</mat-card-actions>

@@ -52,25 +52,25 @@ export class Repository<T> implements IRepository<T> {
                 // Something else happened
                 throw e;
             });
-    };
+    }
 
     where(predicate: Predicate): Promise<T[]> {
         let query = this.baseQuery().where(predicate);
 
         return this.executeQuery(query);
-    };
+    }
 
     whereInCache(predicate: Predicate): T[] {
         let query = this.baseQuery().where(predicate);
 
         return <any[]>this.executeCacheQuery(query);
-    };
+    }
 
     all(): Promise<T[]> {
         let query = this.baseQuery();
 
         return this.executeQuery(query);
-    };
+    }
 
     protected baseQuery(): EntityQuery {
         return EntityQuery.from(this.localResourceName);

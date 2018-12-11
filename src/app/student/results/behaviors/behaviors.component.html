@@ -1,0 +1,61 @@
+<div class="pad-bottom-md" fxShow fxHide.xs>
+  <mat-list>
+    <mat-list-item>
+      <span fxFlex="50">BEHAVIOR</span>
+      <span fxFlex="20">SELF</span>
+      <span fxFlex="15" fxFlexAlign="center">PEERS</span>
+      <span fxFlex="15">INSTRUCTOR</span>
+    </mat-list-item>
+    <mat-list-item *ngFor="let inv of inventories">
+      <span fxFlex="50" style="padding-right: 2.5%">{{inv?.behavior}}</span>
+      <span fxFlex="15">{{inv?.resultBreakOut?.selfResult}}</span>
+      <span fxFlex="20">
+
+        <ngx-charts-pie-chart [view]="[135,90]" [scheme]="inv?.resultBreakOut.peerBoChart.chartColors" [legend]="false" [results]="inv?.resultBreakOut.peerBoChart"
+          [arcWidth]=".45" [explodeSlices]="true" [doughnut]="true">
+        </ngx-charts-pie-chart>
+      </span>
+      <span fxFlex="15">{{inv?.resultBreakOut?.facultyResult}}</span>
+    </mat-list-item>
+  </mat-list>
+</div>
+<div fxHide fxShow.xs>
+  <div class="pad-left-sm pad-right-sm" fxLayout="column">
+    <div>
+      <h1 class="mat-body-2 tc-grey-500 bold">Behavior</h1>
+      <h2 class="mat-title text-center">{{activeInventory?.behavior}}.</h2>
+    </div>
+    <div>
+      <h1 class="mat-body-2 tc-grey-500 bold">Self</h1>
+      <h2 class="mat-title text-center">{{activeInventory?.resultBreakOut?.selfResult}}</h2>
+    </div>
+    <div>
+      <h1 class="mat-body-2 tc-grey-500 bold pull-bottom-md">Peers</h1>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <ngx-charts-pie-chart [view]="[135,90]" [scheme]="activeInventory?.resultBreakOut.peerBoChart.chartColors" [legend]="false"
+          [results]="activeInventory?.resultBreakOut.peerBoChart" [arcWidth]=".45" [explodeSlices]="true" [doughnut]="true">
+        </ngx-charts-pie-chart>
+      </div>
+    </div>
+    <div>
+      <h1 class="mat-body-2 tc-grey-500 bold">Instructor</h1>
+      <h2 class="mat-title text-center">{{activeInventory?.resultBreakOut?.facultyResult}}</h2>
+    </div>
+  </div>
+  <div class="border-top pad-bottom-xs" fxLayout="row">
+    <div fxFlex>
+      <button mat-icon-button color="primary" (click)="previousInv()">
+        <mat-icon matTooltip="Previous" matTooltipPosition="after" class="large-icon">arrow_back</mat-icon>
+      </button>
+    </div>
+    <div class="pull-top-sm" fxFlex=".8 1 auto" fxFlexAlign="center">
+      {{activeInventory?.displayOrder}} / {{inventories.length}}
+    </div>
+
+    <div>
+      <button mat-icon-button color="primary" (click)="nextInv()">
+        <mat-icon matTooltip="Next" matTooltipPosition="before" class="large-icon">arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

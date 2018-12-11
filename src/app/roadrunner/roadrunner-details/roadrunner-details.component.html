@@ -1,0 +1,81 @@
+<td-layout-nav logo="" toolbarTitle="ECAT - Road Runner">
+  <button mat-icon-button td-menu-button tdLayoutToggle>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-card>
+
+    <div *ngIf="event.length > 0 || checkNew == 'New'">
+      <form #roadRunnerForm="ngForm">
+        <mat-toolbar>
+          <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+
+            <span *ngIf="checkNew === 'New'" class="mat-title">Create a location</span>
+            <span *ngIf="!(checkNew === 'New')" class="mat-title">Edit the location</span>
+
+
+          </div>
+        </mat-toolbar>
+        <mat-list class="will-load">
+
+          <div layout-gt-xs="row" layout-margin>
+            <mat-form-field flex>
+              <textarea #locationForm="ngModel" rows="2" maxlength="75" matInput placeholder="Location" value="{{oneEvent.location}}" [(ngModel)]="oneEvent.location"
+                name="location" maxlength="50" tdAutoTrim required></textarea>
+
+            </mat-form-field>
+          </div>
+
+          <div layout-gt-xs="row" layout-margin>
+            <mat-form-field flex>
+              <input matInput placeholder="Contact Number" value="{{oneEvent.phoneNumber}}" [(ngModel)]="oneEvent.phoneNumber" name="contactNumber"
+                maxlength="10" pattern="^\d+$" tdAutoTrim #contactForm="ngModel" required />
+              <mat-hint>
+                <span [hidden]="!contactForm.errors?.pattern" class="tc-red-600">Numbers only</span>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div>
+            <div layout-gt-xs="row" layout-margin>
+              <mat-form-field flex>
+                <input matInput [min]="minDate" [max]="maxDate" #leaveForm="ngModel" [ngModelOptions]="{standalone: true}" [matDatepicker]="leave"
+                  [(ngModel)]="oneEvent.leaveDate" placeholder="Leave Date" required/>
+                <!-- <button matSuffix [matDatepickerToggle]="leave"></button> -->
+                <mat-datepicker-toggle matSuffix [for]="leave"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #leave [startAt]="oneEvent.leaveDate"></mat-datepicker>
+
+              </mat-form-field>
+              <!-- <mat-datepicker #leave [touchUi]="touch" [startAt]="oneEvent.leaveDate"></mat-datepicker> -->
+            </div>
+
+            <div layout-gt-xs="row" layout-margin>
+
+              <mat-form-field flex>
+
+                <!-- <button matSuffix [matDatepickerToggle]="return"></button> -->
+                <input matInput [min]="oneEvent.leaveDate" [max]="maxDate" #returnForm="ngModel" [ngModelOptions]="{standalone: true}" [matDatepicker]="return"
+                  placeholder="Return Date" [(ngModel)]="oneEvent.returnDate" required/>
+                  <mat-datepicker-toggle matSuffix [for]="return"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi="true" #return [startAt]="oneEvent.returnDate"></mat-datepicker>
+                <mat-error *ngIf="returnForm.hasError('matDatepickerMin')">Please select date after your leave date!</mat-error>
+
+              </mat-form-field>
+              <!-- <mat-datepicker #return [touchUi]="touch" [startAt]="oneEvent.returnDate"></mat-datepicker> -->
+            </div>
+          </div>
+        </mat-list>
+
+        <div layout-gt-xs="row" layout-margin class="button-row">
+          <span style="padding-right:10px;">
+            <button mat-stroked-button color="primary" *ngIf="!(checkNew === 'New') && !clone && !signedOut" (click)="delete()">Delete</button>
+          </span>
+          <span style="padding-right:10px;">
+            <button mat-stroked-button color="primary" (click)="cancel()">Cancel</button>
+          </span>
+            <button mat-raised-button color="primary" [disabled]="!roadRunnerForm.valid || !leaveForm.valid || !returnForm.valid" (click)="save()">Save</button>          
+        </div>
+      </form>
+    </div>
+
+  </mat-card>
+
+</td-layout-nav>

@@ -1,0 +1,36 @@
+<div fxLayout="column" fxLayoutGap="15px">
+
+    <div>
+        <div fxLayoutAlign="center center" class="text-xxl">
+            {{activeInventory.itemDescription}}
+        </div>
+    </div>
+
+    <div>
+
+        <mat-grid-list rowHeight="50px" cols="5" >
+            <mat-grid-tile >Never</mat-grid-tile>
+              <mat-grid-tile >Seldom</mat-grid-tile>
+              <mat-grid-tile >Usually</mat-grid-tile>
+              <mat-grid-tile >Mostly</mat-grid-tile>
+              <mat-grid-tile >Always</mat-grid-tile>
+        </mat-grid-list>
+
+        <div>
+            <div>
+                <mat-slider color="primary" [(ngModel)]="activeInventory.response.itemScore" min="1" max="1000"
+                    tickInterval="1">
+                </mat-slider>
+            </div>
+        </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" >
+        <button mat-raised-button color="primary" [disabled]="activeInventory.displayOrder===inventories[0].displayOrder" (click)="previousInventory();">Previous</button>
+        <p class="pad-left-sm pad-right-sm">Item {{activeInventory.displayOrder}} of {{inventories.length}} </p>
+        <button mat-raised-button color="primary" [disabled]="activeInventory.displayOrder===inventories[inventories.length - 1].displayOrder"
+            (click)="nextInventory();">Next</button>
+    </div>
+
+</div>

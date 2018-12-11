@@ -1,0 +1,50 @@
+<mat-card class="width">
+  <mat-card-title class="text-center"> Edit Course Information </mat-card-title>
+  <mat-card-content>
+    <form #courseInfoForm="ngForm">
+        <div layout-gt-xs="row" layout-margin>
+          <mat-form-field flex>
+            <input matInput #classNumInput="ngModel" placeholder="Class Number" [(ngModel)]="course.classNumber" name="classNumber"
+              maxlength="10" tdAutoTrim required/>
+            <mat-hint>
+              <span [hidden]="classNumInput.pristine" class="tc-red-600"></span>
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div layout-gt-xs="row" layout-margin>
+          <mat-form-field flex>
+            <input matInput [min]="minDate" [max]="maxDate" #startForm="ngModel" [ngModelOptions]="{standalone: true}" [matDatepicker]="start"
+              [(ngModel)]="course.startDate" placeholder="Start Date" required/>
+            <!-- <button matSuffix [matDatepickerToggle]="start"></button> -->
+            <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+            <mat-datepicker #start touchUi="false" [startAt]="course.startDate"></mat-datepicker>
+          </mat-form-field>
+          
+        </div>
+        <div layout-gt-xs="row" layout-margin>
+          <mat-form-field flex>
+            <!--button matSuffix [matDatepickerToggle]="grad"></button-->
+            <mat-datepicker-toggle matSuffix [for]="grad"></mat-datepicker-toggle>
+            <input matInput [min]="course.startDate" [max]="maxDate" #gradForm="ngModel" [ngModelOptions]="{standalone: true}" [matDatepicker]="grad"
+              placeholder="Grad Date" [(ngModel)]="course.gradDate" required/>
+            <mat-error *ngIf="gradForm.hasError('matDatepickerMin')">Please select date after the start date!</mat-error>
+            <mat-datepicker #grad touchUi="false" [startAt]="course.gradDate"></mat-datepicker>
+          </mat-form-field>
+          
+        </div>
+        <div layout-gt-xs="row" layout-margin>
+          <mat-form-field flex>
+            <input matInput #displayNameInput="ngModel" placeholder="Display Name" [(ngModel)]="course.name" name="name" tdAutoTrim required/>
+            <mat-hint>
+              <span [hidden]="displayNameInput.pristine" class="tc-red-600"></span>
+            </mat-hint>
+          </mat-form-field>
+        </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions fxLayoutAlign="end">
+    <span fxFlex></span>
+    <button mat-stroked-button color="primary" (click)="this.cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="this.save()" [disabled]="(!courseInfoForm.dirty && !startForm.dirty && !gradForm.dirty) || courseInfoForm.invalid || startForm.invalid || gradForm.invalid">Save</button>
+  </mat-card-actions>
+</mat-card>

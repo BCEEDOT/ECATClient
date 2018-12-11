@@ -1,4 +1,3 @@
-export * from './metadata';
 export * from './spResultBreakOut';
 export * from './course';
 export * from './facultyInCourse';
@@ -24,4 +23,3 @@ export * from './profileFaculty';
 export * from './roadRunner';
 export * from './faculty-entity.module';
 export * from './regHelper';
-

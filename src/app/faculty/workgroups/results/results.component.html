@@ -1,0 +1,47 @@
+<div class="width" *ngIf="isLoading">
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <img class="pad-top-md" src="assets/resultsloading.png" height="150" width="150">
+    </div>
+    <h4 class="text-center pad-bottom-md">Results loading... please wait. </h4>
+    <mat-card-footer>
+      <div class="progress-bar-container">
+        <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </mat-card-footer>
+
+  </mat-card>
+</div>
+
+<div class="width" *ngIf="!isLoading">
+  <mat-card>
+    <mat-card-title fxLayout="row">
+      <div fxFlex>
+        <button mat-raised-button color="primary" [routerLink]="['../..']">Back</button>
+      </div>
+      <div fxFlex="grow" class="text-center">
+        {{workGroupName}} - Results
+      </div>
+      <span fxFlex></span>
+      <button mat-icon-button (click)="this.refreshData()">
+        <mat-icon>autorenew</mat-icon>
+      </button>
+    </mat-card-title>
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">assessment</mat-icon>
+          Assessment Overview
+        </ng-template>
+        <assess-overview [membersResults]="membersResults"></assess-overview>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">format_list_numbered</mat-icon>
+          Strat Overview
+        </ng-template>
+        <strat-overview [membersResults]="membersResults"></strat-overview>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

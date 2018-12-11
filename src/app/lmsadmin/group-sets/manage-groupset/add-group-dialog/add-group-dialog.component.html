@@ -1,0 +1,24 @@
+<mat-card-title>Add Flight</mat-card-title>
+<mat-divider class="pad-bottom-md"></mat-divider>
+<mat-list fxLayoutAlign="center center">
+  <form [formGroup]="editGroupForm" (ngSubmit)="ok()">
+    <mat-list-item class="pull-left-md">
+      <div class="pad-left-sm">
+        <mat-form-field>
+          <mat-select required selected="workGroup.groupNumber" formControlName="groupNumber" placeholder="Flight Number">
+            <mat-option *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-list-item>
+    <mat-list-item class="pull-left-md pad-top-sm">
+      <mat-form-field class="pad-left-sm">
+        <input matInput placeholder="Nickname" id="customName" type="text" formControlName="customName" />
+      </mat-form-field>
+    </mat-list-item>
+  </form>
+</mat-list>
+<mat-card-actions class="pad-top-md pull-bottom-none pad-right-sm" fxLayoutAlign="end" fxLayoutGap="2px">
+  <button mat-stroked-button color="primary" type="button" class="text-upper" (click)="close();">Cancel</button>
+  <button mat-raised-button color="primary" type="button" [disabled]="isDisabled()" (click)="ok()" class="text-upper">Ok</button>
+</mat-card-actions>

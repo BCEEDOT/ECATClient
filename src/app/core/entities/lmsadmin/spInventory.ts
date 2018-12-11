@@ -1,5 +1,5 @@
-import { EntityBase } from '../EntityBase';
-import { SpInstrument } from './SpInstrument';
+import { EntityBase } from '../entitybase';
+import { SpInstrument } from './spInstrument';
 
 /// <code-import> Place custom imports between <code-import> tags
 

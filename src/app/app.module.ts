@@ -1,67 +1,80 @@
 import { NgModule, Type } from '@angular/core';
-import { Http, RequestOptions } from "@angular/http";
+// import { Http, RequestOptions } from "@angular/http";
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
+import { JwtModule } from '@auth0/angular-jwt';
+// import { JwtHelper, AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from "angular2-jwt";
+import { BreezeBridgeHttpClientModule } from 'breeze-bridge2-angular';
+// import { BreezeBridgeAngularModule } from 'breeze-bridge-angular';
 
-import { CovalentCoreModule } from '@covalent/core';
-
-import { SharedModule } from "./shared/shared.module";
-import { CoreModule } from "./core/core.module";
-import { UsersModule } from "./users/users.module";
 import { StudentModule } from "./student/student.module";
-import { DashboardModule } from "./dashboard/dashboard.module";
-import { ProfileModule } from "./profile/profile.module";
-
+import { FacultyModule } from "./faculty/faculty.module";
+import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { ProfileModule } from './profile/profile.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { AppRoutingModule } from './app-routing.module';
 
-import { AppRoutingModule } from "./app-routing.module";
 
-import { JwtHelper, AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from "angular2-jwt";
-import { BreezeBridgeAngularModule } from 'breeze-bridge-angular';
+// export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+//   return new AuthHttp(new AuthConfig({
+//     tokenName: 'ecatAccessToken',
+//     tokenGetter: (() => localStorage.getItem('ecatAccessToken')),
+//     noJwtError: true,
+//   }), http, options);
+// }
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig({
-    tokenName: 'ecatAccessToken',
-    tokenGetter: (() => localStorage.getItem('ecatAccessToken')),
-    noJwtError: true
-  }), http, options);
+export function tokenGetter() {
+  return localStorage.getItem('ecatAccessToken');
 }
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
   ], // directives, components, and pipes owned by this NgModule
   imports: [
-    BreezeBridgeAngularModule,
+    // BreezeBridgeAngularModule,
+    BreezeBridgeHttpClientModule,
+    // SharedModule with the MaterialModule needs to load after Browser and BrowserAnimations
+    BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     CoreModule,
-    BrowserModule,
-    UsersModule,
-    StudentModule,
     ProfileModule,
     DashboardModule,
-    BrowserAnimationsModule,
-    AppRoutingModule, //Add feature modules/routes before main routing module
+    StudentModule,
+    FacultyModule,
+    AppRoutingModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:50000', 'augateway.maxwell.af.mil', 'aupublicdev.maxwell.af.mil', 'intranet.maxwell.af.mil'],
+        throwNoTokenError: false,
+        skipWhenExpired: true,
+      },
+    }),
   ], // modules needed to run this module
   providers: [
-    {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions]
-    },
+    // {
+    //   provide: AuthHttp,
+    //   useFactory: authHttpServiceFactory,
+    //   deps: [Http, RequestOptions],
+    // },
     Title,
-    JwtHelper
+    // JwtHelper
   ], // additional providers needed for this module
   entryComponents: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(router: Router) {
-   
-    console.log('Routes', JSON.stringify(router.config, undefined, 2));
+
   }
 
 }

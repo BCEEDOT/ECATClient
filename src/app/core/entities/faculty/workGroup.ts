@@ -1,16 +1,16 @@
-import { EntityBase } from '../EntityBase';
-import { Course } from './Course';
-import { FacSpComment } from './FacSpComment';
-import { CrseStudentInGroup } from './CrseStudentInGroup';
-import { SpResponse } from './SpResponse';
-import { SpInstrument } from './SpInstrument';
-import { FacSpResponse } from './FacSpResponse';
-import { FacStratResponse } from './FacStratResponse';
-import { StudSpComment } from './StudSpComment';
-import { SpResult } from './SpResult';
-import { StratResponse } from './StratResponse';
-import { StratResult } from './StratResult';
-import { WorkGroupModel } from './WorkGroupModel';
+import { EntityBase } from '../entitybase';
+import { Course } from './course';
+import { FacSpComment } from './facSpComment';
+import { CrseStudentInGroup } from './crseStudentInGroup';
+import { SpResponse } from './spResponse';
+import { SpInstrument } from './spInstrument';
+import { FacSpResponse } from './facSpResponse';
+import { FacStratResponse } from './facStratResponse';
+import { StudSpComment } from './studSpComment';
+import { SpResult } from './spResult';
+import { StratResponse } from './stratResponse';
+import { StratResult } from './stratResult';
+import { WorkGroupModel } from './workGroupModel';
 
 /// <code-import> Place custom imports between <code-import> tags
 
@@ -45,7 +45,7 @@ export class WorkGroup extends EntityBase {
    wgModel: WorkGroupModel;
 
    /// <code> Place custom code between <code> tags
-   
+   canPublish: boolean = null;
    /// </code>
 
 }

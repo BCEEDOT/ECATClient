@@ -1,0 +1,16 @@
+.width {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+::ng-deep {
+    .tab-icon {
+    vertical-align: middle;
+    font-size: 28px;
+    }
+    .small-tab-icon {
+        font-size: 14px;
+        padding-bottom: 10px;
+        padding-left: 5px;
+    }
+}

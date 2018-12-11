@@ -1,0 +1,70 @@
+<mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push']">
+
+  <mat-toolbar td-sidenav-content>
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+
+      <span class="mat-title">Completed</span>
+
+    </div>
+  </mat-toolbar>
+
+  <mat-list class="will-load">
+    <div *ngIf="roadRunnerInfos">
+      <div *ngIf="count === 0 || roadRunnerInfos?.length === 0">
+
+        <p class="mat-title text-center">You have not signed in from any locations.</p>
+      </div>
+    </div>
+    <div *ngIf="roadRunnerInfos">
+      <div *ngIf="roadRunnerInfos?.length > 0">
+
+        <ng-template let-rData let-last="last" ngFor [ngForOf]="roadRunnerInfos">
+
+
+          <div *ngIf="rData?.prevSignOut" fxShow fxHide.xs="true" #row fxLayout="row" fxLayoutGap="20px">
+            <mat-list-item fxFlex="100%">
+
+              <h4 matLine *ngIf="rData.splitLocation.length > 1"> {{rData?.splitLocation[0]}} </h4>
+              <p matLine *ngIf="rData.splitLocation.length > 1">{{rData?.splitLocation[1]}}</p>
+              <h4 matLine *ngIf="rData.splitLocation.length === 1"> {{rData?.splitLocation[0]}}</h4>
+              <p matLine></p>
+
+              <span flex></span>
+
+              <span fxFlex="50">
+          <div class="mat-caption tc-grey-500">
+                    Start Date: 
+                    <span [innerHtml]="rData?.leaveDate | date:'dd MMM yyyy'">{{ rData?.leaveDate }}</span>
+          </div>
+          </span>
+          <span>
+            <button mat-raised-button *ngIf="!signedOut"color="primary" [routerLink]="[rData.id]">Clone</button>
+      </span>
+          </mat-list-item>
+      </div>
+
+      <!--show this div if screensize is small-->
+      <div *ngIf="rData?.prevSignOut" fxHide fxHide.xs="false" #row fxLayout="row" fxLayoutGap="20px">
+        <mat-list-item fxFlex="100%">
+          <h4 matLine *ngIf="rData.splitLocation.length > 1"> {{rData?.splitLocation[0]}} </h4>
+          <p matLine *ngIf="rData.splitLocation.length > 1">{{rData?.splitLocation[1]}}</p>
+          <h4 matLine *ngIf="rData.splitLocation.length === 1"> {{rData?.splitLocation[0]}}</h4>
+          <p matLine></p>
+          <p matLine class="mat-caption" [innerHtml]="rData?.leaveDate | date:'dd MMM yyyy'">{{ rData?.leaveDate }} </p>
+          <span matLine>
+                <a mat-icon-button  color="primary" [routerLink]="[rData.id]">
+                  <mat-icon >content_copy</mat-icon>
+                </a>
+          </span>
+        </mat-list-item>
+
+      </div>
+      <div *ngIf="rData?.prevSignOut">
+        <mat-divider *ngIf="!last" [inset]="true"></mat-divider>
+      </div>
+
+      </ng-template>
+    </div>
+    </div>
+  </mat-list>
+</mat-card>

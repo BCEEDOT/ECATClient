@@ -1,5 +1,5 @@
-import { EntityBase } from '../EntityBase';
-import { Person } from './Person';
+import { EntityBase } from '../entitybase';
+import { Person } from './person';
 
 /// <code-import> Place custom imports between <code-import> tags
 
@@ -18,7 +18,7 @@ export class ProfileStudent extends EntityBase {
    person: Person;
 
    /// <code> Place custom code between <code> tags
-   
+   static initializer(entity: ProfileStudent) { }
    /// </code>
 
 }

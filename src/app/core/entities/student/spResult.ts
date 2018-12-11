@@ -1,14 +1,14 @@
-import { EntityBase } from '../EntityBase';
-import { SpResultBreakOut } from './SpResultBreakOut';
-import { Course } from './Course';
-import { CrseStudentInGroup } from './CrseStudentInGroup';
-import { WorkGroup } from './WorkGroup';
-import { SpInstrument } from './SpInstrument';
-import { SanitizedSpComment } from './SanitizedSpComment';
-import { SanitizedSpResponse } from './SanitizedSpResponse';
+import { EntityBase } from '../entitybase';
+import { SpResultBreakOut } from './spResultBreakOut';
+import { Course } from './course';
+import { CrseStudentInGroup } from './crseStudentInGroup';
+import { WorkGroup } from './workGroup';
+import { SpInstrument } from './spInstrument';
+import { SanitizedSpComment } from './sanitizedSpComment';
+import { SanitizedSpResponse } from './sanitizedSpResponse';
 
 /// <code-import> Place custom imports between <code-import> tags
-
+import { FacSpResponse } from '../faculty/facSpResponse'
 /// </code-import>
 
 export class SpResult extends EntityBase {
@@ -28,7 +28,7 @@ export class SpResult extends EntityBase {
    workGroup: WorkGroup;
 
    /// <code> Place custom code between <code> tags
-   
+   facultyResponses: FacSpResponse[]
    /// </code>
 
 }

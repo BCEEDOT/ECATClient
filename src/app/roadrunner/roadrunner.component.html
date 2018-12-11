@@ -1,0 +1,51 @@
+<td-layout-nav logo="" toolbarTitle="ECAT - Road Runner">
+  <button mat-icon-button td-menu-button tdLayoutToggle>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <!--faculty display-->
+  <mat-card *ngIf="persona.isFaculty">
+    <p></p>
+    <div class="text-center">
+      <span *ngIf="!noSignedOutStudents" class="mat-title">Students Signed Out for {{flightDisplayed}}</span>
+      <span *ngIf="noSignedOutStudents" class="mat-title">No Students Signed Out for {{flightDisplayed}}</span>
+    </div>
+    <div *tdLoading="'roadRunnerLoading'">
+      <div *ngIf="!noSignedOutStudents">
+        <td-chips [(ngModel)]="flightsModel" (add)="add()" (remove)="remove()" (inputChange)="filterFlights($event)" [items]="flights"
+          placeholder="Click to filter by Flight" requireMatch>
+        </td-chips>
+        <div fxShow fxHide.xs="true">
+          <td-data-table [data]="studentsOut" [columns]="columns">
+            <ng-template tdDataTableTemplate="columnName" let-value="value" let-row="row" let-column="column">
+              <div layout="row">
+                <span flex>{{value}}</span>
+              </div>
+            </ng-template>
+          </td-data-table>
+        </div>
+        <!--small screen faculty-->
+        <div fxHide fxHide.xs="false">
+          <td-data-table [data]="studentsOut" [columns]="columns2">
+            <ng-template tdDataTableTemplate="columnName" let-value="value2" let-row="row" let-column="column">
+              <div layout="row">
+                <span flex>{{value2}}</span>
+              </div>
+            </ng-template>
+          </td-data-table>
+        </div>
+      </div>
+    </div>
+    <p></p>
+  </mat-card>
+  <div *ngIf="persona.isStudent" class="pad-bottom-lg">
+    <div *tdLoading="'roadRunnerLoading'">
+      <roadrunner-locations [roadRunnerInfos]="roadRunnerInfos" (signOut)="signOut($event)"></roadrunner-locations>
+      <roadrunner-completed [roadRunnerInfos]="roadRunnerInfos"></roadrunner-completed>
+    </div>
+  </div>
+</td-layout-nav>
+<div *ngIf="persona.isStudent">
+  <a mat-fab color="primary" class="mat-fab-bottom-right" [routerLink]="['New']" matTooltip="Add Address" matTooltipPosition="left">
+    <mat-icon>add</mat-icon>
+  </a>
+</div>

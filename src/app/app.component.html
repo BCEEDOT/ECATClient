@@ -1,15 +1,28 @@
+<div #tokenref></div>
 <td-layout #layout>
-  <td-navigation-drawer logo="assets:covalent" sidenavTitle="" name={{persona?.person?.firstName}}{{persona?.person?.lastName}}  email={{persona?.person?.email}}>
-    <md-nav-list>
-        <a md-list-item routerLink="/dashboard" (click)="layout.close()"><md-icon>dashboard</md-icon>Home</a>
-        <a md-list-item routerLink="/users" (click)="layout.close()"><md-icon>people</md-icon>Users</a>
-        <a md-list-item routerLink="/student" (click)="layout.close()"><md-icon>people</md-icon>Student</a>
-        <a *ngIf="isFaculty" md-list-item routerLink="/faculty" (click)="layout.close()"><md-icon>people</md-icon>Faculty</a>
-    </md-nav-list>
-    <md-nav-list td-navigation-drawer-menu>
-      <a md-list-item routerLink="/profile" (click)="layout.close()"><md-icon>account_circle</md-icon>Profile</a>
-      <a md-list-item (click)="logout(); layout.close();"><md-icon>exit_to_app</md-icon>Sign out</a>
-    </md-nav-list>
+  <td-navigation-drawer name={{cleanName}} email={{persona?.person?.email}}>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" (click)="layout.close()">
+        <mat-icon>dashboard</mat-icon>Dashboard</a>
+      <a *ngIf="isStudent" mat-list-item routerLink="/student/assessment" (click)="layout.close()">
+        <mat-icon>assessment</mat-icon>Assessment Center</a>
+      <a *ngIf="isFaculty" mat-list-item routerLink="/faculty/workgroups" (click)="layout.close()">
+        <mat-icon>people</mat-icon>Workgroup Center</a>
+      <a *ngIf="isLmsAdmin" mat-list-item routerLink="/lmsadmin/courses" (click)="layout.close()">
+        <mat-icon>security</mat-icon>Instructional System Admin</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/cognitives" (click)="layout.close()">
+        <mat-icon>trending_up</mat-icon>Cognitives</a>
+      <a *ngIf="isStudent" mat-list-item routerLink="/roadrunner/student" (click)="layout.close()">
+        <mat-icon>android</mat-icon>Road Runner</a>
+      <a *ngIf="isFaculty" mat-list-item routerLink="/roadrunner/faculty" (click)="layout.close()">
+        <mat-icon>android</mat-icon>Road Runner</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item class="subnav pad-left-xs" routerLink="/profile" (click)="layout.close()">
+        My Profile</a>
+      <a mat-list-item class="subnav pad-left-xs" (click)="logout(); layout.close()">
+        Sign Out</a>
+    </mat-nav-list>
   </td-navigation-drawer>
   <router-outlet></router-outlet>
 </td-layout>

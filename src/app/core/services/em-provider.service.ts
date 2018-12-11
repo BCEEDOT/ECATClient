@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
   EntityManager, NamingConvention, DataService, DataType, MetadataStore,
-  EntityType, NavigationProperty, DataProperty, EntityQuery, DataServiceOptions, config, promises
+  EntityType, NavigationProperty, DataProperty, EntityQuery, DataServiceOptions, config, promises, ValidationOptionsConfiguration, ValidationOptions
 } from 'breeze-client';
-import remove from 'lodash/remove';
-import includes from 'lodash/includes';
-import { AuthHttp } from 'angular2-jwt';
-import { AjaxAngularAdapter } from "breeze-bridge-angular";
+import { includes, remove } from "lodash-es";
+// import { AuthHttp } from 'angular2-jwt';
+// import { AjaxAngularAdapter } from "breeze-bridge-angular";
 
 // Import required breeze adapters. Rollup.js requires the use of breeze.base.debug.js, which doesn't include
 // the breeze adapters. 
@@ -17,13 +16,14 @@ import 'breeze-client/breeze.uriBuilder.odata';
 
 import { EntityTypeAnnotation } from './../entities/entity-type-annotation';
 import { IRegistrationHelper } from './../entities/IRegistrationHelper';
-import { DEV_API } from './../../../config/api.config';
+// import { DEV_API } from './../../../config/api.config';
+import { environment } from "./../../../environments/environment";
 import { DataContext, ResourceEndPoint } from '../../app-constants';
 
 export interface IManager {
   dataContext: DataContext;
   manager: EntityManager;
-  promise: Promise<any>,
+  promise: Promise<any>;
   [index: number]: IManager;
 }
 
@@ -34,38 +34,36 @@ export class EmProviderService {
   private static masterManagers: Array<IManager> = [];
   private static preparePromise: Promise<any>;
 
-  constructor(private authHttp: AuthHttp) {
+  constructor() {
 
   }
 
   //Need to account for client entity extensions.
   prepare(dataContext: DataContext, regHelper: IRegistrationHelper, resourceEndPoint: ResourceEndPoint): Promise<any> {
+    
+    NamingConvention.camelCase.setAsDefault();
+    //new ValidationOptions({ validateOnAttach: false }).setAsDefault();
+    
+    //configure breeze to use authHTTP instead of default angular http class. Used to add access token to header
+    // config.registerAdapter('ajax', () => new AjaxAngularAdapter(<any>this.authHttp));
+    // config.initializeAdapterInstance('ajax', AjaxAngularAdapter.adapterName, true);
 
-    //Pulled from Environments file
-  
-    config.initializeAdapterInstances({ dataService: 'webApi', uriBuilder: 'odata' });
-      NamingConvention.camelCase.setAsDefault();
-      //configure breeze to use authHTTP instead of default angular http class. Used to add access token to header
-      config.registerAdapter('ajax', () => new AjaxAngularAdapter(<any>this.authHttp));
-      config.initializeAdapterInstance('ajax', AjaxAngularAdapter.adapterName, true);
+    // config.initializeAdapterInstances({ dataService: 'webApi', uriBuilder: 'json' });
 
-      let emStatus = EmProviderService.masterManagers[dataContext];
+    let emStatus = EmProviderService.masterManagers[dataContext];
 
-      if (!emStatus) {
-        emStatus = EmProviderService.masterManagers[dataContext] = {
-          dataContext: dataContext,
-          manager: null,
-          promise: null,
-        };
-      }
+    if (!emStatus) {
+      emStatus = EmProviderService.masterManagers[dataContext] = {
+        dataContext: dataContext,
+        manager: null,
+        promise: null,
+      };
+    }
 
     if (!emStatus.promise) {
 
-      
-      let serviceEndPoint = DEV_API + resourceEndPoint;
-
-      console.log(serviceEndPoint);
-
+      // let serviceEndPoint = DEV_API + resourceEndPoint;
+      let serviceEndPoint = environment.api_url+ 'breeze/' + resourceEndPoint;
 
       let dsconfig: DataServiceOptions = {
         serviceName: serviceEndPoint
@@ -73,9 +71,15 @@ export class EmProviderService {
 
       let dataService = new DataService(dsconfig);
 
+      //  let validationConfig: ValidationOptionsConfiguration = {
+      //   validateOnAttach: true
+      // };
+
+      // let validationOptions = new ValidationOptions(validationConfig);
+
       let currentManager = emStatus.manager = new
         EntityManager({
-          dataService: dataService
+          dataService: dataService,
         });
 
       return emStatus.promise =
@@ -94,6 +98,12 @@ export class EmProviderService {
           });
     }
     return emStatus.promise;
+  }
+
+  clear(ecatContext: DataContext): void {
+    if (EmProviderService.masterManagers[ecatContext]) {
+      EmProviderService.masterManagers[ecatContext].manager.clear();
+    }
   }
 
   getManager(ecatContext: DataContext): EntityManager {

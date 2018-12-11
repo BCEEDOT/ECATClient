@@ -1,0 +1,31 @@
+<mat-card class="width">
+  <mat-card-title fxLayout="row">
+    <div fxFlex="100" class="text-center"> Publish {{model.mpWgCategory}} - {{model.name}} Groups </div>
+    <span fxFlex></span>
+    <button mat-icon-button (click)="this.activate(true)"><mat-icon>autorenew</mat-icon></button>
+  </mat-card-title>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <span fxFlex="5"></span>
+        <span fxFlex="50">FLIGHT</span>
+        <span fxFlex="25"># OF MEMBERS</span>
+        <span fxFlex="25">STATUS</span>
+      </mat-list-item>
+      <mat-list-item *ngFor="let grp of model.workGroups">
+        <span fxFlex="5">
+          <mat-icon *ngIf="grp.mpSpStatus==='Reviewed' || grp.groupMembers.length===0" class="tc-green-700">forward</mat-icon>
+          <!-- <mat-icon *ngIf="grp.mpSpStatus!=='Reviewed' && grp.groupMembers.length>0" class="tc-red-700">clear</mat-icon> -->
+        </span>
+        <span fxFlex="50">{{grp.defaultName}} {{grp.customName}}</span>
+        <span fxFlex="25">{{grp.groupMembers.length}}</span>
+        <span fxFlex="25">{{grp.mpSpStatus}}</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions fxLayoutAlign="end">
+    <span fxFlex></span>
+    <button mat-stroked-button color="primary" (click)="this.cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="this.publish()" [disabled]="toPublish.length===0">Publish Groups</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,11 +1,11 @@
-import { EntityBase } from '../EntityBase';
-import { FacultyInCourse } from './FacultyInCourse';
-import { CrseStudentInGroup } from './CrseStudentInGroup';
-import { SpResponse } from './SpResponse';
-import { WorkGroup } from './WorkGroup';
-import { SpResult } from './SpResult';
-import { StratResult } from './StratResult';
-import { StudentInCourse } from './StudentInCourse';
+import { EntityBase } from '../entitybase';
+import { FacultyInCourse } from './facultyInCourse';
+import { CrseStudentInGroup } from './crseStudentInGroup';
+import { SpResponse } from './spResponse';
+import { WorkGroup } from './workGroup';
+import { SpResult } from './spResult';
+import { StratResult } from './stratResult';
+import { StudentInCourse } from './studentInCourse';
 
 /// <code-import> Place custom imports between <code-import> tags
 

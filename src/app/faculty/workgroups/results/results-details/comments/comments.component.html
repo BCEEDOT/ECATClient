@@ -1,0 +1,44 @@
+<td-expansion-panel label="Recieved Comments" [expand]="true">
+  <!--ng-template td-expansion-panel-header>
+    <label fxFlex="stretch" class="selected">
+      <span>Recieved Comments <mat-icon style="color: white">expand_more</mat-icon></span>
+    </label>
+  </ng-template-->
+  <mat-list>
+    <mat-list-item>
+      <span fxFlex="15">AUTHOR</span>
+      <span fxFlex="10">TYPE</span>
+      <span fxFlex="10">FLAGGED</span>
+      <span fxFlex="75">COMMENT</span>
+    </mat-list-item>
+    <mat-list-item *ngIf="student.recipientOfComments.length === 0">No Comments Recieved</mat-list-item>
+    <div *ngIf="student.recipientOfComments.length > 0" >
+      <mat-list-item *ngFor="let comment of student.recipientOfComments">
+        <span fxFlex="15">{{comment.author.rankName}}</span>
+        <span fxFlex="10">{{(comment.requestAnonymity) ? 'Anonymous' : 'Signed'}}</span>
+        <span fxFlex="10" [ngClass]="(comment.flag.mpFaculty === this.commFlagMap.inappr) ? 'tc-red-700' : 'tc-green-700'">{{comment.flag.mpFaculty}}</span>
+        <span fxFlex="75" style="word-break: break-all; overflow-x: auto" (click)="viewFullComment(comment)" style="cursor:pointer">{{(comment.shortText) ? comment.shortText : comment.commentText}}</span>
+      </mat-list-item>
+    </div>
+  </mat-list>
+</td-expansion-panel>
+<mat-divider></mat-divider>
+<td-expansion-panel label="Authored Comments" [expand]="true">
+  <mat-list>
+    <mat-list-item>
+      <span fxFlex="15">RECIPIENT</span>
+      <span fxFlex="10">TYPE</span>
+      <span fxFlex="10">FLAGGED</span>
+      <span fxFlex="75">COMMENT</span>
+    </mat-list-item>
+    <mat-list-item *ngIf="student.authorOfComments.length === 0">No Comments Authored</mat-list-item>
+    <div *ngIf="student.authorOfComments.length > 0" >
+      <mat-list-item *ngFor="let comment of student.authorOfComments">
+        <span fxFlex="15">{{comment.recipient.rankName}}</span>
+        <span fxFlex="10">{{(comment.requestAnonymity) ? 'Anonymous' : 'Signed'}}</span>
+        <span fxFlex="10" [ngClass]="(comment.flag.mpFaculty === this.commFlagMap.inappr) ? 'tc-red-700' : 'tc-green-700'">{{comment.flag.mpFaculty}}</span>
+        <span fxFlex="75" style="word-break: break-all; overflow-x: auto" (click)="viewFullComment(comment)" style="cursor:pointer">{{(comment.shortText) ? comment.shortText : comment.commentText}}</span>
+      </mat-list-item>
+    </div>
+  </mat-list>
+</td-expansion-panel>

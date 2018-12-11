@@ -1,123 +1,197 @@
-import { Injectable } from '@angular/core';
-import { EntityManager, Entity, EntityQuery, FetchStrategy, SaveOptions, EntityChangedEventArgs } from 'breeze-client';
-import { Subject } from 'rxjs/Subject';
+import { Injectable } from "@angular/core";
+import {
+  EntityManager,
+  Entity,
+  EntityQuery,
+  FetchStrategy,
+  SaveOptions,
+  EntityChangedEventArgs,
+  EntityError
+} from "breeze-client";
+import { Subject } from "rxjs";
 
-import { EmProviderService } from '../../core/services/em-provider.service';
-import { DataContext } from '../../app-constants';
+import { MpEntityError } from "../../core/common/mapStrings";
+import { EmProviderService } from "../../core/services/em-provider.service";
+import { DataContext } from "../../app-constants";
 
-
-@Injectable()
+//@Injectable()
 export class BaseDataContext {
+  static shelveSets = {};
+  //private static savedOrRejectedSubject = new Subject<SavedOrRejectedArgs>();
 
-    private static shelveSets = {};
-    //private static savedOrRejectedSubject = new Subject<SavedOrRejectedArgs>();
+  _manager: EntityManager;
 
-    private _manager: EntityManager;
+  entityChangedSubject: Subject<EntityChangedEventArgs>;
 
-    private entityChangedSubject: Subject<EntityChangedEventArgs>;
+  constructor(
+    private dataContext: DataContext,
+    private _emProvider: EmProviderService
+  ) {
+    this.entityChangedSubject = new Subject<EntityChangedEventArgs>();
+  }
 
-    constructor(private dataContext: DataContext, private _emProvider: EmProviderService) {
-        this.entityChangedSubject = new Subject<EntityChangedEventArgs>();
+  // static deleteShelveSet(key: string): void {
+  //     delete UnitOfWork.shelveSets[key];
+  // }
+
+  protected get manager(): EntityManager {
+    if (!this._manager) {
+      this._manager = this._emProvider.getManager(this.dataContext);
+
+      this._manager.entityChanged.subscribe(args => {
+        this.entityChangedSubject.next(args);
+      });
+    }
+    return this._manager;
+  }
+
+  get entityChanged() {
+    return this.entityChangedSubject.asObservable();
+  }
+
+  protected queryFailed(error: any) {
+    const msg = `Error querying data: ${
+      error ? error.message || error.status : "Unknown Reason"
+    }`;
+    return Promise.reject(msg);
+  }
+
+  static get savedOrRejected() {
+    //return UnitOfWork.savedOrRejectedSubject.asObservable();
+    return null;
+  }
+
+  //modify has changes so that it checks against all managers?
+  hasChanges(): boolean {
+    return this.manager.hasChanges();
+  }
+
+  // clear(): void {
+  //     this.manager.clear();
+  // }
+
+  // hasChangesChanged(): Observable<any> {
+  //     return this.manager.hasChangesChanged.subscribe(eventArgs => {
+  //         var data = {hasChanges: eventArgs.hasChanges}
+  //     })
+  // }
+
+  getChanges(): Entity[] {
+    return this.manager.getChanges();
+  }
+
+  namedCommit(selectedEntities: Entity[]): Promise<any> {
+    return <any>this.manager
+      .saveChanges(selectedEntities)
+      .then(saveResult => {
+        return saveResult.entities;
+      })
+      .catch(errors => {
+        let message = this.processSaveErrors(errors);
+
+        throw message;
+      });
+  }
+
+  //This is save changes
+  commit(): Promise<any> {
+    //let saveOptions = new SaveOptions({ resourceName: 'savechanges' });
+    //return <any>this.manager.saveChanges(null, saveOptions)
+    return <any>this.manager
+      .saveChanges()
+      .then(saveResult => {
+        return saveResult.entities;
+      })
+      .catch(errors => {
+        let message = this.processSaveErrors(errors);
+
+        throw message;
+      });
+  }
+
+  processSaveErrors(errors): string {
+    const entityErrors = errors.entityErrors;
+
+    if (errors.status === 401) {
+      return "You have meen logged out due to time. Please login and try";
     }
 
-    // static deleteShelveSet(key: string): void {
-    //     delete UnitOfWork.shelveSets[key];
-    // }
+    if (entityErrors) {
+      const monitorErrors = entityErrors.filter(
+        error =>
+          error.errorName === MpEntityError.crseNotOpen ||
+          error.errorName === MpEntityError.wgNotOpen
+      );
+      if (monitorErrors.length > 0) {
+        monitorErrors.forEach(error =>
+          error.entity.entityAspect.rejectChanges()
+        );
 
-    protected get manager(): EntityManager {
-        if (!this._manager) {
-            this._manager = this._emProvider.getManager(this.dataContext);
-
-            this._manager.entityChanged.subscribe(args => {
-                this.entityChangedSubject.next(args);
-            });
+        if (
+          monitorErrors.some(
+            error => error.errorName === MpEntityError.crseNotOpen
+          )
+        ) {
+          return "The Course is currently closed for Review, please refresh the screen";
         }
-        return this._manager;
+
+        if (
+          monitorErrors.some(
+            error => error.errorName === MpEntityError.wgNotOpen
+          )
+        ) {
+          return "The Group is currently Under Review, please refresh the screen";
+        }
+      }
     }
 
-    get entityChanged() {
-        return this.entityChangedSubject.asObservable();
-    }
+    return "An unexpected error occured, your changes were not saved. Please try again.";
+  }
 
-    static get savedOrRejected() {
-        //return UnitOfWork.savedOrRejectedSubject.asObservable();
-        return null;
-    }
+  rollback(): void {
+    let pendingChanges = this.manager.getChanges();
+    this.manager.rejectChanges();
+    // UnitOfWork.savedOrRejectedSubject.next({
+    //     entities: pendingChanges,
+    //     rejected: true
+    // });
+  }
 
-    //modify has changes so that it checks against all managers?
-    hasChanges(): boolean {
-        return this.manager.hasChanges();
-    }
+  clear(): void {
+    this._emProvider.clear(this.dataContext);
+  }
 
-    // hasChangesChanged(): Observable<any> {
-    //     return this.manager.hasChangesChanged.subscribe(eventArgs => {
-    //         var data = {hasChanges: eventArgs.hasChanges}
-    //     })
-    // }
+  // shelve(key: string, clear: boolean = false): void {
+  //     let data = this.manager.exportEntities(null, { asString: false, includeMetadata: false });
+  //     UnitOfWork.shelveSets[key] = data;
+  //     if (clear) {
+  //         this._emProvider.reset(this.manager);
+  //     }
+  // }
 
-    getChanges(): Entity[] {
-        return this.manager.getChanges();
-    }
+  // unshelve(key: string, clear: boolean = true): boolean {
+  //     let data = UnitOfWork.shelveSets[key];
+  //     if (!data) {
+  //         return false;
+  //     }
 
-    //This is save changes
-    commit(): Promise<any> {
-        let saveOptions = new SaveOptions({ resourceName: 'savechanges' });
+  //     if (clear) {
+  //         // Clear the entity manager and don't bother importing lookup data from masterManager.
+  //         this.manager.clear();
+  //     }
+  //     this.manager.importEntities(data);
 
-        return <any>this.manager.saveChanges(null, saveOptions)
-            .then((saveResult) => {
-                // UnitOfWork.savedOrRejectedSubject.next({
-                //     entities: saveResult.entities,
-                //     rejected: false
-                // });
+  //     // Delete the shelveSet
+  //     delete UnitOfWork.shelveSets[key];
+  //     return true;
+  // }
 
-                return saveResult.entities;
-            });
-    }
+  // protected createRepository<T>(entityTypeName: string, resourceName: string, isCached: boolean = false) {
+  //     return new Repository<T>(this.manager, entityTypeName, resourceName, isCached);
+  // }
 
-    rollback(): void {
-        let pendingChanges = this.manager.getChanges();
-        this.manager.rejectChanges();
-        // UnitOfWork.savedOrRejectedSubject.next({
-        //     entities: pendingChanges,
-        //     rejected: true
-        // });
-    }
-
-    // clear(): void {
-    //     this._emProvider.reset(this.manager);
-    // }
-
-    // shelve(key: string, clear: boolean = false): void {
-    //     let data = this.manager.exportEntities(null, { asString: false, includeMetadata: false });
-    //     UnitOfWork.shelveSets[key] = data;
-    //     if (clear) {
-    //         this._emProvider.reset(this.manager);
-    //     }
-    // }
-
-    // unshelve(key: string, clear: boolean = true): boolean {
-    //     let data = UnitOfWork.shelveSets[key];
-    //     if (!data) {
-    //         return false;
-    //     }
-
-    //     if (clear) {
-    //         // Clear the entity manager and don't bother importing lookup data from masterManager.
-    //         this.manager.clear();
-    //     }
-    //     this.manager.importEntities(data);
-
-    //     // Delete the shelveSet
-    //     delete UnitOfWork.shelveSets[key];
-    //     return true;
-    // }
-
-    // protected createRepository<T>(entityTypeName: string, resourceName: string, isCached: boolean = false) {
-    //     return new Repository<T>(this.manager, entityTypeName, resourceName, isCached);
-    // }
-
-    // protected createFactory<T extends Entity>(type: { new (): T; }) {
-    //     //return new EntityFactory<T>(type, this.manager);
-    //     return null;
-    // }
+  // protected createFactory<T extends Entity>(type: { new (): T; }) {
+  //     //return new EntityFactory<T>(type, this.manager);
+  //     return null;
+  // }
 }

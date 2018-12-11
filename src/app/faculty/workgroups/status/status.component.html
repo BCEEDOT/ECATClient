@@ -1,0 +1,41 @@
+<div class="width">
+  <mat-card>
+    <mat-card-title fxLayout="row">
+      <button mat-raised-button color="primary" (click)="back()">Back</button>
+      <span fxFlex="grow" class="text-center">{{workGroup.mpCategory}} - {{wgName}} Status</span>
+      <span fxFlex></span>
+      <button mat-raised-button (click)="this.reviewFlight()" [ngClass]="canReview ? 'can-review' : 'no-review'" *ngIf="workGroup.mpSpStatus !== statusMap.created && workGroup.mpSpStatus !== statusMap.published">Review</button>
+      <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <span fxFlex="45"></span>
+          <span fxFlex="10" class="text-center">SELF</span>
+          <span fxFlex="10" class="text-center">PEER</span>
+          <span fxFlex="10" class="text-center">STRATS</span>
+          <span fxFlex="15" class="text-center">COMMENTS</span>
+          <span fxFlex="20" class="text-center">RESPONSE AGGREGATES</span>
+        </mat-list-item>
+        <mat-list-item *ngFor="let student of members">
+          <span fxFlex="45">{{student.rankName}}</span>
+          <span fxFlex="10" class="text-center"><mat-icon *ngIf="student.check.isSelfDone">check</mat-icon><mat-icon *ngIf="!student.check.isSelfDone">clear</mat-icon></span>
+          <span fxFlex="10" class="text-center"><mat-icon *ngIf="student.check.sp.isDone">check</mat-icon><mat-icon *ngIf="!student.check.sp.isDone" matTooltip={{student.check.sp.count}} matTooltipPosition="above">clear</mat-icon></span>
+          <span fxFlex="10" class="text-center"><mat-icon *ngIf="student.check.strat.isDone">check</mat-icon><mat-icon *ngIf="!student.check.strat.isDone" matTooltip={{student.check.strat.count}} matTooltipPosition="above">clear</mat-icon></span>
+          <span fxFlex="15" class="text-center">{{student.numberOfAuthorComments}}</span>
+          <span fxFlex="20" class="text-center">
+          <ngx-charts-bar-horizontal-stacked
+            [view]="[150, 50]"
+            [scheme]="student.statusOfStudent.gaveBreakoutChartDataColors"
+            [results]="student.statusOfStudent.gaveBreakOutChartData"
+            [showGridLines]="false"
+            *ngIf="student.hasChartData">
+          </ngx-charts-bar-horizontal-stacked>
+          <span *ngIf="!student.hasChartData">No Data</span>
+        </span>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

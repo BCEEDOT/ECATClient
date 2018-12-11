@@ -1,8 +1,8 @@
-import { EntityBase } from '../EntityBase';
-import { Course } from './Course';
-import { CrseStudentInGroup } from './CrseStudentInGroup';
-import { WorkGroup } from './WorkGroup';
-import { StudSpCommentFlag } from './StudSpCommentFlag';
+import { EntityBase } from '../entitybase';
+import { Course } from './course';
+import { CrseStudentInGroup } from './crseStudentInGroup';
+import { WorkGroup } from './workGroup';
+import { StudSpCommentFlag } from './studSpCommentFlag';
 
 /// <code-import> Place custom imports between <code-import> tags
 
@@ -27,7 +27,13 @@ export class StudSpComment extends EntityBase {
    workGroup: WorkGroup;
 
    /// <code> Place custom code between <code> tags
-   
+
+   get shortText(): string {
+    if (this.commentText && this.commentText.length > 250){
+        return this.commentText.substring(0, 250) + ' [...]';
+    }
+    return null;
+   }
    /// </code>
 
 }

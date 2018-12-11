@@ -1,28 +1,138 @@
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
+import {
+    CovalentCommonModule, CovalentLayoutModule, CovalentMediaModule, CovalentExpansionPanelModule,
+    CovalentLoadingModule, CovalentDialogsModule, CovalentSearchModule, CovalentPagingModule,
+    CovalentMenuModule, CovalentChipsModule, CovalentDataTableModule, CovalentMessageModule,
+} from '@covalent/core';
+import {
+    MatButtonModule, MatListModule, MatIconModule, MatCardModule, MatMenuModule, MatInputModule, MatButtonToggleModule,
+    MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule, MatDialogModule, MatSnackBarModule, MatToolbarModule,
+    MatTabsModule, MatSidenavModule, MatTooltipModule, MatCheckboxModule, MatRadioModule, MatGridListModule,
+    MatProgressBarModule, MatSliderModule, MatChipsModule, MatRippleModule, MatExpansionModule
+} from '@angular/material';
+import { LineChartModule, PieChartModule, BarChartModule } from '@swimlane/ngx-charts';
+import { DragulaModule } from 'ng2-dragula';
 
-import { CovalentCoreModule } from '@covalent/core';
-import { CovalentHighlightModule } from '@covalent/highlight';
-import { CovalentMarkdownModule } from '@covalent/markdown';
-
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-
-
-
+import { LoggerService } from './services/logger.service';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
     imports: [
-        CovalentCoreModule,    
-        CovalentHighlightModule,
-        CovalentMarkdownModule,
-        NgxChartsModule,
-        CommonModule
+        FlexLayoutModule,
+        CommonModule,
+        FormsModule,
+        MatButtonModule,
+        MatListModule,
+        MatIconModule,
+        MatCardModule,
+        MatMenuModule,
+        MatInputModule,
+        MatButtonToggleModule,
+        MatProgressSpinnerModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatTabsModule,
+        MatSidenavModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        // MatCoreModule,
+        // MatAutocompleteModule,
+        MatProgressBarModule,
+        MatSliderModule,
+        MatChipsModule,
+        MatGridListModule,
+        MatRippleModule,
+        MatExpansionModule,
+        CovalentCommonModule,
+        CovalentLayoutModule,
+        CovalentMediaModule,
+        CovalentExpansionPanelModule,
+        CovalentMessageModule,
+        // CovalentFileModule,
+        // CovalentStepsModule, 
+        CovalentLoadingModule,
+        CovalentDialogsModule,
+        CovalentSearchModule,
+        CovalentPagingModule,
+        // CovalentNotificationsModule, 
+        CovalentMenuModule,
+        CovalentChipsModule,
+        CovalentDataTableModule,
+        // CovalentJsonForMatterModule,
+        // CovalentHighlightModule,
+        // CovalentMarkdownModule,
+        DragulaModule,
+        // NgxChartsModule
+         LineChartModule,
+         PieChartModule,
+         BarChartModule
+
     ],
     declarations: [
+        PagenotfoundComponent],
+    exports: [
+        FlexLayoutModule,
+        CommonModule,
+        FormsModule,
+        MatButtonModule,
+        MatListModule,
+        MatIconModule,
+        MatCardModule,
+        MatMenuModule,
+        MatInputModule,
+        MatButtonToggleModule,
+        MatProgressSpinnerModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatTabsModule,
+        MatSidenavModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        // MatCoreModule, 
+        // MatAutocompleteModule,
+        MatProgressBarModule,
+        MatSliderModule,
+        MatChipsModule,
+        MatGridListModule,
+        MatRippleModule,
+        MatExpansionModule,
+        CovalentCommonModule,
+        CovalentLayoutModule,
+        CovalentMediaModule,
+        CovalentExpansionPanelModule,
+        // CovalentFileModule,
+        // CovalentStepsModule, 
+        CovalentLoadingModule,
+        CovalentDialogsModule,
+        CovalentSearchModule,
+        CovalentPagingModule,
+        // CovalentNotificationsModule, 
+        CovalentMenuModule,
+        CovalentChipsModule,
+        CovalentDataTableModule,
+        // CovalentJsonForMatterModule,
+        // CovalentHighlightModule, 
+        CovalentMessageModule,
+        // CovalentMarkdownModule,
+        DragulaModule,
+        LineChartModule,
+        PieChartModule,
+        BarChartModule
     ],
-    exports: [CovalentCoreModule, CovalentHighlightModule, CovalentMarkdownModule, FormsModule, CommonModule],
-    providers: []
+    providers: [
+        LoggerService,
+    ]
 })
 
 export class SharedModule { }

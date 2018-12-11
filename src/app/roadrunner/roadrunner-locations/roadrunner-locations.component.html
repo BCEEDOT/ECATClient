@@ -1,0 +1,98 @@
+<mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push']">
+  <td-message *ngIf="signedOut" label="Signed Out" sublabel="To view all saved locations, you must sign in." class="bgc-green-200"
+    icon="info"></td-message>
+  <mat-toolbar td-sidenav-content *ngIf="!signedOut">
+    <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+      <span class="mat-title">Future locations to check out</span>
+    </div>
+  </mat-toolbar>
+  <mat-list class="will-load">
+    <div *ngIf="roadRunnerInfos">
+      <div *ngIf="roadRunnerInfos?.length > 0">
+        <ng-template let-rrData let-last="last" ngFor [ngForOf]="roadRunnerInfos">
+          <div *ngIf="(!rrData?.prevSignOut && rrData?.signOut) || (!rrData?.prevSignOut && !rrData?.signedOutSomewhere) " fxShow fxHide.xs="true"
+            #row fxLayout="row" fxLayoutGap="20px">
+            <mat-list-item fxFlex="100%">
+              <h4 matLine *ngIf="rrData.splitLocation.length > 1" [ngClass]="{'highlight': rrData?.signOut == true}"> {{rrData?.splitLocation[0]}} </h4>
+              <p matLine *ngIf="rrData.splitLocation.length > 1" [ngClass]="{'highlight': rrData?.signOut == true}">{{rrData?.splitLocation[1]}}</p>
+              <h4 matLine *ngIf="rrData.splitLocation.length === 1" [ngClass]="{'highlight': rrData?.signOut == true}"> {{rrData?.splitLocation[0]}}</h4>
+              <p matLine></p>
+              <span fxFlex="30">
+                <div class="mat-caption tc-grey-500">
+                  Start Date: 
+                  <span [innerHtml]="rrData?.leaveDate | date:'dd MMM yyyy'">{{ rrData?.leaveDate }}</span>
+          </div>
+          </span>
+
+          <span fxFlex="30">
+          <div class="mat-caption tc-grey-500">
+            Return Date: 
+            <span [innerHtml]="rrData?.returnDate | date:'dd MMM yyyy'">{{ rrData?.returnDate }}</span>
+      </div>
+      </span>
+
+      <div fxFlex="10">
+        <mat-menu #appMenu="matMenu" yPosition="below" xPosition="before">
+          <button *ngIf="!rrData?.signOut && !rrData?.prevSignOut && !rrData?.signedOutSomewhere" mat-menu-item (click)="signOutButton(rrData)"> 
+              <mat-icon> directions_run</mat-icon>
+              <span class="mat-subheading-1"> Sign Out </span>
+            </button>
+          <button *ngIf="rrData?.signOut" mat-menu-item (click)="signOutButton(rrData)"> 
+              <mat-icon> keyboard_return </mat-icon>
+              <span class="mat-subheading-1"> Sign In </span>
+            </button>
+          <button mat-menu-item [routerLink]="[rrData.id]"> 
+              <mat-icon> edit </mat-icon>
+              <span class="mat-subheading-1"> View/Edit </span>
+            </button>
+        </mat-menu>
+
+        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+      </div>
+      </mat-list-item>
+    </div>
+
+    <!--show when screen is small-->
+
+    <div *ngIf="!rrData?.prevSignOut" fxHide fxHide.xs="false" #row fxLayout="row" fxLayoutGap="20px">
+      <mat-list-item fxFlex="100%">
+        <h4 matLine *ngIf="rrData.splitLocation.length > 1"> {{rrData?.splitLocation[0]}} </h4>
+        <p matLine *ngIf="rrData.splitLocation.length > 1">{{rrData?.splitLocation[1]}}</p>
+        <h4 matLine *ngIf="rrData.splitLocation.length === 1"> {{rrData?.splitLocation[0]}}</h4>
+        <p matLine></p>
+        <p matLine class="mat-caption" [innerHtml]="rrData?.leaveDate | date:'dd MMM yyyy'">{{ rrData?.leaveDate }} </p>
+        <span matLine>
+                  <a mat-icon-button  color="primary" [routerLink]="[rrData.id]">
+                    <mat-icon >edit</mat-icon>
+                  </a>
+                  <a *ngIf="!rrData?.signOut && !rrData?.prevSignOut && !rrData?.signedOutSomewhere" mat-icon-button  color="primary" (click)="signOutButton(rrData)">
+                    <mat-icon >directions_run</mat-icon>
+                  </a>
+                  <a *ngIf="rrData?.signOut" mat-icon-button  color="primary" (click)="signOutButton(rrData)">
+                    <mat-icon >keyboard_return</mat-icon>
+
+                  </a>
+                </span>
+
+      </mat-list-item>
+
+    </div>
+
+    <div *ngIf="!rrData?.prevSignOut && !rrData?.signedOutSomewhere">
+      <mat-divider *ngIf="!last" [inset]="true"></mat-divider>
+    </div>
+    </ng-template>
+
+    </div>
+    </div>
+    <div *ngIf="roadRunnerInfos">
+      <div *ngIf="roadRunnerInfos?.length === count || roadRunnerInfos?.length === 0">
+
+        <p class="mat-title text-center">You have no locations to sign out to. Add an location using the + or Clone buttons.</p>
+      </div>
+    </div>
+
+  </mat-list>
+</mat-card>

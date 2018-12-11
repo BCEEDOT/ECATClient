@@ -1,13 +1,13 @@
-import { EntityBase } from '../EntityBase';
-import { Course } from './Course';
-import { FacStratResponse } from './FacStratResponse';
-import { CrseStudentInGroup } from './CrseStudentInGroup';
-import { StratResponse } from './StratResponse';
-import { SpResult } from './SpResult';
-import { SpInstrument } from './SpInstrument';
-import { GroupReconResult } from './GroupReconResult';
-import { StratResult } from './StratResult';
-import { WorkGroupModel } from './WorkGroupModel';
+import { EntityBase } from '../entitybase';
+import { Course } from './course';
+import { FacStratResponse } from './facStratResponse';
+import { CrseStudentInGroup } from './crseStudentInGroup';
+import { StratResponse } from './stratResponse';
+import { SpResult } from './spResult';
+import { SpInstrument } from './spInstrument';
+import { GroupReconResult } from './groupReconResult';
+import { StratResult } from './stratResult';
+import { WorkGroupModel } from './workGroupModel';
 
 /// <code-import> Place custom imports between <code-import> tags
 
@@ -42,7 +42,9 @@ export class WorkGroup extends EntityBase {
    wgModel: WorkGroupModel;
 
    /// <code> Place custom code between <code> tags
-   
+   changeDescription: string;
+   maxSize: number;
+   toDelete: boolean;
    /// </code>
 
 }

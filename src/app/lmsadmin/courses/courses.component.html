@@ -1,0 +1,66 @@
+<mat-card class="width">
+  <ng-template tdLoading [tdLoadingUntil]="!isLoading" tdLoadingStrategy="replace" tdLoadingType="circle">
+    <mat-card-title>
+      <div fxLayout="row">
+        <div fxFlex="grow" class="text-center">
+          Course List
+        </div>
+        <div fxFlex></div>
+        <div fxLayout="row">
+          <button mat-raised-button color="primary" (click)="this.pollCourses()">Poll LMS Courses</button>
+          <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+        </div>
+      </div>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <span fxFlex="100" class="text-center pad-top-xl mat-title" *ngIf="!this.courses">No courses for this academy.</span>
+      <div *ngIf="courses?.length > 0">
+        <mat-list>
+          <mat-list-item>
+            <span fxFlex="30">NAME</span>
+            <span fxFlex="30">CLASS</span>
+            <span fxFlex="30">START DATE</span>
+            <span fxFlex="30">GRAD DATE</span>
+            <span fxFlex="10"></span>
+          </mat-list-item>
+          <mat-list-item *ngFor="let course of courses">
+            <span fxFlex="30">
+              <p>{{course.name}}</p>
+            </span>
+            <span fxFlex="30">
+              <p>{{course.classNumber}}</p>
+            </span>
+            <span fxFlex="30">
+              <p>{{course.displayStart}}</p>
+            </span>
+            <span fxFlex="30">
+              <p>{{course.displayGrad}}</p>
+            </span>
+            <div fxFlex="10">
+              <mat-menu #appMenu="matMenu" yPosition="below" xPosition="before">
+                <button mat-menu-item [routerLink]="[course.id + '/info']"> 
+                  <mat-icon> info_outline </mat-icon>
+                  <span class="mat-subheading-1"> Course Information </span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item [routerLink]="[course.id + '/enrollments']" [disabled]="course.classNumber===null || course.classNumber === '' || course.name === null || course.name === ''"> 
+                  <mat-icon> people_outline </mat-icon>
+                  <span class="mat-subheading-1"> Course Enrollments </span>
+                </button>
+                <button mat-menu-item [routerLink]="[course.id + '/groupsets']" [disabled]="course.classNumber===null || course.classNumber === '' || course.name === null || course.name === ''"> 
+                  <mat-icon> library_books </mat-icon>
+                  <span class="mat-subheading-1"> Group Management </span>
+                </button>
+              </mat-menu>
+
+              <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-card-content>
+  </ng-template>
+</mat-card>

@@ -1,0 +1,22 @@
+<td-layout-nav logo="" toolbarTitle="ECAT - WorkGroup Center">
+  <button mat-icon-button td-menu-button tdLayoutToggle>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div class="width pad-bottom-sm">
+    <div fxLayoutAlign="end" class="pad-right-md pad-top-sm" *ngIf="onListView$ | async">
+      <button mat-button [matMenuTriggerFor]="posXMenu" class="pad-top-xs" style="font-size: 16px;">
+        {{activeCourse?.displayName}}
+        <mat-icon class="mat-24">expand_more</mat-icon>
+      </button>
+      <mat-menu x-position="before" #posXMenu="matMenu" class="before">
+        <button *ngFor="let course of courses" mat-menu-item (click)="setActiveCourse(course, false)">
+          {{course.displayName}}
+        </button>
+      </mat-menu>
+      <button mat-icon-button (click)="refreshData()">
+        <mat-icon class="mat-24">autorenew</mat-icon>
+      </button>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</td-layout-nav>

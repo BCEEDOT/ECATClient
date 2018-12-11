@@ -1,0 +1,143 @@
+<div ngClass="large-container" ngClass.xs="xs-container" ngClass.sm="small-container" fxLayout="row" fxLayoutGap="1%" tabindex="0"
+  (keydown.ArrowLeft)="onLeftArrow($event)" (keydown.ArrowRight)="onRightArrow($event)">
+  <div fxFlex></div>
+  <div class="pad-top-sm">
+    <mat-card ngClass.xs="auto-height">
+      <mat-card-title *ngIf="!isSelf">Assessement for {{activeInventory?.responseForAssessee?.assessee?.rankName}}</mat-card-title>
+      <mat-card-title *ngIf="isSelf">Self Assessment</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <p>With regards to displaying the behavior
+          <span style="color: #3e6d92">{{activeInventory.behavior}}</span> how effective {{perspective}}?</p>
+        <!-- For Large display -->
+        <div fxShow fxHide.xs>
+          <button mat-icon-button matTooltip="Mark As (Not) Displayed" matTooltipPosition="below" [mat-menu-trigger-for]="menu" [disabled]="viewOnly"
+            style="float: left">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <span></span>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngIf="!activeInventory.behaveDisplayed" (click)="activeInventory.behaveDisplayed=true; saveCheck()">Displayed</button>
+            <button mat-menu-item *ngIf="activeInventory.behaveDisplayed" (click)="activeInventory.behaveDisplayed=false; saveCheck()">Not Displayed</button>
+          </mat-menu>
+          <span></span>
+          <div *ngIf="activeInventory.behaveDisplayed">
+            <button mat-raised-button (click)="activeInventory.behaviorEffect=respEnum.ie; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorEffect===respEnum.ie}"
+              [disabled]="viewOnly && activeInventory.behaviorEffect!==respEnum.ie">Ineffective</button>
+            <button mat-raised-button (click)="activeInventory.behaviorEffect=respEnum.e; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorEffect===respEnum.e}"
+              [disabled]="viewOnly && activeInventory.behaviorEffect!==respEnum.e">Effective</button>
+            <button mat-raised-button (click)="activeInventory.behaviorEffect=respEnum.he; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorEffect===respEnum.he}"
+              [disabled]="viewOnly && activeInventory.behaviorEffect!==respEnum.he">Highly Effective</button>
+            <span class="pad-right-sm"></span>
+            <div style="float:right">
+              <button mat-raised-button (click)="activeInventory.behaviorFreq=respEnum.usl; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorFreq===respEnum.usl}"
+                [disabled]="viewOnly && activeInventory.behaviorFreq!==respEnum.usl">Usually</button>
+              <button mat-raised-button (click)="activeInventory.behaviorFreq=respEnum.alw; saveCheck()" [ngClass]="{'btn-selected': activeInventory.behaviorFreq===respEnum.alw}"
+                [disabled]="viewOnly && activeInventory.behaviorFreq!==respEnum.alw">Always</button>
+            </div>
+          </div>
+          <div *ngIf="!activeInventory.behaveDisplayed">
+            <p class="text-center">NOT DISPLAYED</p>
+          </div>
+        </div>
+        <!-- For Mobile -->
+        <form #assessmentForm="ngForm">
+          <div fxLayout="column" fxLayoutGap="30px" fxLayoutAlign="center center" fxHide fxShow.xs>
+            <div fxFlex>
+              <mat-slide-toggle [disabled]="viewOnly" (change)="saveCheck()" name="displayed" class="example-margin" [(ngModel)]="activeInventory.behaveDisplayed"
+                [disabled]="disabled">
+                {{(activeInventory.behaveDisplayed) ? 'Not Displayed' : 'Displayed'}}
+              </mat-slide-toggle>
+            </div>
+            <div fxFlex *ngIf="!activeInventory.behaveDisplayed">
+              <p class="text-center">NOT DISPLAYED</p>
+            </div>
+            <div fxFlex *ngIf="activeInventory.behaveDisplayed">
+              <mat-select (change)="saveCheck()" [(ngModel)]="activeInventory.behaviorEffect" [disabled]="viewOnly" name="effectiveness"
+                #assessmentForm="ngModel" placeholder="Effectiveness">
+                <mat-option [value]="respEnum.ie">
+                  Ineffective
+                </mat-option>
+                <mat-option [value]="respEnum.e">
+                  Effective
+                </mat-option>
+                <mat-option [value]="respEnum.he">
+                  Highly Effective
+                </mat-option>
+              </mat-select>
+            </div>
+            <div fxFlex *ngIf="activeInventory.behaveDisplayed">
+              <mat-select (change)="saveCheck()" [(ngModel)]="activeInventory.behaviorFreq" [disabled]="viewOnly" name="frequency" #assessmentForm="ngModel"
+                placeholder="Frequency">
+                <mat-option [value]="respEnum.usl">
+                  Usually
+                </mat-option>
+                <mat-option [value]="respEnum.alw">
+                  Always
+                </mat-option>
+              </mat-select>
+
+            </div>
+
+          </div>
+        </form>
+      </mat-card-content>
+      <!-- For large display -->
+      <mat-card-actions>
+        <div fxLayout="row" class="pad-bottom-md pad-left-xs pad-right-xs">
+          <!-- <button mat-raised-button color="primary" [disabled]="activeInventory.id===inventories[0].id" (click)="previousInv()">Previous</button> -->
+          <div fxFlex="37" fxFlex.xs="25"></div>
+          <div fxFlex>
+            <button mat-icon-button color="primary" [disabled]="activeInventory.id===inventories[0].id" (click)="previousInv()">
+              <mat-icon matTooltip="Previous" matTooltipPosition="after" class="large-icon">arrow_back</mat-icon>
+            </button>
+          </div>
+          <div fxFlex></div>
+          <div fxFlex="1 1 auto" fxFlexAlign="center" class="pad-bottom-xs">
+            {{activeInventory.displayOrder}} / {{inventories.length}}
+          </div>
+          <div FxFlex></div>
+          <div>
+            <button mat-icon-button color="primary" [disabled]="activeInventory.id===inventories[inventories.length - 1].id" (click)="nextInv()">
+              <mat-icon matTooltip="Next" matTooltipPosition="before" class="large-icon">arrow_forward</mat-icon>
+            </button>
+          </div>
+          <div fxFlex="37" fxFlex.xs="25"></div>
+          <!-- <button mat-raised-button color="primary" [disabled]="activeInventory.id===inventories[inventories.length - 1].id" (click)="nextInv()">Next</button> -->
+        </div>
+
+        <div fxLayout="row">
+          <div fxFlex></div>
+          <div fxShow fxHide.xs>
+            <button mat-raised-button color="primary" *ngIf="viewOnly" (click)="cancel()">Exit</button>
+            <button mat-stroked-button color="primary" *ngIf="!viewOnly" (click)="cancel()">Cancel</button>
+            <button mat-raised-button color="primary" *ngIf="!viewOnly" [disabled]="!canSave" (click)="save()">Save</button>
+          </div>
+          <div fxHide fxShow.xs>
+              <button mat-icon-button color="primary" *ngIf="viewOnly" (click)="cancel()">
+                <mat-icon matTooltip="Back" matTooltipPosition="before" class="large-icon">exit_to_app</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" *ngIf="!viewOnly" (click)="cancel()">
+                <mat-icon matTooltip="Cancel" matTooltipPosition="before" class="large-icon">cancel</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" *ngIf="!viewOnly" [disabled]="!canSave" (click)="save()">
+                <mat-icon matTooltip="Save" matTooltipPosition="before" class="large-icon">save</mat-icon>
+              </button>
+            </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <span></span>
+  <!-- For large display. List of behaviors on right -->
+  <div fxShow fxHide.xs fxHide.sm>
+    <mat-nav-list>
+      <h4>Behaviors</h4>
+      <a mat-list-item *ngFor="let inventory of inventories" (click)="activeInventory=inventory; saveCheck()" [ngClass]="{'inv-selected': activeInventory.id===inventory.id}">
+        <p matLine class="mat-title" style="color: #3e6d92">{{getShortBehavior(inventory)}}</p>
+        <p matLine class="mat-subheading-1">{{getResponseString(inventory)}}</p>
+      </a>
+    </mat-nav-list>
+  </div>
+  <div fxFlex></div>
+</div>

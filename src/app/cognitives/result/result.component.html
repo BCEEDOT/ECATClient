@@ -1,0 +1,19 @@
+<td-layout-nav logo="" toolbarTitle="ECAT - Cognitive Results">
+    <button mat-icon-button td-menu-button tdLayoutToggle>
+        <mat-icon>menu</mat-icon>
+    </button>
+    <mat-card [ngSwitch]="cogResultId" tdMediaToggle="gt-xs" class="pad-sm">
+        <mat-card-title>
+            <div>
+                <button mat-raised-button color="primary" (click)="goBack()">
+              <mat-icon class="tc-white-700">arrow_back</mat-icon>Back to Cognitives
+          </button>
+            </div>
+        </mat-card-title>
+        <ecpe-result *ngSwitchCase="1"> </ecpe-result>
+        <esalb-result *ngSwitchCase="2"> </esalb-result>
+        <ecmspe-result *ngSwitchCase="3"> </ecmspe-result>
+        <etmpre-result *ngSwitchCase="4"> </etmpre-result>
+    </mat-card>
+
+</td-layout-nav>
