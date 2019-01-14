@@ -1,20 +1,41 @@
 <div class="width">
-  <ng-template tdLoading [tdLoadingUntil]="!isLoading" tdLoadingStrategy="overlay">
+  <ng-template
+    tdLoading
+    [tdLoadingUntil]="!isLoading"
+    tdLoadingStrategy="overlay"
+  >
     <mat-card>
       <mat-card-title fxLayout="row">
         <div>
-          <button mat-raised-button color="primary" [routerLink]="['../..']">Back</button>
+          <button mat-raised-button color="primary" [routerLink]="['../..']">
+            Back
+          </button>
         </div>
         <div fxFlex="100" class="text-center">
-          {{selStudent?.rankName}} - Result Details
+          {{ selStudent?.rankName }} - Result Details
         </div>
         <span fxFlex></span>
-        <button mat-raised-button [mat-menu-trigger-for]="menu" class="selected pad-right-xl">Select Student <mat-icon style="color:white">expand_more</mat-icon></button>
-        <span></span>
+
+        <button
+          mat-raised-button
+          [mat-menu-trigger-for]="menu"
+          class="selected pad-right-xl"
+        >
+          Select Student <mat-icon style="color:white">expand_more</mat-icon>
+        </button>
         <mat-menu #menu="matMenu">
-          <button *ngFor="let mem of groupMems" mat-menu-item (click)="selStudent = mem">{{mem.rankName}}</button>
+          <button
+            *ngFor="let mem of groupMems"
+            mat-menu-item
+            (click)="selStudent = mem"
+          >
+            {{ mem.rankName }}
+          </button>
         </mat-menu>
-        <button mat-icon-button (click)="this.refreshData()"><mat-icon>autorenew</mat-icon></button>
+
+        <button mat-icon-button (click)="this.refreshData()">
+          <mat-icon>autorenew</mat-icon>
+        </button>
       </mat-card-title>
       <mat-tab-group>
         <mat-tab>
@@ -22,14 +43,20 @@
             <mat-icon class="tab-icon">assignment</mat-icon>
             Behaviors
           </ng-template>
-          <results-behaviors *ngIf="selStudent" [student]="selStudent"></results-behaviors>
+          <results-behaviors
+            *ngIf="selStudent"
+            [student]="selStudent"
+          ></results-behaviors>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon">comment</mat-icon>
             Comments
           </ng-template>
-          <results-comments *ngIf="selStudent" [student]="selStudent"></results-comments>
+          <results-comments
+            *ngIf="selStudent"
+            [student]="selStudent"
+          ></results-comments>
         </mat-tab>
       </mat-tab-group>
     </mat-card>
