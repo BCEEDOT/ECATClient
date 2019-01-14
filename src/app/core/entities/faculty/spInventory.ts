@@ -335,9 +335,27 @@ export class SpInventory extends EntityBase {
 
             const recDataset = [];
 
+            const receivedBoGraphColors =  {domain: []};
+            
+
             for (let bo in receivedBo) {
                 if (receivedBo.hasOwnProperty(bo)) {
-                    recDataset.push({ name: bo, value: receivedBo[bo] });
+                    if (receivedBo[bo] > 0) {
+                        recDataset.push({ name: bo, value: receivedBo[bo] });
+                        if (bo === "Highly Effective") {
+                            receivedBoGraphColors.domain.push("#00308F");
+                        }
+                        if (bo === "Effective") {
+                            receivedBoGraphColors.domain.push("#00AA58");
+                        }
+                        if (bo === "Not Displayed") {
+                            receivedBoGraphColors.domain.push("#AAAAAA");
+                        }
+                        if (bo === "Ineffective") {
+                            receivedBoGraphColors.domain.push("#AA0000");
+                        }
+                    }
+                    
                     // if (bo === 'IEA') recDataset.push({ data: receivedBo[bo], label: bo, color: '#AA0000' });
                     // if (bo === 'IEU') recDataset.push({ data: receivedBo[bo], label: bo, color: '#FE6161' });
                     // if (bo === 'ND') recDataset.push({ data: receivedBo[bo], label: bo, color: '#AAAAAA' });
@@ -347,8 +365,10 @@ export class SpInventory extends EntityBase {
                     // if (bo === 'HEU') recDataset.push({ data: receivedBo[bo], label: bo, color: '#7CA8FF' });
                 }
             }
+
             //current.receivedBo = recDataset;
             current.receivedBo = [ { "name": "# Recieved", "series": recDataset }];
+            current.receivedBoGraphColors = receivedBoGraphColors;
 
             const gvnDataset = [];
 

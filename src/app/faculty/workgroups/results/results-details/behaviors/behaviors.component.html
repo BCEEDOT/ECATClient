@@ -12,7 +12,7 @@
       <span fxFlex="15">
         <ngx-charts-bar-horizontal-stacked
             [view]="[150, 50]"
-            [scheme]="chartColors"
+            [scheme]="inv.behaveResultForStudent[student.studentId].receivedBoGraphColors"
             [results]="inv.behaveResultForStudent[student.studentId].receivedBo"
             [showGridLines]="false"
             (select)="onSelect($event)">
