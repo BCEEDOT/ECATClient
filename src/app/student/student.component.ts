@@ -201,7 +201,8 @@ export class StudentComponent
       this.setActiveWorkGroup(workGroup);
     } else {
       this.workGroupService.workGroup(this.activeWorkGroup);
-      this.nav(this.activeWorkGroup);
+      //Removed to fix canceled route due to path match in routeback component
+      //this.nav(this.activeWorkGroup);
     }
   }
 
@@ -252,20 +253,21 @@ export class StudentComponent
     });
   }
 
-  nav(workGroup: WorkGroup): void {
-    const resultsPublished: boolean =
-      this.activeWorkGroup.mpSpStatus === MpSpStatus.published;
+  //Removed to fix canceled route due to path match in routeback component
+  // nav(workGroup: WorkGroup): void {
+  //   const resultsPublished: boolean =
+  //     this.activeWorkGroup.mpSpStatus === MpSpStatus.published;
 
-    resultsPublished
-      ? this.router.navigate(
-          ["results", this.activeCourseId, this.activeWorkGroupId],
-          { relativeTo: this.route }
-        )
-      : this.router.navigate(
-          ["list", this.activeCourseId, this.activeWorkGroupId, "main"],
-          { relativeTo: this.route }
-        );
-  }
+  //   resultsPublished
+  //     ? this.router.navigate(
+  //         ["results", this.activeCourseId, this.activeWorkGroupId],
+  //         { relativeTo: this.route }
+  //       )
+  //     : this.router.navigate(
+  //         ["list", this.activeCourseId, this.activeWorkGroupId, "main"],
+  //         { relativeTo: this.route }
+  //       );
+  // }
 
   setActiveWorkGroup(workGroup: WorkGroup): void {
     this.canRoute().subscribe(canRoute => {
