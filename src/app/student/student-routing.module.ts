@@ -58,6 +58,7 @@ const studentRoutes: Routes = [
             component: SPProviderAssessComponent,
             resolve: { inventories: 'spAssessResolver' }
           },
+          //This is used to do the routing to the list and results
           {
             path: '',
             component: RouteBackComponent,

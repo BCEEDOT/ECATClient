@@ -79,7 +79,8 @@ export class FacultyComponent implements OnInit, AfterContentChecked {
     this.activeCourseId = this.activeCourse.id;
     this.facWorkGroupService.course(this.activeCourse);
 
-    this.router.navigate(['list', this.activeCourseId], { relativeTo: this.route });
+    //Removed to fix canceled route due to path match in routeback component
+    //this.router.navigate(['list', this.activeCourseId], { relativeTo: this.route });
 
   }
 
