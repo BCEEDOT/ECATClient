@@ -12,7 +12,7 @@ import { FacWorkgroupService } from '../../../services/facworkgroup.service';
   templateUrl: './assess.component.html',
   styleUrls: ['./assess.component.scss']
 })
-export class AssessComponent implements OnInit, OnDestroy {
+export class EvaluateAssessComponent implements OnInit, OnDestroy {
 
   groupMembers: CrseStudentInGroup[];
   workGroup: WorkGroup;
