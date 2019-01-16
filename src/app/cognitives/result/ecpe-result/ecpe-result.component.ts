@@ -53,15 +53,18 @@ export class EcpeResultComponent implements OnInit, OnDestroy {
             }
         } else if (this.ecpeResult.outcome > this.ecpeMean) {
             //Midly Innovative
-            if (this.ecpeResult.outcome < (this.ecpeMean + this.ecpeSD)) {
+            if (this.ecpeResult.outcome <= (this.ecpeMean + this.ecpeSD)) {
                 this.ecpeResultText = "Mildly Innovative";
                 //Moderately Innovative
-            } else if (this.ecpeResult.outcome < (this.ecpeMean + (this.ecpeSD * 2))) {
+            } else if (this.ecpeResult.outcome <= (this.ecpeMean + (this.ecpeSD * 2))) {
                 this.ecpeResultText = "Moderately Innovative";
                 //Strongly Innovative
             } else {
                 this.ecpeResultText = "Strongly Innovative";
             }
+        } else if (this.ecpeResult.outcome == this.ecpeMean) {
+            //Midly Adaptive/Innovative
+            this.ecpeResultText = "Mildy Adaptive/Innovative";
         }
     }//end calcEcpeResult
 
