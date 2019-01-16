@@ -18,7 +18,7 @@ import { GlobalService } from "../../../core/services/global.service";
   styleUrls: ['./assess.component.scss']
 })
 
-export class AssessComponent implements OnInit {
+export class SpProviderAssessComponent implements OnInit {
   inventories: Array<IStudSpInventory | IFacSpInventory>;
   inventories$: Observable<Array<IStudSpInventory | IFacSpInventory>>;
   inventoriesSub: Subscription;
