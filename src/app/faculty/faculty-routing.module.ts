@@ -3,21 +3,18 @@ import { RouterModule, Routes, ActivatedRouteSnapshot } from '@angular/router';
 
 import { FacultyAuthGuardService } from './services/faculty-auth-guard.service';
 import { FacultyDataContextService } from './services/faculty-data-context.service';
-import { WorkGroupsComponent } from './workgroups/work-groups.component';
 import { FacultyComponent } from './faculty.component';
 import { ListComponent } from './workgroups/list/list.component';
-import { GlobalService } from '../core/services/global.service';
 import { StatusComponent } from './workgroups/status/status.component'
 import { EvaluateComponent } from './workgroups/evaluate/evaluate.component';
 import { FlightRosterComponent } from './workgroups/flight-roster/flight-roster.component';
-import { AssessComponent as SPProviderAssessComponent } from '../provider/sp-provider/assess/assess.component'
+import { SpProviderAssessComponent } from '../provider/sp-provider/assess/assess.component'
 
-import { AssessComponent as EvaluateAssessComponent } from "./workgroups/evaluate/assess/assess.component";
+import { EvaluateAssessComponent } from "./workgroups/evaluate/assess/assess.component";
 import { StratComponent } from "./workgroups/evaluate/strat/strat.component";
 import { CommentsComponent } from "./workgroups/evaluate/comments/comments.component";
 
 import { ResultsComponent } from "./workgroups/results/results.component";
-import { Course } from '../core/entities/faculty';
 import { ResultsDetailsComponent } from "./workgroups/results/results-details/results-details.component";
 import { FacultySaveChangesGuard } from "./services/faculty-savechangesguard.service";
 import { RoutebackComponent } from "./workgroups/routeback/routeback.component";
@@ -80,7 +77,7 @@ const facultyRoutes: Routes = [
 
           {
             path: 'list/:crsId/evaluate/:wrkGrpId/assess/:assesseeId',
-            component: SPProviderAssessComponent,
+            component: SpProviderAssessComponent,
             resolve: { inventories: 'facSpAssessResolver' },
             canDeactivate: [FacultySaveChangesGuard],
           },

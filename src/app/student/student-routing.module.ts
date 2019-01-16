@@ -4,11 +4,11 @@ import { ActivatedRouteSnapshot, RouteReuseStrategy, RouterModule, Routes } from
 import { StudentSavechangesguardService } from './services/student-savechangesguard.service';
 import { StudentAuthGuard } from './services/student-auth-guard.service';
 import { StudentDataContext } from './services/student-data-context.service';
-import { GlobalService } from '../core/services/global.service';
+
 import { StudentComponent } from './student.component';
 import { ListComponent } from './list/list.component';
 import { ResultsComponent } from './results/results.component';
-import { AssessComponent as SPProviderAssessComponent } from '../provider/sp-provider/assess/assess.component';
+import { SpProviderAssessComponent } from '../provider/sp-provider/assess/assess.component';
 import { AssessComponent } from "./shared/assess/assess.component";
 import { StratComponent } from "./list/strat/strat.component";
 import { RouteBackComponent } from './shared/route-back/route-back.component';
@@ -50,12 +50,12 @@ const studentRoutes: Routes = [
           },
           {
             path: 'results/:crsId/:wrkGrpId/assess/:assesseeId',
-            component: SPProviderAssessComponent,
+            component: SpProviderAssessComponent,
             resolve: { inventories: 'spAssessResolver' }
           },
           {
             path: 'list/:crsId/:wrkGrpId/assess/:assesseeId',
-            component: SPProviderAssessComponent,
+            component: SpProviderAssessComponent,
             resolve: { inventories: 'spAssessResolver' }
           },
           //This is used to do the routing to the list and results

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from "../../shared/shared.module";
-import { AssessComponent } from './assess/assess.component';
+import { SpProviderAssessComponent } from './assess/assess.component';
 import { CommentDialog } from './comment/comment.dialog';
 import { SpProviderService } from './sp-provider.service';
 
@@ -9,8 +9,8 @@ import { SpProviderService } from './sp-provider.service';
   imports: [
     SharedModule
   ],
-  declarations: [ AssessComponent, CommentDialog ],
-  exports: [ AssessComponent ],
+  declarations: [ SpProviderAssessComponent, CommentDialog ],
+  exports: [ SpProviderAssessComponent ],
   providers: [ SpProviderService ],
   entryComponents: [ CommentDialog ]
 })
