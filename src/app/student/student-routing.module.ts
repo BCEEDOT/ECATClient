@@ -57,14 +57,13 @@ const studentRoutes: Routes = [
             path: 'list/:crsId/:wrkGrpId/assess/:assesseeId',
             component: SpProviderAssessComponent,
             resolve: { inventories: 'spAssessResolver' }
-          },
-          //This is used to do the routing to the list and results
-          {
-            path: '',
-            component: RouteBackComponent,
-            pathMatch: 'full'
-            // Set active course and workgroup. Determine if results are published for active group. 
-          },
+          }
+          // {
+          //   path: '',
+          //   component: RouteBackComponent,
+          //   pathMatch: 'full'
+          //   // Set active course and workgroup. Determine if results are published for active group. 
+          // },
           //  {
           //    path: '',
           //    component: StudentComponent,
