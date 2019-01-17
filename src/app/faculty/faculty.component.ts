@@ -1,8 +1,8 @@
 import { Component, AfterViewInit, OnInit, Inject, OnDestroy, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable ,  Subscription } from 'rxjs';
-import { pluck } from "rxjs/Operators";
+import { pluck, filter, pairwise } from "rxjs/Operators";
 import { TdDialogService, TdLoadingService } from "@covalent/core";
 
 import { Course, WorkGroup } from '../core/entities/faculty';
@@ -32,6 +32,28 @@ export class FacultyComponent implements OnInit, AfterContentChecked {
     private facultyDataContext: FacultyDataContextService,
     private facWorkGroupService: FacWorkgroupService,
   ) {
+
+    // router.events
+    //   .pipe(
+    //     filter(e => e instanceof NavigationEnd),
+    //     pairwise()
+    //   )
+
+    //   .subscribe((event: any[]) => {
+    //     var previousRoute = event[0].urlAfterRedirects;
+    //     var newRoute = event[1].urlAfterRedirects;
+
+    //     console.log(previousRoute);
+    //     console.log(newRoute);
+
+    //     // var matchPreviousRoute = previousRoute.match("list|result");
+    //     // var matchNewRoute = newRoute.match("^/student/assessment$");
+
+    //     // if (matchPreviousRoute && matchNewRoute) {
+    //     //   this.activate(false);
+    //     // }
+    //   });
+
     this.courses$ = route.data.pipe(pluck('courses'));
   }
 

@@ -27,7 +27,9 @@ const appRoutes: Routes = [
     // Uses old style routing for older browsers eg... http://localhost/#/Home
     // RouterModule.forRoot(appRoutes, { useHash: true });
     // TODO: Disable tracing for production
-    // RouterModule.forRoot(appRoutes, {enableTracing: true})
+    // RouterModule.forRoot(appRoutes, {
+    //   onSameUrlNavigation: 'reload',
+    //   enableTracing: true})
     RouterModule.forRoot(appRoutes)
   ],
   exports: [

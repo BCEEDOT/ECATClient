@@ -8,7 +8,12 @@ import {
   ChangeDetectorRef,
   AfterContentChecked
 } from "@angular/core";
-import { ActivatedRoute, Router, UrlSegment } from "@angular/router";
+import {
+  ActivatedRoute,
+  Router,
+  UrlSegment,
+  NavigationEnd
+} from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import {
   TdLoadingService,
@@ -16,7 +21,7 @@ import {
   TdMediaService
 } from "@covalent/core";
 import { Observable, Subscription, Observer, of } from "rxjs";
-import { pluck } from "rxjs/Operators";
+import { pluck, filter, pairwise } from "rxjs/Operators";
 import {
   MatDialog,
   MatDialogRef,
@@ -67,6 +72,24 @@ export class StudentComponent
     public dialog: MatDialog,
     @Inject(DOCUMENT) doc: any
   ) {
+    router.events
+      .pipe(
+        filter(e => e instanceof NavigationEnd),
+        pairwise()
+      )
+
+      .subscribe((event: any[]) => {
+        var previousRoute = event[0].urlAfterRedirects;
+        var newRoute = event[1].urlAfterRedirects;
+
+        var matchPreviousRoute = previousRoute.match("list|result");
+        var matchNewRoute = newRoute.match("^/student/assessment$");
+
+        if (matchPreviousRoute && matchNewRoute) {
+          this.activate(false);
+        }
+      });
+
     this.courses$ = route.data.pipe(pluck("assess"));
   }
 
@@ -202,7 +225,7 @@ export class StudentComponent
     } else {
       this.workGroupService.workGroup(this.activeWorkGroup);
       //Removed to fix canceled route due to path match in routeback component
-      //this.nav(this.activeWorkGroup);
+      this.nav(this.activeWorkGroup);
     }
   }
 
@@ -254,20 +277,20 @@ export class StudentComponent
   }
 
   //Removed to fix canceled route due to path match in routeback component
-  // nav(workGroup: WorkGroup): void {
-  //   const resultsPublished: boolean =
-  //     this.activeWorkGroup.mpSpStatus === MpSpStatus.published;
+  nav(workGroup: WorkGroup): void {
+    const resultsPublished: boolean =
+      this.activeWorkGroup.mpSpStatus === MpSpStatus.published;
 
-  //   resultsPublished
-  //     ? this.router.navigate(
-  //         ["results", this.activeCourseId, this.activeWorkGroupId],
-  //         { relativeTo: this.route }
-  //       )
-  //     : this.router.navigate(
-  //         ["list", this.activeCourseId, this.activeWorkGroupId, "main"],
-  //         { relativeTo: this.route }
-  //       );
-  // }
+    resultsPublished
+      ? this.router.navigate(
+          ["results", this.activeCourseId, this.activeWorkGroupId],
+          { relativeTo: this.route }
+        )
+      : this.router.navigate(
+          ["list", this.activeCourseId, this.activeWorkGroupId, "main"],
+          { relativeTo: this.route }
+        );
+  }
 
   setActiveWorkGroup(workGroup: WorkGroup): void {
     this.canRoute().subscribe(canRoute => {
