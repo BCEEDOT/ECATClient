@@ -9,7 +9,7 @@ export class WorkGroupService {
     isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     assessComplete$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     stratComplete$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    onListView$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    onListView$: BehaviorSubject<boolean> = new BehaviorSubject(true);
     stratTabActive$: BehaviorSubject<boolean> = new BehaviorSubject(false); 
 
     workGroup(workGroup: WorkGroup): void {

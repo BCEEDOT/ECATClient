@@ -53,6 +53,7 @@ export class StudentComponent
   //onListView: boolean = true;
   onListView$: Observable<boolean>;
   viewSub: Subscription;
+  noWorkGroup: boolean = false;
 
   constructor(
     private titleService: Title,
@@ -190,6 +191,8 @@ export class StudentComponent
 
     if (this.activeCourse.workGroups.length > 0) {
       this.initWorkGroups(this.activeCourse.workGroups);
+    } else {
+      this.noWorkGroup = true;
     }
   }
 
@@ -256,6 +259,10 @@ export class StudentComponent
 
             if (this.activeCourse.workGroups.length > 0) {
               this.initWorkGroups(this.activeCourse.workGroups);
+            } else {
+              this.dialogService.openAlert({
+                message: 'No Workgroup Enrollments for ' + this.activeCourse.name
+              });
             }
             this.workGroupService.isLoading(false);
           })

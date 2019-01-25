@@ -32,10 +32,20 @@
       </button>
     </div>
   </div>
+  <div class="width" *ngIf="noWorkGroup">
+    <mat-card>
+      <mat-card-title>No Workgroup Enrollments</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <h5 class="mat-subheading-1">You are not currently enrolled in a workgroup</h5>
+      </mat-card-content>
+    </mat-card>
+  </div>
   <router-outlet>
 
   </router-outlet>
 </td-layout-nav>
+
 <div fxHide.xs *ngIf="activeWorkGroup">
   <a *ngIf="onListView$ | async" style="z-index: 9999;" mat-fab color="primary" class="mat-fab-bottom-right" (click)="assessCompare()" matTooltip="Compare"
     matTooltipPosition="left">

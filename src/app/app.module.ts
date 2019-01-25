@@ -29,7 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
 // }
 
 export function tokenGetter() {
-  return localStorage.getItem('ecatAccessToken');
+  return sessionStorage.getItem('ecatAccessToken');
 }
 
 @NgModule({

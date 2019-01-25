@@ -51,8 +51,8 @@ export class AuthService {
         let accessToken = loginResponse.access_token;
         let idToken = loginResponse.id_token;
         if (accessToken && idToken) {
-          localStorage.setItem('ecatAccessToken', accessToken);
-          localStorage.setItem('ecatUserIdToken', idToken);
+          sessionStorage.setItem('ecatAccessToken', accessToken);
+          sessionStorage.setItem('ecatUserIdToken', idToken);
           return true;
         } else {
 
@@ -63,8 +63,8 @@ export class AuthService {
 
   activateUser(): void {
 
-    let accessTokenSigned = localStorage.getItem('ecatAccessToken');
-    let idTokenSigned = localStorage.getItem('ecatUserIdToken');
+    let accessTokenSigned = sessionStorage.getItem('ecatAccessToken');
+    let idTokenSigned = sessionStorage.getItem('ecatUserIdToken');
 
     let accessToken = this.jwt.decodeToken(accessTokenSigned);
     //TODO: .NET CORE
@@ -124,8 +124,8 @@ export class AuthService {
 
     this.global.user(undefined);
     this.global.userDataContext(false);
-    localStorage.removeItem('ecatAccessToken');
-    localStorage.removeItem('ecatUserIdToken');
+    sessionStorage.removeItem('ecatAccessToken');
+    sessionStorage.removeItem('ecatUserIdToken');
     this.router.navigate(['/login']);
   }
 
